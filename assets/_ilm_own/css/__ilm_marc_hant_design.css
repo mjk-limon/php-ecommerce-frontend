@@ -1,0 +1,209 @@
+.marchant-corner {background: url('../images/seller.jpg');background-size: cover;}
+.marchant-corner .mc-reg {color: #e0e0e0;background: rgba(0,0,0,.6);padding: 15px;}
+.marchant-corner .mc-login {color: #e2e2e2;background: rgba(0,0,0,.6);padding: 15px;margin-top: 2em;margin-bottom: 2em;border-radius: 5px;}
+.marchant-corner .mc-reg h2, .marchant-corner .mc-login h2 {font-family: impact;color: #49a2d3;}
+.marchant-corner .mc-login h2{text-align:center;}
+.marchant-corner .mc-reg label, .marchant-corner .mc-login label {display: block;color: #fff;margin-bottom: 13px;}
+/* basic */
+.my-2{margin-top:.5rem;margin-bottom:.5rem}
+.main{margin-bottom:15px;background-color:#fcfcfc}
+.page-header{margin-top: 0;font-size:24px;border-bottom-color:#888;position:relative}
+.page-header:after{position:absolute;width:100%;height:1px;border-bottom:1px solid #888;content:' ';bottom:-4px;left:0}
+.sidebar{padding-right: 0px;text-align: center;}
+.sidebar ul.nav li a{border: 1px solid #d7d7d7;margin-bottom: 6px;color: #303030;font-size: 16px;padding: 20px;}
+.menu-icons{display:block;text-align:center}
+.main-interface{padding:2rem;box-shadow:0px 0px 5px #ddd;background:#fff;margin-top:15px}
+.form-group label{border-bottom:2px}
+.form-group .form-control{border-radius:0;box-shadow:none}
+.form-group .bmd-help, .form-group .form-helper{font-size:12px}
+/* dashboard */
+.dashboard-widget {padding: 5px;}
+.dashboard-widget .well{padding: 0;}
+.widget-number {
+	display: block;
+	text-align: center;
+	font-size: 5em;
+	font-family: "Lato Bold", sans-serif;
+	color: #303030;
+}
+.widget-footer {
+	display: block;
+	text-align: center;
+	font-size: 16px;
+	background: #0093cc;
+	padding: 5px 0px;
+	color: #fff;
+}
+.in-c .widget-footer {background: #303030;}
+/* deal management */
+.deal-management .product-info .navs {
+	margin: 5px 15px 0px 0px;
+	text-align: right;
+	padding: 5px 10px;
+}
+.deal-management .description {
+	margin: 2em 0;
+	white-space: pre-wrap;
+}
+.deal-management .product-images .dailysell {display: block; width: 20%; margin-left: 5px; margin-bottom: 10px;}
+.deal-management .product-images .grids {padding: 0px 10px; margin: 0px 5px; box-shadow: 0px 0px 2px;}
+.deal-management .product-images .grids img {height: 200px; margin: 0 auto;}
+.maincat, .subcatgroup, .subcat{text-transform:capitalize;}
+.bootstrap-tagsinput {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	padding: 6px 6px;
+	color: #555;
+	vertical-align: middle;
+	width: 100%;
+	height: 34px;
+	cursor: text;
+}
+.bootstrap-tagsinput input {
+	border: none;
+	box-shadow: none;
+	outline: none;
+	background-color: transparent;
+	padding: 0 6px;
+	margin: 0;
+	width: auto;
+	max-width: inherit;
+}
+.bootstrap-tagsinput.form-control input::-moz-placeholder {color: #777;opacity: 1;}
+.bootstrap-tagsinput.form-control input:-ms-input-placeholder {color: #777;}
+.bootstrap-tagsinput.form-control input::-webkit-input-placeholder {color: #777;}
+.bootstrap-tagsinput input:focus {border: none;box-shadow: none;}
+.bootstrap-tagsinput .label {
+	margin-right: 2px;
+	color: white;
+	background-color:#0275d8;
+	padding:5px 8px;border-radius:3px;
+	border:1px solid #01649e
+}
+.bootstrap-tagsinput .label [data-role="remove"] {margin-left: 8px;cursor: pointer;}
+.bootstrap-tagsinput .label [data-role="remove"]:after {
+	content: "×";
+	padding: 0px 4px;
+	background-color:rgba(0, 0, 0, 0.1);
+	border-radius:50%;
+	font-size:13px
+}
+.bootstrap-tagsinput .label [data-role="remove"]:hover:after {background-color:rgba(0, 0, 0, 0.62);}
+.bootstrap-tagsinput .label [data-role="remove"]:hover:active {box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);}
+.bootstrap-tagsinput .label.red, .cbox.red {background-color: red; color: #fff}
+.bootstrap-tagsinput .label.orange, .cbox.orange {background-color: orange; color: #fff}
+.bootstrap-tagsinput .label.yellow, .cbox.yellow {background-color: yellow; color: #000}
+.bootstrap-tagsinput .label.green, .cbox.green {background-color: green; color: #fff}
+.bootstrap-tagsinput .label.cyan, .cbox.cyan {background-color: cyan; color: #000}
+.bootstrap-tagsinput .label.blue, .cbox.blue {background-color: blue; color: #fff}
+.bootstrap-tagsinput .label.indigo, .cbox.indigo {background-color: indigo; color: #fff}
+.bootstrap-tagsinput .label.violet, .cbox.violet {background-color: violet; color: #000}
+.bootstrap-tagsinput .label.purple, .cbox.purple {background-color: purple; color: #fff}
+.bootstrap-tagsinput .label.magenta, .cbox.magenta {background-color: magenta; color: #fff}
+.bootstrap-tagsinput .label.pink, .cbox.pink {background-color: pink; color: #000}
+.bootstrap-tagsinput .label.brown, .cbox.brown {background-color: brown; color: #fff}
+.bootstrap-tagsinput .label.white, .cbox.white {background-color: white; color: #000}
+.bootstrap-tagsinput .label.black, .cbox.black {background-color: black; color: #fff}
+.bootstrap-tagsinput .label.skyblue, .cbox.skyblue {background-color: skyblue; color: #000}
+.form-group.is-filled .image-select-label {z-index: 11;left: 10px;background: #fff; padding: 0px 4px;}
+.btn.single-file-input .empty-files {position: relative; z-index: 2}
+.file-droper {
+	position: relative;
+	min-height: 150px;
+	background: #fff;
+	border: 2px dotted #00bcd4;
+	cursor: pointer;
+}
+.file-droper .droper-text{
+	padding: 4rem;
+	text-align: center;
+	font-size: 22px;
+	color: #00bcd4;
+}
+.file-droper .droper-helper{
+	display: block;
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+}
+.file-droper .droper-retry {
+	display: none;
+	text-align: center;
+	padding: 8px;
+	color: #00bcd4;
+	background: #ededed;
+	font-weight: bold;
+}
+.file-droper .f-nav {
+	display: block;
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+.file-droper select{
+	width: 100%;
+	display: block;
+	padding: 5px;
+	color: #fff;
+	border: 0;
+	text-align: left;
+	text-transform: capitalize;
+}
+.file-droper select:hover {background-color: #00bcd4!important}
+.tab-content #subLabel{display: none;}
+.tab-content p.selected-p{
+	color: #333;
+	font-size: 13px;
+	font-weight: bold;
+	border-bottom: 1px dashed #333;
+	text-transform: capitalize;
+}
+.tab-content p.selected-p span{color: #ff0000;}
+.tab-content #next-btn{display: none;}
+.tab-content ul{padding: 0;margin: 0;}
+.tab-content #step1 ul li{
+	position: relative;
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+	margin: 0;
+	list-style: none;
+	padding: 7px 10px;
+	border-bottom: 1px solid #ccc;
+	text-transform: capitalize;
+	cursor: pointer;
+}
+.tab-content #step1 ul li:first-child{border-top: 1px solid #ccc;}
+.tab-content #step1 ul li:hover{background: #00bcd4; color: #fff}
+.tab-content #step1 ul li.active{background: #0090a2; color: #00ff42}
+.tab-content #step1 ul li i.fa.fa-chevron-right {
+	font-size: 11px!important;
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	transform: translateY(-50%)
+}
+.dropped-item {
+	position: relative;
+	z-index: 2;
+	display: inline-block;
+	width: 25%;
+	padding: 5px;
+}
+.dropped-item img {display: block;width: 100%; height: 90px;}
+.form-group input[type="file"] {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+.file-droper input[type=file] {cursor: pointer;z-index: 0}
+.old-items.well {padding:1rem}
+.old-items .oitem{position:relative;display:inline-block;width:15%}
+.old-items .oitem .remove{position:absolute;right:0}
+.old-items .oitem img{width:100%}

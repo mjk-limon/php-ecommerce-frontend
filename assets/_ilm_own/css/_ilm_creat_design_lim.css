@@ -1,0 +1,174 @@
+/*==========
+	Author: Md Jahid Khan Limon
+	Mobile: 01956758055
+	Facebook: @mjk.limon
+*/
+/*-- Page Alert --*/
+/*======== Page Alert =======*/
+body .page-alert{display:none;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999999;position:fixed}
+body .page-alert img.loading{max-width:110px;display:block;margin-left:auto;margin-right:auto}
+body .page-alert .alert-text{position:absolute;background:#fff;border:1px solid #ccc;box-shadow:2px 3px 10px #000;top:50%;left:50%;transform:translate(-50%,-50%);min-width:30%}
+body .page-alert .alert-text-header{position:relative;background-color:#f6f7f9;border-bottom:1px solid #e5e5e5;color:#1d2129;font-size:13px;font-weight:700;line-height:19px;padding:5px 12px}
+body .page-alert .alert-text-doc{padding:14px 12px}
+body .page-alert .alertClose{position:absolute;top:5px;right:5px;font-size:20px;border:1px solid red;cursor:pointer;text-align:center;border-radius:50px;width:23px;background:red;height:23px;color:#fff}
+/*-- No Products Alert --*/
+.no-products{background:#FFA3A3;padding:20px;color:#252525;border-left:5px solid #ff6978;margin:5px 0}
+.no-products p{text-transform:none}
+
+.inner-page{background: var(--innerpage)!important;background-repeat:repeat;background-size:auto}
+.inner-page .inner_page_title{margin-top:0;margin-bottom:1em}
+.inner-page .usp-img{text-align:center;padding-top:10px;width:100px}
+.inner-page .contact-box{height:100px;margin-top:10px;background-color:#eee;padding:5px;padding-top:15px}
+.inner-page .usp-heading{text-align:center}
+.inner-page .sub-heading{font-size:20px;font-weight:800;color:#000;margin-top:0;margin-bottom:5px}
+.inner-page .usp-text{text-align:center;margin-top:10px}
+.inner-page #content a{color:#F68B1E}
+.inner-page .lg{width:66.41%;box-sizing:border-box}
+.inner-page .content-column{margin:0;padding:10px;display:inline-block;box-sizing:border-box;vertical-align:top}
+.inner-page .social-icon{height:30px}
+
+.limon-login{padding-top:60px;padding-bottom:60px;min-height:100vh}
+.limon-login.login-page{background:url(../../images/bg1.jpg) no-repeat;background-attachment:fixed;background-size:cover}
+.limon-login .wrapper{width:450px;margin:auto;padding:2% 15px;background-color:#fff;box-shadow:0 0 5px #ccc;min-height:60vh}
+.limon-login .wrapper.inner-page{width:80%}
+.limon-login .wrapper.my-account{width:65%;margin:auto;padding:0;background-color:#fff;box-shadow:0 0 5px #ccc}
+.limlog-form{display:block;width:350px;margin:auto}
+.limlog-form.inner-page{width:95%}
+.limlog-form label,.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form input[type="submit"]{display:block;font-family:'Open Sans',sans-serif}
+.limlog-form input[type="text"],.limlog-form input[type="password"]{outline:0;padding:12px 15px;border:1px solid #000;width:100%;letter-spacing:1px;box-sizing:border-box}
+.limon-login .wrapper > h2{text-align:center;margin-bottom:30px;text-transform:uppercase;font-size:26px;color:#13caca;font-weight:600;letter-spacing:2px}
+a.pass{font-size:13px;color:#ef4242;font-family:'Open Sans',sans-serif;letter-spacing:2px;display:block;text-align:right;margin:15px 0}
+a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Open Sans',sans-serif}
+
+.limlog-form{display:block;width:95%;margin:auto}
+.limlog-form label,.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form button{display:block;font-family:'Open Sans',sans-serif}
+.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form select,.limlog-form textarea{outline:0;padding:8px 15px;border:1px solid #ccc;width:100%;resize:none;}
+.limlog-form label{margin:20px 0 5px;font-size:13px;color:#000;font-weight:600}
+.limlog-form input[type="text"]:focus,.limlog-form input[type="password"]:focus,
+.limlog-form select:focus,.limlog-form textarea:focus{border-color:#888;transition: border-color .4s}
+.limlog-form button{margin:10px 0 20px auto;padding:3px 60px;font-size:18px;background-color:#0469a7;color:#fff;outline:0;border:2px solid #0469a7}
+.limlog-form button:hover{color:#0469a7;background-color:transparent;border:2px solid #0469a7}
+
+/*========== Checkout ==========*/
+.mainContentpanel{position:relative;border:0;min-height:10vh}
+.mainContentpanel .steps{box-shadow: 0px 1px 3px #ccc;}
+.steps ul{list-style:none outside none;margin:0;padding:0}
+.steps ul li:first-child{padding:0 7rem 0 2rem;font-size:2.5rem;color:#333}
+.steps ul li{background:none repeat scroll 0 0 #fff;color:#999;cursor:default;float:left;height:60px;line-height:60px;margin:-1px 0;padding:0 4rem;position:relative}
+.steps ul li.active{background:none repeat scroll 0 0 #f7f6f5;color:#333}
+.steps ul li.disabled, .steps ul li.disabled a{opacity:.6;color:#ccc;pointer-events:none}
+.steps .chevron,.steps .chevron:before{width:0;height:0;border-style:solid;border-width:30px 0 30px 29px;border-color:transparent transparent transparent #ccc;top:0;right:-30px;z-index:1;position:absolute}
+.steps .chevron:before{content:"";border-color:transparent transparent transparent #fff;top:-30px;right:1px}
+.steps .active .chevron:before{border-color:transparent transparent transparent #f7f6f5}
+.steps ul li .badge{margin-right:8px;background-color:#ccc}
+.steps ul li.active .badge{background-color:#999}
+
+.mainContentpanel .ck-area{padding:3em}
+.mainContentpanel .nav-invoker{display:block;margin: 20px 0 10px 0;text-align:right}
+.nav-invoker.qc-inv{text-align:center}
+.nav-invoker .nav-btn{display:inline-block;padding:8px 30px;margin-left:15px;line-height:initial;border:0;background:#5cb85c;color:#fff;font-size:18px;font-weight:400;box-shadow:6px 6px 8px -6px #888}
+.nav-invoker .nav-btn:hover{box-shadow:none;transition:box-shadow .4s;}
+.nav-btn.previous{background:#888;}
+
+.checkout-login{margin:0}
+#checkout .limlog-form{width:100%}
+#checkout .limlog-form label{color:#333;font-weight:500;text-transform:none;letter-spacing:1.2px}
+#checkout .limlog-form textarea{width:100%;min-height:100px;resize:none}
+#checkout .limlog-form select{width:100%}
+#checkout .login-success .limlog-form input[disabled],
+#checkout .login-success .limlog-form textarea[disabled],
+#checkout .login-success .limlog-form input[readonly],
+#checkout .login-success .limlog-form textarea[readonly]{border:0;background:#fff;padding:0;font:inherit;letter-spacing:inherit;min-height:inherit}
+
+#quickbuy-form .modal-grid > h4{margin-bottom:1em}
+#quickbuy-form .modal-grid.second-grid{border-left:1px dashed #aaa;margin-left:-1px}
+.qocarttable{font-size:13px}
+.qocarttable p{margin-bottom:0}
+.qopinfo p{font-size:11px}
+.qopinfo p.qoPNAME{font-size:13px;font-weight:500}
+#checkout .qo-user-info .limlog-form{width:90%}
+.limlog-form .dd-container label{margin:0}
+.limlog-form .dd-search-filter {position:absolute;width:100%;height:100%;top:0;left:0;border:none!important}
+#checkout .qc-pmnt-btn{border-radius:0;margin:1em 0;background:var(--accent);color:#fff}
+
+.checkout-login .large-social-buttons {padding-left: 0;margin-top:20px}
+.checkout-login .large-social-buttons a,.large-social-buttons a:visited{display:block;text-shadow:0 1px 0 rgba(0,0,0,0.2);color:#FFF;border-radius:40px;border:1px solid;padding:15px 0;margin-bottom:10px;text-align:center;font-size:16px;font-weight:300}
+.checkout-login .large-social-buttons a.disabled,.large-social-buttons a.disabled:visited{opacity:.3;pointer-events:none;cursor:default}
+.checkout-login .large-social-buttons a span{padding-right:4px}
+.checkout-login .large-social-buttons li.fb a{background:#3b4998;border-color:#2d3773}
+.checkout-login .large-social-buttons li.tw a{background:#4099ff;border-color:#0d7eff}
+.checkout-login .large-social-buttons li.gp a{background:#dc4a36;border-color:#be3421}
+
+.quick-checkout{display:none}
+.logged-in .login-check{position:absolute;right:-1px;top:-1px;width:20px;text-align:center;background:#90ee90}
+.logged-in .login-check .fa{color:#fff}
+.logged-in h3{font-size:16px;margin-bottom:10px}
+.logged-in table{width:100%;font-size:12px;color:#888}
+.logged-in table tr td{padding:5px 10px;vertical-align:top}
+.logged-in table tr td a{color:#337ab7}
+.logged-in #orderLoc{display:none}
+
+#co-order-summery .order-summery .flex{display:flex;flex-wrap:wrap}
+.order-summery .order-summery-tab-1{flex:1;text-align:center}
+.order-summery .order-summery-tab-1 h3{font-size:16px;margin-bottom:6px}
+.order-summery .order-summery-tab-1 p{font-size:12px;color:#555;padding-left:8px;margin-bottom:2px}
+.order-summery .order-total{text-align:center;padding:20px;margin-top:20px;border:1px dotted #888;border-radius:5px}
+.order-summery .order-total h3{color:#000}
+
+.pmnt-methods{text-align:center}
+.pmnt-methods .method-top{margin-bottom:30px}
+.pmnt-methods .mthd-single{display: inline-block;width: 150px;margin: 0 10px;vertical-align: top;padding: 10px;box-shadow: 0px 0px 5px #ddd;}
+.pmnt-methods .mthd-paypal{width:40%;margin: 20px auto;}
+.pmnt-methods .method-bottom .mthd-single{width:100px}
+.method-bottom span{display: block;margin-bottom: 20px;color: #ccc;}
+.method-bottom span::after {display: block;content: ' ';width: 180px;height: 1px;background: #ddd;margin: 0 auto;}
+.mthd-single .mthd-logo {width:100%}
+.method-bottom .mthd-logo {filter:grayscale(1); transition: filter .6s}
+.method-bottom .mthd-single:hover .mthd-logo {filter:grayscale(0)}
+.mthd-single h3 {font-size: 16px;font-weight: 300;margin-bottom: 0;margin-top: 10px}
+
+.confirm-payment-dialog > h4, .confirm-payment-dialog .payment-info, .confirm-payment-dialog .confirm-form {margin:1.5rem auto}
+.confirm-payment-dialog .payment-info{padding-left:.5rem}
+.confirm-payment-dialog .btn.cf-btn{border-radius:0;background:var(--accent);color:#fff;font-size:16px;letter-spacing:0.7px;padding:1rem 2rem;margin:10px 0;border:0}
+
+#thank-you h2.successfull{text-align:center;margin-bottom:2em;font-size:26px;color:#333;text-shadow:1px 1px 1px #666}
+#thank-you span.p-title{text-align:center;margin:1.5em 0;background-color:#888;color:#fff;font-size:20px;padding:.3em .6em;display:inline-block}
+#thank-you .separator{height:10px}
+#thank-you .your-data,#thank-you .your-bill{text-align:center}
+#thank-you .your-data table{width:100%;border-collapse:collapse;border-spacing:0;border:0}
+#thank-you .your-data table tr td{padding:5px;font-size:14px;text-align:left;color:#888}
+
+#thank-you .your-bill p.your-bill-nav{text-align:right}
+#thank-you .your-bill .invoice-print{color:#333;text-decoration:underline;font-size:14px;font-family:'Times New Roman';cursor:pointer}
+#thank-you .invoice{position:relative;width:8.268in;height:11.693in;margin:50px auto;text-align:left;padding:50px 65px;box-shadow:0 0 20px #ccc}
+#thank-you .invoice ._invoice_watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50%;filter:opacity(.04)}
+#thank-you .invoice-top img{max-width:100%;height:100px}
+#thank-you .invoice-top .tagline h2.company-name{margin:0;font-weight:700;font-size:28px;line-height:1em;text-transform:none}
+#thank-you .invoice-top .tagline p{text-align:left;color:#888;font-size:14px;margin-bottom:0;line-height:1.2em}
+#thank-you .invoice-top .qr{text-align:right}
+#thank-you .invoice-top .qr img{border:1px solid #e7e7e7}
+#thank-you .invoice-middle .invoice-id{margin-top:60px;margin-bottom:40px}
+#thank-you .invoice-middle .invoice-id h1{font-size:50px;font-family:'impact';color:#396E00;line-height:50px}
+#thank-you .invoice-middle .invoice-id h3{margin-bottom:5px}
+#thank-you .invoice-middle .invoice-id img{width:250px;height:40px}
+#thank-you .invoice-middle .invoice-info table{width:auto;border-collapse:collapse;border-spacing:0}
+#thank-you .invoice-middle .invoice-info table tr td{vertical-align:top;font-size:13px;padding:1px 3px}
+#thank-you .invoice-middle .invoice-bill-to p{text-align:left;margin-bottom:2px;font-size:13px;color:#000}
+#thank-you .invoice-table .itemLists{width:100%;border-collapse:collapse;border-spacing:0;margin-top:40px;font-size:14px}
+#thank-you .invoice-table .itemLists td,#thank-you .invoice-table .itemLists th{padding:10px;vertical-align:top}
+#thank-you .invoice-table .itemLists thead tr{border-bottom:2px solid #aaa;color:#333;font-weight:600}
+#thank-you .invoice-table .itemLists tbody tr{border-bottom:1px solid #ccc;color:#333;font-weight:500}
+#thank-you .invoice-table .itemLists td p.ipnaid{font-size:11px;color:#333;text-align:left;margin-bottom:0}
+#thank-you .invoice-table .itemLists td p.ipnaid.ipname{font-weight:600;font-size:13px}
+#thank-you .invoice-table .itemTotal{width:35%;border-collapse:collapse;border-spacing:0;margin-top:10px;font-size:14px;float:right;color:#333}
+#thank-you .invoice-table .itemTotal tr.subtotal{color:#396E00;border-top:2px dotted #aaa;font-size:16px}
+#thank-you .invoice-table .itemTotal tr td{padding:5px}
+#thank-you .invoice-table .payment-info{color:#888;font-size:12px;margin-top:20px;width:100%;font-weight:400}
+#thank-you .invoice-table .payment-info img{width:400px;height:60px}
+
+@media print {
+	body *{visibility:hidden}
+	@page{size:auto;margin:0}
+	.invoice,.invoice *{visibility:visible}
+	.invoice{width:100%;position:absolute;left:0;top:0}
+}

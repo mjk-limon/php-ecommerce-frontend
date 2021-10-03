@@ -1,0 +1,284 @@
+/*=======================================
+Web page Loaders & Notifications
+=========================================
+Created by Md Jahid Khan Limon 
+I'lm (2020)
+=======================================*/
+.modal-dialog {
+	transition: width .6s ease;
+}
+.vertical-alignment-helper {
+	display:table;
+	height: 100%;
+	width: 100%;
+	pointer-events:none;
+}
+.vertical-align-center {
+	display: table-cell;
+	vertical-align: middle;
+	pointer-events:none;
+}
+.modal-content {
+	width:inherit;
+	max-width:inherit;
+	height:inherit;
+	margin: 0 auto;
+	pointer-events: all;
+	box-shadow: 0 5px 25px rgba(0,0,0,.75);
+	border-radius: 0;
+	border: 0;
+}
+#ajaxContents, #tempModal {
+	animation-timing-function: cubic-bezier(.22,.61,.36,1);
+	animation-duration: 1s;
+}
+#tempModal {
+	z-index: 1060
+}
+.modal-backdrop.in ~ .modal-backdrop.in {
+	z-index: 1050
+}
+
+.floatingNotification{
+	position:fixed;
+	background-image:linear-gradient(
+		45deg,
+		rgba(255,255,255,.15) 20%,
+		transparent 20%,
+		transparent 40%,
+		rgba(255,255,255,.15) 40%,
+		rgba(255,255,255,.15) 60%,
+		transparent 60%,
+		transparent 80%,
+		rgba(255,255,255,.15) 80%,
+		rgba(255,255,255,.15)) !important;
+	min-width:300px;
+	max-width:90%;
+	bottom:20px;
+	left: 30px;
+	text-align:center;
+	color:#fff;
+	padding:.75rem 3rem;
+	background-color:#0a0;
+	font-size:20px;
+	font-weight:300;
+	box-shadow:2px 2px 2px -1px #333;
+	animation-duration: .4s;
+	z-index: 2147483649;
+	transition: bottom .4s ease;
+}
+.floatingNotification.emsg{background:#c00}
+
+.elem-loader{
+	position:relative;
+	pointer-events:none
+}
+body.elem-loader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+}
+.elem-loader::after {
+	width: 100%;
+	position: absolute;
+	display: block;
+	height: 100%;
+	content: ' ';
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(255,255,255,.7) url('../../images/ajax-loader.gif');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 150px;
+	z-index: 2147483648;
+}
+.elem-loader.tiny::after {
+	background: rgba(255, 255, 255, 0.9) url('../../images/ajax-loader2.gif') no-repeat;
+	background-position: center;
+	background-size: 50px;
+}
+
+.skeleton {
+	margin:2rem auto;
+	width: 95%;
+	height: 60vh;
+	
+	background-image:
+		linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+		linear-gradient( lightgray 140px, transparent 0 ),
+		linear-gradient( lightgray 20px, transparent 0 ),
+		linear-gradient( lightgray 20px, transparent 0 ),
+		linear-gradient( lightgray 20px, transparent 0 ),
+		linear-gradient( lightgray 20px, transparent 0 );
+
+	background-repeat: repeat-y;
+
+	background-size:
+		50px 200px, /* highlight */
+		200px 200px, /* square */
+		30% 200px,
+		70% 200px,
+		50% 200px,
+		60% 200px;
+
+	background-position:
+		0 20px, /* highlight */
+		0 20px, /* circle */
+		220px 20px,
+		220px 60px,
+		220px 100px,
+		220px 140px;
+
+	animation: shine 1.5s infinite;
+}
+.skeleton.v2 {
+	margin-top: 0;
+	height: 95vh;
+	background-image:
+		linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+		linear-gradient( lightgray 110px, transparent 0 ),
+		linear-gradient( lightgray 15px, transparent 0 ),
+		linear-gradient( lightgray 15px, transparent 0 ),
+		linear-gradient( lightgray 15px, transparent 0 ),
+		linear-gradient( lightgray 15px, transparent 0 );
+		
+	background-size:
+		50px 150px,
+		140px 150px,
+		30% 150px,
+		70% 150px,
+		50% 150px,
+		60% 150px;
+	
+	background-position:
+		0 20px,
+		0 20px,
+		160px 20px,
+		160px 50px,
+		160px 80px,
+		160px 110px;
+		
+	animation: shinev2 1.5s infinite;
+}
+.skeleton.v3 {
+	margin-top: 0;
+	height: 200vh;
+	background-image: url('../../images/skeleton-product-grid.gif');
+	background-position: 0 0;
+	background-size: 25%;
+	background-repeat: repeat;
+	animation: none;
+}
+@keyframes shine {
+	0%, 100% {
+		background-position:
+			0% 20px, /* move highlight to right */
+			0 20px,
+			220px 20px,
+			220px 60px,
+			220px 100px,
+			220px 140px;
+		
+		background-size:
+			50px 200px, /* highlight */
+			200px 200px,
+			30% 200px,
+			70% 200px,
+			50% 200px,
+			60% 200px;
+	}
+	50% {
+		background-position:
+			100% 20px, /* move highlight to right */
+			0 20px,
+			220px 20px,
+			220px 60px,
+			220px 100px,
+			220px 140px;
+		
+		background-size:
+			50px 200px, /* highlight */
+			200px 200px, /* circle */
+			40% 200px,
+			90% 200px,
+			60% 200px,
+			80% 200px;
+		
+	}
+}
+@keyframes shinev2 {
+	0%,100% {
+		background-size:
+			50px 150px,
+			140px 150px,
+			30% 150px,
+			70% 150px,
+			50% 150px,
+			60% 150px;
+		
+		background-position:
+			0% 20px,
+			0 20px,
+			160px 20px,
+			160px 50px,
+			160px 80px,
+			160px 110px;
+	}
+	50% {
+		background-size:
+			50px 150px,
+			140px 150px,
+			40% 150px,
+			90% 150px,
+			60% 150px,
+			80% 150px;
+		
+		background-position:
+			100% 20px,
+			0 20px,
+			160px 20px,
+			160px 50px,
+			160px 80px,
+			160px 110px;
+	}
+}
+
+@keyframes mobileshine {
+	0%,100% {
+		background-size:
+			50px 100px,
+			100px 100px,
+			30% 100px,
+			70% 100px,
+			50% 100px,
+			60% 100px;
+			
+		background-position:
+			0% 10px, 
+			0 10px,
+			110px 10px,
+			110px 30px,
+			110px 50px,
+			110px 70px;
+	}
+	50% {
+		background-size:
+			50px 100px, 
+			100px 100px,
+			40% 100px,
+			90% 100px,
+			60% 100px,
+			80% 100px;
+			
+		background-position:
+			100% 10px, 
+			0 10px,
+			110px 10px,
+			110px 30px,
+			110px 50px,
+			110px 70px;
+	}
+}
