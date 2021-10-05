@@ -2,114 +2,128 @@
 
 namespace _ilmComm;
 
-$Prs = $this->AllProducts;
+$sp = $this->SingleProduct;
 ?>
 
-<section class="main-body">
-	<div class="container">
-		<?php if (file_exists($this->CatImages[0])) : ?>
-			<div class="row" style="margin-bottom: 20px;">
-				<div class="col-md-12">
-					<div id="myCarousel" class="carousel slide product-page-carousel" data-ride="carousel">
-						<div class="carousel-inner">
-							<div class="item active">
-								<div class="ppc-single-slide">
-									<div class="ppc-single-background" style="background-image: url('<?= Models::asset($this->CatImages[0]) ?>);"></div>
-									<div class="ppc-single-image">
-										<img data-src="<?= Models::asset($this->CatImages[0]) ?>">
-									</div>
-								</div>
-							</div>
+<div class="homepage-top-section">
+    <div style="width: 100%;overflow: hidden;background-color: #000;">
+        <div id="video"></div>
+        <div style="width: 50%;margin:0 auto">
+            <div class="myVideo" id="my_video" data-video="https://www.w3schools.com/html/mov_bbb.mp4" data-type='video/mp4'></div>
+        </div>
+    </div>
+</div>
 
-							<?php if (file_exists($this->CatImages[1])) : ?>
-								<div class="item">
-									<div class="ppc-single-slide">
-										<div class="ppc-single-background" style="background-image: url('<?= Models::asset($this->CatImages[1]) ?>);"></div>
-										<div class="ppc-single-image">
-											<img data-src="<?= Models::asset($this->CatImages[1]) ?>">
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
+<section class="main-body bg-dark">
+    <div class="spd">
+        <div class="container">
+            <div class="section-browse-cat">
+                <div class="bc-title">
+                    <div class="bc-main-title">FEATURED</div>
+                </div>
+                <div class="bc-product-area">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="bc-single">
+                                <div class="grid-row grid2">
+                                    <?php
+                                    $St_i = 1;
+                                    $Cat = new Category\FetchCategories;
+                                    $MainCats = $Cat->fetchMain();
+                                    while ($ArrMain = $MainCats->fetch_assoc()) :
+                                        $Cat->setCatId($ArrMain['id']);
+                                        $Cat->setMain($ArrMain['main']);
+                                        $Cat->setSubGroup(null);
+                                        $Cat->setSub(null);
+                                    ?>
+                                        <div class="grids">
+                                            <div class="bc-products">
+                                                <div class="single-product">
+                                                    <div class="sp-image">
+                                                        <a href="<?php echo $Cat->getHref() ?>">
+                                                            <img src="<?php echo $Cat->getCatImg('Homepage category sample')[0] ?>" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="sp-pr">
+                                                        <div class="sp-pr-info">
+                                                            <a href="<?php echo $Cat->getHref() ?>">
+                                                                <h5><?php echo $Cat->Mainc ?></h5>
+                                                                <p>24 Videos</p>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endwhile; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="sticky" style="height: calc(100vh - 40px);display: flex;flex-direction: column;">
+                                <div class="playback-area">
+                                    <div id="trending-playback">
+                                        <div class="myVideo" id="my_video2"></div>
+                                    </div>
+                                    <h4>Trending</h4>
+                                </div>
+                                <div class="playback-playlist">
+                                    <div class="playlist-single">
+                                        <div class="ps-image">
+                                            <img src="images/DHL-1612949010.png" alt="">
+                                        </div>
+                                        <div class="ps-title">
+                                            Simple Title Simple Title Simple Title Simple Title
+                                            Simple Title Simple Title Simple Title Simple Title
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-							<?php if (file_exists($this->CatImages[2])) : ?>
-								<div class="item">
-									<div class="ppc-single-slide">
-										<div class="ppc-single-background" style="background-image: url('<?= Models::asset($this->CatImages[2]) ?>);"></div>
-										<div class="ppc-single-image">
-											<img data-src="<?= Models::asset($this->CatImages[2]) ?>">
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
-
-		<?php if ($this->TotalProduct) : ?>
-			<div class="row">
-
-				<?php if (!$this->mobileView) : ?>
-					<div class="col-md-2p5 col-md-3 product-filter-sidebar">
-						<?php include "layouts/product-page-filters.php" ?>
-					</div>
-				<?php endif; ?>
-
-				<div class="col-md-9p5 col-md-9 product-main-panel">
-					<div class="section-mb features_items">
-						<div id="pp-main-area" class="v3">
-							<?php include "layouts/product-page-products.php" ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		<?php else : ?>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="empty-product-page">
-						<img src="<?= Models::asset("assets/images/pp-empty.png") ?>" alt="" />
-						<h4>WE CAN'T SEEM TO FIND THE PRODUCT YOU ARE LOOKING FOR</h4>
-						<h4>PLEASE HAVE A LOOK OUR OTHER CATEGORIES</h4>
-					</div>
-				</div>
-			</div>
-		<?php endif; ?>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<?php if ($this->mobileView) : ?>
-	<div class="mb-floating-filter-btns" id="pp-mbl-srt-area">
-		<li>
-			<a href="#mb-psort" data-toggle="collapse"><i class="fa fa-random"></i> Sort</a>
-			<div id="mb-psort" class="collapse mb-psort-nav sort-options">
-				<ul>
-					<li class="active"><a href="javascript:;" data-sv="1">Popular</a></li>
-					<li><a href="javascript:;" data-sv="2">New added</a></li>
-					<li><a href="javascript:;" data-sv="3">Price Low to High</a></li>
-					<li><a href="javascript:;" data-sv="4">Price High to Low</a></li>
-					<li><a href="javascript:;" data-sv="5">Discount Low to High</a></li>
-					<li><a href="javascript:;" data-sv="6">Discount High to Low</a></li>
-				</ul>
-			</div>
-		</li>
-		<li><a href="#mb-filter-modal" data-toggle="modal"><i class="fa fa-filter"></i> Filters</a></li>
-	</div>
+<link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/rtopvideoplayer/rtop.videoPlayer.1.0.2.min.css') ?>" />
+<script src="<?php echo Models::asset('assets/vendors/rtopvideoplayer/rtop.videoPlayer.1.0.2.min.js') ?>"></script>
+<script src="<?php echo Models::asset('assets/vendors/sticky/jquery.sticky.js') ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#my_video').RTOP_VideoPlayer({
+            showFullScreen: true,
+            showTimer: true,
+            showSoundControl: true,
+            //autoPlay: true,
+        });
 
-	<div class="modal right fade" id="mb-filter-modal" role="dialogue" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-					<?php
-					include "layouts/product-page-filters.php"
-					?>
+        $('#my_video2').RTOP_VideoPlayer({
+            showFullScreen: true,
+            showTimer: true,
+            showSoundControl: true,
+            autoPlay: true,
+            vimeo_url: "https://vimeo.com/567880610"
+        });
 
-					<a class="mb-ff-navs" href="javascript:;" data-dismiss="modal">Apply Filters</a>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
+        $("#sticky").sticky({
+            topSpacing: 20,
+            center: true
+        });
 
-<script defer src="<?= Models::asset("assets/_ilm_own/js/productPage_scripts.js") ?>"></script>
+        $('.playlist-single').click(function() {
+            $("#trending-playback").html('<div class="myVideo" id="my_video2"></div>');
+            $('#my_video2').RTOP_VideoPlayer({
+                showFullScreen: true,
+                showTimer: true,
+                showSoundControl: true,
+                autoPlay: true,
+                vimeo_url: 'https://vimeo.com/193141268'
+            });
+        });
+    });
+</script>
+
+<script defer src="<?= Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>

@@ -56,14 +56,14 @@ $shippingMethods = $this->shippingMethods();
 						<div class="social-icons">
 							<ul class="nav">
 
-							<?php foreach ($socialLinks as $SK => $SL) : ?>
-								<li>
-									<a href="<?= $SL ?>" target="_blank">
-										<i class="fa fa-<?= $SK ?>"></i>
-									</a>
-								</li>
-							<?php endforeach; ?>
-							
+								<?php foreach ($socialLinks as $SK => $SL) : ?>
+									<li>
+										<a href="<?= $SL ?>" target="_blank">
+											<i class="fa fa-<?= $SK ?>"></i>
+										</a>
+									</li>
+								<?php endforeach; ?>
+
 							</ul>
 						</div>
 						<div class="nuws">
@@ -88,17 +88,17 @@ $shippingMethods = $this->shippingMethods();
 				<div class="col-md-6 pm-delv">
 					<h4>Payment Methods</h4>
 
-				<?php foreach ($paymentMethods as $PM) : ?>
-					<img src="<?= Models::asset($PM); ?>" class="img-responsive" />
-				<?php endforeach; ?>
-				
+					<?php foreach ($paymentMethods as $PM) : ?>
+						<img src="<?= Models::asset($PM); ?>" class="img-responsive" />
+					<?php endforeach; ?>
+
 				</div>
 				<div class="col-md-6 pm-delv">
 					<h4>Delivered By</h4>
 
-				<?php foreach ($shippingMethods as $SM) : ?>
-					<img src="<?= Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?= htmlspecialchars($SM['method_name']) ?>" />
-				<?php endforeach; ?>
+					<?php foreach ($shippingMethods as $SM) : ?>
+						<img src="<?= Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?= htmlspecialchars($SM['method_name']) ?>" />
+					<?php endforeach; ?>
 
 				</div>
 			</div>
@@ -119,22 +119,24 @@ $shippingMethods = $this->shippingMethods();
 </footer>
 
 <?php include realpath(__DIR__ . "/../layouts/footer-notification-modal.php"); ?>
-<script src="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
-<script src="<?= Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
+<script src="<?php echo Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?php echo Models::asset('assets/vendors/rtopvideoplayer/rtop.videoPlayer.1.0.2.min.js') ?>"></script>
+<script src="<?php echo Models::asset('assets/vendors/sticky/jquery.sticky.js') ?>"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
+<script src="<?php echo  Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
+<script src="<?php echo  Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
 	lazyLoadInstance.update()
 </script>

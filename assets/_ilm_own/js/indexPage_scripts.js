@@ -23,7 +23,7 @@ _ilm_home_page = {
 				$ChanceToShow: 2,
 			}
 		};
-		banner_slider = new $JssorSlider$("sliderb_container", banner_options);
+		//banner_slider = new $JssorSlider$("sliderb_container", banner_options);
 		
 		//Flash Sale/ Trending sliders
 		flash_trending_options = {

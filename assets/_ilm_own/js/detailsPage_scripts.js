@@ -9,7 +9,7 @@ _ilm_Details_page = {
 			autoplay:true
 		});
 		lazyLoadInstance.update();
-		$('span.stars').stars({starSize: 13});
+		$('span.stars').stars({starSize: 14});
 		
 		$(".cs-btn").on("click", function(){
 			var prid, colr;

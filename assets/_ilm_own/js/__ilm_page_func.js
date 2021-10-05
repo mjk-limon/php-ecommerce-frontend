@@ -61,17 +61,17 @@ $(document).ready(function() {
 			return;
 		
 		//if(st > lastScrollTop && st > navbarHeight){
-		if(st > navbarHeight) {
+		/* if(st > navbarHeight) {
 			$('body').addClass("fixed-menu-bar");
 			$(".deskv-hm-movable").detach().appendTo(".deskv-hb");
-			$('.sticky-wrapper, .site-branding-area').addClass("animated fadeInUp");
+			$('.site-branding-area').addClass("animated fadeInUp");
 		} else {
 			if(st + $(window).height() < $(document).height()) {
 				$('body').removeClass("fixed-menu-bar");
 				$(".deskv-hm-movable").detach().appendTo(".deskv-hm");
-				$('.sticky-wrapper, .site-branding-area').removeClass("animated fadeInUp");
-			}
-		}
+				$('.site-branding-area').removeClass("animated fadeInUp");
+			} 
+		} */
 		
 		lastScrollTop = st;
 	});

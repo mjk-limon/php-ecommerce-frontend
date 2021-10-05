@@ -1,0 +1,16 @@
+/**
+* jquery.smartSticky 2.6.1
+* https://github.com/oplaner4/jquery.smartSticky
+* by Ondrej Planer, oplaner4@gmail.com
+* 
+* This library requires jQuery.js
+* See the documentation before using this library please
+* jquery.smartSticky.js may be freely distributed under the MIT license.
+*
+* Copyright 2020, Ondrej Planer
+ * 
+ * 
+ * PRESERVE THIS PLEASE
+*/
+
+.sticky-smart{position:absolute}.sticky-smart-parent{position:relative}.sticky-smart.sticky-smart-active{z-index:1048;padding:.5rem 15px;-webkit-box-shadow:0 0 2rem rgba(0,0,0,.15);box-shadow:0 0 2rem rgba(0,0,0,.15);-webkit-transition:opacity .1s ease-in-out;-o-transition:opacity .1s ease-in-out;transition:opacity .1s ease-in-out;margin:0}.sticky-smart-placeholder,.sticky-smart.sticky-smart-active.sticky-smart-invisible{opacity:0;visibility:hidden}.sticky-smart.sticky-smart-active.sticky-smart-background{background-color:#fff}
