@@ -66,7 +66,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 						</div>
 					</div>
 
-					<div class="col-md-5 single-top-right">
+					<div class="col-md-4p5 col-md-4 single-top-right">
 						<div class="product-title">
 							<div class="pt-area">
 								<?php if (!$this->mobileView) : ?>
@@ -83,15 +83,16 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 							</div>
 						</div>
 
-						<!--div class="product-price">
+						<div class="product-price">
 							<p class="pr-price" data-dis="<?= $PrDetails->getDiscount() ?>">
+								Price:
 								<span><?= Models::curr($PrDetails->getPrice()) ?></span>
 
 								<?php if ($PrDetails->getDiscount()) : ?>
 									<span class="pre-price"><?= Models::curr($PrDetails->getPrice(0)) ?></span>
 								<?php endif; ?>
 							</p>
-						</div-->
+						</div>
 
 
 						<div class="product-buy-section">
@@ -99,9 +100,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 							$AvaClass = $PrDetails->getStock() ? '' : 'notava';
 							$Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
 							?>
-
-							<!--p class="pr-entl">Availability: <span class="entl-data ava <?= $AvaClass ?>"><?= $Availability ?></span></p>
-							<p class="pr-entl">Product Code: <span class="entl-data" id="tPrId"><?= $this->Prid ?></span></p-->
 
 							<div class="pr-size-color">
 								<?php
@@ -133,128 +131,124 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 								$Sizes = $PrDetails->getSizes();
 								if (array_filter($Sizes)) :
 								?>
-									<ul class="pr-sc-ul size-selection">
+									<!--ul class="pr-sc-ul size-selection">
 										<div>Select size:</div>
 
 										<?php foreach ($Sizes as $Size) : ?>
 											<li class="ss-btn"><?= $Size ?></li>
 										<?php endforeach; ?>
 
-									</ul>
+									</ul-->
 								<?php endif; ?>
 
 							</div>
-
-							<?php if (!$this->mobileView) : ?>
-								<div class="pr-buy-navs">
-									<ul class="qty-selection">
-										<div>Select Quantity:</div>
-										<li class="item_minus"><a href="javascript:;">-</a></li>
-										<li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-										<li class="item_plus"><a href="javascript:;">+</a></li>
-									</ul>
-
-									<div class="row">
-										<div class="col-md-7 col-xs-6">
-											<ul class="bnav-btns">
-												<em data-prid="<?= $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
-													<img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
-												</em>
-												<li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
-												<li class="quick-buy cAddBuyNav">Quick Buy</li>
-											</ul>
-
-											<p class="bnav-wishlist">Buy Later? <a href="javascript:;" class="cAddWishNav"><i class="fa fa-heart-o"></i> Add to wishlist</a></p>
-										</div>
-										<div class="col-md-5 col-xs-6">
-
-											<?php if (Models::getContactInformation('phone')) : ?>
-												<div class="callfororder">
-													<i class="fa fa-phone callicon" aria-hidden="true"></i>
-													<div class="callnumber">
-														<p class="pnormelad">Call for order</p>
-														<p class="pstrongad"><?= Models::getContactInformation('phone') ?></p>
-													</div>
-												</div>
-											<?php endif; ?>
-
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
-
 						</div>
-
-						<ul class="share">
-							<p class="shareli">
-								Share on:
-							</p>
-							<li>
-								<a href="https://www.facebook.com/sharer.php?u=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-facebook"></i></a>
-							</li>
-							<li>
-								<a href="http://twitter.com/share?text=<?= urlencode(COMPANY_NAME) ?>+Product&url=<?= urlencode($SelfUrl); ?>&hashtags=<?= urlencode(COMPANY_NAME) ?>,Ecommerce,Products,<?= urlencode($this->Mainc); ?>" target="_blank"><i class="fa fa-twitter"></i></a>
-							</li>
-							<li>
-								<a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode($SelfUrl); ?>&title=<?= urlencode(COMPANY_NAME) ?>+Products&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
-							</li>
-							<li>
-								<a href="https://pinterest.com/pin/create/button/?url=<?= urlencode($SelfUrl); ?>&media=<?= urlencode(Models::baseUrl("proimg/" . $this->Prid . "/thumb.jpg")); ?>&description=" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-							</li>
-
-							<?php if ($this->mobileView) : ?>
-								<li>
-									<a class="noRoute" href="whatsapp://send?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
-								</li>
-							<?php else : ?>
-								<li>
-									<a href="https://wa.me/?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
-								</li>
-							<?php endif; ?>
-						</ul>
 					</div>
 
-					<div class="col-md-2 details-top-right hidden-xs">
-						<div class="section-mb bg-main">
+					<div class="col-md-2p5 col-md-3 details-top-right hidden-xs">
+						<div class="section-mb">
+							<div class="dtr-pr-buy">
+								<p class="pr-price" data-dis="<?= $PrDetails->getDiscount() ?>">
+									<span><?= Models::curr($PrDetails->getPrice()) ?></span>
+								</p>
 
-							<div class="pr-glancebox">
-								<div class="gb-title">Total Stock</div>
-								<h3 class="gb-val" id="tStock"><?= $PrDetails->getStock(); ?></h3>
-							</div>
-							<div class="pr-glancebox">
-								<div class="gb-title">Total Views</div>
-								<h3 class="gb-val"><?= $PrDetails->getTotalViews(); ?></h3>
-							</div>
-							<div class="pr-glancebox">
-								<div class="gb-title">Delivery Info</div>
-								<ul>
+								<div class="pr-glancebox">
+									<div class="gb-title">Delivery Info</div>
+									<ul>
+										<li style="padding-bottom: 0;">
+											<div class="gb-col-groups">
+												<i class="fa fa-truck"></i>
+												<span><strong>Fastest delivery.</strong> Type your location to get available shipping methods.</span>
+											</div>
+											<div class="gb-full">
+												<form id="checkDeliveryCost" action="" method="POST">
+													<input type="hidden" name="get_delivery_methods">
+													<div class="inline-form">
+														<input type="text" name="loc" placeholder="Enter you location" required="">
+														<button class="">Check</button>
+													</div>
+												</form>
+											</div>
+										</li>
+									</ul>
+								</div>
+
+								<p class="pr-entl">
+									<span class="entl-data ava <?= $AvaClass ?>" style="font-size:2.1rem;font-weight:normal;">
+										<?= $Availability ?>
+									</span>
+								</p>
+
+								<?php if (!$this->mobileView) : ?>
+									<div class="pr-buy-navs">
+										<div class="qty-selection">
+											<div>Quantity:</div>
+											<select>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12 col-xs-12">
+												<ul class="bnav-btns">
+													<em data-prid="<?= $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
+														<img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
+													</em>
+													<li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
+													<li class="quick-buy cAddBuyNav">Quick Buy</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<div class="pr-glancebox">
+									<ul>
+										<li>
+											<div class="gb-col-groups">
+												<i class="fa fa-lock"></i>
+												<span>Payment Security Guranteed.</span>
+											</div>
+										</li>
+										<li>
+											<div class="gb-col-groups">
+												<i class="fa fa-undo"></i>
+												<span>Free and Easy Return Policy.</span>
+											</div>
+										</li>
+									</ul>
+								</div>
+
+								<p class="bnav-wishlist">Buy Later? <a href="javascript:;" class="cAddWishNav"><i class="fa fa-heart-o"></i> Add to wishlist</a></p>
+
+								<ul class="share">
+									<p class="shareli">Share</p>
 									<li>
-										<div class="gb-col-groups">
-											<i class="fa fa-truck"></i>
-											<span><strong>Fastest delivery.</strong> Type your location to get available shipping methods.</span>
-										</div>
-										<div class="gb-full">
-											<form id="checkDeliveryCost" action="" method="POST">
-												<input type="hidden" name="get_delivery_methods" />
-												<div class="inline-form">
-													<input type="text" name="loc" placeholder="Enter you location" required />
-													<button class="">Check</button>
-												</div>
-											</form>
-										</div>
+										<a href="https://www.facebook.com/sharer.php?u=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-facebook"></i></a>
 									</li>
 									<li>
-										<div class="gb-col-groups">
-											<i class="fa fa-lock"></i>
-											<span>Payment Security Guranteed.</span>
-										</div>
+										<a href="http://twitter.com/share?text=<?= urlencode(COMPANY_NAME) ?>+Product&url=<?= urlencode($SelfUrl); ?>&hashtags=<?= urlencode(COMPANY_NAME) ?>,Ecommerce,Products,<?= urlencode($this->Mainc); ?>" target="_blank"><i class="fa fa-twitter"></i></a>
 									</li>
 									<li>
-										<div class="gb-col-groups">
-											<i class="fa fa-undo"></i>
-											<span>Free and Easy Return Policy.</span>
-										</div>
+										<a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode($SelfUrl); ?>&title=<?= urlencode(COMPANY_NAME) ?>+Products&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
 									</li>
+									<li>
+										<a href="https://pinterest.com/pin/create/button/?url=<?= urlencode($SelfUrl); ?>&media=<?= urlencode(Models::baseUrl("proimg/" . $this->Prid . "/thumb.jpg")); ?>&description=" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+									</li>
+
+									<?php if ($this->mobileView) : ?>
+										<li>
+											<a class="noRoute" href="whatsapp://send?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
+										</li>
+									<?php else : ?>
+										<li>
+											<a href="https://wa.me/?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
+										</li>
+									<?php endif; ?>
 								</ul>
 							</div>
 						</div>
@@ -265,92 +259,70 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 	</div>
 </section>
 
-<section class="main-body">
+<section class="main-body bg-white">
 	<div class="spd">
 		<div class="container">
-			<div class="section-mb details-page-bottom">
-				<h4 class="discription-review-title">
-					<span><a href="javascript:;" data-target="#pr-dis" data-toggle="DRtab" class="active true">Product Full Description</a></span>
-					<span>|</span>
-					<span><a href="javascript:;" id="DRRvwBtn" data-target="#pr-rvw" class="true" data-toggle="DRtab">Ratings &amp; Reviews</a></span>
-				</h4>
-				<div class="discription-review-body">
-					<div id="pr-dis"><?= $PrDetails->getDescription(); ?></div>
-					<div id="pr-rvw" style="display:none">
-						<div class="row">
+			<div class="section-mb">
+				<div class="product-page-products related-product">
+					<h4>Related items to explore</h4>
+					<div class="grid-row">
 
-							<?php if (!$ratClass) : ?>
-								<div class="col-md-4 col-xs-12">
-									<h4>Product Rating</h4>
-									<div class="row ratings">
-										<div class="col-md-4 col-xs-5 rating-review text-center">
-											<h1><?= $PrDetails->getRating("r_r") ?></h1>
-											<h4>/5</h4>
-											<span class="stars"><?= $PrDetails->getRating("r_r") ?></span>
-											<p><small><em>(Total Ratings: <?= $PrDetails->getRating("r_t") ?>)</em></small></p>
-										</div>
-										<div class="col-md-8 col-xs-7 user-rating">
-
-											<?php
-											for ($RI = 5; $RI > 0; $RI--) :
-												$BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
-											?>
-												<div class="row-rat">
-													<?= $RI ?> Star
-													<span class="rating-progress">
-														<span style="width:<?= $BarWidth ?>%"></span>
-													</span>
-												</div>
-											<?php endfor; ?>
-
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
-
-							<div class="col-md-8 col-xs-12">
-								<h4>Reviews</h4>
-								<div class="user-review-section _nrp">
-									<div id="rv-main-area" class="_nrt">
-										<?php include "layouts/details-page-reviews.php"; ?>
-									</div>
-									<div class="new-qus-reply">
-
-										<?php if ($this->UserData) : ?>
-											<form class="replyRvwForm" action="" method="POST">
-												<input type="hidden" name="name" value="<?= $this->UserData->getFullName() ?>" />
-												<input type="hidden" name="email" value="<?= $this->UserData->getUserName() ?>" />
-												<input type="hidden" name="prid" value="<?= $this->Prid ?>" />
-												<input type="hidden" name="reply_product_rvw" />
-												<input type="hidden" name="rtp" value="rvw" />
-
-												<div class="user-star-rating">
-													<h5>Your Rating:</h5>
-													<div class="us-rating">
-														<!--
-														--><input name="rating" id="e5" type="radio" value="05"><label for="e5">&star;</label>
-														<!--
-														--><input name="rating" id="e4" type="radio" value="04"><label for="e4">&star;</label>
-														<!--
-														--><input name="rating" id="e3" type="radio" value="03"><label for="e3">&star;</label>
-														<!--
-														--><input name="rating" id="e2" type="radio" value="02"><label for="e2">&star;</label>
-														<!--
-														--><input name="rating" id="e1" type="radio" value="01"><label for="e1">&star;</label>
-													</div>
-												</div>
-												<div class="inline-form">
-													<textarea type="text" name="message" placeholder="Write a review..." required=""></textarea>
-													<button class="">Submit</button>
-												</div>
-											</form>
-										<?php else : ?>
-											<p>Please <a href="/login/?ref=p.03">Login</a> to write a review.</p>
+						<?php
+						$sp = $this->SingleProduct;
+						$Suggestions = $this->ProductSuggestion;
+						while ($Rpr = $Suggestions->fetch_array()) :
+							$sp->setPrInfo($Rpr);
+							$sp->processDiscount();
+							$sp->processStock();
+						?>
+							<div class="grids">
+								<div class="single-product <?= $spAddClass ?>">
+									<div class="sp-image">
+										<?php if ($sp->getDiscount()) : ?>
+											<span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
 										<?php endif; ?>
-
+										<a href="<?= $sp->getHref() ?>">
+											<img src="<?= $sp->getProductImage() ?>" />
+										</a>
+									</div>
+									<div class="sp-pr">
+										<div class="sp-pr-info">
+											<a href="<?= $sp->getHref() ?>">
+												<h5><?= $sp->getName() ?></h5>
+											</a>
+											<div style="margin-bottom:.5rem;">
+												<span class="stars" style="margin:0"><?php echo rand(30, 50) / 10 ?></span>
+												14
+											</div>
+											<p>
+												<strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
+												<?php if ($sp->getDiscount()) : ?>
+													<strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
+												<?php endif; ?>
+											</p>
+										</div>
 									</div>
 								</div>
 							</div>
+						<?php
+						endwhile;
+						$Suggestions->free();
+						?>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="spd">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-mb details-page-bottom">
+						<h4 class="discription-review-title">Product Manuals</h4>
+						<div class="discription-review-body">
+							<?php echo $PrDetails->getDescription(); ?>
 						</div>
 					</div>
 				</div>
@@ -364,7 +336,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 				<div class="row">
 					<div class="col-md-8">
 						<div class="section-mb details-page-bottom" id="Rating">
-							<h4 class="discription-review-title">Product Questions</h4>
+							<h4 class="discription-review-title">Customer Question &amp; Answers</h4>
 							<div class="discription-review-body">
 								<div class="question-top _nrp">
 									<div id="rv-qus-area" class="_nrt">
@@ -413,13 +385,96 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
 	<div class="spd">
 		<div class="container">
+			<div class="row">
+
+				<?php if (!$ratClass) : ?>
+					<div class="col-md-4 col-xs-12">
+						<div class="section-mb details-page-bottom">
+							<h4 class="discription-review-title">Customer Reviews</h4>
+						</div>
+						<div class="row ratings">
+							<div class="col-md-4 col-xs-5 rating-review text-center">
+								<h1><?= $PrDetails->getRating("r_r") ?></h1>
+								<h4>/5</h4>
+								<span class="stars"><?= $PrDetails->getRating("r_r") ?></span>
+								<p><small><em>(Total Ratings: <?= $PrDetails->getRating("r_t") ?>)</em></small></p>
+							</div>
+							<div class="col-md-8 col-xs-7 user-rating">
+
+								<?php
+								for ($RI = 5; $RI > 0; $RI--) :
+									$BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
+								?>
+									<div class="row-rat">
+										<?= $RI ?> Star
+										<span class="rating-progress">
+											<span style="width:<?= $BarWidth ?>%"></span>
+										</span>
+									</div>
+								<?php endfor; ?>
+
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
+
+				<div class="col-md-8 col-xs-12">
+					<h4>Reviews</h4>
+					<div class="user-review-section _nrp">
+						<div id="rv-main-area" class="_nrt">
+							<?php include "layouts/details-page-reviews.php"; ?>
+						</div>
+						<div class="new-qus-reply">
+
+							<?php if ($this->UserData) : ?>
+								<form class="replyRvwForm" action="" method="POST">
+									<input type="hidden" name="name" value="<?= $this->UserData->getFullName() ?>" />
+									<input type="hidden" name="email" value="<?= $this->UserData->getUserName() ?>" />
+									<input type="hidden" name="prid" value="<?= $this->Prid ?>" />
+									<input type="hidden" name="reply_product_rvw" />
+									<input type="hidden" name="rtp" value="rvw" />
+
+									<div class="user-star-rating">
+										<h5>Your Rating:</h5>
+										<div class="us-rating">
+											<!--
+											--><input name="rating" id="e5" type="radio" value="05"><label for="e5">&star;</label>
+											<!--
+											--><input name="rating" id="e4" type="radio" value="04"><label for="e4">&star;</label>
+											<!--
+											--><input name="rating" id="e3" type="radio" value="03"><label for="e3">&star;</label>
+											<!--
+											--><input name="rating" id="e2" type="radio" value="02"><label for="e2">&star;</label>
+											<!--
+											--><input name="rating" id="e1" type="radio" value="01"><label for="e1">&star;</label>
+										</div>
+									</div>
+									<div class="inline-form">
+										<textarea type="text" name="message" placeholder="Write a review..." required=""></textarea>
+										<button class="">Submit</button>
+									</div>
+								</form>
+							<?php else : ?>
+								<p>Please <a href="/login/?ref=p.03">Login</a> to write a review.</p>
+							<?php endif; ?>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="spd" style="padding-bottom: 1.5rem;margin-bottom: 0;">
+		<div class="container">
 			<div class="section-mb">
-				<div class="product-page-products">
-					<h4>Related Products</h4>
+				<div class="product-page-products related-product">
+					<h4>Recommended based on your shopping trends</h4>
 					<div class="grid-row">
+
 						<?php
 						$sp = $this->SingleProduct;
-						$Suggestions = $this->ProductSuggestion;
+						$Suggestions = $this->ProductSuggestion2;
 						while ($Rpr = $Suggestions->fetch_array()) :
 							$sp->setPrInfo($Rpr);
 							$sp->processDiscount();
@@ -435,24 +490,20 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 											<img src="<?= $sp->getProductImage() ?>" />
 										</a>
 									</div>
-									<div class="has-sp-nav">
-										<div class="sp-pr">
-											<div class="sp-pr-info">
-												<a href="<?= $sp->getHref() ?>">
-													<h5><?= $sp->getName() ?></h5>
-												</a>
-												<p>
-													<strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
-													<?php if ($sp->getDiscount()) : ?>
-														<strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
-													<?php endif; ?>
-												</p>
+									<div class="sp-pr">
+										<div class="sp-pr-info">
+											<a href="<?= $sp->getHref() ?>">
+												<h5><?= $sp->getName() ?></h5>
+											</a>
+											<div style="margin-bottom:.5rem;">
+												<span class="stars" style="margin:0"><?php echo rand(30, 50) / 10 ?></span>
 											</div>
-										</div>
-										<div class="sp-nav">
-											<em data-prid="<?= $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
-											<a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-											<a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+											<p>
+												<strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
+												<?php if ($sp->getDiscount()) : ?>
+													<strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
+												<?php endif; ?>
+											</p>
 										</div>
 									</div>
 								</div>
