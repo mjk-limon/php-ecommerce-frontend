@@ -173,7 +173,7 @@ if (isset($_GET['pdf'])) {
                                     foreach ($OdredProducts as $i => $Prs) :
                                         $Sp->setPrId($Prs['p']);
                                         $Sp->processDiscount();
-                                        $Sp->processStock($Prs["s"], $Prs["c"]); 
+                                        $Sp->processStock($Prs["s"], $Prs["c"]);
                                     ?>
                                         <tr style="border-bottom:1px solid #ccc;color:#333;font-weight:500">
                                             <td style="padding:10px;vertical-align:middle"><?php echo $i + 1 ?></td>
@@ -183,7 +183,7 @@ if (isset($_GET['pdf'])) {
                                                 </p>
                                                 <p class="ipnaid" style="margin:0 0 3px 0;font-size:11px;color:#333;text-align:left;margin-bottom:0">
                                                     ID: <?php echo $Sp->getProductId() ?>
-                                                    <?php 
+                                                    <?php
                                                     if ($Prs["s"]) {
                                                         echo ', Size: ' . $Prs["s"];
                                                     }
@@ -242,12 +242,21 @@ if (isset($_GET['pdf'])) {
                             <div class="payment-info" style="color:#888;font-size:12px;margin-top:20px;width:100%;font-weight:400">
                                 <p style="margin:0 0 3px 0">
                                     Payment Type: <?php echo $OrderInfo->getPaymentType() ?>
+
                                     <?php if ($CouponDiscount) : ?>
                                         , Used coupon: <?php echo $CpInfo->getCouponCode() ?>
                                     <?php endif; ?>
+
                                 </p>
                                 <p style="margin:0 0 3px 0">Payment TrxnId: <?php echo $OrderInfo->getPaymentTrxnId() ?></p>
                                 <img style="width:400px;height:60px" src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t=' . urlencode(base64_encode($OrderInfo->getPaymentTrxnId())) ?>" alt="<?php echo $OrderInfo->getPaymentTrxnId()  ?>" />
+                                <p>
+                                    Your complete satisfaction<br />
+                                    We want to make sure that your are completely satisfied with <?php echo COMPANY_NAME ?>.<br />
+                                    Delivery: If for any reason you are not, then please advise the Customer Services Team Member at the door and they will ensure that any issues will be resolve for you.<br />
+                                    If there are any questions you'd like to ask, either about your order or any aspect of the <?php echo COMPANY_NAME ?> service,
+                                    Please call us on <?php echo Models::getContactInformation('mobile1') ?>, or e-mail us at <?php echo Models::getContactInformation('email') ?>. We are open seven days a week.
+                                </p>
                             </div>
                         </div>
                     </div>
