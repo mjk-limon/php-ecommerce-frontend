@@ -6,83 +6,84 @@ $OrderHistory = $UserInfo->getOrderHistory();
 ?>
 
 <?php if ($OrderHistory->num_rows) : ?>
-	<div class="order-history">
-		<h3>My Order History</h3>
+    <div class="order-history">
+        <h3>My Order History</h3>
 
-	<?php
-	while ($ROH = $OrderHistory->fetch_assoc()) :
-		$OdrInfo->setOrderId($ROH['order_no']);
-	?>
-		<div class="tlist-single">
-			<div class="orderHistory-title">
-				<h5>Order No: #<?= $OdrInfo->getOrderId() ?></h5>
-				<p>Ordering Date: <?= date("F j, Y", strtotime($OdrInfo->getOrderDate())) ?></p>
-				<p>
-					Status: <span class="label label-info"><?= $OdrInfo->writeOrderStatus() ?></span>
-					
-				<?php if ($OdrInfo->getOrderStatus() == '1') : ?>
-					<a href="?update=1&id=<?= $OdrInfo->getOrderId() ?>&value=3">Cancel Order</a>
-				<?php elseif ($OdrInfo->getOrderStatus() == '5') : ?>
-					<a href="?update=1&id=<?= $OdrInfo->getOrderId() ?>&value=0">Order Again</a>
-				<?php endif; ?>
+        <?php
+        while ($ROH = $OrderHistory->fetch_assoc()) :
+            $OdrInfo->setOrderId($ROH['order_no']);
+        ?>
+            <div class="tlist-single">
+                <div class="orderHistory-title">
+                    <h5>Order No: #<?php echo $OdrInfo->getOrderId() ?></h5>
+                    <p>Ordering Date: <?php echo date("F j, Y", strtotime($OdrInfo->getOrderDate())) ?></p>
+                    <p>
+                        Status: <span class="label label-info"><?php echo $OdrInfo->writeOrderStatus() ?></span>
 
-				</p>
-			</div>
+                        <?php if ($OdrInfo->getOrderStatus() == '1') : ?>
+                            <a href="?update=1&id=<?php echo $OdrInfo->getOrderId() ?>&value=3">Cancel Order</a>
+                        <?php elseif ($OdrInfo->getOrderStatus() == '5') : ?>
+                            <a href="?update=1&id=<?php echo $OdrInfo->getOrderId() ?>&value=0">Order Again</a>
+                        <?php endif; ?>
 
-			<table class="table orderHistory-table">
-				<thead>
-					<tr class="info">
-						<th>Product Info</th>
-						<th>Quantity</th>
-						<th>Total</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
+                    </p>
+                </div>
 
-				<?php
-				$OdrPrs = $OdrInfo->getOrderedProducts();
-				foreach ($OdrPrs as $Prs) :
-					$PrInfo->setPrid($Prs['p']);
+                <table class="table orderHistory-table">
+                    <thead>
+                        <tr class="info">
+                            <th>Product Info</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-					if (!$PrInfo->checkProduct()) continue;
+                        <?php
+                        $OdrPrs = $OdrInfo->getOrderedProducts();
+                        foreach ($OdrPrs as $Prs) :
+                            $PrInfo->setPrid($Prs['p']);
 
-					$PrInfo->processDiscount($Prs['q']);
-					$PrInfo->processStock($Prs['s'], $Prs['c']);
+                            if (!$PrInfo->checkProduct()) {
+                                continue;
+                            }
 
-				?>
-					<tr>
-						<td class="tlist-fullinfo">
-							<div class="tl-img" style="--tlwdth:60px;background-image: url('<?= $PrInfo->getProductImage() ?>')"></div>
-							<div class="tl-area" style="--tlwdth:60px">
-								<?= $PrInfo->getName() ?>
-								<div class="tl-data">
-									Size: <?= $Prs['s'] ?: 'N/a' ?>,
-									Color: <?= $Prs['c'] ?: 'N/a' ?>
-								</div>
-							</div>
-						</td>
-						<td><?= $Prs['q'] ?></td>
-						<td><?= Models::curr($PrInfo->getPrice($PrInfo->getDiscount())) ?></td>
-						<td><a href="<?= $PrInfo->getHref() ?>">Details</a></td>
-					</tr>
-				<?php endforeach; ?>
-				
-				</tbody>
-			</table>
-		</div>
-	<?php endwhile; ?>
+                            $PrInfo->processDiscount($Prs['q']);
+                            $PrInfo->processStock($Prs['s'], $Prs['c']);
+                        ?>
+                            <tr>
+                                <td class="tlist-fullinfo">
+                                    <div class="tl-img" style="--tlwdth:60px;background-image: url('<?php echo $PrInfo->getProductImage() ?>')"></div>
+                                    <div class="tl-area" style="--tlwdth:60px">
+                                        <?php echo $PrInfo->getName() ?>
+                                        <div class="tl-data">
+                                            Size: <?php echo $Prs['s'] ?: 'N/a' ?>,
+                                            Color: <?php echo $Prs['c'] ?: 'N/a' ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><?php echo $Prs['q'] ?></td>
+                                <td><?php echo Models::curr($PrInfo->getPrice($PrInfo->getDiscount())) ?></td>
+                                <td><a href="<?php echo $PrInfo->getHref() ?>">Details</a></td>
+                            </tr>
+                        <?php endforeach; ?>
 
-	</div>
+                    </tbody>
+                </table>
+            </div>
+        <?php endwhile; ?>
+
+    </div>
 <?php else : ?>
-	<div class="no-products">
-		<h4> Order History Is Empty ! </h4>
-		<ul>
-			<li>You have no product in your order history </li>
-			<li>Please go back. And order first</li>
-			<li>For any help, Please contact our help center</li>
-		</ul>
-	</div>
+    <div class="no-products">
+        <h4> Order History Is Empty ! </h4>
+        <ul>
+            <li>You have no product in your order history </li>
+            <li>Please go back. And order first</li>
+            <li>For any help, Please contact our help center</li>
+        </ul>
+    </div>
 <?php
 endif;
 $OrderHistory->free();
