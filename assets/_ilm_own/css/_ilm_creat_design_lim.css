@@ -1,9 +1,9 @@
 /*==========
-	Author: Md Jahid Khan Limon
-	Mobile: 01956758055
-	Facebook: @mjk.limon
+Author: Md Jahid Khan Limon
+Dhaka Solution
+Facebook: @mjk.limon
 */
-/*-- Page Alert --*/
+
 /*======== Page Alert =======*/
 body .page-alert{display:none;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999999;position:fixed}
 body .page-alert img.loading{max-width:110px;display:block;margin-left:auto;margin-right:auto}

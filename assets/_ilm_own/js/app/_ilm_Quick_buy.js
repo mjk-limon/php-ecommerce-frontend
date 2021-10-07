@@ -139,7 +139,7 @@ _ilm_Quick_buy = {
                                             aprstotal = aprstotaltext.match(floatRegex).map(function (v) { return parseFloat(v); }),
                                             dcosttext = $(data.selectedItem[0]).find(".dd-desc span").text(),
                                             dcost = dcosttext.match(floatRegex).map(function (v) { return parseFloat(v); });
-    
+
                                         $('.dcosttotal').text(dcosttext);
                                         $('.aprdcostsubtotal').text(Number(aprstotal) + Number(dcost));
                                     }
