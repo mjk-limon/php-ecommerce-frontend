@@ -165,18 +165,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                 <li class="dropdown ht-top-shortcut">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-right animated slideDown">
-                                        <li>
-                                            <a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
-                                            <ul class="collapse" id="ht-currency">
-                                                <li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-                                                <li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
-                                                <li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
-                                                <li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
-                                            </ul>
-                                        </li>
-
                                         <?php if (!$this->UserData) : ?>
-                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Registration</a></li>
                                             <li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
                                         <?php else : ?>
                                             <li><a href="/my-account/?c=90.04">Notifications (<?= $this->NotificationBadge ?>)</a></li>
