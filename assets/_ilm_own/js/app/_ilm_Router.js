@@ -46,18 +46,27 @@ _ilm_Router = {
 
 	showSkeleton: function ($elem) {
 		$.ilmScroll('body');
-		$elem.addClass("skeleton").html("");
+
+		if ($elem.attr("id") == 'skmbcontent') {
+			$('#skeletenLoadActivity').addClass('showactivity');
+			return;
+		}
+		$elem.addClass("skeleton");
 	},
 
 	dataLoadSkeleton: function (result, $elem) {
+		if ($elem.attr("id") == 'skmbcontent') {
+			$('#skeletenLoadActivity').removeClass('showactivity');
+		} else {
+			$elem.removeClass("skeleton").hide();
+		}
+		
 		if (typeof result.error === 'undefined') {
 			_ilm_Router.loadHeadData(result);
 
-			$elem.removeClass("skeleton").hide();
 			$elem.fadeIn().html(result.content);
 		} else {
 			//_ilm.showNotification(result.error, true);
-			$elem.removeClass("skeleton").hide();
 			$elem.fadeIn().html("<center><h3>Internal Server error</h3></center>");
 			$elem.fadeIn().html(result.error);
 		}

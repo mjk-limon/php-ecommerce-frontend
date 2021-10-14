@@ -23,23 +23,34 @@
 	.floatingNotification{max-width:inherit;width:90%;left:5%}
 	.main-body, .main-body.bg-white{padding:1.5rem 0}
 	.main-body .spd{margin:1rem 0}
-	#skbc-top-margin{height:100px}
+	#skmbcontent{padding-left:0;padding-top:calc(95px + 1rem)}
 	#skmbcategories, #skmbcart{animation:fadeInLeft .4s}
 	a#scrollUp{bottom:80px}
+	.linear-activity{height:4px;top:calc(95px + 1rem);left:0;width:100%;}
 	
 	/* ==========================
 	 Header 
 	================*/
-	.logo-cols{flex:1}
-	.logo img{max-height:65px;width:100%;max-width:none;height:auto}
+	header{height:calc(95px + 1rem)}
+	.logo-cols{flex:2}
+	.head-right-col_{flex:1}
+	.logo .menu-toggle-btn, .logo > a{display:inline-block;vertical-align:middle}
+	.menu-toggle-btn > span{display:block;width:28px;height:2px;background-color:#444;margin-bottom:7px}
+	.menu-toggle-btn > span:nth-child(2){width:24px}
+	.logo img{max-height:45px;width:100%;max-width:none;height:auto}
 	.head-right-col{flex:2;padding-left:15px}
-	ul.ht-right{padding-left: 15px;margin:0;display:table;width:100%;height:100%}
+	ul.ht-right{padding-left: 15px;margin:0;display:table;width:100%;height:100%;text-align:right}
 	ul.ht-right > li{display:table-cell;vertical-align:middle}
+	ul.ht-right > li.cart{text-align:right;padding:5px 10px;background-color:#df0000;color:#fff;font-size:15px}
 	ul.ht-right .ht-top-shortcut .dropdown-toggle{display: block;padding: 0 15px;}
 	ul.ht-right .ht-top-shortcut .dropdown-menu{border-radius:0;border:0;top:80%;box-shadow:-1px 2px 3px -1px #7f7f7f}
-	.m-ht-search{width:100%;border:0;outline:none;padding:5px 10px;background:#f5f5f5}
+	.m-ht-search{width:100%;border:0;outline:none;padding:10px 15px;background:#f5f5f5;margin-bottom:10px;border-radius:5px;}
 	.m-ht-threshold{display:block;padding:5px 15px;}
 	
+	.site-nav-area{transition:left .4s cubic-bezier(.08,.82,.17,1);left:-300px;}
+	.site-nav-area.open{left:0;}
+
+
 	.mainmenu-area1{border-top:0}
 	.m-hb-grid{text-align:center;color:#aaa;padding:6px 0 4px;font-size:12px}
 	.m-hb-grid.active{color:var(--accent)}
@@ -58,7 +69,7 @@
 	.mainmenu ul li a span img{width:25px}
 	.mainmenu ul li a i{float:right}
 	.mainmenu ul.sub-menu {position:static;width:100%;box-shadow:none}
-	.navbar-nav li ul.sub-menu li a{padding:3px}
+	.navbar-nav li ul.sub-menu li a{padding:3px 15px}
 	.sub-menu > .sub-cols.view-all > a{padding-left:5px;color:var(--accent)}
 	.mainmenu ul.sub-menu a i{float:none}
 	
@@ -74,13 +85,16 @@
 	/* ==========================
 	 Homepage
 	================*/
+	.home-product-categories .products{margin-left:-5px;margin-right:-5px;}
+	.home-product-categories .products > .product-category{padding-left:5px;padding-right:5px;}
+	ul.products.columns-5 > .product{flex:0 0 33.333333%;max-width:33.333333%}
 	.tc-list .tc-single{min-width:75px;padding:.5rem}
 	.tc-single .tc-single-title{font-size:12px}
 	.tc-list .tc-single:first-child h2, .tc-list .tc-single:first-child h4{font-size:13px}
 	
 	.ft-title{border-bottom:5px solid #f5f5f5}
 	.ft-pr-mbl{flex-wrap:wrap}
-	.grid-row, .grid-row.grid4{grid-template-columns:repeat(2, 1fr)}
+	.grid-row, .grid-row.grid4, .grid-row.grid5{grid-template-columns:repeat(2, 1fr)}
 	.grid-row .grids.large-grid{height:400px}
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.ft-pr-mbl .single-product{position:relative;width:50%;padding:1rem 10px;border-right:5px solid #f6f6f6;border-bottom:5px solid #f5f5f5}
@@ -97,7 +111,7 @@
 	.tt-filter .ttf-single .ttf-close, .scb-cart-area .rmv-crt-btn{text-shadow:none;display:inline-block;width:20px;height:20px;border-radius:50%;background:#e44;color:#fff;text-align:center;padding:0;margin-left:3px;font-size:14px}
 	
 	.mb-floating-filter-btns{position:fixed;bottom:0;left:0;width:100%;z-index:1000;box-shadow:0 -1px 2px #e1e1e1}
-	.mb-floating-filter-btns li{width:50%;display:inline-block;list-style-type:none;text-align:center;border-right:1px solid #e1e1e1}
+	.mb-floating-filter-btns li{width:49%;display:inline-block;list-style-type:none;text-align:center;border-right:1px solid #e1e1e1}
 	.mb-floating-filter-btns li:last-child{border-right:0}
 	.mb-floating-filter-btns li a{padding:8px 0;display:block;background:#fff;font-weight:300;font-size:16px}
 	.mb-floating-filter-btns li a i{margin-right:7px;font-size:13px;color:#888}
@@ -118,8 +132,10 @@
 	
 	.empty-product-page > h4{font-size:1.7rem}
 	.grid-row .grids{padding:1rem}
-	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:250px}
-	.sp-image{height:70%}
+	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:300px}
+	.sp-image{height:55%}
+	.sp-pr-info p{font-size:14px;}
+	.sp-pr-info .p-old{margin-left: 0;}
 	
 	
 	/* ==========================
@@ -142,8 +158,8 @@
 	 Cart, Floating Cart, Checkout,
 	 Login/Registration, My account
 	================*/
-	.sc-body-top {padding:2rem 1rem 0;background:transparent;color:#333}
-	.fsc-content {height:calc(100vh - 170px)}
+	.sc-body-top {padding:2rem 1rem 0;color:#333}
+	.floating-sc .sc-body {width:100vw}
 	.table.fc-table > tbody > tr > td{vertical-align:top}
 	.coupon-area{width:100%}
 	
@@ -180,6 +196,8 @@
 	/* ==========================
 	 Footer
 	================*/
+	#footer{padding-left:0}
+	.footer-widget .col-md-2p5{width:50%}
 	.single-widget h2{font-size:15px}
 	.social-icons ul li a i{width:25px;height:auto;padding:5px;font-size:14px}
 	.searchform input{max-width:70%}

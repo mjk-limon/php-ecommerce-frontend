@@ -38,7 +38,8 @@ body .page-alert .alertClose{position:absolute;top:5px;right:5px;font-size:20px;
 .limlog-form input[type="text"],.limlog-form input[type="password"]{outline:0;padding:12px 15px;border:1px solid #000;width:100%;letter-spacing:1px;box-sizing:border-box}
 .limon-login .wrapper > h2{text-align:center;margin-bottom:30px;text-transform:uppercase;font-size:26px;color:#13caca;font-weight:600;letter-spacing:2px}
 a.pass{font-size:13px;color:#ef4242;font-family:'Open Sans',sans-serif;letter-spacing:2px;display:block;text-align:right;margin:15px 0}
-a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Open Sans',sans-serif}
+a.newacc, a.swaplogin{display:block;margin:2px 0;font-size:15px;text-align:left!important;color:#0469a7;font-family:'Open Sans',sans-serif}
+a.swaplogin{color:#333}
 
 .limlog-form{display:block;width:95%;margin:auto}
 .limlog-form label,.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form button{display:block;font-family:'Open Sans',sans-serif}
@@ -71,6 +72,8 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .nav-btn.previous{background:#888;}
 
 .checkout-login{margin:0}
+#checkout .opt-login-form ._ilmForm{margin-top:1.5rem;margin-bottom:3rem}
+#checkout .email-login-form{display:none}
 #checkout .limlog-form{width:100%}
 #checkout .limlog-form label{color:#333;font-weight:500;text-transform:none;letter-spacing:1.2px}
 #checkout .limlog-form textarea{width:100%;min-height:100px;resize:none}
@@ -78,7 +81,7 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 #checkout .login-success .limlog-form input[disabled],
 #checkout .login-success .limlog-form textarea[disabled],
 #checkout .login-success .limlog-form input[readonly],
-#checkout .login-success .limlog-form textarea[readonly]{border:0;background:#fff;padding:0;font:inherit;letter-spacing:inherit;min-height:inherit}
+#checkout .login-success .limlog-form textarea[readonly]{border:0;background:#fafafa;padding:0;font:inherit;letter-spacing:inherit;min-height:inherit}
 
 #quickbuy-form .modal-grid > h4{margin-bottom:1em}
 #quickbuy-form .modal-grid.second-grid{border-left:1px dashed #aaa;margin-left:-1px}
@@ -103,10 +106,15 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .logged-in .login-check{position:absolute;right:-1px;top:-1px;width:20px;text-align:center;background:#90ee90}
 .logged-in .login-check .fa{color:#fff}
 .logged-in h3{font-size:16px;margin-bottom:10px}
+.logged-in .logged-in-userdata{padding:10px;margin-bottom:10px;background-color:#fafafa;box-shadow:0px 0px 3px #c6c6c6}
 .logged-in table{width:100%;font-size:12px;color:#888}
 .logged-in table tr td{padding:5px 10px;vertical-align:top}
 .logged-in table tr td a{color:#337ab7}
-.logged-in #orderLoc{display:none}
+.logged-in .logged-in-userdata .editinfo, .logged-in .logged-in-userdata.editing .saveinfo{display:inline-block;}
+.logged-in .logged-in-userdata.editing .editinfo, .logged-in .logged-in-userdata .saveinfo{display:none;}
+.logged-in .loggedindatanav a{display:block;margin:3px 0;font-size:13.5px;}
+.logged-in .logged-in-userdata:not(.editing) .hideonnoedit{display:none}
+.logged-in.noAddress .nav-invoker, .logged-in.noAddress .shippingIdCont{display:none}
 
 #co-order-summery .order-summery .flex{display:flex;flex-wrap:wrap}
 .order-summery .order-summery-tab-1{flex:1;text-align:center}

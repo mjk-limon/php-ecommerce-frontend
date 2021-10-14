@@ -4,7 +4,7 @@ namespace _ilmComm;
 
 $sp = $this->SingleProduct;
 $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
-$slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 100));
+$slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 115));
 ?>
 
 <?php if (!$this->mobileView) : ?>
@@ -14,93 +14,53 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <?php endif; ?>
 
 <div class="homepage-top-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 menu-selection hidden-xs">
-                <div id="all-dept-menus" class="all-dept-menus">
-                    <div class="manue mainmenu index-menu">
-                        <ul class="nav navbar-nav slimScroll">
+    <div id="slider">
+        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1349px;height: 415px; overflow: hidden;">
+            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1349px; height: 415px;overflow: hidden;">
 
-                            <?php
-                            include "layouts/menu.php";
-                            ?>
-
-                        </ul>
+                <?php
+                $Slider1 = $this->TopSlider;
+                while ($ArrSlider = $Slider1->fetch_array()) :
+                ?>
+                    <div>
+                        <a href="<?php echo $ArrSlider['image_link'] ?>">
+                            <img u="image" src="<?php echo Models::asset($ArrSlider['image']) ?>" />
+                        </a>
                     </div>
-                </div>
+                <?php
+                endwhile;
+                $Slider1->free();
+                ?>
+
             </div>
-            <div class="col-md-9 slider-section">
-                <div id="slider">
-                    <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1349px;height: 415px; overflow: hidden;">
-                        <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1349px; height: 415px;overflow: hidden;">
-
-                            <?php
-                            $Slider1 = $this->TopSlider;
-                            while ($ArrSlider = $Slider1->fetch_array()) :
-                            ?>
-                                <div>
-                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
-                                        <img u="image" src="<?php echo Models::asset($ArrSlider['image']) ?>" />
-                                    </a>
-                                </div>
-                            <?php
-                            endwhile;
-                            $Slider1->free();
-                            ?>
-
-                        </div>
-                        <div data-u="navigator" class="jssorb034" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
-                            <div data-u="prototype" class="i" style="width:13px;height:13px;">
-                                <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
-                                    <path class="b" d="M11400,13800H4600c-1320,0-2400-1080-2400-2400V4600c0-1320,1080-2400,2400-2400h6800 c1320,0,2400,1080,2400,2400v6800C13800,12720,12720,13800,11400,13800z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+            <div data-u="navigator" class="jssorb034" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+                <div data-u="prototype" class="i" style="width:13px;height:13px;">
+                    <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                        <path class="b" d="M11400,13800H4600c-1320,0-2400-1080-2400-2400V4600c0-1320,1080-2400,2400-2400h6800 c1320,0,2400,1080,2400,2400v6800C13800,12720,12720,13800,11400,13800z"></path>
+                    </svg>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3 hidden-xs" style="padding-right:0">
-                <a href="<?php echo $this->TopSticker1['image_link']; ?>">
-                    <img class="img-responsive" src="<?php echo $this->TopSticker1['image']; ?>" alt="" />
-                </a>
-            </div>
-            <div class="col-md-9 col-xs-12">
-                <div class="trending-categories">
-                    <div class="tc-list slimScroll">
-                        <div class="tc-single">
-                            <h2>Top Ranking</h2>
-                            <h4>Categories</h4>
-                        </div>
-
-                        <?php
-                        $TrCat = $this->TrendCategories;
-                        $TcRes = $TrCat->fetchTrending();
-
-                        while ($TC = $TcRes->fetch_array()) :
-                            $TrCat->setCatId($TC['id']);
-                            $TrCat->setMain($TC['main']);
-
-                            $CatLink = $TrCat->getHref();
-                            $CatImg = $TrCat->getCatImg('Top ranking category icon')[0];
-                        ?>
-                            <div class="tc-single">
-                                <a href="<?php echo $CatLink ?>">
-                                    <div class="tc-single-img" style="background-image:url('<?php echo $CatImg ?>')"></div>
-                                    <div class="tc-single-title"><?php echo htmlspecialchars($TC['main']) ?></div>
-                                </a>
-                            </div>
-                        <?php endwhile; ?>
-
-                    </div>
+    </div>
+    <div class="top-ads-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-6 p0">
+                    <a href="<?php echo $this->TopSticker1['image_link'] ?>">
+                        <img src="<?php echo $this->TopSticker1['image'] ?>" alt="Banner Image">
+                    </a>
+                </div>
+                <div class="col-md-6 col-xs-6 p0">
+                    <a href="<?php echo $this->TopSticker2['image_link'] ?>">
+                        <img src="<?php echo $this->TopSticker2['image'] ?>" alt="Banner Image">
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<section class="main-body">
+<section class="main-body" style="min-height:auto;">
 
     <?php if ($this->FlashSales->num_rows && $this->FlashSalesTimer) : ?>
         <div class="spd">
@@ -191,6 +151,58 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
     <div class="spd">
         <div class="container">
+            <div class="section-mb bg-main">
+                <div class="ft-pr-sliders home-product-categories">
+                    <ul class="products columns-5">
+                        <?php
+                        $remi = 0;
+                        $Cat = new Category\FetchCategories;
+                        $MainCats = $Cat->fetchMain();
+
+                        while ($ArrMain = $MainCats->fetch_assoc()) :
+                            $Cat->setCatId($ArrMain['id']);
+                            $Cat->setMain($ArrMain['main']);
+                            $Cat->setSubGroup(null);
+                            $Cat->setSub(null);
+
+                            $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 9999);
+                            $ProductInCategory = $BrowseCatProducts->num_rows;
+                            $CatImg = Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-2.png?rand=' . rand());
+
+                            if ($remi >= 12) {
+                                continue;
+                            }
+                        ?>
+                            <li class="product-category product first">
+                                <a href="<?= $Cat->getHref() ?>">
+                                    <img src="<?= $CatImg ?>" alt="<?= htmlspecialchars($Cat->Mainc) ?>">
+                                    <h2 class="ds-loop-category__title"> <?= htmlspecialchars($Cat->Mainc) ?><mark class="count"><?= $ProductInCategory ?> products</mark></h2>
+                                </a>
+                            </li>
+                        <?php
+
+                            $remi++;
+                        endwhile;
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="main-body bg-white">
+    <div class="spd">
+        <div class="container">
+            <div class="body-ads-section">
+                <a href="<?php echo $this->TopSticker1['image_link'] ?>">
+                    <img src="<?php echo $this->TopSticker1['image'] ?>" alt="Banner Image">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="spd">
+        <div class="container">
             <div class="section-mb">
                 <div class="ft-title">
                     <div class="ft-title-left">
@@ -198,8 +210,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     </div>
                 </div>
                 <div class="ft-pr-sliders">
-                    <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;visibility:hidden;"' : null ?>>
-                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
+                    <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:' . $slideSize[1] . 'px;overflow:hidden;visibility:hidden;"' : null ?>>
+                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
                             <?php
                             $TrendingProducts = $this->Trendings;
@@ -208,7 +220,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                 $sp->processDiscount();
                                 $sp->processStock();
                             ?>
-                                <div class="single-product">
+                                <div class="single-product fixed-nav">
                                     <div class="sp-image">
 
                                         <?php if ($sp->getDiscount()) : ?>
@@ -224,6 +236,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                             <div class="sp-pr-info">
                                                 <a href="<?php echo $sp->getHref() ?>">
                                                     <h5><?php echo $sp->getName() ?></h5>
+                                                    <p class="sp-pr-sizes"><?php echo implode(', ', $this->SingleProduct->getSizes()) ?></p>
                                                 </a>
                                                 <p>
                                                     <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
@@ -238,7 +251,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                         <div class="sp-nav">
                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                             <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -262,189 +274,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <?php endif; ?>
 
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="main-body bg-white">
-    <div class="spd">
-        <div class="container">
-            <div class="section-mb">
-                <div class="bc-title">
-                    <div class="bc-main-title">New Arrivals</div>
-                </div>
-                <div class="ft-pr-sliders">
-                    <div class="new-arrivals">
-                        <div class="grid-row">
-
-                            <?php
-                            $St_i = 1;
-                            $newArrivals = $this->newArrivals();
-                            while ($NaPr = $newArrivals->fetch_assoc()) :
-                                $sp->setPrInfo($NaPr);
-                                $sp->processDiscount();
-                                $sp->processStock();
-                            ?>
-                                <div class="grids">
-                                    <div class="bc-products">
-                                        <div class="single-product">
-                                            <div class="sp-image">
-
-                                                <?php if ($sp->getDiscount()) : ?>
-                                                    <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
-                                                <?php endif; ?>
-
-                                                <a href="<?php echo $sp->getHref() ?>">
-                                                    <img src="<?php echo $sp->getProductImage() ?>" />
-                                                </a>
-                                            </div>
-                                            <div class="has-sp-nav">
-                                                <div class="sp-pr">
-                                                    <div class="sp-pr-info">
-                                                        <a href="<?php echo $sp->getHref() ?>">
-                                                            <h5><?php echo $sp->getName() ?></h5>
-                                                        </a>
-                                                        <p>
-                                                            <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
-                                                            <?php if ($sp->getDiscount()) : ?>
-                                                                <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
-                                                            <?php endif; ?>
-
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="sp-nav">
-                                                    <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                    <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                    <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php if ($St_i == 2) : ?>
-                                    <div class="grids large-grid">
-                                        <div class="prgrid-ads-section">
-                                            <a href="<?php echo $this->TopSticker2['image_link'] ?>" class="prgrid-ad-img" style="background-image:url('<?php echo $this->TopSticker2['image'] ?>')"></a>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-
-                            <?php
-                                $St_i++;
-                            endwhile;
-                            ?>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="spd">
-        <div class="container">
-            <div class="section-browse-cat">
-                <div class="bc-title">
-                    <div class="bc-main-title">Browse Our Categories</div>
-                </div>
-                <div class="bc-product-area">
-
-                    <?php
-                    $St_i = 1;
-                    $Cat = new Category\FetchCategories;
-                    $MainCats = $Cat->fetchMain();
-
-                    while ($ArrMain = $MainCats->fetch_assoc()) :
-                        $Cat->setCatId($ArrMain['id']);
-                        $Cat->setMain($ArrMain['main']);
-                        $Cat->setSubGroup(null);
-                        $Cat->setSub(null);
-
-                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId);
-                        if ($BrowseCatProducts->num_rows) :
-                    ?>
-                            <div class="bc-single">
-                                <div class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></div>
-                                <div class="grid-row">
-
-                                    <?php
-                                    $Ct_i = 1;
-                                    while ($TrPr = $BrowseCatProducts->fetch_assoc()) :
-                                        $sp->setPrInfo($TrPr);
-                                        $sp->processDiscount();
-                                        $sp->processStock();
-                                    ?>
-
-                                        <?php
-                                        if ($Ct_i == 1) :
-                                            $CatImg = Models::asset('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-3.jpg');
-                                        ?>
-                                            <div class="grids large-grid onlycolspan">
-                                                <div class="prgrid-ads-section">
-                                                    <a href="<?php echo $Cat->getHref() ?>" class="prgrid-ad-img" style="background-image:url('<?php echo $CatImg ?>')"></a>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <div class="grids">
-                                            <div class="bc-products">
-                                                <div class="single-product <?php echo $spAddClass ?>">
-                                                    <div class="sp-image">
-
-                                                        <?php if ($sp->getDiscount()) : ?>
-                                                            <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
-                                                        <?php endif; ?>
-
-                                                        <a href="<?php echo $sp->getHref() ?>">
-                                                            <img src="<?php echo $sp->getProductImage() ?>" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="has-sp-nav">
-                                                        <div class="sp-pr">
-                                                            <div class="sp-pr-info">
-                                                                <a href="<?php echo $sp->getHref() ?>">
-                                                                    <h5><?php echo $sp->getName() ?></h5>
-                                                                </a>
-                                                                <p>
-                                                                    <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
-                                                                    <?php if ($sp->getDiscount()) : ?>
-                                                                        <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
-                                                                    <?php endif; ?>
-
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="sp-nav">
-                                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php
-                                        $Ct_i++;
-                                    endwhile;
-                                    ?>
-
-                                </div>
-                                <div class="bc-cat-all">
-                                    <div>&nbsp;</div><a href="<?php echo $Cat->getHref() ?>">View All</a>
-                                </div>
-                            </div>
-                    <?php
-                            $St_i++;
-                        endif;
-                    endwhile;
-                    ?>
-
                 </div>
             </div>
         </div>

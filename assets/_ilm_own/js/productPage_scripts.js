@@ -1,6 +1,7 @@
 _ilm_Product_page = {
     init: function () {
         lazyLoadInstance.update();
+        _ilm_Product_page.initMenuBar();
         $('span.stars').stars({ starSize: 13 });
 
         $(".fpCbox").on("change", function () {
@@ -109,6 +110,29 @@ _ilm_Product_page = {
             lazyLoadInstance.update();
         }, skeleton);
         return true;
+    },
+    
+    initMenuBar: function () {
+        var trimmedUrl = window.location.pathname.replace(projectfolder, "");
+        var escapeRegExp = function (string) {
+            return string.replace(/[.*+?^${ }()|[\]\\]/g, "\\\$&");
+        }
+
+        $(".site-nav-area a.active").removeClass("active");
+        $(".site-nav-area .dropdown.show").removeClass("show");
+
+        $(".site-nav-area a").each(function () {
+            var navLinkHref = $(this).attr("href");
+            var RegStr = escapeRegExp(navLinkHref) + "(\\?.*)?$";
+            var re = new RegExp(RegStr);
+
+            if (trimmedUrl.match(re)) {
+                $(this).addClass("active");
+                if ($(this).closest(".dropdown").length) {
+                    $(this).closest(".dropdown").addClass("show");
+                }
+            }
+        });
     }
 }
 

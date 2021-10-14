@@ -5,63 +5,50 @@ namespace _ilmComm;
 $Prs = $this->AllProducts;
 ?>
 
-<section class="main-body">
-    <div class="container">
-        <?php if (file_exists($this->CatImages[0])) : ?>
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-md-12">
-                    <div id="myCarousel" class="carousel slide product-page-carousel" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <div class="ppc-single-slide">
-                                    <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[0]) ?>);"></div>
-                                    <div class="ppc-single-image">
-                                        <img data-src="<?php echo Models::asset($this->CatImages[0]) ?>">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <?php if (file_exists($this->CatImages[1])) : ?>
-                                <div class="item">
-                                    <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[1]) ?>);"></div>
-                                        <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[1]) ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if (file_exists($this->CatImages[2])) : ?>
-                                <div class="item">
-                                    <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[2]) ?>);"></div>
-                                        <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[2]) ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+<?php if (file_exists($this->CatImages[0])) : ?>
+    <div id="myCarousel" class="carousel slide product-page-carousel" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="ppc-single-slide">
+                    <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[0]) ?>);"></div>
+                    <div class="ppc-single-image">
+                        <img data-src="<?php echo Models::asset($this->CatImages[0]) ?>">
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
 
-        <?php if ($this->TotalProduct) : ?>
-            <div class="row">
-
-                <?php if (!$this->mobileView) : ?>
-                    <div class="col-md-2p5 col-md-3 product-filter-sidebar">
-                        <?php include "layouts/product-page-filters.php" ?>
-                    </div>
-                <?php endif; ?>
-
-                <div class="col-md-9p5 col-md-9 product-main-panel">
-                    <div class="section-mb features_items">
-                        <div id="pp-main-area" class="v3">
-                            <?php include "layouts/product-page-products.php" ?>
+            <?php if (file_exists($this->CatImages[1])) : ?>
+                <div class="item">
+                    <div class="ppc-single-slide">
+                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[1]) ?>);"></div>
+                        <div class="ppc-single-image">
+                            <img data-src="<?php echo Models::asset($this->CatImages[1]) ?>">
                         </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if (file_exists($this->CatImages[2])) : ?>
+                <div class="item">
+                    <div class="ppc-single-slide">
+                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[2]) ?>);"></div>
+                        <div class="ppc-single-image">
+                            <img data-src="<?php echo Models::asset($this->CatImages[2]) ?>">
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<section class="main-body">
+    <div class="container">
+        <?php if ($this->TotalProduct) : ?>
+            <div class="product-main-panel">
+                <div class="section-mb features_items">
+                    <div id="pp-main-area" class="v3">
+                        <?php include "layouts/product-page-products.php" ?>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,7 @@ $shippingMethods = $this->shippingMethods();
     <div class="footer-widget">
         <div class="container">
             <div class="row">
-                <div class="col-md-2 col-xs-6">
+                <div class="col-md-2p5 col-md-2 col-xs-6">
                     <div class="single-widget">
                         <h2>Company</h2>
                         <ul class="nav nav-pills nav-stacked">
@@ -24,7 +24,7 @@ $shippingMethods = $this->shippingMethods();
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2 col-xs-6">
+                <div class="col-md-2p5 col-md-2 col-xs-6">
                     <div class="single-widget">
                         <h2>Support</h2>
                         <ul class="nav nav-pills nav-stacked">
@@ -36,7 +36,7 @@ $shippingMethods = $this->shippingMethods();
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2 col-xs-6">
+                <div class="col-md-2p5 col-md-2 col-xs-6">
                     <div class="single-widget">
                         <h2>Account</h2>
                         <ul class="nav nav-pills nav-stacked">
@@ -48,7 +48,7 @@ $shippingMethods = $this->shippingMethods();
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-2 hidden-xs"></div>
+
                 <div class="col-md-4 col-xs-6">
                     <div class="single-widget al-l">
                         <h2>FOLLOW US</h2>

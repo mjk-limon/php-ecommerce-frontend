@@ -54,7 +54,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 <?php endif; ?>
 
 <div class="product-page-products">
-    <div class="grid-row grid4">
+    <div class="grid-row grid5">
         <?php
         foreach ($this->AllProducts as $Product) :
             $this->SingleProduct->setPrInfo($Product);
@@ -62,7 +62,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
             $this->SingleProduct->processStock();
         ?>
             <div class="grids">
-                <div class="single-product <?php echo $spAddClass ?>">
+                <div class="single-product fixed-nav">
                     <div class="sp-image">
 
                         <?php if ($this->SingleProduct->getDiscount()) : ?>
@@ -78,6 +78,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                             <div class="sp-pr-info">
                                 <a href="<?php echo $this->SingleProduct->getHref() ?>">
                                     <h5><?php echo $this->SingleProduct->getName() ?></h5>
+                                    <p class="sp-pr-sizes"><?php echo implode(', ', $this->SingleProduct->getSizes()) ?></p>
                                 </a>
                                 <p>
                                     <strong class="price"><?php echo Models::curr($this->SingleProduct->getPrice()) ?></strong>
@@ -87,15 +88,10 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                                 </p>
                             </div>
                         </div>
-
-                        <?php if (!$this->mobileView) : ?>
-                            <div class="sp-nav">
-                                <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
-                            </div>
-                        <?php endif; ?>
-
+                        <div class="sp-nav">
+                            <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+                        </div>
                     </div>
                 </div>
             </div>

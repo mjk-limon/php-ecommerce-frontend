@@ -226,6 +226,7 @@ var _ilm_Cart_floatingcart = {
                 _ilm.globLoader("hide", '#fsc-content');
                 $("#fsc-content").html(result.content);
                 $("#fcTot").html(result.ctotal);
+                $("#fcAmnt").html(result.camount);
             } else _ilm.showNotification(result.error, true);
         }
         ajaxPost({ update_cart_data: 1 }, ajaxCallback);

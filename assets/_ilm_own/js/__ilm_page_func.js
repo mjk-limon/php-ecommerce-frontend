@@ -1,20 +1,11 @@
 /*!
  =========================================================
- * I'lm Admin Panel v7.1.1
+ * I'lm Creative Design v10.1.6
  =========================================================
 
  * Home Page: http://ilmtechpw.bongobuild.com/
  * Copyright 2019 Dhaka Solution
-
  * Designed & Created by Limon 
-
-   ||     ||||  |||||         ||||
-  ||||    ||||  ||||||       |||||
-  ||||    ||||  |||||||     ||||||
-  ||||    ||||  |||| |||||||| ||||
-  ||||    ||||  ||||  ||||||  ||||
-||||||||  ||||  ||||  |||||   ||||
-  
  =========================================================
  */
 
@@ -52,28 +43,15 @@ $(document).ready(function () {
         }
     });
 
-    $(window).on("scroll", function () {
-        var delta = 5,
-            navbarHeight = 50,
-            st = $(this).scrollTop();
+    $(document).on("click", ".menu-toggle-btn", function (e) {
+        e.preventDefault();
+        $('.site-nav-area').toggleClass("open");
+    });
 
-        if (Math.abs(lastScrollTop - st) <= delta)
-            return;
-
-        //if(st > lastScrollTop && st > navbarHeight){
-        if (st > navbarHeight) {
-            $('body').addClass("fixed-menu-bar");
-            $(".deskv-hm-movable").detach().appendTo(".deskv-hb");
-            $('.sticky-wrapper, .site-branding-area').addClass("animated fadeInUp");
-        } else {
-            if (st + $(window).height() < $(document).height()) {
-                $('body').removeClass("fixed-menu-bar");
-                $(".deskv-hm-movable").detach().appendTo(".deskv-hm");
-                $('.sticky-wrapper, .site-branding-area').removeClass("animated fadeInUp");
-            }
+    $(".site-nav-area").on("click", "a", function () {
+        if ($(".site-nav-area").hasClass("open")) {
+            $(".site-nav-area").removeClass("open");
         }
-
-        lastScrollTop = st;
     });
 
     $("li.dropdown").each(function () {

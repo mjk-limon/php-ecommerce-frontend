@@ -11,27 +11,76 @@ namespace _ilmComm;
                 <div class="section-mb login_registration_widget">
                     <h2 class="widget_title">Existing User</h2>
                     <div class="registration_form">
-                        <div class="row">
-                            <div class="col-md-6 col-xs-12">
-                                <form class="_ilmForm" id="loginForm" action="" method="POST">
-                                    <input type="hidden" name="loginUser" />
-                                    <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
+                        <div role="tabpanel" class="logintabs">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#OTP" aria-controls="OTP" role="tab" data-toggle="tab">Login Using Mobile Number</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#Username" aria-controls="Username" role="tab" data-toggle="tab">Login Using Email</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="OTP">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-12 col-md-offset-3">
+                                            <form class="_ilmForm" id="otpLoginForm" action="" method="POST">
+                                                <input type="hidden" name="otpLoginUser" />
+                                                <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
 
-                                    <div class="form-group widget_input">
-                                        <label>Your Email Address</label>
-                                        <input class="form-control" type="email" name="username" required />
-                                    </div>
-                                    <div class="form-group widget_input">
-                                        <label>Password</label>
-                                        <input class="form-control" type="password" name="password" required />
-                                    </div>
-                                    <div class="forget"><a href="#forgotPassword" data-toggle="modal">Forgot your password ?</a></div>
-                                    <button type="submit" class="submit-btn iFSubmitBtn">Sign In</button>
+                                                <div class="form-group widget_input">
+                                                    <label>Your Mobile Number</label>
+                                                    <div class="input-group" id="verf-num">
+                                                        <div class="input-group-addon">+88</div>
+                                                        <input class="form-control" name="mobile_number" placeholder="01XXXXXXXXX" required />
+                                                    </div>
+                                                </div>
 
-                                    <div class="swap-btn"><a href="/register/?ref=<?php echo urlencode($this->getReferences('key')) ?>">Create new account</a></div>
-                                </form>
+                                                <div class="verification-section">
+                                                    <div id="verify-slider"></div>
+
+                                                    <div class="form-group verification-code">
+                                                        <label>Verification Code</label>
+                                                        <input class="form-control" name="otp" pattern="[0-9]+" required />
+                                                        <span class="form-helper"><a href="javascript:;" class="reset disabled">Resend Verification Code (<span>20 </span>s)</a></span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <button type="submit" class="submit-btn iFSubmitBtn">Verify</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="Username">
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-12 col-md-offset-3">
+                                            <form class="_ilmForm" id="loginForm" action="" method="POST">
+                                                <input type="hidden" name="loginUser" />
+                                                <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
+
+                                                <div class="form-group widget_input">
+                                                    <label>Your Email Address</label>
+                                                    <input class="form-control" type="email" name="username" required />
+                                                </div>
+                                                <div class="form-group widget_input">
+                                                    <label>Password</label>
+                                                    <input class="form-control" type="password" name="password" required />
+                                                </div>
+                                                <div class="forget"><a href="#forgotPassword" data-toggle="modal">Forgot your password ?</a></div>
+                                                <button type="submit" class="submit-btn iFSubmitBtn">Sign In</button>
+
+                                                <div class="swap-btn"><a href="/register/?ref=<?php echo urlencode($this->getReferences('key')) ?>">Create new account</a></div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 col-xs-12">
+                        </div>
+
+                        <div class="row" style="margin-top: 2rem">
+                            <div class="col-md-6 col-xs-12 col-md-offset-3">
                                 <?php ?>
                                 <div class="social-login-btns">
                                     <h5>or, Social Login</h5>
@@ -97,4 +146,77 @@ namespace _ilmComm;
     </div>
 </div>
 
+<link href="<?php echo Models::asset('assets/vendors/slidetounlock/slideToUnlock.css') ?>" rel="stylesheet" />
+<link href="<?php echo Models::asset('assets/vendors/slidetounlock/green.theme.css') ?>" rel="stylesheet" />
+<script src="<?php echo Models::asset('assets/vendors/slidetounlock/jquery.slideToUnlock.js') ?>"></script>
+
 <script defer src="<?php echo Models::asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.reset').click(function(e) {
+            e.preventDefault();
+            if ($(this).hasClass("disabled")) {
+                return;
+            }
+            initSlider();
+        });
+
+        var initSlider = function() {
+            $('#verify-slider').html("");
+            $('.reset').addClass("disabled");
+            $('.verification-section').removeClass("verified");
+
+            $("#verify-slider").slideToUnlock({
+                lockText: 'Slide To Verify',
+                unlockfn: function() {
+                    var mobile_number = $('#verf-num input').val(),
+                        number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
+                        t_i = 20,
+                        timer;
+
+                    if (number_regex.test(mobile_number)) {
+                        sendOtp(mobile_number)
+                        $('.verification-section').addClass("verified");
+
+                        if (timer) {
+                            clearInterval(timer);
+                        }
+
+                        timer = setInterval(function() {
+                            t_i--;
+                            $('.reset span').html(t_i);
+
+                            if (t_i < 1) {
+                                $('.reset').removeClass("disabled");
+                                clearInterval(timer);
+                            }
+                        }, 1000);
+                        return;
+                    }
+
+                    _ilm.showNotification("Mobile number is not valid!", true);
+                    initSlider();
+                }
+            });
+        }
+
+        var sendOtp = function(mobile_number) {
+            ajaxPost({
+                sendVerifyOtp: mobile_number
+            }, function(data) {
+                var Result = IsJsonString(data) ? JSON.parse(data) : {
+                    success: false,
+                    error: data
+                };
+
+                console.log(Result);
+                if (!Result.success) {
+                    _ilm.showNotification(Result.error, true);
+                    initSlider();
+                }
+            });
+        }
+
+        initSlider();
+    });
+</script>
