@@ -5,6 +5,7 @@ namespace _ilmComm;
 $sp = $this->SingleProduct;
 $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 115));
+$TopSticker3 = $this->getStickers('index', 4);
 ?>
 
 <?php if (!$this->mobileView) : ?>
@@ -176,11 +177,13 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                             <li class="product-category product first">
                                 <a href="<?= $Cat->getHref() ?>">
                                     <img src="<?= $CatImg ?>" alt="<?= htmlspecialchars($Cat->Mainc) ?>">
-                                    <h2 class="ds-loop-category__title"> <?= htmlspecialchars($Cat->Mainc) ?><mark class="count"><?= $ProductInCategory ?> products</mark></h2>
+                                    <h2 class="ds-loop-category__title">
+                                        <?= htmlspecialchars($Cat->Mainc) ?>
+                                        <mark class="count"><?= $ProductInCategory ?> products</mark>
+                                    </h2>
                                 </a>
                             </li>
                         <?php
-
                             $remi++;
                         endwhile;
                         ?>
@@ -195,12 +198,13 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     <div class="spd">
         <div class="container">
             <div class="body-ads-section">
-                <a href="<?php echo $this->TopSticker1['image_link'] ?>">
-                    <img src="<?php echo $this->TopSticker1['image'] ?>" alt="Banner Image">
+                <a href="<?php echo $TopSticker3['image_link'] ?>">
+                    <img src="<?php echo $TopSticker3['image'] ?>" alt="Banner Image">
                 </a>
             </div>
         </div>
     </div>
+
     <div class="spd">
         <div class="container">
             <div class="section-mb">
