@@ -5,7 +5,7 @@ namespace _ilmComm;
 $Sc = $this->SingleCustomer;
 $Cs = $this->CartSummery;
 $PmntGateways = $this->availablePaymentGateways();
-$DeliveryLocations = $this->getDeliveryLocations();
+$DeliveryLocations = $this->getDeliveryLocations(null);
 ?>
 <section class="main-body">
     <div id="checkout">
