@@ -70,11 +70,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 									<h2 class="pr-name"><?php echo $PrDetails->getName() ?></h2>
 								<?php endif; ?>
 
-								<p>
-									<span style="display:inline-block;vertical-align:middle;"><span class="stars"><?= $PrDetails->getRating("r_r") ?></span></span>
-									<span><em>(Total Ratings: <?= $PrDetails->getRating("r_t") ?>)</em></small>
-								</p>
-
 								<p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>">
 									<span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
 
@@ -221,88 +216,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 			<div class="section-mb details-page-bottom">
 				<h4 class="discription-review-title">
 					<span><a href="javascript:;" data-target="#pr-dis" data-toggle="DRtab" class="active true">Product Full Description</a></span>
-					<span>|</span>
-					<span><a href="javascript:;" id="DRRvwBtn" data-target="#pr-rvw" class="true" data-toggle="DRtab">Ratings &amp; Reviews</a></span>
 				</h4>
 				<div class="discription-review-body">
 					<div id="pr-dis"><?php echo $PrDetails->getDescription(); ?></div>
-					<div id="pr-rvw" style="display:none">
-						<div class="row">
-
-							<?php if (!$ratClass) : ?>
-								<div class="col-md-4 col-xs-12">
-									<h4>Product Rating</h4>
-									<div class="row ratings">
-										<div class="col-md-4 col-xs-5 rating-review text-center">
-											<h1><?php echo $PrDetails->getRating("r_r") ?></h1>
-											<h4>/5</h4>
-											<span class="stars"><?php echo $PrDetails->getRating("r_r") ?></span>
-											<p><small><em>(Total Ratings: <?php echo $PrDetails->getRating("r_t") ?>)</em></small></p>
-										</div>
-										<div class="col-md-8 col-xs-7 user-rating">
-
-											<?php
-											for ($RI = 5; $RI > 0; $RI--) :
-												$BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
-											?>
-												<div class="row-rat">
-													<?php echo $RI ?> Star
-													<span class="rating-progress">
-														<span style="width:<?php echo $BarWidth ?>%"></span>
-													</span>
-												</div>
-											<?php endfor; ?>
-
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
-
-							<div class="col-md-8 col-xs-12">
-								<h4>Reviews</h4>
-								<div class="user-review-section _nrp">
-									<div id="rv-main-area" class="_nrt">
-										<?php include "layouts/details-page-reviews.php"; ?>
-									</div>
-									<div class="new-qus-reply">
-
-										<?php if ($this->UserData) : ?>
-											<form class="replyRvwForm" action="" method="POST">
-												<input type="hidden" name="name" value="<?php echo $this->UserData->getFullName() ?>" />
-												<input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
-												<input type="hidden" name="prid" value="<?php echo $this->Prid ?>" />
-												<input type="hidden" name="reply_product_rvw" />
-												<input type="hidden" name="rtp" value="rvw" />
-
-												<div class="user-star-rating">
-													<h5>Your Rating:</h5>
-													<div class="us-rating">
-														<!--
-														--><input name="rating" id="e5" type="radio" value="05"><label for="e5">&star;</label>
-														<!--
-														--><input name="rating" id="e4" type="radio" value="04"><label for="e4">&star;</label>
-														<!--
-														--><input name="rating" id="e3" type="radio" value="03"><label for="e3">&star;</label>
-														<!--
-														--><input name="rating" id="e2" type="radio" value="02"><label for="e2">&star;</label>
-														<!--
-														--><input name="rating" id="e1" type="radio" value="01"><label for="e1">&star;</label>
-													</div>
-												</div>
-												<div class="inline-form">
-													<textarea type="text" name="message" placeholder="Write a review..." required=""></textarea>
-													<button class="">Submit</button>
-												</div>
-											</form>
-										<?php else : ?>
-											<p>Please <a href="/login/?ref=p.03">Login</a> to write a review.</p>
-										<?php endif; ?>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -105,7 +105,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                     ?>
                         <div class="col-md-9 deskv-hm-movable">
                             <div class="row">
-                                <div class="col-md-7 hidden-xs">
+                                <div class="col-md-6 hidden-xs">
                                     <div class="serachbox">
                                         <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
                                             <div class="searchfld deskv">
@@ -116,7 +116,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-md-5 hidden-xs">
+                                <div class="col-md-6 hidden-xs">
                                     <ul class="wishlistall flex" style="justify-content:right;align-items:center;">
                                         <li>
                                             <a href="/my-account/?c=90.04" title="Notification" class="notf">
@@ -125,9 +125,10 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/contact/" title="Support" class="support">
+                                            <a href="javascript:;" title="Support" class="support"
+                                                    onclick="window.open('tel:<?php echo Models::getContactInformation('mobile1') ?>')">
                                                 <div></div>
-                                                <span>Support</span>
+                                                <span><?php echo Models::getContactInformation('mobile1') ?></span>
                                             </a>
                                         </li>
                                         <?php if ($this->UserData) : ?>

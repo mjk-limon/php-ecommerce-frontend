@@ -120,43 +120,41 @@ $DeliveryLocations = $this->getDeliveryLocations(null);
             initSlider();
         });
 
+        $("#verify-slider button").click(function(e) {
+            e.preventDefault();
+
+            var mobile_number = $('#verf-num input').val(),
+                number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
+                t_i = 20,
+                timer;
+
+            if (number_regex.test(mobile_number)) {
+                sendOtp(mobile_number)
+                $('.verification-section').addClass("verified");
+
+                if (timer) {
+                    clearInterval(timer);
+                }
+
+                timer = setInterval(function() {
+                    t_i--;
+                    $('.reset span').html(t_i);
+
+                    if (t_i < 1) {
+                        $('.reset').removeClass("disabled");
+                        clearInterval(timer);
+                    }
+                }, 1000);
+                return;
+            }
+
+            _ilm.showNotification("Mobile number is not valid!", true);
+            initSlider();
+        });
+
         var initSlider = function() {
-            $('#verify-slider').html("");
             $('.reset').addClass("disabled");
             $('.verification-section').removeClass("verified");
-
-            $("#verify-slider").slideToUnlock({
-                lockText: 'Slide To Verify',
-                unlockfn: function() {
-                    var mobile_number = $('#verf-num input').val(),
-                        number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
-                        t_i = 20,
-                        timer;
-
-                    if (number_regex.test(mobile_number)) {
-                        sendOtp(mobile_number)
-                        $('.verification-section').addClass("verified");
-
-                        if (timer) {
-                            clearInterval(timer);
-                        }
-
-                        timer = setInterval(function() {
-                            t_i--;
-                            $('.reset span').html(t_i);
-
-                            if (t_i < 1) {
-                                $('.reset').removeClass("disabled");
-                                clearInterval(timer);
-                            }
-                        }, 1000);
-                        return;
-                    }
-
-                    _ilm.showNotification("Mobile number is not valid!", true);
-                    initSlider();
-                }
-            });
         }
 
         var sendOtp = function(mobile_number) {

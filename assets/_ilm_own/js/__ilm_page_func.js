@@ -32,7 +32,7 @@ $(document).ready(function () {
     $(window).on("popstate", function (e) { location.reload() });
 
     /*======= Basic =========*/
-    $.scrollUp({ scrollText: '<i class="fa fa-arrow-up"></i>', zIndex: 2147483647 });
+    //$.scrollUp({ scrollText: '<i class="fa fa-arrow-up"></i>', zIndex: 2147483647 });
 
     $(document).on("click", "a, [data-href]", function (e) {
         var target = $(this).attr("href");
@@ -67,8 +67,11 @@ $(document).ready(function () {
         }
 
         $SubCols.each(function () {
-            if (!$(this).find(".no-catsub").length)
+            if (!$(this).find(".no-catsub").length) {
                 hasSub = true;
+            } else {
+                $(this).find("li").remove();
+            }
         });
 
         if (!hasSub)

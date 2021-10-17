@@ -22,7 +22,10 @@ namespace _ilmComm;
                             </div>
                         </div>
                         <div class="verification-section">
-                            <div id="verify-slider"></div>
+                            <div id="verify-slider">
+                                <button class="submit-btn">Send OTP</button>
+                            </div>
+                            
                             <div class="form-group verification-code">
                                 <label>Verification Code</label>
                                 <input class="form-control" name="otp" pattern="[0-9]+" required />
@@ -90,10 +93,7 @@ namespace _ilmComm;
                                 <select name="orderLocation" id="orderLoc">
 
                                     <?php foreach ($DeliveryLocations as $Loc) : ?>
-                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" 
-                                                data-description="<?php echo $Loc['city'] ?>" 
-                                                <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> 
-                                                autocomplete="off">
+                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" data-description="<?php echo $Loc['city'] ?>" <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> autocomplete="off">
                                             <?php echo htmlspecialchars($Loc['location']) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -169,10 +169,7 @@ else :
                                             <td>
                                                 <select name="orderLocation" id="orderLoc">
                                                     <?php foreach ($DeliveryLocations as $Loc) : ?>
-                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>"
-                                                                data-description="<?php echo $Loc['city'] ?>" 
-                                                                <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?>
-                                                                autocomplete="off">
+                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" data-description="<?php echo $Loc['city'] ?>" <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> autocomplete="off">
                                                             <?php echo htmlspecialchars($Loc['location']) ?>
                                                         </option>
                                                     <?php endforeach; ?>
