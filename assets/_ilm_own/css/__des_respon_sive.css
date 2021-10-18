@@ -145,7 +145,7 @@
 	.flex-control-thumbs li{float:none;display:inline-block;vertical-align:top}
 	.row-rat .rating-progress{width:120px}
 	
-	.pr-buy-navs{position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;z-index:100;padding:.5rem}
+	.pr-buy-navs:not(.sp-nav){position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;z-index:100;padding:.5rem}
 	.pr-buy-navs .m-flex{align-items:center}
 	.qty-selection{flex:1 0;margin:0}
 	.qty-selection li{width:30%}

@@ -11,7 +11,7 @@ $shippingMethods = $this->shippingMethods();
 <footer id="footer">
     <div class="footer-widget">
         <div class="container">
-            <div class="row flex">
+            <div class="row flex" style="flex-wrap:wrap;">
                 <div class="col-md-3 col-xs-6 flex">
                     <div class="single-widget">
                         <img src="<?php echo Models::getLogo() ?>" class="img-responsive">
