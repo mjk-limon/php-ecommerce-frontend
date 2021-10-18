@@ -37,7 +37,9 @@ namespace _ilmComm;
                                                 </div>
 
                                                 <div class="verification-section">
-                                                    <div id="verify-slider"></div>
+                                                    <div id="verify-slider">
+                                                        <button class="submit-btn">Send OTP</button>
+                                                    </div>
 
                                                     <div class="form-group verification-code">
                                                         <label>Verification Code</label>
@@ -146,10 +148,6 @@ namespace _ilmComm;
     </div>
 </div>
 
-<link href="<?php echo Models::asset('assets/vendors/slidetounlock/slideToUnlock.css') ?>" rel="stylesheet" />
-<link href="<?php echo Models::asset('assets/vendors/slidetounlock/green.theme.css') ?>" rel="stylesheet" />
-<script src="<?php echo Models::asset('assets/vendors/slidetounlock/jquery.slideToUnlock.js') ?>"></script>
-
 <script defer src="<?php echo Models::asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -161,43 +159,41 @@ namespace _ilmComm;
             initSlider();
         });
 
+        $("#verify-slider button").click(function(e) {
+            e.preventDefault();
+
+            var mobile_number = $('#verf-num input').val(),
+                number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
+                t_i = 20,
+                timer;
+
+            if (number_regex.test(mobile_number)) {
+                sendOtp(mobile_number)
+                $('.verification-section').addClass("verified");
+
+                if (timer) {
+                    clearInterval(timer);
+                }
+
+                timer = setInterval(function() {
+                    t_i--;
+                    $('.reset span').html(t_i);
+
+                    if (t_i < 1) {
+                        $('.reset').removeClass("disabled");
+                        clearInterval(timer);
+                    }
+                }, 1000);
+                return;
+            }
+
+            _ilm.showNotification("Mobile number is not valid!", true);
+            initSlider();
+        });
+
         var initSlider = function() {
-            $('#verify-slider').html("");
             $('.reset').addClass("disabled");
             $('.verification-section').removeClass("verified");
-
-            $("#verify-slider").slideToUnlock({
-                lockText: 'Slide To Verify',
-                unlockfn: function() {
-                    var mobile_number = $('#verf-num input').val(),
-                        number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
-                        t_i = 20,
-                        timer;
-
-                    if (number_regex.test(mobile_number)) {
-                        sendOtp(mobile_number)
-                        $('.verification-section').addClass("verified");
-
-                        if (timer) {
-                            clearInterval(timer);
-                        }
-
-                        timer = setInterval(function() {
-                            t_i--;
-                            $('.reset span').html(t_i);
-
-                            if (t_i < 1) {
-                                $('.reset').removeClass("disabled");
-                                clearInterval(timer);
-                            }
-                        }, 1000);
-                        return;
-                    }
-
-                    _ilm.showNotification("Mobile number is not valid!", true);
-                    initSlider();
-                }
-            });
         }
 
         var sendOtp = function(mobile_number) {

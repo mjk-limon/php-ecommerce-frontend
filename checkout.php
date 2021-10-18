@@ -105,10 +105,6 @@ $DeliveryLocations = $this->getDeliveryLocations(null);
     }
 </style>
 
-<link href="<?php echo Models::asset('assets/vendors/slidetounlock/slideToUnlock.css') ?>" rel="stylesheet" />
-<link href="<?php echo Models::asset('assets/vendors/slidetounlock/green.theme.css') ?>" rel="stylesheet" />
-<script src="<?php echo Models::asset('assets/vendors/slidetounlock/jquery.slideToUnlock.js') ?>"></script>
-
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/checkoutPage_scripts.js") ?>"></script>
 <script type="text/javascript">
     $(document).ready(function() {

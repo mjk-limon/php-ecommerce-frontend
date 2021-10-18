@@ -164,6 +164,7 @@ ul.sub-menu{position:relative;list-style:none;padding:0;margin-left:10px;border-
 .wishlistall > li a{padding:0.5rem 1rem;position:relative;color:#333;display:block}
 .wishlistall > li a.support{border:1px solid #888;font-weight:bold}
 .wishlistall > li a.useraccount{background-color:#df0000;color:#fff}
+.wishlistall > li a.useraccount.loggedin{background-color:rgb(255, 169, 65)}
 .wishlistall > li a div{width:25px;height:25px;background-image:url('../../images/webicons.png');background-position:-2px 0;display:inline-block;vertical-align:middle}
 .wishlistall > li a span{display:inline-block;vertical-align:middle}
 .wishlistall > li a.notf div{background-position:-30px 0}

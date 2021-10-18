@@ -133,9 +133,9 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         </li>
                                         <?php if ($this->UserData) : ?>
                                             <li class="dropdown">
-                                                <a href="javascript:;" class="useraccount" data-toggle="dropdown">
+                                                <a href="javascript:;" class="useraccount loggedin" data-toggle="dropdown">
                                                     <div></div>
-                                                    <span>Welcome, <?php echo $this->UserData['last_name'] ?></span>
+                                                    <span>Welcome, <?php echo $this->UserData['first_name'] ?></span>
                                                 </a>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item" href="/my-account/">My Profile</a>
