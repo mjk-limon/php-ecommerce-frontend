@@ -207,8 +207,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 							<?php endif; ?>
 
 						</ul>
-					</div>
 
+						<span id="tStock" class="hidden-lg hidden-xs"><?php echo $PrDetails->getStock() ?></span>
+					</div>
 				</div>
 			</div>
 		</div>
