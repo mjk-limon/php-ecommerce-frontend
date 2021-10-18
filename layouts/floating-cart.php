@@ -24,7 +24,6 @@ if ($this->CartItems) :
                             <img src="<?= $Sp->getProductImage() ?>" alt="" />
                             <div class="dis-title">
                                 <h5><?= $Sp->getName() ?></h5>
-                                <span>Size: <?= $CItem['s'] ?>, Color: <?= $CItem['c'] ?></span>
                                 <span>Unit Price: <?= Models::curr($Sp->getPrice()) ?></span>
                             </div>
                         </td>

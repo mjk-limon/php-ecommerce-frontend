@@ -89,7 +89,7 @@ _ilm_Cart = {
         ajaxCallback = function (data) {
             var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
             if (result.success) {
-                _ilm.showNotification("Product successfully added to cart.");
+                //_ilm.showNotification("Product successfully added to cart.");
                 _ilm.popupContent("hide");
 
                 _ilm_Cart_floatingcart.updateCartData();
