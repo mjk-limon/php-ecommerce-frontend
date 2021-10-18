@@ -79,7 +79,7 @@ namespace _ilmComm;
                             </div>
                         </div>
 
-                        <div class="row" style="margin-top: 2rem">
+                        <div class="row" style="margin-top: 2rem;display: none;">
                             <div class="col-md-6 col-xs-12 col-md-offset-3">
                                 <?php ?>
                                 <div class="social-login-btns">

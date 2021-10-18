@@ -138,9 +138,15 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 								<div class="pr-buy-navs">
 									<ul class="qty-selection">
 										<div>Select Quantity:</div>
-										<li class="item_minus"><a href="javascript:;">-</a></li>
-										<li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-										<li class="item_plus"><a href="javascript:;">+</a></li>
+										<li class="item_minus">
+											<a href="javascript:;">-</a>
+										</li>
+										<li class="item_qty item_qty_input">
+											<input type="number" value="1" max="<?php echo $PrDetails->getStock() ?>" autocomplete="off" />
+										</li>
+										<li class="item_plus">
+											<a href="javascript:;">+</a>
+										</li>
 									</ul>
 
 									<div class="row">
@@ -262,9 +268,24 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 												</p>
 											</div>
 										</div>
-										<div class="sp-nav">
-											<em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
-											<a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+										<div class="sp-nav pr-buy-navs">
+											<div class="adv-nav flex">
+												<ul class="qty-selection">
+													<li class="item_minus">
+														<a href="javascript:;">-</a>
+													</li>
+													<li class="item_qty item_qty_input">
+														<input type="number" value="1" max="<?php echo $this->SingleProduct->getStock() ?>" autocomplete="off" readonly>
+													</li>
+													<li class="item_plus">
+														<a href="javascript:;">+</a>
+													</li>
+												</ul>
+												<ul class="bnav-btns">
+													<em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+													<li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
+												</ul>
+											</div>
 										</div>
 									</div>
 								</div>

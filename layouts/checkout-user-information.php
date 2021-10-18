@@ -58,15 +58,6 @@ namespace _ilmComm;
                     <a href="/register/?ref=p.05" class="newacc">Create New Account</a>
                 </div>
             </div>
-            <div class="col-md-6 hidden-xs checkout-login checkout-login-right">
-                <div class="limlog-form">
-                    <ul class="large-block-grid-2 small-block-grid-1 large-social-buttons">
-                        <li class="fb"><a href="https://www.facebook.com/" class="disabled"><span aria-hidden="true" class="fa fa-facebook"></span> Login With Facebook</a></li>
-                        <li class="tw"><a href="https://twitter.com/" class="disabled"> <span aria-hidden="true" class="fa fa-twitter"></span> Login With Twitter</a></li>
-                        <li class="gp"><a href="https://plus.google.com/" class="disabled"><span aria-hidden="true" class="fa fa-google-plus">&nbsp;</span>Login With Google Plus</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
 
         <?php if (Models::getSiteSettings("qch")) : ?>
