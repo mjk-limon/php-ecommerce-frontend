@@ -177,7 +177,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             <li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
                                         <?php endif; ?>
 
-                                        <li><a href="/brands/">Brands</a></li>
                                         <li><a href="/track-order/">Track Order</a></li>
                                     </ul>
                                 </li>
