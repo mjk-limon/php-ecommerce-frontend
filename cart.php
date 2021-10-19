@@ -41,9 +41,6 @@ $Sp = $this->SingleProduct;
 
                                                     </div>
                                                 </div>
-                                                <div class="fi-cart-data">
-                                                    Size: <?php echo $CItem['s'] ?> &nbsp; Color: <?php echo $CItem['c'] ?>
-                                                </div>
                                                 <div class="fi-cart-data fi-qty">
                                                     Quantity:
                                                     <input type="number" name="" value="<?php echo $CItem['q'] ?>" data-ogn="<?php echo $CItem['q'] ?>" min="1" />
