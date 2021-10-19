@@ -41,11 +41,11 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 	<script src="<?= Models::asset("assets/vendors/_jquery/jqu_ilm_plugin.js") ?>"></script>
 	<script src="<?= Models::asset("assets/vendors/flexslider/__ds_jqu_flex.js") ?>"></script>
 
-<?php if ($this->mobileView) : ?>
-	<link href="<?= Models::asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
-<?php else : ?>
-	<script src="<?= Models::asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
-<?php endif; ?>
+	<?php if ($this->mobileView) : ?>
+		<link href="<?= Models::asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
+	<?php else : ?>
+		<script src="<?= Models::asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
+	<?php endif; ?>
 
 	<?php
 	Head\AdditionalHead::getAdditionalScripts();
@@ -65,92 +65,102 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 </head>
 
 <body <?= $body_class ?>>
-<?php if (!$this->mobileView) : ?>
-	<div class="floating-sc">
-		<div class="sc-btn">
-			<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-			<div><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
-		</div>
-		<div class="sc-body">
-			<div class="clearfix sc-body-top">
-				<span class="floating-sc-close">&times;</span>
-				<h4>Shopping Cart</h4>
-				<span class="scb-ct"><?= $this->CartData->getTotalItem() ?> ITEM(S)</span>
+	<?php if (!$this->mobileView) : ?>
+		<div class="floating-sc">
+			<div class="sc-btn">
+				<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+				<div><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
 			</div>
-			<div id="fsc-content" class="fsc-content slimScroll"></div>
+			<div class="sc-body">
+				<div class="clearfix sc-body-top">
+					<span class="floating-sc-close">&times;</span>
+					<h4>Shopping Cart</h4>
+					<span class="scb-ct"><?= $this->CartData->getTotalItem() ?> ITEM(S)</span>
+				</div>
+				<div id="fsc-content" class="fsc-content slimScroll"></div>
+			</div>
 		</div>
-	</div>
-<?php endif; ?>
+	<?php endif; ?>
 
 	<header id="header">
-	<?php
-	if (!$this->mobileView) :
-		//Desktop view header top
-
-	?>
-		<div class="header_top">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6 hidden-xs">
-						<div class="top-user-nav">
-							<ul class="nav nav-pills">
-								<li>
-									<a href="#" onclick="window.open('tel:<?= Models::getContactInformation("mobile1") ?>')">
-										Hotline: <span><?= Models::getContactInformation("mobile1") ?></span>
-									</a>
-								</li>
-								<li>
-									<a href="#" onclick="window.open('mailto:<?= Models::getContactInformation("email") ?>')">
-										Mail Us: <span><?= Models::getContactInformation("email") ?></span>
-									</a>
-								</li>
-							</ul>
+		<?php
+		if (!$this->mobileView) :
+			//Desktop view header top
+		?>
+			<div class="header_top">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6 hidden-xs">
+							<div class="top-user-nav">
+								<ul class="nav nav-pills">
+									<li>
+										<a href="#" onclick="window.open('tel:<?= Models::getContactInformation("mobile1") ?>')">
+											Hotline: <span><?= Models::getContactInformation("mobile1") ?></span>
+										</a>
+									</li>
+									<li>
+										<a href="#" onclick="window.open('mailto:<?= Models::getContactInformation("email") ?>')">
+											Mail Us: <span><?= Models::getContactInformation("email") ?></span>
+										</a>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-md-6 col-sm-12">
-						<div class="header-right">
-							<ul class="list-unstyled list-inline">
-							<?php if ($this->UserData) : ?>
-								<li class="dropdown">
-									<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-										<span class="key"><i class="fa fa-user"></i> My Account</span><b class="caret"></b></a>
-									<ul class="dropdown-menu">
-										<li><a href="/my-account/">Update Account</a></li>
-										<li><a href="/my-account/?c=90.02">My Wishlists</a></li>
-										<li><a href="/my-account/?c=90.03">Order History</a></li>
-										<li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Logout</a></li>
-									</ul>
-								</li>
-							<?php endif; ?>
+						<div class="col-md-6 col-sm-12">
+							<div class="header-right">
+								<ul class="list-unstyled list-inline">
+									<?php if ($this->UserData) : ?>
+										<li class="dropdown">
+											<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+												<span class="key"><i class="fa fa-user"></i> My Account</span><b class="caret"></b></a>
+											<ul class="dropdown-menu">
+												<li><a href="/my-account/">Update Account</a></li>
+												<li><a href="/my-account/?c=90.02">My Wishlists</a></li>
+												<li><a href="/my-account/?c=90.03">Order History</a></li>
+												<li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Logout</a></li>
+											</ul>
+										</li>
+									<?php endif; ?>
 
-								<li class="dropdown dropdown-small">
-									<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-										<span class="key"><?= $this->Language ?></span><b class="caret"></b>
-									</a>
-									<ul class="dropdown-menu">
-										<li><a href="?lang=en">English</a></li>
-										<li><a href="?lang=bn">বাংলা</a></li>
-									</ul>
-								</li>
-								<li class="dropdown dropdown-small">
-									<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-										<span class="key"><?= Models::curr(); ?></span><b class="caret"></b>
-									</a>
-									<ul class="dropdown-menu">
-										<li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-										<li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
-										<li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
-										<li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
-									</ul>
-								</li>
-							</ul>
+									<li>
+										<a href="/my-account/?c=90.02">
+											Wishlist
+										</a>
+									</li>
+
+									<li>
+										<a href="javascript:;" onclick="alert('Apps is coming soon !');">
+											Download App
+										</a>
+									</li>
+
+									<li class="dropdown dropdown-small">
+										<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+											<span class="key">English (US)</span><b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="?lang=en">English</a></li>
+											<!--li><a href="?lang=bn">বাংলা</a></li-->
+										</ul>
+									</li>
+									<li class="dropdown dropdown-small">
+										<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+											<span class="key"><?= Models::curr(); ?></span><b class="caret"></b>
+										</a>
+										<ul class="dropdown-menu">
+											<li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
+											<li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
+											<li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
+											<li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	<?php endif; ?>
+		<?php endif; ?>
 
 		<div class="site-branding-area">
 			<div class="container">
@@ -161,70 +171,79 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 						</div>
 					</div>
 
-				<?php
-				if (!$this->mobileView) :
-					//Desktop view header middle
-				?>
-					<div class="col-md-9 deskv-hm-movable">
-						<div class="row">
-							<div class="col-md-9 hidden-xs">
-								<div class="serachbox">
-									<form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
-										<div class="searchfld deskv">
-											<input type="text" placeholder="Search here" name="q" autocomplete="off" class="input-text search-q" />
-											<button type="submit" class="subs"><i class="fa fa-search subsi"></i></button>
-											<div id="search-suggestions" class="srch-datalist slimScroll"></div>
-										</div>
-									</form>
+					<?php
+					if (!$this->mobileView) :
+						//Desktop view header middle
+					?>
+						<div class="col-md-9 deskv-hm-movable">
+							<div class="row">
+								<div class="col-md-10 hidden-xs">
+									<div class="serachbox">
+										<form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
+											<div class="searchfld deskv">
+												<input type="text" placeholder="Search here" name="q" autocomplete="off" class="input-text search-q" />
+												<button type="submit" class="subs"><i class="fa fa-search subsi"></i></button>
+												<div id="search-suggestions" class="srch-datalist slimScroll"></div>
+											</div>
+											<div class="campaignarea">
+												<div class="campaign-sticker">
+													<a href="/track-order/">
+														Track order
+													</a><a href="/campaign/">
+														Campagins
+													</a>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<div class="col-md-2 hidden-xs">
+									<ul class="wishlistall">
+										<li><a href="/my-account/?c=90.04" title="Notification"><i class="fa fa-bell"></i> <span class="badge"><?= $this->NotificationBadge ?></span></a></li>
+										<li><a href="/contact/" title="Support"><i class="fa fa-question-circle"></i></a></li>
+									</ul>
 								</div>
 							</div>
-							<div class="col-md-3 hidden-xs">
-								<ul class="wishlistall">
-									<li><a href="/my-account/?c=90.04" title="Notification"><i class="fa fa-bell"></i> <span class="badge"><?= $this->NotificationBadge ?></span></a></li>
-									<li><a href="/contact/" title="Support"><i class="fa fa-question-circle"></i></a></li>
-								</ul>
-							</div>
 						</div>
-					</div>
-				<?php
-				else :
-					//Mobile view header top & middle
-				?>
-					<div class="col-xs-7 head-right-col_">
-						<ul class="ht-right">
-							<li><input type="text" class="m-ht-search tsearch-icon" placeholder="Search for products" />
-							</li>
-							<li class="dropdown ht-top-shortcut">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-								<ul class="dropdown-menu dropdown-menu-right animated slideDown">
-									<li>
-										<a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
-										<ul class="collapse" id="ht-currency">
-											<li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-											<li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
-											<li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
-											<li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
-										</ul>
-									</li>
+					<?php
+					else :
+						//Mobile view header top & middle
+					?>
+						<div class="col-xs-7 head-right-col_">
+							<ul class="ht-right">
+								<li><input type="text" class="m-ht-search tsearch-icon" placeholder="Search for products" />
+								</li>
+								<li class="dropdown ht-top-shortcut">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+									<ul class="dropdown-menu dropdown-menu-right animated slideDown">
+										<li>
+											<a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
+											<ul class="collapse" id="ht-currency">
+												<li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
+												<li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
+												<li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
+												<li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
+											</ul>
+										</li>
 
-								<?php if (!$this->UserData) : ?>
-									<li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
-									<li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
-								<?php else : ?>
-									<li><a href="/my-account/?c=90.04">Notifications (<?= $this->NotificationBadge ?>)</a></li>
-									<li><a href="/my-account/">Update Account</a></li>
-									<li><a href="/my-account/?c=90.02">My Wishlists</a></li>
-									<li><a href="/my-account/?c=90.03">Order History</a></li>
-									<li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
-								<?php endif; ?>
+										<?php if (!$this->UserData) : ?>
+											<li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+											<li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
+										<?php else : ?>
+											<li><a href="/my-account/?c=90.04">Notifications (<?= $this->NotificationBadge ?>)</a></li>
+											<li><a href="/my-account/">Update Account</a></li>
+											<li><a href="/my-account/?c=90.02">My Wishlists</a></li>
+											<li><a href="/my-account/?c=90.03">Order History</a></li>
+											<li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
+										<?php endif; ?>
 
-									<li><a href="/brands/">Brands</a></li>
-									<li><a href="/track-order/">Track Order</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				<?php endif; ?>
+										<li><a href="/brands/">Brands</a></li>
+										<li><a href="/track-order/">Track Order</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					<?php endif; ?>
 
 				</div>
 			</div>
@@ -234,68 +253,66 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 			<div class="mainmenu-area1">
 				<div class="container">
 					<div class="row deskv-hb">
+						<?php
+						if (!$this->mobileView) :
+							//Desktop view header bottom
+						?>
+							<div class="col-md-3" id="all-dept-btn" style="padding-right:0px">
+								<div class="manue dropdown mainmenu cacaallpaje">
+									<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="javascript:;">
+										<i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
+									</a>
+									<ul class="nav navbar-nav dropdown-menu">
+										
+										<?php
+										include "menu.php";
+										?>
 
-					<?php
-					if (!$this->mobileView) :
-						//Desktop view header bottom
-					?>
-						<div class="col-md-3" id="all-dept-btn" style="padding-right:0px">
-							<div class="manue dropdown mainmenu cacaallpaje">
-								<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="javascript:;">
-									<i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
-								</a>
-								<ul class="nav navbar-nav dropdown-menu">
-									
-								<?php
-								include "menu.php";
-								?>
-								
-								</ul>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div class="col-md-9 cols hidden-xs">
-							<div class="mainmenu-area-quicklinks">
-								<ul class="m-a-links">
-									<li><a href="/">Home</a></li>
-									<li><a href="/my-account/?c=90.02">Wishlists</a></li>
-									<li><a href="/brands/">Brands</a></li>
-									<li><a href="/track-order/">Track Order</a></li>
-									
-									<?php if (!$this->UserData) : ?>
-										<li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
-										<li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
-									<?php else : ?>
-										<li><a href="/my-account/">User Account</a></li>
-									<?php endif; ?>
-									
-									<li><a href="/contact/">Support</a></li>
-								</ul>
-							</div>
-						</div>
-					<?php
-					else :
-						//Mobile view header bottom
-					?>
-						<div class="col-xs-4 m-hb-grid cntntTab active" data-target="#skmbcontent">
-							<div class="m-hb-grid-menu">
-								<i class="fa fa-th-large"></i> Main
-							</div>
-						</div>
+							<div class="col-md-9 cols hidden-xs">
+								<div class="mainmenu-area-quicklinks">
+									<ul class="m-a-links">
+										<li><a href="/">Home</a></li>
+										<li><a href="/brands/">Brands</a></li>
+										<li><a href="/track-order/">Track Order</a></li>
 
-						<div class="col-xs-4 m-hb-grid tb-2" data-target="#skmbcategories">
-							<div class="m-hb-grid-menu">
-								<i class="fa fa-th-list"></i> Categories
-							</div>
-						</div>
+										<?php if (!$this->UserData) : ?>
+											<li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+											<li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
+										<?php else : ?>
+											<li><a href="/my-account/">User Account</a></li>
+										<?php endif; ?>
 
-						<div class="col-xs-4 m-hb-grid tb-3" data-target="#skmbcart">
-							<div class="m-hb-grid-menu sc-btn">
-								<span id="fcTot" class="badge"><?= $this->CartData->getTotalItem() ?></span>
-								<i class="fa fa-shopping-cart "></i> Cart
+										<li><a href="/contact/">Support</a></li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div class="tabbed-section__highlighter"></div>
-					<?php endif; ?>
+						<?php
+						else :
+							//Mobile view header bottom
+						?>
+							<div class="col-xs-4 m-hb-grid cntntTab active" data-target="#skmbcontent">
+								<div class="m-hb-grid-menu">
+									<i class="fa fa-th-large"></i> Main
+								</div>
+							</div>
+
+							<div class="col-xs-4 m-hb-grid tb-2" data-target="#skmbcategories">
+								<div class="m-hb-grid-menu">
+									<i class="fa fa-th-list"></i> Categories
+								</div>
+							</div>
+
+							<div class="col-xs-4 m-hb-grid tb-3" data-target="#skmbcart">
+								<div class="m-hb-grid-menu sc-btn">
+									<span id="fcTot" class="badge"><?= $this->CartData->getTotalItem() ?></span>
+									<i class="fa fa-shopping-cart "></i> Cart
+								</div>
+							</div>
+							<div class="tabbed-section__highlighter"></div>
+						<?php endif; ?>
 
 					</div>
 				</div>
@@ -304,45 +321,45 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 	</header>
 	<div id="skbc-top-margin"></div>
 
-<?php
-if ($this->mobileView) :
-	//Mobile view header toggle tabs
-?>
-	<div class="mb-top-search">
-		<div class="search-area">
-			<form method="GET" action="<?= PROJECT_FOLDER . 'search/' ?>">
-				<div class="m-flex">
-					<a href="javascript:;" class="tclose-icon tsearch-icon"><i class="fa fa-arrow-left"></i></a>
-					<input type="text" class="search-q" name="q" placeholder="Type product id, name, category..." />
-					<button type="submit" class="tsearch-btn"><i class="fa fa-search"></i></button>
-				</div>
-			</form>
-		</div>
-		<div class="mb-ts-backdrop srch-datalist" id="search-suggestions"></div>
-	</div>
-
-	<section id="skmbcategories" style="display:none">
-		<div class="mainmenu">
-			<ul class="nav navbar-nav">
-
-			<?php 
-			include "menu.php"; 
-			?>
-
-			</ul>
-		</div>
-	</section>
-
-	<section id="skmbcart" class="mbl-tab-sc" style="display:none">
-		<div class="sc-body">
-			<div class="sc-body-top">
-				<h4>Shopping Cart</h4>
-				<span class="scb-ct"><?= $this->CartData->getTotalItem() ?> ITEM(S)</span>
+	<?php
+	if ($this->mobileView) :
+		//Mobile view header toggle tabs
+	?>
+		<div class="mb-top-search">
+			<div class="search-area">
+				<form method="GET" action="<?= PROJECT_FOLDER . 'search/' ?>">
+					<div class="m-flex">
+						<a href="javascript:;" class="tclose-icon tsearch-icon"><i class="fa fa-arrow-left"></i></a>
+						<input type="text" class="search-q" name="q" placeholder="Type product id, name, category..." />
+						<button type="submit" class="tsearch-btn"><i class="fa fa-search"></i></button>
+					</div>
+				</form>
 			</div>
-			<div id="fsc-content" class="fsc-content slimScroll"></div>
+			<div class="mb-ts-backdrop srch-datalist" id="search-suggestions"></div>
 		</div>
-	</section>
-<?php endif; ?>
+
+		<section id="skmbcategories" style="display:none">
+			<div class="mainmenu">
+				<ul class="nav navbar-nav">
+					
+					<?php
+					include "menu.php";
+					?>
+
+				</ul>
+			</div>
+		</section>
+
+		<section id="skmbcart" class="mbl-tab-sc" style="display:none">
+			<div class="sc-body">
+				<div class="sc-body-top">
+					<h4>Shopping Cart</h4>
+					<span class="scb-ct"><?= $this->CartData->getTotalItem() ?> ITEM(S)</span>
+				</div>
+				<div id="fsc-content" class="fsc-content slimScroll"></div>
+			</div>
+		</section>
+	<?php endif; ?>
 
 	<section id="skmbcontent" style="display:block">
 		<?php

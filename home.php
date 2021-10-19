@@ -11,6 +11,10 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     <div class="container home-floating-menu-container">
 
     </div>
+<?php else : ?>
+    <div class="floating-number" style="position:fixed;bottom:0;left:0;padding:3px 10px;background:var(--accent);z-index:9999;color:#fff;">
+        <strong>Call: <span><?php echo Models::getContactInformation('mobile1') ?></span></strong>
+    </div>
 <?php endif; ?>
 
 <div class="homepage-top-section">
@@ -57,42 +61,15 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 hidden-xs" style="padding-right:0">
-                <a href="<?php echo $this->TopSticker1['image_link']; ?>">
-                    <img class="img-responsive" src="<?php echo $this->TopSticker1['image']; ?>" alt="" />
-                </a>
-            </div>
-            <div class="col-md-9 col-xs-12">
-                <div class="trending-categories">
-                    <div class="tc-list slimScroll">
-                        <div class="tc-single">
-                            <h2>Top Ranking</h2>
-                            <h4>Categories</h4>
+                    <div class="trending-categories">
+                        <div class="tc-list">
+                            <a href="/campaign/">
+                                <img src="<?php echo $this->TopSticker3['image'] ?>" alt="Banner image">
+                            </a>
+                            <a href="<?php echo $this->TopSticker4['image_link'] ?>">
+                                <img src="<?php echo $this->TopSticker4['image'] ?>" alt="Banner image">
+                            </a>
                         </div>
-
-                        <?php
-                        $TrCat = $this->TrendCategories;
-                        $TcRes = $TrCat->fetchTrending();
-
-                        while ($TC = $TcRes->fetch_array()) :
-                            $TrCat->setCatId($TC['id']);
-                            $TrCat->setMain($TC['main']);
-
-                            $CatLink = $TrCat->getHref();
-                            $CatImg = $TrCat->getCatImg('Top ranking category icon')[0];
-                        ?>
-                            <div class="tc-single">
-                                <a href="<?php echo $CatLink ?>">
-                                    <div class="tc-single-img" style="background-image:url('<?php echo $CatImg ?>')"></div>
-                                    <div class="tc-single-title"><?php echo htmlspecialchars($TC['main']) ?></div>
-                                </a>
-                            </div>
-                        <?php endwhile; ?>
-
                     </div>
                 </div>
             </div>
@@ -101,8 +78,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 </div>
 
 <section class="main-body">
-
-    <?php if ($this->FlashSales->num_rows && $this->FlashSalesTimer) : ?>
+    <?php if (false) : ?>
         <div class="spd">
             <div class="container">
                 <div class="section-mb">
@@ -148,11 +124,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                     </a>
                                                     <p>
                                                         <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
                                                         <?php if ($sp->getDiscount()) : ?>
                                                             <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                         <?php endif; ?>
-
                                                     </p>
                                                 </div>
                                             </div>
@@ -181,7 +155,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     </svg>
                                 </div>
                             <?php endif; ?>
-
                         </div>
                     </div>
                 </div>
@@ -227,11 +200,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                 </a>
                                                 <p>
                                                     <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
                                                     <?php if ($sp->getDiscount()) : ?>
                                                         <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                     <?php endif; ?>
-
                                                 </p>
                                             </div>
                                         </div>
@@ -260,7 +231,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                 </svg>
                             </div>
                         <?php endif; ?>
-
                     </div>
                 </div>
             </div>
@@ -278,7 +248,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 <div class="ft-pr-sliders">
                     <div class="new-arrivals">
                         <div class="grid-row">
-
                             <?php
                             $St_i = 1;
                             $newArrivals = $this->newArrivals();
@@ -291,11 +260,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     <div class="bc-products">
                                         <div class="single-product">
                                             <div class="sp-image">
-
                                                 <?php if ($sp->getDiscount()) : ?>
                                                     <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
                                                 <?php endif; ?>
-
                                                 <a href="<?php echo $sp->getHref() ?>">
                                                     <img src="<?php echo $sp->getProductImage() ?>" />
                                                 </a>
@@ -308,11 +275,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                         </a>
                                                         <p>
                                                             <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
                                                             <?php if ($sp->getDiscount()) : ?>
                                                                 <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                             <?php endif; ?>
-
                                                         </p>
                                                     </div>
                                                 </div>
@@ -369,9 +334,11 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         if ($BrowseCatProducts->num_rows) :
                     ?>
                             <div class="bc-single">
-                                <div class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></div>
+                                <div class="bc-cat-all">
+                                    <a href="<?php echo $Cat->getHref() ?>">View All</a>
+                                    <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></span>
+                                </div>
                                 <div class="grid-row">
-
                                     <?php
                                     $Ct_i = 1;
                                     while ($TrPr = $BrowseCatProducts->fetch_assoc()) :
@@ -379,7 +346,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                         $sp->processDiscount();
                                         $sp->processStock();
                                     ?>
-
                                         <?php
                                         if ($Ct_i == 1) :
                                             $CatImg = Models::asset('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-3.jpg');
@@ -412,11 +378,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                                 </a>
                                                                 <p>
                                                                     <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
                                                                     <?php if ($sp->getDiscount()) : ?>
                                                                         <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                                     <?php endif; ?>
-
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -434,9 +398,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     endwhile;
                                     ?>
 
-                                </div>
-                                <div class="bc-cat-all">
-                                    <div>&nbsp;</div><a href="<?php echo $Cat->getHref() ?>">View All</a>
                                 </div>
                             </div>
                     <?php
