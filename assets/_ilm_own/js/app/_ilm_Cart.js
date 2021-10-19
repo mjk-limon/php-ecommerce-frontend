@@ -93,7 +93,7 @@ _ilm_Cart = {
                 _ilm.popupContent("hide");
 
                 _ilm_Cart_floatingcart.updateCartData();
-                _ilm_Cart_floatingcart.showCart();
+                //_ilm_Cart_floatingcart.showCart();
             } else if (result.openpop) {
                 _ilm.popupContent("show", result.content);
             } else {

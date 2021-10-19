@@ -70,10 +70,10 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
             <div class="sc-btn">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <div><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
-                <div class="fcamount"><?php echo Models::curr() ?><span id="fcAmnt"><?= $this->CartData->getSubTotal() ?></span></div>
+                <div class="fcamount"><?php echo Models::curr() ?><span id="fcAmnt" class="odometer"><?php echo $this->CartData->getSubTotal() ?></span></div>
             </div>
         <?php endif; ?>
-        
+
         <div class="sc-body">
             <div class="clearfix sc-body-top">
                 <span class="floating-sc-close">&times;</span>
@@ -125,8 +125,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" title="Support" class="support"
-                                                    onclick="window.open('tel:<?php echo Models::getContactInformation('mobile1') ?>')">
+                                            <a href="javascript:;" title="Support" class="support" onclick="window.open('tel:<?php echo Models::getContactInformation('mobile1') ?>')">
                                                 <div></div>
                                                 <span><?php echo Models::getContactInformation('mobile1') ?></span>
                                             </a>
@@ -162,7 +161,11 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                     ?>
                         <div class="col-xs-7 head-right-col_">
                             <ul class="ht-right">
-                                <li class="cart sc-btn"><i class="fa fa-shopping-cart"></i> Cart</li>
+                                <li class="cart sc-btn">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <div class="fccarttotal"><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span></div>
+                                    <div class="fcamount"><?php echo Models::curr() ?><span id="fcAmnt" class="odometer"><?php echo $this->CartData->getSubTotal() ?></span></div>
+                                </li>
                                 <li class="dropdown ht-top-shortcut">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-right animated slideDown">

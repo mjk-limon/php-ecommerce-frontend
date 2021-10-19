@@ -124,6 +124,9 @@ $shippingMethods = $this->shippingMethods();
 <script src="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
 <script src="<?= Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?= Models::asset('assets/vendors/counterup/odometer.min.js') ?>"></script>
+
+<link rel="stylesheet" href="<?= Models::asset('assets/vendors/counterup/odometer-theme-minimal.css') ?>" />
 
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
