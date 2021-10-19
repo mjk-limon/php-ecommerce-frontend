@@ -15,7 +15,7 @@ $shippingMethods = $this->shippingMethods();
                 <div class="col-md-3 col-xs-6 flex">
                     <div class="single-widget">
                         <img src="<?php echo Models::getLogo() ?>" class="img-responsive">
-                        <p style="margin-top: 20px">Hello world! Hello hello hello</p>
+                        <p style="margin-top: 20px"></p>
                         <div class="social-icons text-center footer-social">
                             <ul class="nav">
 
