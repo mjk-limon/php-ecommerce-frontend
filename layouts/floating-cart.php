@@ -27,7 +27,7 @@ if ($this->CartItems) :
                                 <span>Unit Price: <?= Models::curr($Sp->getPrice()) ?></span>
                             </div>
                         </td>
-                        <td><?= $Sp->getPrice() * $CItem['q'] ?></td>
+                        <td><?php echo round($Sp->getPrice() * $CItem['q']) ?></td>
                         <td><span class="rmv-crt-btn" data-dynamic="<?= $CKey ?>">&times;</span></td>
                     </tr>
                 <?php endforeach; ?>
