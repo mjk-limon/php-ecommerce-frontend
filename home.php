@@ -5,7 +5,7 @@ namespace _ilmComm;
 $sp = $this->SingleProduct;
 $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 115));
-$TopSticker3 = $this->getStickers('index', 4);
+$TopSticker3 = $this->getStickers(4);
 ?>
 
 <?php if (!$this->mobileView) : ?>
