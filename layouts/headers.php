@@ -189,9 +189,18 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 												<div class="campaign-sticker">
 													<a href="/track-order/">
 														Track order
-													</a><a href="/campaign/">
-														Campagins
 													</a>
+
+													<?php if (Models::admFet("_ilm_cmp")) : ?>
+														<a href="/campaign/">
+															Campagins
+														</a>
+													<?php else : ?>
+														<a href="/search/?q=&a_s_t=flash_sales">
+															Flash Sales
+														</a>
+													<?php endif; ?>
+													
 												</div>
 											</div>
 										</form>
@@ -263,7 +272,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 										<i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
 									</a>
 									<ul class="nav navbar-nav dropdown-menu">
-										
+
 										<?php
 										include "menu.php";
 										?>
@@ -341,7 +350,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 		<section id="skmbcategories" style="display:none">
 			<div class="mainmenu">
 				<ul class="nav navbar-nav">
-					
+
 					<?php
 					include "menu.php";
 					?>

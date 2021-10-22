@@ -458,8 +458,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         </div>
                                         <div class="sp-nav">
                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                            <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                            <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%;">অর্ডার করুন</a>
                                         </div>
                                     </div>
                                 </div>

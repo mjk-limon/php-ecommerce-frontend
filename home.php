@@ -132,8 +132,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                             </div>
                                             <div class="sp-nav">
                                                 <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                                <a href="javascript:;" class="buy-now cAddBuyNav">অর্ডার করুন</a>
                                             </div>
                                         </div>
                                     </div>
@@ -208,8 +208,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                         </div>
                                         <div class="sp-nav">
                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                            <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                            <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%">অর্ডার করুন</a>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +283,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                 </div>
                                                 <div class="sp-nav">
                                                     <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                    <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                    <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                    <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                                    <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%;">অর্ডার করুন</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,8 +386,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                         </div>
                                                         <div class="sp-nav">
                                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                            <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                                            <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%">Buy Now</a>
                                                         </div>
                                                     </div>
                                                 </div>

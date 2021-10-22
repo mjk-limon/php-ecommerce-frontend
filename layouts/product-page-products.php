@@ -81,9 +81,11 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                                 </a>
                                 <p>
                                     <strong class="price"><?php echo Models::curr($this->SingleProduct->getPrice()) ?></strong>
+                                    
                                     <?php if ($this->SingleProduct->getDiscount()) : ?>
                                         <strong class="p-old"><?php echo Models::curr($this->SingleProduct->getPrice(0)) ?></strong>
                                     <?php endif; ?>
+                                    
                                 </p>
                             </div>
                         </div>
@@ -91,8 +93,8 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         <?php if (!$this->mobileView) : ?>
                             <div class="sp-nav">
                                 <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
+                                <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%">অর্ডার করুন</a>
                             </div>
                         <?php endif; ?>
 
