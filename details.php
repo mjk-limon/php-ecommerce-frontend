@@ -36,7 +36,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                 ?>
 
                 <div class="row">
-                    <div class="col-md-4 single-top-left">
+                    <div class="col-md-5 single-top-left">
 
                         <?php if ($this->mobileView) : ?>
                             <h2 class="pr-name"><?php echo $PrDetails->getName() ?></h2>
@@ -52,7 +52,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 ?>
                                     <li data-thumb="<?php echo Models::asset($Image) ?>">
                                         <div class="thumb-image detail_images">
-                                            <img src="<?php echo Models::asset($Image) ?>" data-imagezoom="true" class="img-responsive" alt="<?php echo $Image ?>">
+                                            <div class="easyzoom easyzoom--overlay">
+                                                <a href="<?php echo Models::asset($Image) ?>">
+                                                    <img src="<?php echo Models::asset($Image) ?>" alt="" class="img-responsive" />
+                                                </a>
+                                            </div>
                                         </div>
                                     </li>
                                 <?php endforeach; ?>
@@ -62,7 +66,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </div>
                     </div>
 
-                    <div class="col-md-6 single-top-right">
+                    <div class="col-md-7 single-top-right">
                         <div class="product-title">
                             <div class="pt-area">
 
@@ -71,7 +75,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <?php endif; ?>
 
                                 <small>By, <a href="<?php echo '/search/?q=&a_s_t=brand&astval=' . urlencode($PrDetails->getBrandName()) ?>"><?php echo $PrDetails->getBrandName() ?></a></small>
-                                <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>" data-prs="<?php echo round($PrDetails->getPrice()) ?>">
+                                <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>">
                                     <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
 
                                     <?php if ($PrDetails->getDiscount()) : ?>
@@ -89,7 +93,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             ?>
 
                             <p class="pr-entl">Availability: <span class="entl-data ava <?php echo $AvaClass ?>"><?php echo $Availability ?></span></p>
-                            <p class="pr-entl">SKU: <span class="entl-data"><?php echo $PrDetails->getOthers("sku") ?></span></p>
                             <p class="pr-entl">Product Code: <span class="entl-data" id="tPrId"><?php echo $this->Prid ?></span></p>
 
                             <div class="pr-size-color">
@@ -118,9 +121,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         foreach ($Colors as $Color) :
                                             $resColor = Models::restyleUrl($Color, true);
                                             $background = str_replace(" ", ", ", $Color, $count);
-                                            if ($count) {
-                                                $background = 'linear-gradient(45deg, ' . $background . ')';
-                                            }
+                                            if ($count) $background = 'linear-gradient(45deg, ' . $background . ')';
                                             $colrPrev = (file_exists(Models::docRoot("proimg/{$this->Prid}/{$resColor}-texture.png")) ?
                                                 "url('" . Models::asset("proimg/{$this->Prid}/{$resColor}-texture.png") . "') no-repeat center / 100% 100%" :
                                                 $background);
@@ -143,17 +144,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
                                         <li class="item_plus"><a href="javascript:;">+</a></li>
                                     </ul>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p>
-                                                Product amount total:
-                                                <strong>
-                                                    <?php echo Models::curr() ?><span id="pramqty"><?php echo round($PrDetails->getPrice()) ?></span>
-                                                </strong>
-                                            </p>
-                                        </div>
-                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-7 col-xs-6">
@@ -216,7 +206,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </ul>
                     </div>
 
-                    <div class="col-md-2 details-top-right hidden-xs">
+                    <div class="col-md-2 details-top-right hidden-xs hidden-lg">
                         <div class="section-mb bg-main">
                             <div class="pr-glancebox <?php echo $ratClass ?>">
                                 <div class="gb-title">Product Rating</div>
@@ -552,7 +542,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
         });
     </script>
 <?php else : ?>
-
+    <link rel="stylesheet" href="<?php echo Models::asset("assets/vendors/imagezoom/easyzoom.css") ?>" />
+    <script src="<?php echo Models::asset("assets/vendors/imagezoom/easyzoom.js") ?>"></script>
 <?php endif; ?>
 
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>

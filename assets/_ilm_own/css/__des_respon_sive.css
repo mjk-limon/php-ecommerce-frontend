@@ -40,7 +40,7 @@
 	.m-ht-search{width:100%;border:0;outline:none;padding:5px 10px;background:#f5f5f5}
 	.m-ht-threshold{display:block;padding:5px 15px;}
 	
-	.mainmenu-area1{border-top:0}
+	.mainmenu-area1{border-top:0;background-color:transparent;}
 	.m-hb-grid{text-align:center;color:#aaa;padding:6px 0 4px;font-size:12px}
 	.m-hb-grid.active{color:var(--accent)}
 	.m-hb-grid-menu .fa{display:block;font-size:14px}
@@ -74,6 +74,7 @@
 	/* ==========================
 	 Homepage
 	================*/
+	.homepage-top-section .slider-section .banner-slider-holder{padding-top:0px;padding-left:0px}
 	.tc-list .tc-single{min-width:75px;padding:.5rem}
 	.tc-single .tc-single-title{font-size:12px}
 	.tc-list .tc-single:first-child h2, .tc-list .tc-single:first-child h4{font-size:13px}
@@ -117,7 +118,8 @@
 	.filter-form > h4{padding-left:0}
 	
 	.empty-product-page > h4{font-size:1.7rem}
-	.grid-row .grids{padding:1rem}
+	.bc-cat-tab{width: 70%;font-size: 1.2rem;}
+	.bc-cat-tab a{width: 49%; padding-left: 0; padding-right: 0; text-align:center}
 	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:250px}
 	.sp-image{height:70%}
 	
