@@ -62,7 +62,7 @@ _ilm_home_page = {
 
 			if (parentWidth) {
 				jssorSlider.$ScaleWidth(Math.min(parentWidth, 1950));
-				parentHeight = jssorSlider.$Elmt.parentNode.clientHeight;
+				parentHeight = jssorSlider.$Elmt.parentNode.clientHeight + 20;
 				if ($(jssorSlider.$Elmt).hasClass("banner-slider")) {
 					$('#all-dept-menus .mainmenu > ul').height(parentHeight);
 				}
