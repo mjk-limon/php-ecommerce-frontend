@@ -124,7 +124,9 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 
 									<li class="dropdown dropdown-small">
 										<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-											<span class="key"><img src="<?php echo Models::asset("images/flag-uk-icon.png") ?>"><?php echo $this->Language ?></span><b class="caret"></b></a>
+											<span class="key"><?php echo $this->Language ?></span>
+											<b class="caret"></b>
+										</a>
 										<ul class="dropdown-menu">
 											<li><a href="?lang=en">English</a></li>
 											<li><a href="?lang=bn">বাংলা</a></li>
