@@ -178,13 +178,10 @@ _ilm_Details_page = {
             if (item.i_s == cD.size && item.i_c == cD.colr) {
                 var $PriceElem = $(".pr-price"),
                     $StockElem = $("#tStock"),
-                    prDis = parseInt($PriceElem.data("dis")),
-                    prDisPrice = item.s_p.replace(/[0-9]{1,}/g, function (prPrice) {
-                        return prPrice - (prPrice * (prDis / 100));
-                    }), priceLbl;
+                    priceLbl;
 
-                priceLbl = prDis
-                    ? prDisPrice + '<span class="pre-price">' + item.s_p + '</span>'
+                priceLbl = item.p_d
+                    ? item.p_dp + '<span class="pre-price">' + item.s_p + '</span>'
                     : item.s_p;
 
                 $PriceElem.html(priceLbl);
