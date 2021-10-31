@@ -8,9 +8,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 ?>
 
 <?php if (!$this->mobileView) : ?>
-    <div class="container home-floating-menu-container">
-
-    </div>
+    
 <?php endif; ?>
 
 <div class="homepage-top-section">

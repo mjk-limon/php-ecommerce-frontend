@@ -65,7 +65,7 @@ body.elem-loader{padding-right:18px}
 .fc-tamount{text-align:center;padding:7px 0;background:#ccc;border-radius:7px 7px 0 0}
 
 /*== Header ===*/
-header{box-shadow: 0px 3px 5px #d2d2d2;position: fixed;top:0;left:0;width:100%;background: var(--header);z-index:1030}
+header{box-shadow:0 3px 5px -4px #666;position: fixed;top:0;left:0;width:100%;background: var(--header);z-index:1030}
 .header_top{background:none repeat scroll 0 0 #FFF}
 .top-user-nav ul li a{display:block;font-size:13px;padding:3px 5px;color:var(--accent);font-family:'Roboto',sans-serif;font-weight:300}
 .top-user-nav ul li a span{font-weight:500;color:#888}
@@ -135,8 +135,8 @@ header{box-shadow: 0px 3px 5px #d2d2d2;position: fixed;top:0;left:0;width:100%;b
 .mainmenu ul li a i{text-align:right}
 .mainmenu ul li a:hover, .mainmenu ul li a.active, .shop-menu ul li a.active{background:none;color:var(--accent)}
 ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;background:var(--menubar);list-style:none;padding:10px;margin-left:0;width:700px;border:1px solid #e5e5e5;box-shadow:0 3px 3px rgba(0,0,0,0.1);display:none;z-index:999;min-height:100%}
-.navbar-nav li ul.sub-menu li{padding:3px 8px;border:0;line-height:1.1em}
-.navbar-nav li ul.sub-menu li a{font-weight:400;color:#444;font-size:14px}
+.navbar-nav li ul.sub-menu li{padding:0px 8px;border:0;line-height:1.1em;white-space:normal}
+.navbar-nav li ul.sub-menu li a{font-weight:400;color:#444;font-size:14px;display:block;padding:5px 9px}
 .navbar-nav li ul.sub-menu li a:hover{color:var(--accent)}
 .manue .fa-angle-down{float:none;position:absolute;right:6px;top:50%;transform:translateY(-50%)}
 .nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu{display:block}
@@ -347,7 +347,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .thumb-image.no-stock:after{background-image:url('../../images/no-stock.png');background-size:100% 100%;width:100%;height:100%;position:absolute;top:0;left:0;display:block;content:'';opacity:0.3}
 .single-top-right .product-title{border-bottom:1px solid #eee;margin-bottom:1rem}
 .pt-area{font-size:13px}
-.pr-name{font-weight:300;font-size:24px;margin-bottom:2px;margin-top:0px}
+.pr-name{font-weight:400;font-size:24px;margin-bottom:2px;margin-top:0px}
 .pr-price{color:var(--accent);font-size:2.5rem;font-weight:500;margin:7px 0;}
 .pre-price{color:#acacac;font-size:2rem;font-weight:300;margin-left:7px;text-decoration:line-through}
 

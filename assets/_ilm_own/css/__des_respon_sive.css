@@ -31,7 +31,7 @@
 	 Header 
 	================*/
 	.logo-cols{flex:1}
-	.logo img{max-height:65px;width:100%;max-width:none;height:auto}
+	.logo img{height:50px;max-width:100%}
 	.head-right-col{flex:2;padding-left:15px}
 	ul.ht-right{padding-left: 15px;margin:0;display:table;width:100%;height:100%}
 	ul.ht-right > li{display:table-cell;vertical-align:middle}
