@@ -14,8 +14,12 @@ $shippingMethods = $this->shippingMethods();
             <div class="row flex" style="flex-wrap:wrap;">
                 <div class="col-md-3 col-xs-6 flex">
                     <div class="single-widget">
-                        <img src="<?php echo Models::getLogo() ?>" class="img-responsive">
-                        <p style="margin-top: 20px"></p>
+                        <img src="<?php echo Models::asset("images/logo2.png") ?>" class="img-responsive">
+                        <p style="margin-top: 20px">
+                            <?php
+                            Head\DevInfo::getDevComInfo();
+                            ?>
+                        </p>
                         <div class="social-icons text-center footer-social">
                             <ul class="nav">
 
@@ -31,26 +35,7 @@ $shippingMethods = $this->shippingMethods();
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="single-widget">
-                        <h2>Contact Us</h2>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                <h5><i class="fa fa-map-marker contact-icon"></i> Office Address</h5>
-                                <p><?php echo Models::getContactInformation('address') ?></p>
-                            </li>
-                            <li>
-                                <h5><i class="fa fa-mobile contact-icon"></i> Phone</h5>
-                                <p><?php echo Models::getContactInformation('mobile1') ?></p>
-                            </li>
-                            <li>
-                                <h5><i class="fa fa-envelope-o contact-icon"></i> Email</h5>
-                                <p><?php echo Models::getContactInformation('email') ?></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2 col-xs-6">
+                <div class="col-md-4 col-xs-6">
                     <div class="single-widget">
                         <h2>USEFULL LINKS</h2>
                         <ul class="nav nav-pills nav-stacked">
@@ -63,58 +48,25 @@ $shippingMethods = $this->shippingMethods();
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-md-3 col-xs-6">
-                    <div class="single-widget al-l">
-                        <div class="nuws">
-                            <h2>Newsletter Singup</h2>
-                            <p>Enter your email below and get informed of our offers, campaigns, new products alers!</p>
-                            <form action="" method="POST" id="newslettersubmit" class="searchform _ilmForm">
-                                <input type="hidden" name="newsletter_add" value="1" />
-                                <div class="flex">
-                                    <input type="text" required="" name="email" placeholder="Email Address" />
-                                    <button type="submit" class="btn btn-sub newsletter-btn iFSubmitBtn">SUBMIT</button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="col-md-5 col-xs-6">
+                    <div class="single-widget">
+                        <h2>Contact Us</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li>
+                                <h5><i class="fa fa-map-marker contact-icon"></i></h5>
+                                <p><?php echo Models::getContactInformation('address') ?></p>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-mobile contact-icon"></i></h5>
+                                <p><?php echo Models::getContactInformation('mobile1') ?></p>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-envelope-o contact-icon"></i></h5>
+                                <p><?php echo Models::getContactInformation('email') ?></p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 pm-delv">
-                    <h4>Payment Methods</h4>
-
-                    <?php foreach ($paymentMethods as $PM) : ?>
-                        <img src="<?= Models::asset($PM); ?>" class="img-responsive" />
-                    <?php endforeach; ?>
-
-                </div>
-                <div class="col-md-6 pm-delv">
-                    <h4>Delivered By</h4>
-
-                    <?php foreach ($shippingMethods as $SM) : ?>
-                        <img src="<?= Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?= htmlspecialchars($SM['method_name']) ?>" />
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <p class="pull-left">
-                    <img src="<?php echo Models::getLogo() ?>" class="footerlogo">
-                </p>
-                <p class="pull-right">
-                    <?php
-                    Head\DevInfo::getDevComInfo();
-                    ?>
-                </p>
             </div>
         </div>
     </div>

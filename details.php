@@ -177,9 +177,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </div>
 
                         <ul class="share">
-                            <p class="shareli">
-                                Share on:
-                            </p>
                             <li>
                                 <a href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-facebook"></i></a>
                             </li>

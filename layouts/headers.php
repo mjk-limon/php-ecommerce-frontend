@@ -90,25 +90,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-6 hidden-xs">
-							<div class="top-user-nav">
-								<ul class="nav nav-pills">
-									<li>
-										<a href="#" onclick="window.open('tel:<?php echo Models::getContactInformation("mobile1") ?>')">
-											Hotline: <span><?php echo Models::getContactInformation("mobile1") ?></span>
-										</a>
-									</li>
-									<li>
-										<a href="#" onclick="window.open('mailto:<?php echo Models::getContactInformation("email") ?>')">
-											Mail Us: <span><?php echo Models::getContactInformation("email") ?></span>
-										</a>
-									</li>
-								</ul>
-							</div>
+							
 						</div>
 
 						<div class="col-md-6 col-sm-12">
 							<div class="header-right">
 								<ul class="list-unstyled list-inline">
+									
 									<?php if ($this->UserData) : ?>
 										<li class="dropdown">
 											<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">

@@ -10,7 +10,7 @@ while ($TrPr = $BrowseCatProducts->fetch_assoc()) :
 ?>
 
     <?php
-    if ($Ct_i == 1) :
+    if ($Ct_i == 1 && false) :
         $CatImg = Models::asset('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-3.jpg');
     ?>
         <div class="grids large-grid onlycolspan">

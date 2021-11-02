@@ -54,6 +54,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                                 endwhile;
                                 $Slider1->free();
                                 ?>
+
                             </div>
                             <div data-u="navigator" class="jssorb034" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
                                 <div data-u="prototype" class="i" style="width:13px;height:13px;">
@@ -75,7 +76,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
         <div class="container">
             <div class="section-mb" style="background-color: transparent;">
                 <div class="ft-pr-sliders home-product-categories">
-                    <ul class="products columns-6">
+                    <ul class="products columns-5">
                         <?php
                         $remi = 0;
                         $Cat = new Category\FetchCategories;
@@ -101,7 +102,6 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                                     <img src="<?php echo $CatImg ?>" alt="<?php echo htmlspecialchars($Cat->Mainc) ?>">
                                     <h2 class="ds-loop-category__title">
                                         <?php echo htmlspecialchars($Cat->Mainc) ?>
-                                        <mark class="count"><?php echo $ProductInCategory ?> products</mark>
                                     </h2>
                                 </a>
                             </li>
@@ -132,13 +132,13 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                         $Cat->setSubGroup(null);
                         $Cat->setSub(null);
 
-                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 6);
+                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 10);
                         if ($BrowseCatProducts->num_rows) :
                     ?>
                             <div class="bc-single">
-                                <div class="bc-cat-name">
-                                    <?php echo htmlspecialchars($Cat->Mainc) ?>
-                                    <div class="clearfix"></div>
+                                <div class="bc-cat-all">
+                                    <a href="<?php echo $Cat->getHref() ?>">View All</a>
+                                    <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></span>
                                 </div>
                                 <div class="grid-row">
 
