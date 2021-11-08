@@ -1,9 +1,20 @@
 /*====== Smooth Scroll =======*/
 $.ilmScroll = function (elem = null) {
-    elem = elem || 'body';
-    return $('html, body').animate({
-        scrollTop: $(elem).offset().top
-    }, 800);
+    var $page = $('html, body'),
+        elem = elem || 'body',
+        offsetTop = $(elem).offset().top;
+    
+
+    $page.on("scroll.iss mousedown.ismd wheel.isw DOMMouseScroll.isdm mousewheel.ismw keyup.isk touchmove.ist", function () {
+        $page.stop();
+        $page.off("scroll.iss mousedown.ismd wheel.isw DOMMouseScroll.isdm mousewheel.ismw keyup.isk touchmove.ist");
+    });
+    
+    $page.animate({ scrollTop: offsetTop }, 800, function () {
+        $page.off("scroll.iss mousedown.ismd wheel.isw DOMMouseScroll.isdm mousewheel.ismw keyup.isk touchmove.ist");
+    });
+
+    return true;
 }
 /*====== Rating =======*/
 $.fn.stars = function (options) {

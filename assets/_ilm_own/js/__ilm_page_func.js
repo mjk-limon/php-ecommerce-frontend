@@ -215,8 +215,10 @@ _ilm = {
 	},
 	
 	jumpToSection: function(selector, callback = null) {
-		var offsetTop = $(selector).offset().top - 120;
-		$('html, body').animate({scrollTop: offsetTop}, callback);
+		var $page = $('html, body'),
+			offsetTop = $(selector).offset().top - 120;
+		
+		$page.animate({scrollTop: offsetTop}, callback);
 	}
 }
 function ajaxPost(data, success, url=null, addArg={}) {
