@@ -94,7 +94,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             </p>
                         </div>
 
-
                         <div class="product-buy-section">
                             <?php
 							$AvaClass = $PrDetails->getStock() ? '' : 'notava';
@@ -140,8 +139,12 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
 									</ul-->
                                 <?php endif; ?>
-
                             </div>
+                        </div>
+
+                        <div class="product-short-description">
+                            <h5>Description</h5>
+                            <?php echo $PrDetails->getOthers("prshortdes") ?>
                         </div>
                     </div>
 

@@ -156,7 +156,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                     ?>
                         <div class="col-md-10 deskv-hm-movable">
                             <div class="row flex" style="align-items: center;">
-                                <div class="col-md-8 hidden-xs">
+                                <div class="col-md-7 hidden-xs">
                                     <div class="serachbox">
                                         <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
                                             <div class="searchfld deskv">
@@ -167,7 +167,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-md-4 hidden-xs">
+                                <div class="col-md-5 hidden-xs">
                                     <ul class="wishlistall">
                                         <?php if ($this->UserData) : ?>
                                             <li class="dropdown">
