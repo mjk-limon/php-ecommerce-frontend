@@ -325,7 +325,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
             </div>
         </div>
     </header>
-    <div id="skbc-top-margin"></div>
 
     <?php
     if ($this->mobileView) :

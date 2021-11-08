@@ -75,6 +75,7 @@
 	/* ==========================
 	 Homepage
 	================*/
+	.video-controls .vc-top-padding{width:100%}
 	.tc-list .tc-single{min-width:75px;padding:.5rem}
 	.tc-single .tc-single-title{font-size:12px}
 	.tc-list .tc-single:first-child h2, .tc-list .tc-single:first-child h4{font-size:13px}
@@ -85,6 +86,7 @@
 	.grid-row .grids.large-grid{height:400px}
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.ft-pr-mbl .single-product{position:relative;width:50%;padding:1rem 10px;border-right:5px solid #f6f6f6;border-bottom:5px solid #f5f5f5}
+	.bc-products .single-product, .product-page-products .single-product{height:120px}
 	.ft-pr-mbl .single-product:nth-child(2n){border-right:0}
 	.sp-nav .add-cart, .sp-nav .buy-now{padding:.5rem .25rem;font-size:1.1rem}
 	
@@ -120,15 +122,16 @@
 	.empty-product-page > h4{font-size:1.7rem}
 	.grid-row .grids{padding:1rem}
 	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:250px}
-	.sp-image{height:70%}
 	
 	
 	/* ==========================
 	 Details Page
 	================*/
 	.pr-name{font-size:18px;margin-bottom:1.5rem}
-	.flex-control-nav{width:100%;left:0}
-	.flex-control-thumbs li{float:none;display:inline-block;vertical-align:top}
+	.slides{width:100%;left:0}
+	.flex-control-nav{position:relative;width:100%;left:0}
+	.flex-control-thumbs li{float:none;display:inline-block;vertical-align:top;margin:0!important}
+	.flex-control-thumbs img{height:60px}
 	.row-rat .rating-progress{width:120px}
 	
 	.pr-buy-navs{position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;z-index:100;padding:.5rem}

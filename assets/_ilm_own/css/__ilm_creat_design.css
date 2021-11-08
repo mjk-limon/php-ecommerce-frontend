@@ -188,6 +188,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .video-controls{text-align: right;border-top: 1px solid #333;padding: 1rem}
 .video-controls.vc-mini{padding:.5rem 0}
 .vc-group:not(.m0){margin-bottom:8px}
+.video-controls .vc-top-padding{width:25%}
 .vc-group a{display:inline-block;background-color:#000;color:#fff;margin-left:3%;width:46%;text-align:center;height:35px;line-height:35px;font-size:16px;font-weight:bold;border:1px solid transparent;box-shadow:1px 1px 2px -1px #888}
 .vc-group.lightlink a{background-color:#222}
 .vc-group a.prLikeBtn.liked {color:lightseagreen!important}

@@ -23,12 +23,12 @@ $NaPr = $this->newArrivals(1, 'id,name,category,discount,price,item_left,others'
             ?>
                 <div id="htt_video" data-vimeourl="<?php echo $sp->getOthers('prvid') ?>"></div>
             <?php else : ?>
-                <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                <img src="<?php echo $sp->getProductImage() ?>" class="img-responsive">
             <?php endif; ?>
         </div>
         <div class="video-controls">
             <div style="display:flex;justify-content:end;">
-                <div style="width:25%">
+                <div class="vc-top-padding">
                     <div class="vc-group">
                         <a href="javascript:;" class="prLikeBtn" data-prid="<?php echo $sp->getProductId() ?>">Like (<span><?php echo $sp->getRating("r_t") ?></span>)</a>
                         <a href="javascript:;">Total Order (<?php echo $sp->getRating("r_s") ?>)</a>
