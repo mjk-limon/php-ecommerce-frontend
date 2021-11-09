@@ -13,12 +13,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     </div>
 <?php endif; ?>
 
-<script type="text/javascript">
-    slideSize = {
-        width: <?= $slideSize[0] ?>,
-        height: <?= $slideSize[1] ?>
-    };
-</script>
 <div class="homepage-top-section">
     <div id="slider">
         <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 490px; overflow: hidden;">
@@ -47,36 +41,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     </svg>
                 </div>
             </div>
-            <style>
-                /*jssor slider bullet skin 061 css*/
-                .jssorb061 {
-                    position: absolute;
-                }
-
-                .jssorb061 .i {
-                    position: absolute;
-                    cursor: pointer;
-                }
-
-                .jssorb061 .i .b {
-                    fill: #fff;
-                }
-
-                .jssorb061 .i:hover .b {
-                    fill-opacity: .7;
-                }
-
-                .jssorb061 .iav .b {
-                    fill: #46d1d3;
-                    fill-opacity: .5;
-                    stroke: #00fbff;
-                    stroke-width: 2000;
-                }
-
-                .jssorb061 .i.idn {
-                    opacity: .3;
-                }
-            </style>
         </div>
     </div>
 </div>
@@ -101,45 +65,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         </div>
                     </div>
                     <div class="ft-pr-sliders">
-                        <style>
-                            /*jssor slider arrow skin 082 css*/
-                            .jssora082 {
-                                display: block;
-                                position: absolute;
-                                cursor: pointer;
-                            }
-
-                            .jssora082 .c {
-                                fill: #fff;
-                                fill-opacity: .5;
-                                stroke: #000;
-                                stroke-width: 160;
-                                stroke-miterlimit: 10;
-                                stroke-opacity: 0.3;
-                            }
-
-                            .jssora082 .a {
-                                fill: #000;
-                                opacity: .8;
-                            }
-
-                            .jssora082:hover .c {
-                                fill-opacity: .3;
-                            }
-
-                            .jssora082:hover .a {
-                                opacity: 1;
-                            }
-
-                            .jssora082.jssora082dn {
-                                opacity: .5;
-                            }
-
-                            .jssora082.jssora082ds {
-                                opacity: .3;
-                                pointer-events: none;
-                            }
-                        </style>
                         <div <?= !$this->mobileView ? 'id="flashsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;visibility:hidden;"' : null ?>>
                             <div <?= !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
@@ -226,7 +151,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
             <div class="section-mb">
                 <div class="row">
                     <?php
-                    $Slider = $this->CategorySamples;
+                    $Slider = $this->getSliders(3);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-4">
@@ -259,7 +184,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="row">
                     <?php
-                    $Slider = $this->SpotLight;
+                    $Slider = $this->getSliders(4);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-4">
@@ -292,7 +217,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="row">
                     <?php
-                    $Slider = $this->NewArrivals;
+                    $Slider = $this->getSliders(5);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-4">
@@ -325,7 +250,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="row">
                     <?php
-                    $Slider = $this->ShopConcern;
+                    $Slider = $this->getSliders(6);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-3">
@@ -358,7 +283,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="row">
                     <?php
-                    $Slider = $this->ProductReview;
+                    $Slider = $this->getSliders(7);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-4">
@@ -391,7 +316,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="row">
                     <?php
-                    $Slider = $this->BeautyAdvice;
+                    $Slider = $this->getSliders(8);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
                         <div class="col-md-6">
@@ -399,7 +324,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                 <div class="slg-image">
                                     <a href="https://www.youtube.com/watch?v=<?php echo $ArrSlider['image_text1']; ?>" rel="prettyPhoto" title="YouTube View">
                                         <img src="https://img.youtube.com/vi/<?php echo $ArrSlider['image_text1']; ?>/hqdefault.jpg" class="video-gallery" />
-                                        <img src="images/play.png" class="video-play" />
+                                        <img src="<?php echo Models::asset("assets/images/play.png") ?>" class="video-play" />
                                     </a>
                                 </div>
                                 <div class="slg-text slg-text-ps">
@@ -418,4 +343,13 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     </div>
 </section>
 
+<link href="<?php echo Models::asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />
+<script type="text/javascript">
+slideSize = {
+    width: <?= $slideSize[0] ?>,
+    height: <?= $slideSize[1] ?>
+};
+</script>
+<script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
+<script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script defer src="<?= Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>

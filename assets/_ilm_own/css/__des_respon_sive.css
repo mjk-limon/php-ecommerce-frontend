@@ -172,7 +172,7 @@
 	#thank-you .invoice{zoom:.4}
 	@media print{#thank-you .invoice{zoom:1}}
 	
-	.order-track {background:transparent url(../../../images/track.png) bottom right 6px/110px no-repeat;padding:4rem 2rem}
+	.order-track {background:transparent url(../../images/track.png) bottom right 6px/110px no-repeat;padding:4rem 2rem}
 	.order-track .form-area{width:100%}
 	
 	.single-brand{min-width:32.5%}

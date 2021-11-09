@@ -52,7 +52,7 @@ $(document).ready(function () {
         }
     });
 
-    $(window).on("scroll", function () {
+    /* $(window).on("scroll", function () {
         var delta = 5,
             navbarHeight = 50,
             st = $(this).scrollTop();
@@ -74,7 +74,7 @@ $(document).ready(function () {
         }
 
         lastScrollTop = st;
-    });
+    }); */
 
     $("li.dropdown").each(function () {
         var hasSub = false,
