@@ -1,5 +1,16 @@
 _ilm_Cart = {
     init: function () {
+        $(document).on("click", ".item_plus, .item_minus", function (e) {
+            var $env = $(this),
+                $qtybox = $env.parent().find(".item_qty_input input"),
+                prQty = parseInt($qtybox.val());
+
+            $env.hasClass("item_plus") ? prQty++ : prQty--;
+
+            _ilm_Cart.quantityChange(prQty, $qtybox);
+            e.preventDefault();
+        });
+
         $(document).on('click', '.cAddBuyNav', function (e) {
             if ($(this).hasClass("add-cart")) {
                 var itemInfo, env = this, $cartEm;
@@ -36,6 +47,28 @@ _ilm_Cart = {
         });
     },
 
+    quantityChange: function (newQty, $qtybox) {
+        var prLimit = parseInt($qtybox.prop('max'));
+
+        if (newQty < 1) {
+            $qtybox.val("1");
+            _ilm.showNotification("Minimmum quantity selection is 1.", true);
+        } else if (newQty > prLimit) {
+            $qtybox.val(prLimit);
+            _ilm.showNotification("Stock limited!", true);
+        } else {
+            $qtybox.val(newQty);
+            _ilm_Cart.setCartData("qty", newQty, $qtybox);
+        }
+
+        return null;
+    },
+
+    setCartData: function (key, value, $qtybox) {
+        var $cartEm = $qtybox.closest(".pr-buy-navs").find(".bnav-btns > em").get(0);
+        $cartEm.dataset[key] = value;
+    },
+
     addToCart: function (itemInfo, successCallback = null) {
         var ajaxData, ajaxCallback;
 
@@ -56,11 +89,11 @@ _ilm_Cart = {
         ajaxCallback = function (data) {
             var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
             if (result.success) {
-                _ilm.showNotification("Product successfully added to cart.");
+                //_ilm.showNotification("Product successfully added to cart.");
                 _ilm.popupContent("hide");
 
                 _ilm_Cart_floatingcart.updateCartData();
-                _ilm_Cart_floatingcart.showCart();
+                //_ilm_Cart_floatingcart.showCart();
             } else if (result.openpop) {
                 _ilm.popupContent("show", result.content);
             } else {
@@ -226,17 +259,25 @@ var _ilm_Cart_floatingcart = {
                 _ilm.globLoader("hide", '#fsc-content');
                 $("#fsc-content").html(result.content);
                 $("#fcTot").html(result.ctotal);
+                $("#fcAmnt").html(result.camount);
             } else _ilm.showNotification(result.error, true);
         }
         ajaxPost({ update_cart_data: 1 }, ajaxCallback);
     },
 
     showCart: function () {
+        if (typeof Tawk_API !== 'undefined') {
+            Tawk_API.hideWidget();
+        }
         $(".sc-body").addClass("open");
         //$(".main-body").addClass("sc-cart-open");
     },
 
     hideCart: function () {
+        if (typeof Tawk_API !== 'undefined') {
+            Tawk_API.showWidget();
+        }
+
         $(".sc-body").removeClass("open");
         //$(".main-body").removeClass("sc-cart-open");
     }

@@ -2,6 +2,7 @@
 
 namespace _ilmComm;
 
+$sp = $this->SingleProduct;
 $PrDetails = $this->ProductDetails;
 $PrDetails->processStock();
 $PrDetails->processDiscount();
@@ -156,18 +157,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             </div>
                                         <?php endif; ?>
 
-                                        <div class="pr-short-description">
-                                            <p>Nirvana Color is featuring six warm, neutral liquid lipstick shades in matte finish. Each finish stays lenient on lips with a vibrant effect and creates velvety rich, high-impact color in just one stroke.</p>
-                                            <p><strong>SHADES:</strong></p>
-                                            <ul>
-                                                <li>Hot Chilli Pepper</li>
-                                                <li>Moon Safari</li>
-                                                <li>Anarchist</li>
-                                                <li>Naughty Girl</li>
-                                                <li>Womanity</li>
-                                                <li>Romantika</li>
-                                            </ul>
-                                        </div>
+                                        <?php if ($PrDetails->getOthers("prshortdes")) : ?>
+                                            <div class="pr-short-description">
+                                                <?php echo $PrDetails->getOthers("prshortdes") ?>
+                                            </div>
+                                        <?php endif; ?>
 
                                         <div class="pr-meta-info">
                                             <span>SKU: <span>13706</span></span>
@@ -208,105 +202,40 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         <div class="glancebox-header">RECOMMENDED FOR YOU</div>
 
                         <div class="section-mb">
-                            <div class="pr-glancebox">
-                                <div class="flex">
-                                    <div class="gb-image" style="width: 35%;">
-                                        <img src="<?php echo Models::asset('proimg/102000/1.jpg') ?>" alt="">
-                                    </div>
-                                    <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                        <div class="gb-title">Nirvana Color Liquid Matte Lipstick Romantika</div>
-                                        <div class="gb-description">
-                                            <p class="text-muted">5Gm</p>
-                                            <p><strong>Tk.315</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gb-pr-buy-nav">
-                                    <div class="flex">
-                                        <ul class="qty-selection" style="width: 35%;">
-                                            <li class="item_minus"><a href="javascript:;">-</a></li>
-                                            <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-                                            <li class="item_plus"><a href="javascript:;">+</a></li>
-                                        </ul>
-                                        <a href="javascript:;" style="width: 65%;" class="buy-now cAddBuyNav">ADD TO CART</a>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="pr-glancebox">
-                                <div class="flex">
-                                    <div class="gb-image" style="width: 35%;">
-                                        <img src="<?php echo Models::asset('proimg/102000/1.jpg') ?>" alt="">
+                            <?php
+                            $Recommended = $this->productSuggestion(false, 4);
+                            while ($RcInfo = $Recommended->fetch_assoc()) :
+                                $sp->setPrInfo($RcInfo);
+                            ?>
+                                <div class="pr-glancebox">
+                                    <div class="flex">
+                                        <div class="gb-image" style="width: 35%;">
+                                            <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                                        </div>
+                                        <div class="gb-info" style="width: 65%;padding-left: 10px;">
+                                            <div class="gb-title"><?php echo $sp->getName() ?></div>
+                                            <div class="gb-description">
+                                                <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
+                                                <p><strong><?php echo $sp->getPrice() ?></strong></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                        <div class="gb-title">Nirvana Color Liquid Matte Lipstick Romantika</div>
-                                        <div class="gb-description">
-                                            <p class="text-muted">5Gm</p>
-                                            <p><strong>Tk.315</strong></p>
+                                    <div class="gb-pr-buy-nav pr-buy-navs">
+                                        <div class="flex">
+                                            <ul class="qty-selection" style="width: 35%;">
+                                                <li class="item_minus"><a href="javascript:;">-</a></li>
+                                                <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
+                                                <li class="item_plus"><a href="javascript:;">+</a></li>
+                                            </ul>
+                                            <ul class="bnav-btns">
+                                                <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                                <li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="gb-pr-buy-nav">
-                                    <div class="flex">
-                                        <ul class="qty-selection" style="width: 35%;">
-                                            <li class="item_minus"><a href="javascript:;">-</a></li>
-                                            <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-                                            <li class="item_plus"><a href="javascript:;">+</a></li>
-                                        </ul>
-                                        <a href="javascript:;" style="width: 65%;" class="buy-now cAddBuyNav">ADD TO CART</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pr-glancebox">
-                                <div class="flex">
-                                    <div class="gb-image" style="width: 35%;">
-                                        <img src="<?php echo Models::asset('proimg/102000/1.jpg') ?>" alt="">
-                                    </div>
-                                    <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                        <div class="gb-title">Nirvana Color Liquid Matte Lipstick Romantika</div>
-                                        <div class="gb-description">
-                                            <p class="text-muted">5Gm</p>
-                                            <p><strong>Tk.315</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gb-pr-buy-nav">
-                                    <div class="flex">
-                                        <ul class="qty-selection" style="width: 35%;">
-                                            <li class="item_minus"><a href="javascript:;">-</a></li>
-                                            <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-                                            <li class="item_plus"><a href="javascript:;">+</a></li>
-                                        </ul>
-                                        <a href="javascript:;" style="width: 65%;" class="buy-now cAddBuyNav">ADD TO CART</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="pr-glancebox">
-                                <div class="flex">
-                                    <div class="gb-image" style="width: 35%;">
-                                        <img src="<?php echo Models::asset('proimg/102000/1.jpg') ?>" alt="">
-                                    </div>
-                                    <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                        <div class="gb-title">Nirvana Color Liquid Matte Lipstick Romantika</div>
-                                        <div class="gb-description">
-                                            <p class="text-muted">5Gm</p>
-                                            <p><strong>Tk.315</strong></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gb-pr-buy-nav">
-                                    <div class="flex">
-                                        <ul class="qty-selection" style="width: 35%;">
-                                            <li class="item_minus"><a href="javascript:;">-</a></li>
-                                            <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
-                                            <li class="item_plus"><a href="javascript:;">+</a></li>
-                                        </ul>
-                                        <a href="javascript:;" style="width: 65%;" class="buy-now cAddBuyNav">ADD TO CART</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endwhile; ?>
 
                         </div>
                     </div>
@@ -468,7 +397,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <h4>CUSTOMER ALSO VIEWED</h4>
                     <div class="grid-row grid4">
                         <?php
-                        $sp = $this->SingleProduct;
                         $Suggestions = $this->ProductSuggestion;
                         while ($Rpr = $Suggestions->fetch_array()) :
                             $sp->setPrInfo($Rpr);
@@ -525,7 +453,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <h4>YOU MAY ALSO LIKE</h4>
                     <div class="grid-row grid4">
                         <?php
-                        $Suggestions = $this->YouMayLike;
+                        $Suggestions = $this->productSuggestion(false);
                         while ($Rpr = $Suggestions->fetch_array()) :
                             $sp->setPrInfo($Rpr);
                             $sp->processDiscount();
@@ -634,38 +562,38 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 <link rel="stylesheet" href="<?= Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
 <script src="<?= Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
 <script>
-    var openPhotoSwipe = function(index) {
-        var pswpElement = document.querySelectorAll('.pswp')[0],
-            items = [<?= $zoom_item ?>],
-            options = {
-                index: index
-            },
-            gallery;
+var openPhotoSwipe = function(index) {
+    var pswpElement = document.querySelectorAll('.pswp')[0],
+        items = [<?= $zoom_item ?>],
+        options = {
+            index: index
+        },
+        gallery;
 
-        gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-        gallery.init();
-    }
+    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+    gallery.init();
+}
 
-    $('[data-zoom]').click(function() {
-        var index = $(this).closest("li").index();
-        openPhotoSwipe(index);
-    });
+$('[data-zoom]').click(function() {
+    var index = $(this).closest("li").index();
+    openPhotoSwipe(index);
+});
 </script>
 
 <script defer src="<?= Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>
 <script defer type="text/javascript">
-    $(document).ready(function() {
-        <?php if ($this->checkJump('jumpToRvw')) : ?>
-            $('#DRRvwBtn').trigger("click");
-            _ilm.jumpToSection('#DRRvwBtn', function() {
-                $('#rv-main-area .media:first-child').addClass('animated flash');
-            });
-        <?php endif; ?>
+$(document).ready(function() {
+    <?php if ($this->checkJump('jumpToRvw')) : ?>
+        $('#DRRvwBtn').trigger("click");
+        _ilm.jumpToSection('#DRRvwBtn', function() {
+            $('#rv-main-area .media:first-child').addClass('animated flash');
+        });
+    <?php endif; ?>
 
-        <?php if ($this->checkJump('jumpToQstn')) : ?>
-            _ilm.jumpToSection('#Rating', function() {
-                $('#rv-qus-area .media:first-child').addClass('animated flash');
-            });
-        <?php endif; ?>
-    });
+    <?php if ($this->checkJump('jumpToQstn')) : ?>
+        _ilm.jumpToSection('#Rating', function() {
+            $('#rv-qus-area .media:first-child').addClass('animated flash');
+        });
+    <?php endif; ?>
+});
 </script>

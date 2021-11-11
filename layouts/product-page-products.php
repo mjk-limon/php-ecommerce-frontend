@@ -59,7 +59,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
             $this->SingleProduct->processStock();
         ?>
             <div class="grids">
-                <div class="single-product <?= $spAddClass ?>">
+                <div class="single-product <?= $spAddClass ?> m-flex">
                     <div class="sp-image">
 
                         <?php if ($this->SingleProduct->getDiscount()) : ?>
@@ -89,14 +89,11 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                             </div>
                         </div>
 
-                        <?php if (!$this->mobileView) : ?>
-                            <div class="sp-nav">
-                                <em data-prid="<?= $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                <a href="javascript:;" class="add-cart cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                                <a href="javascript:;" class="buy-now cAddBuyNav">ADD TO CART</a>
-                            </div>
-                        <?php endif; ?>
-
+                        <div class="sp-nav">
+                            <em data-prid="<?= $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                            <a href="javascript:;" class="add-cart cAddBuyNav"><i class="fa fa-heart-o"></i></a>
+                            <a href="javascript:;" class="buy-now cAddBuyNav">ADD TO CART</a>
+                        </div>
                     </div>
                 </div>
             </div>

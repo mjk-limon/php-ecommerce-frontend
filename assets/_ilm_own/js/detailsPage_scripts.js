@@ -6,7 +6,6 @@ _ilm_Details_page = {
 		$('.flexslider').flexslider({
 			animation: "fade",
 			controlNav: "thumbnails",
-			pauseOnHover: true,
 			autoplay: true
 		});
 		lazyLoadInstance.update();
@@ -21,31 +20,21 @@ _ilm_Details_page = {
 		});
 
 		$(".ss-btn, .cs-btn").on("click", function () {
-			var $env = $(this), cartkey, cartval;
-			cartkey = $env.hasClass("ss-btn") ? 'size' : 'colr';
-			catval = $.trim($env.text());
+			var $env = $(this),
+				$qtybox = $(".item_qty_input input"),
+				cartkey = $env.hasClass("ss-btn") ? 'size' : 'colr',
+				cartval = $.trim($env.text());
+
 			$env.parent().find(".active").removeClass("active");
 			$env.addClass("active");
 
-			_ilm_Details_page.setCartData(cartkey, catval);
+			_ilm_Cart.setCartData(cartkey, cartval, $qtybox);
 			_ilm_Details_page.refreshProductPrice(this);
-		});
-
-		$(".item_plus, .item_minus").on("click", function (e) {
-			var $env = $(this), $qtybox, prQty;
-
-			$qtybox = $(".item_qty_input input");
-			prQty = parseInt($qtybox.val());
-
-			$env.hasClass("item_plus") ? prQty++ : prQty--;
-
-			_ilm_Details_page.quantityChange(prQty);
-			e.preventDefault();
 		});
 
 		$(".item_qty_input input").on("change", function (e) {
 			var prQty = parseInt($(this).val()) || 1;
-			_ilm_Details_page.quantityChange(prQty);
+			_ilm_Cart.quantityChange(prQty, $(this));
 			e.preventDefault();
 		});
 
@@ -119,33 +108,6 @@ _ilm_Details_page = {
 
 			e.preventDefault();
 		});
-	},
-
-	quantityChange: function (newQty) {
-		var $qtybox = $(".item_qty_input input"),
-			prLimit = parseInt($("#tStock").text()),
-			itemPrice = parseInt($(".pr-price").data("prs"));
-
-		if (newQty < 1) {
-			$qtybox.val("1");
-			$("#pramqty").html(itemPrice);
-			_ilm.showNotification("Minimmum quantity selection is 1.", true);
-		} else if (newQty > prLimit) {
-			$qtybox.val(prLimit);
-			$("#pramqty").html(prLimit * itemPrice);
-			_ilm.showNotification("Stock limited!", true);
-		} else {
-			$qtybox.val(newQty);
-			$("#pramqty").html(newQty * itemPrice);
-			_ilm_Details_page.setCartData("qty", newQty);
-		}
-
-		return null;
-	},
-
-	setCartData: function (key, value) {
-		var $cartEm = document.querySelector('.bnav-btns > em');
-		$cartEm.dataset[key] = value;
 	},
 
 	refreshProductPrice: function (env) {

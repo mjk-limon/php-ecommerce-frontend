@@ -52,15 +52,16 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     ?>
 
     <style type="text/css">
-        :root {
-            --accent: <?= $this->ColrData['accent'] ?>;
-            --accentsec: <?= $this->ColrData['accentsec'] ?>;
-            --secondary: <?= $this->ColrData['secondary'] ?>;
-            --mainbody: <?= $this->ColrData['mainbody'] ?>;
-            --innerpage: <?= $this->ColrData['innerpage'] ?>;
-            --header: <?= $this->ColrData['header'] ?>;
-            --menubar: <?= $this->ColrData['menubar'] ?>;
-        }
+    :root {
+        --accent: <?= $this->ColrData['accent'] ?>;
+        --accentsec: <?= $this->ColrData['accentsec'] ?>;
+        --secondary: <?= $this->ColrData['secondary'] ?>;
+        --mainbody: <?= $this->ColrData['mainbody'] ?>;
+        --innerpage: <?= $this->ColrData['innerpage'] ?>;
+        --header: <?= $this->ColrData['header'] ?>;
+        --menubar: <?= $this->ColrData['menubar'] ?>;
+    }
+
     </style>
 </head>
 
@@ -94,7 +95,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                             <div class="col-md-2 col-xs-5 cols logo-cols">
                                 <div class="logo">
                                     <a href="/" id="home-btn">
-                                        <!--img src="<?php echo Models::getLogo() ?>" -->
                                         <img src="<?php echo Models::getLogo() ?>">
                                     </a>
                                 </div>
@@ -103,8 +103,67 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                 <div class="mainmenu-area-quicklinks">
                                     <ul class="m-a-links">
                                         <li><a href="/">CATEGORIES</a></li>
-                                        <li><a href="/">BRANDS</a></li>
-                                        <li><a href="/">ALL ABOUT BEAUTY</a></li>
+                                        <li>
+                                            <a href="/">BRANDS</a>
+                                            <div class="header-floating-menu animated fadeInUp slimScroll">
+                                                <div class="hfm-brands">
+                                                    <h5 class="hfm-title">ALL BRANDS</h5>
+
+                                                    <?php
+                                                    $BrandList = $this->extModel("Brands")->brandLists(true);
+                                                    $BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
+                                                    foreach ($BrandGroups as $GK => $GK_Val) :
+                                                    ?>
+                                                        <div class="brand-group" style="margin-bottom: 1rem">
+                                                            <div class="bc-cat-name" style="color:var(--accent)"><?php echo $GK ?></div>
+                                                            <div class="flex brand-flex">
+
+                                                                <?php
+                                                                foreach ($GK_Val as $BrName) :
+                                                                    $BrLink = $BrandList[$BrName]['link'];
+                                                                    $BrImg = $BrandList[$BrName]['image'];
+                                                                ?>
+                                                                    <div class="single-brand">
+                                                                        <div class="single-brand-info">
+                                                                            <a href="<?php echo $BrLink ?>">
+                                                                                <div class="sb-brand-image-placeholder">
+                                                                                    <div class="sb-brand-image" style="background-image:url('<?php echo $BrImg ?>')"></div>
+                                                                                </div>
+                                                                                <div class="sb-brand-title"><?php echo $BrName ?></div>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!--li>
+                                            <a href="/">ALL ABOUT BEAUTY</a>
+                                            <div class="header-floating-menu animated fadeInUp slimScroll">
+                                                <div class="hfm-brands">
+                                                    <div class="flex">
+                                                        <div class="flex-item">
+                                                            <div class="single-layout-grid">
+                                                                <div class="slg-image">
+                                                                    <a href="">
+                                                                        <img src="" />
+                                                                    </a>
+                                                                </div>
+                                                                <div class="slg-text">
+                                                                    <h5>Hello</h5>
+                                                                    <p>Hanji</p>
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li-->
                                     </ul>
                                 </div>
                             </div>
@@ -134,9 +193,29 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                         else :
                             //Mobile view header top & middle
                         ?>
-                            <div class="col-xs-7 head-right-col_">
+                            <div class="col-xs-12 head-right-col_">
                                 <ul class="ht-right">
-                                    <li><input type="text" class="m-ht-search tsearch-icon" placeholder="Search for products" />
+                                    <li>
+                                        <div class="ht-right-icon icon-shopping-bag">
+                                            <a href="#">
+                                                <i class="pe-7s-menu"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li style="width:70%">
+                                        <div class="logo">
+                                            <a href="/" id="home-btn">
+                                                <img src="<?php echo Models::getLogo() ?>">
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ht-right-icon icon-shopping-bag">
+                                            <a class="cart-contents" href="#" title="View your shopping cart">
+                                                <i class="pe-7s-shopbag"></i>
+                                                <span class="count">0</span>
+                                            </a>
+                                        </div>
                                     </li>
                                     <li class="dropdown ht-top-shortcut">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -196,25 +275,10 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                         else :
                             //Mobile view header bottom
                         ?>
-                            <div class="col-xs-4 m-hb-grid cntntTab active" data-target="#skmbcontent">
-                                <div class="m-hb-grid-menu">
-                                    <i class="fa fa-th-large"></i> Main
-                                </div>
-                            </div>
 
-                            <div class="col-xs-4 m-hb-grid tb-2" data-target="#skmbcategories">
-                                <div class="m-hb-grid-menu">
-                                    <i class="fa fa-th-list"></i> Categories
-                                </div>
+                            <div class="col-xs-12 m-hb-grid">
+                                <input type="text" class="m-ht-search tsearch-icon" placeholder="Search for products" />
                             </div>
-
-                            <div class="col-xs-4 m-hb-grid tb-3" data-target="#skmbcart">
-                                <div class="m-hb-grid-menu sc-btn">
-                                    <span id="fcTot" class="badge"><?= $this->CartData->getTotalItem() ?></span>
-                                    <i class="fa fa-shopping-cart "></i> Cart
-                                </div>
-                            </div>
-                            <div class="tabbed-section__highlighter"></div>
                         <?php endif; ?>
 
                     </div>
@@ -265,67 +329,68 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     <?php endif; ?>
 
     <style>
-        .linear-activity {
-            display: none;
-            overflow: hidden;
-            width: 100%;
-            height: 6px;
-            background-color: #b3e5fc
+    .linear-activity {
+        display: none;
+        overflow: hidden;
+        width: 100%;
+        height: 6px;
+        background-color: #b3e5fc
+    }
+
+    .linear-activity.showactivity {
+        display: block;
+    }
+
+    .linear-activity.showactivity+#skmbcontent {
+        opacity: 0.5;
+    }
+
+    .indeterminate {
+        position: relative;
+        width: 100%;
+        height: 100%
+    }
+
+    .indeterminate:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        background-color: #03a9f4;
+        animation: indeterminate_first 1.5s infinite ease-out
+    }
+
+    .indeterminate:after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        background-color: #4fc3f7;
+        animation: indeterminate_second 1.5s infinite ease-in
+    }
+
+    @keyframes indeterminate_first {
+        0% {
+            left: -100%;
+            width: 100%
         }
 
-        .linear-activity.showactivity {
-            display: block;
+        100% {
+            left: 100%;
+            width: 10%
+        }
+    }
+
+    @keyframes indeterminate_second {
+        0% {
+            left: -150%;
+            width: 100%
         }
 
-        .linear-activity.showactivity + #skmbcontent {
-            opacity: 0.5;
+        100% {
+            left: 100%;
+            width: 10%
         }
+    }
 
-        .indeterminate {
-            position: relative;
-            width: 100%;
-            height: 100%
-        }
-
-        .indeterminate:before {
-            content: '';
-            position: absolute;
-            height: 100%;
-            background-color: #03a9f4;
-            animation: indeterminate_first 1.5s infinite ease-out
-        }
-
-        .indeterminate:after {
-            content: '';
-            position: absolute;
-            height: 100%;
-            background-color: #4fc3f7;
-            animation: indeterminate_second 1.5s infinite ease-in
-        }
-
-        @keyframes indeterminate_first {
-            0% {
-                left: -100%;
-                width: 100%
-            }
-
-            100% {
-                left: 100%;
-                width: 10%
-            }
-        }
-
-        @keyframes indeterminate_second {
-            0% {
-                left: -150%;
-                width: 100%
-            }
-
-            100% {
-                left: 100%;
-                width: 10%
-            }
-        }
     </style>
 
     <div class="linear-activity" id="skeletenLoadActivity">

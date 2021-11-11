@@ -7,7 +7,7 @@ $Prs = $this->AllProducts;
 
 <section class="main-body" style="padding-top: 0;">
 	<?php if (file_exists($this->CatImages[0])) : ?>
-		<div style="margin-bottom: 20px;">
+		<div style="margin:0">
 			<div id="myCarousel" class="carousel slide product-page-carousel" data-ride="carousel">
 				<div class="carousel-inner">
 					<div class="item active">
@@ -47,7 +47,7 @@ $Prs = $this->AllProducts;
 
 	<div class="container">
 		<?php if ($this->TotalProduct) : ?>
-			<div class="row">
+			<div class="row" style="margin-top: 20px">
 
 				<?php if (!$this->mobileView) : ?>
 					<div class="col-md-3p5 col-md-3 product-filter-sidebar">
