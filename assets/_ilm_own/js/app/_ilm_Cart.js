@@ -217,7 +217,7 @@ var _ilm_Cart_floatingcart = {
         $(".floating-sc, .mbl-tab-sc").on("click", ".rmv-crt-btn", function () {
             var dynamic_value = $(this).data("dynamic");
 
-            $(this).closest('tr').fadeOut('slow', function () {
+            $(this).closest('.sinlge-fc-item').fadeOut('slow', function () {
                 _ilm.globLoader("show", '.scb-cart-area');
 
                 _ilm_Cart.deleteFromCart(dynamic_value, function () {

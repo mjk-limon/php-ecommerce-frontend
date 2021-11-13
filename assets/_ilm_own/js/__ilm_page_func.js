@@ -52,30 +52,6 @@ $(document).ready(function () {
         }
     });
 
-    /* $(window).on("scroll", function () {
-        var delta = 5,
-            navbarHeight = 50,
-            st = $(this).scrollTop();
-
-        if (Math.abs(lastScrollTop - st) <= delta)
-            return;
-
-        //if(st > lastScrollTop && st > navbarHeight){
-        if (st > navbarHeight) {
-            $('body').addClass("fixed-menu-bar");
-            $(".deskv-hm-movable").detach().appendTo(".deskv-hb");
-            $('.sticky-wrapper, .site-branding-area').addClass("animated fadeInUp");
-        } else {
-            if (st + $(window).height() < $(document).height()) {
-                $('body').removeClass("fixed-menu-bar");
-                $(".deskv-hm-movable").detach().appendTo(".deskv-hm");
-                $('.sticky-wrapper, .site-branding-area').removeClass("animated fadeInUp");
-            }
-        }
-
-        lastScrollTop = st;
-    }); */
-
     $("li.dropdown").each(function () {
         var hasSub = false,
             $Relative = $(this),
@@ -120,18 +96,31 @@ $(document).ready(function () {
                 for (var i = 0; i < result.content.length; i++) {
                     prHref = result.content[i].href;
                     prCat = result.content[i].category;
+                    prThumb = result.content[i].thumb;
                     prName = result.content[i].name.replace(new RegExp(keyword, "gi"), "<b>$&</b>");
 
-                    $ApHtml = '<li><div class="single-srchdata"><a href="' + prHref + '">' + prName;
-                    if (prCat) $ApHtml += '<span>' + prCat + '</span>';
-                    $ApHtml += '</a></div></li>';
+                    if (prCat) {
+                        $ApHtml = `<li><img src="${prThumb}"/>
+                            <div class="single-srchdata">
+                                <a href="${prHref}">
+                                    ${prName}
+                                    <span>${prCat}</span>
+                                </a>
+                            </div></li>`;
+                    } else {
+                        $ApHtml = `<li>
+                            <div class="single-srchdata">
+                                <a href="${prHref}">
+                                    ${prName}
+                                </a>
+                            </div></li>`;
+                    }
 
                     $('#search-suggestions').append($ApHtml)
                 }
             } else $('#search-suggestions').html(result.error);
         });
     });
-
 
     $(".dropdown-menu .dropdown > a > i.fa-angle-down").on("click", function (e) {
         e.preventDefault();
@@ -157,16 +146,14 @@ $(document).ready(function () {
         $(target).show();
     });
 
-    $('#skmbcategories').on('click', '.dropdown > a', function () {
-        var $liElem = $(this).parent();
-        $liElem.toggleClass("show");
-        return false;
+    $('.icon-toggle-sidemenu').on('click', function (e) {
+        $('#skmbcategories').toggle();
     });
 
-    $('.tsearch-icon').on('click', function (e) {
-        $(".search-area").toggleClass("show")
-        if ($(".search-area").hasClass("show")) $(".search-area input").focus();
-        e.preventDefault();
+    $('#skmbcategories').on('click', '.toggle-sidemenuitem', function () {
+        var $liElem = $(this).closest(".dropdown");
+        $liElem.toggleClass("show");
+        return false;
     });
 });
 

@@ -21,7 +21,7 @@
 	.main-body, .main-body.bg-white{padding:1.5rem 0}
 	.main-body .spd{margin:1rem 0}
 	#skbc-top-margin{height:85px}
-	#skmbcategories, #skmbcart{animation:fadeInLeft .4s}
+	#skmbcategories{position:fixed;top:0;left:0;width:100%;height:100%;overflow:auto;background:#fff;z-index:99999;animation:FloatingMenuIn .6s cubic-bezier(.25,.37,0,.99)}
 	a#scrollUp{bottom:80px}
 	
 	/* ==========================
@@ -31,6 +31,7 @@
 	.logo-cols{flex:1}
 	.logo img{display:block;width:auto;max-width:100%;margin:0 auto}
 	.head-right-col{flex:2;padding-left:15px}
+	.searchfld{margin:5px auto}
 	ul.ht-right{padding-left: 0px;margin:0;display:table;width:100%;height:100%}
 	ul.ht-right > li{display:table-cell;vertical-align:middle}
 	ul.ht-right .ht-top-shortcut .dropdown-toggle{display: block;padding: 0 15px;}
@@ -50,12 +51,13 @@
 	
 	.mainmenu{min-height:calc(100vh - 100px)}
 	.mainmenu .navbar-nav{margin:1rem 0}
-	.mainmenu ul li{border-bottom:0}
-	.mainmenu ul li a{font-size:16px;font-weight:400;padding:1rem 1.5rem;line-height:2.5rem}
+	.mainmenu ul li{border-bottom:0;height:auto}
+	.mainmenu ul li a{font-size:16px;font-weight:400;padding:1rem 1.5rem;line-height:2.5rem;background-position:left}
 	.mainmenu ul li a span{vertical-align:bottom}
 	.mainmenu ul li a span img{width:25px}
-	.mainmenu ul li a i{float:right}
+	.mainmenu ul li a i{color:#333;border:1px solid #d7d7d7;text-shadow:none;font-size:2.5rem;float:right}
 	.mainmenu ul.sub-menu {position:static;width:100%;box-shadow:none}
+	.sub-menu > .sub-cols{width:100%;float:none}
 	.navbar-nav li ul.sub-menu li a{padding:3px}
 	.sub-menu > .sub-cols.view-all > a{padding-left:5px;color:var(--accent)}
 	.mainmenu ul.sub-menu a i{float:none}
@@ -84,7 +86,7 @@
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.ft-pr-mbl .single-product{position:relative;width:50%;padding:1rem 10px;border-right:5px solid #f6f6f6;border-bottom:5px solid #f5f5f5}
 	.ft-pr-mbl .single-product:nth-child(2n){border-right:0}
-	.sp-nav .add-cart, .sp-nav .buy-now{padding:.5rem .25rem;font-size:1.1rem}
+	.sp-nav .add-cart, .sp-nav .buy-now{padding:.5rem .25rem;font-size:1.5rem}
 	
 	/* ==========================
 	 Product page
@@ -118,7 +120,11 @@
 	.empty-product-page > h4{font-size:1.7rem}
 	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:200px}
 	.sp-image{height:70%}
-	
+	.sp-image img{margin:15px auto;max-height:100%}
+	.has-sp-nav{flex:1}
+	.sp-pr{padding:1em 0.75em}
+	.sp-nav{opacity:1;left:0;line-height:2}
+
 	
 	/* ==========================
 	 Details Page
@@ -128,20 +134,22 @@
 	.flex-control-thumbs li{float:none;display:inline-block;vertical-align:top}
 	.row-rat .rating-progress{width:120px}
 	
-	.pr-buy-navs{position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;z-index:100;padding:.5rem}
+	.details-top-right{padding-left:15px}
+	.pr-buy-navs.fixed-floating{position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;z-index:100;padding:.5rem;margin:0}
 	.pr-buy-navs .m-flex{align-items:center}
 	.qty-selection{flex:1 0;margin:0}
 	.qty-selection li{width:30%}
 	.bnav-btns{flex:3 0;display:flex}
-	.bnav-btns li{flex:1 0;font-size:14px}
+	.bnav-btns li{flex:1 0;font-size:14px;text-align:center;font-weight:bold}
 	.bnav-wishlist{margin-bottom:0;text-align:right}
+	
 	
 	/* ==========================
 	 Cart, Floating Cart, Checkout,
 	 Login/Registration, My account
 	================*/
-	.sc-body-top {padding:2rem 1rem 0;background:transparent;color:#333}
-	.fsc-content {height:calc(100vh - 170px)}
+	.floating-sc .sc-body{width:100vw}
+	.fsc-content {height:calc(100vh - 50px)}
 	.table.fc-table > tbody > tr > td{vertical-align:top}
 	.coupon-area{width:100%}
 	

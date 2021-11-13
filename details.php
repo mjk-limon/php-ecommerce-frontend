@@ -198,7 +198,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </div>
                     </div>
 
-                    <div class="col-md-3 details-top-right hidden-xs">
+                    <div class="col-md-3 details-top-right">
                         <div class="glancebox-header">RECOMMENDED FOR YOU</div>
 
                         <div class="section-mb">
@@ -504,11 +504,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 </section>
 
 <?php if ($this->mobileView) : ?>
-    <div class="pr-buy-navs">
+    <div class="pr-buy-navs fixed-floating">
         <div class="m-flex">
             <ul class="qty-selection">
                 <li class="item_minus"><a href="javascript:;">-</a></li>
-                <li class="item_qty item_qty_input">1</li>
+                <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
                 <li class="item_plus"><a href="javascript:;">+</a></li>
             </ul>
             <ul class="bnav-btns">
@@ -516,7 +516,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
                 </em>
                 <li class="add-to-cart add-cart cAddBuyNav mb-details">Add To Cart</li>
-                <li class="quick-buy cAddBuyNav mb-details">Quick Buy</li>
             </ul>
         </div>
         <p class="bnav-wishlist">Buy Later? <a href="javascript:;" class="cAddWishNav"><i class="fa fa-heart-o"></i> Add to wishlist</a></p>

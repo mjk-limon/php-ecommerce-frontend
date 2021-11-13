@@ -66,22 +66,20 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 </head>
 
 <body <?= $body_class ?>>
-    <?php if (!$this->mobileView) : ?>
-        <div class="floating-sc">
-            <div class="sc-btn">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <div><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
-                <div><span id="fcAmnt"><?php echo Models::curr($this->CartData->getSubTotal()) ?></span></div>
-            </div>
-            <div class="sc-body">
-                <div class="clearfix sc-body-top">
-                    <span class="floating-sc-close"><i class="pe-7s-close"></i></span>
-                    <h4>CART</h4>
-                </div>
-                <div id="fsc-content" class="fsc-content slimScroll"></div>
-            </div>
+    <div class="floating-sc">
+        <div class="sc-btn">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <div><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
+            <div><span id="fcAmnt"><?php echo Models::curr($this->CartData->getSubTotal()) ?></span></div>
         </div>
-    <?php endif; ?>
+        <div class="sc-body">
+            <div class="clearfix sc-body-top">
+                <span class="floating-sc-close"><i class="pe-7s-close"></i></span>
+                <h4>CART</h4>
+            </div>
+            <div id="fsc-content" class="fsc-content slimScroll"></div>
+        </div>
+    </div>
 
     <header id="header">
         <div class="site-branding-area">
@@ -183,7 +181,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     </a>
                                 </div>
                                 <div class="ht-right-icon icon-shopping-bag">
-                                    <a class="cart-contents" href="#" title="View your shopping cart">
+                                    <a class="cart-contents sc-btn" href="javascript:;" title="View your shopping cart">
                                         <i class="pe-7s-shopbag"></i>
                                         <span class="count">0</span>
                                     </a>
@@ -196,8 +194,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                             <div class="col-xs-12 head-right-col_">
                                 <ul class="ht-right">
                                     <li>
-                                        <div class="ht-right-icon icon-shopping-bag">
-                                            <a href="#">
+                                        <div class="ht-right-icon icon-toggle-sidemenu">
+                                            <a href="javascript:;">
                                                 <i class="pe-7s-menu"></i>
                                             </a>
                                         </div>
@@ -211,7 +209,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     </li>
                                     <li>
                                         <div class="ht-right-icon icon-shopping-bag">
-                                            <a class="cart-contents" href="#" title="View your shopping cart">
+                                            <a class="cart-contents sc-btn" href="javascript:;" title="View your shopping cart">
                                                 <i class="pe-7s-shopbag"></i>
                                                 <span class="count">0</span>
                                             </a>
@@ -275,9 +273,16 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                         else :
                             //Mobile view header bottom
                         ?>
-
-                            <div class="col-xs-12 m-hb-grid">
-                                <input type="text" class="m-ht-search tsearch-icon" placeholder="Search for products" />
+                            <div class="col-xs-12">
+                                <div class="serachbox">
+                                    <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
+                                        <div class="searchfld deskv">
+                                            <input type="text" placeholder="Search for Proudcts, Brands..." name="q" autocomplete="off" class="input-text search-q" />
+                                            <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>
+                                            <div id="search-suggestions" class="srch-datalist slimScroll"></div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         <?php endif; ?>
 
@@ -292,20 +297,12 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     if ($this->mobileView) :
         //Mobile view header toggle tabs
     ?>
-        <div class="mb-top-search">
-            <div class="search-area">
-                <form method="GET" action="<?= PROJECT_FOLDER . 'search/' ?>">
-                    <div class="m-flex">
-                        <a href="javascript:;" class="tclose-icon tsearch-icon"><i class="fa fa-arrow-left"></i></a>
-                        <input type="text" class="search-q" name="q" placeholder="Type product id, name, category..." />
-                        <button type="submit" class="tsearch-btn"><i class="fa fa-search"></i></button>
-                    </div>
-                </form>
-            </div>
-            <div class="mb-ts-backdrop srch-datalist" id="search-suggestions"></div>
-        </div>
-
         <section id="skmbcategories" style="display:none">
+            <div class="clearfix sc-body-top">
+                <span class="floating-sc-close icon-toggle-sidemenu"><i class="pe-7s-close"></i></span>
+                <h4>Menu</h4>
+            </div>
+
             <div class="mainmenu">
                 <ul class="nav navbar-nav">
 
@@ -316,82 +313,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                 </ul>
             </div>
         </section>
-
-        <section id="skmbcart" class="mbl-tab-sc" style="display:none">
-            <div class="sc-body">
-                <div class="sc-body-top">
-                    <h4>Shopping Cart</h4>
-                    <span class="scb-ct"><?= $this->CartData->getTotalItem() ?> ITEM(S)</span>
-                </div>
-                <div id="fsc-content" class="fsc-content slimScroll"></div>
-            </div>
-        </section>
     <?php endif; ?>
-
-    <style>
-    .linear-activity {
-        display: none;
-        overflow: hidden;
-        width: 100%;
-        height: 6px;
-        background-color: #b3e5fc
-    }
-
-    .linear-activity.showactivity {
-        display: block;
-    }
-
-    .linear-activity.showactivity+#skmbcontent {
-        opacity: 0.5;
-    }
-
-    .indeterminate {
-        position: relative;
-        width: 100%;
-        height: 100%
-    }
-
-    .indeterminate:before {
-        content: '';
-        position: absolute;
-        height: 100%;
-        background-color: #03a9f4;
-        animation: indeterminate_first 1.5s infinite ease-out
-    }
-
-    .indeterminate:after {
-        content: '';
-        position: absolute;
-        height: 100%;
-        background-color: #4fc3f7;
-        animation: indeterminate_second 1.5s infinite ease-in
-    }
-
-    @keyframes indeterminate_first {
-        0% {
-            left: -100%;
-            width: 100%
-        }
-
-        100% {
-            left: 100%;
-            width: 10%
-        }
-    }
-
-    @keyframes indeterminate_second {
-        0% {
-            left: -150%;
-            width: 100%
-        }
-
-        100% {
-            left: 100%;
-            width: 10%
-        }
-    }
-
-    </style>
 
     <div class="linear-activity" id="skeletenLoadActivity">
         <div class="indeterminate"></div>
