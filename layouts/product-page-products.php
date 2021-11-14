@@ -93,8 +93,8 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         <?php if (!$this->mobileView) : ?>
                             <div class="sp-nav">
                                 <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                <!--a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a-->
-                                <a href="javascript:;" class="buy-now cAddBuyNav" style="width:100%">অর্ডার করুন</a>
+                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+                                <a href="javascript:;" class="buy-now cAddBuyNav">Order Now</a>
                             </div>
                         <?php endif; ?>
 
