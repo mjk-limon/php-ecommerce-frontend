@@ -157,7 +157,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 								<div class="col-md-9 hidden-xs">
 									<div class="mainmenu-area-quicklinks">
 										<ul class="m-a-links">
-											<li><a href="/page/travel-advisory/">Travel Advisory</a></li>
+											<li><a href="javascript:;">Dine In</a></li>
 
 											<?php if (!$this->UserData) : ?>
 												<li><a class="_ph_RegBtn" href="/register/?ref=<?php echo urlencode($this->HeadData['ref']) ?>">Join free</a></li>
@@ -210,7 +210,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 											<li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?php echo urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
 										<?php endif; ?>
 
-										<li><a href="/track-order/">Travel Advisory</a></li>
+										<li><a href="javascript:;">Dine In</a></li>
 									</ul>
 								</li>
 							</ul>
