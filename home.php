@@ -160,7 +160,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
 
                             $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 9999);
                             $ProductInCategory = $BrowseCatProducts->num_rows;
-                            $CatImg = Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-2.png?rand=' . rand());
+                            $CatImg = Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-1.jpg?rand=' . rand());
 
                         ?>
                             <li class="product-category product first">
