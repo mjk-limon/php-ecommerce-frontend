@@ -58,7 +58,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
             <div class="trending-categories">
                 <div class="tc-list">
                     <a href="<?php echo $this->TopSticker3['image_link'] ?>">
-                        <img src="<?php echo $this->TopSticker3['image'] ?>" class="img-reponsive" alt="Banner image">
+                        <img src="<?php echo $this->TopSticker3['image'] ?>" class="img-responsive" alt="Banner image">
                     </a>
                     <a href="<?php echo $this->TopSticker4['image_link'] ?>">
                         <img src="<?php echo $this->TopSticker4['image'] ?>" class="img-responsive" alt="Banner image">
@@ -67,7 +67,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
             </div>
         </div>
     </div>
-    
+
     <div class="spd">
         <div class="container">
             <div class="section-mb bg-main">
