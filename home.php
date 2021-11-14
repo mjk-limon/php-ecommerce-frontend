@@ -47,23 +47,27 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                         </div>
                     </div>
                 </div>
-
-                <div class="trending-categories">
-                    <div class="tc-list">
-                        <a href="/campaign/">
-                            <img src="<?php echo $this->TopSticker3['image'] ?>" alt="Banner image">
-                        </a>
-                        <a href="<?php echo $this->TopSticker4['image_link'] ?>">
-                            <img src="<?php echo $this->TopSticker4['image'] ?>" alt="Banner image">
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
 <section class="main-body">
+    <div class="spd">
+        <div class="container">
+            <div class="trending-categories">
+                <div class="tc-list">
+                    <a href="<?php echo $this->TopSticker3['image_link'] ?>">
+                        <img src="<?php echo $this->TopSticker3['image'] ?>" class="img-reponsive" alt="Banner image">
+                    </a>
+                    <a href="<?php echo $this->TopSticker4['image_link'] ?>">
+                        <img src="<?php echo $this->TopSticker4['image'] ?>" class="img-responsive" alt="Banner image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="spd">
         <div class="container">
             <div class="section-mb bg-main">
@@ -181,10 +185,10 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
 
 <link href="<?php echo Models::asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />
 <script type="text/javascript">
-slideSize = {
-    width: <?php echo $slideSize[0] ?>,
-    height: <?php echo $slideSize[1] ?>
-};
+    slideSize = {
+        width: <?php echo $slideSize[0] ?>,
+        height: <?php echo $slideSize[1] ?>
+    };
 </script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
