@@ -54,7 +54,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 <?php endif; ?>
 
 <div class="product-page-products">
-    <div class="grid-row grid4">
+    <div class="grid-row grid3">
         <?php
         foreach ($this->AllProducts as $Product) :
             $this->SingleProduct->setPrInfo($Product);
@@ -91,8 +91,8 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         <?php if (!$this->mobileView) : ?>
                             <div class="sp-nav">
                                 <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                <!-- <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a> -->
+                                <a href="<?php echo $this->SingleProduct->getHref() ?>" class="buy-now">View Package</a>
                             </div>
                         <?php endif; ?>
 

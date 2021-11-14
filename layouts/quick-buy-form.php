@@ -50,7 +50,6 @@ $Products[] = array(
                         <tr>
                             <td colspan="6" class="text-right">
                                 <p class="mb-0"><strong>Item Total:</strong> <span class="aprstotal"><?php echo Models::curr($this->Sp->getPrice() * $Products[0]['q']) ?></span></p>
-                                <p><strong>Delivery Cost:</strong> <span class="dcosttotal">20</span></p>
                                 <p><strong>Subtotal:</strong> <?php echo Models::curr() ?><span class="aprdcostsubtotal">0</span></p>
                             </td>
                         </tr>
@@ -62,28 +61,11 @@ $Products[] = array(
                 <div class="limlog-form">
                     <form class="checkOutUserInfo quickbuy" action="#" method="post">
                         <input type="hidden" name="products" value="<?php echo htmlspecialchars(json_encode($Products)) ?>" />
+                        <input type="hidden" name="orderLocation" value="None">
+                        <input type="hidden" name="shippingId" value="1">
 
                         <?php if (!$this->UserData) : ?>
                             <input type="hidden" name="email" value="" />
-
-                            <label>Delivery Location</label>
-                            <select name="orderLocation" id="orderLoc">
-
-                                <?php
-                                $Locations = $this->DeliveryLocations;
-                                foreach ($Locations as $Loc) :
-                                ?>
-                                    <option value="<?php echo $Loc ?>">
-                                        <?php echo $Loc ?>
-                                    </option>
-                                <?php endforeach; ?>
-
-                            </select>
-
-                            <div class="shippingIdCont">
-                                <label>Delivery Option</label>
-                                <select name="shippingId" id="shippingId"></select>
-                            </div>
 
                             <label>Your Name</label>
                             <input type="text" name="fullName" placeholder="Enter Your Name" required="" />
@@ -130,15 +112,6 @@ $Products[] = array(
                                             <td colspan="2"><a data-dismiss="modal" href="/my-account/?logout=1&ref=">Not You ? Login Again</a> </td>
                                         </tr>
                                     </table>
-
-                                    <select name="orderLocation" id="orderLoc">
-                                        <option value="<?php echo $Sc->getCity() ?>"><?php echo $Sc->getCity() ?></option>
-                                    </select>
-
-                                    <div class="shippingIdCont">
-                                        <label>Delivery Option</label>
-                                        <select name="shippingId" id="shippingId"></select>
-                                    </div>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -165,6 +138,6 @@ $Products[] = array(
 </div>
 
 <script>
-    _ilm_Quick_buy.init();
-    _ilm_Quick_buy.initSelectMethod();
+_ilm_Quick_buy.init();
+_ilm_Quick_buy.initSelectMethod();
 </script>
