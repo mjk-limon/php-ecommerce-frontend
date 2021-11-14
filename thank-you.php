@@ -4,7 +4,7 @@ namespace _ilmComm;
 
 $OrderInfo = $this->orderInformation();
 $OrderId = $OrderInfo->getOrderId();
-$InvoiceUrl = Models::baseUrl('invoice/print/odr-'. $OrderId);
+$InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
 ?>
 
 <section class="main-body">
@@ -265,6 +265,13 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-'. $OrderId);
 
                                         <p>Payment Number: <?php echo $OrderInfo->getPaymentTrxnId() ?></p>
                                         <p><img src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t=' . urlencode(base64_encode($OrderInfo->getPaymentTrxnId())) ?>" alt="<?php echo $OrderInfo->getPaymentTrxnId()  ?>" /></p>
+                                        <p>
+                                            Your complete satisfaction<br />
+                                            We want to make sure that your are completely satisfied with <?php echo COMPANY_NAME ?>.<br />
+                                            Delivery: If for any reason you are not, then please advise the Customer Services Team Member at the door and they will ensure that any issues will be resolve for you.<br />
+                                            If there are any questions you'd like to ask, either about your order or any aspect of the <?php echo COMPANY_NAME ?> service,
+                                            Please call us on <?php echo Models::getContactInformation('mobile1') ?>, or e-mail us at <?php echo Models::getContactInformation('email') ?>. We are open seven days a week.
+                                        </p>
                                     </div>
                                 </div>
                             </div>

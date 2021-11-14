@@ -11,3 +11,18 @@
 .jssora082:hover .a{opacity:1}
 .jssora082.jssora082dn{opacity:.5}
 .jssora082.jssora082ds{opacity:.3;pointer-events:none}
+.jssorl-009-spin img{animation-name:jssorl-009-spin;animation-duration:1.6s;animation-iteration-count:infinite;animation-timing-function:linear}
+@keyframes jssorl-009-spin {
+from{transform:rotate(0deg)}
+to{transform:rotate(360deg)}
+}
+.jssorb072 .i{position:absolute;color:#000;font-family:"Helvetica neue",Helvetica,Arial,sans-serif;text-align:center;cursor:pointer;z-index:0}
+.jssorb072 .i .b{fill:#fff;opacity:.3}
+.jssorb072 .i:hover{opacity:.7}
+.jssorb072 .iav{color:#fff}
+.jssorb072 .iav .b{fill:var(--accent);opacity:.6}
+.jssorb072 .i.idn{opacity:.3}
+.jssora073{display:block;position:absolute;cursor:pointer}
+.jssora073 .a{fill:#ddd;fill-opacity:.7;stroke:#000;stroke-width:160;stroke-miterlimit:10;stroke-opacity:.7}
+.jssora073:hover{opacity:.8}
+.jssora073.jssora073dn{opacity:.4}
