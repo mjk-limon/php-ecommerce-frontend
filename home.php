@@ -57,7 +57,7 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
         <div class="container">
             <div class="trending-categories">
                 <div class="tc-list">
-                    <a href="<?php echo $this->TopSticker3['image_link'] ?>">
+                    <a href="<?php echo $this->TopSticker3['image_link'] ?>" style="margin-right:10px;">
                         <img src="<?php echo $this->TopSticker3['image'] ?>" class="img-responsive" alt="Banner image">
                     </a>
                     <a href="<?php echo $this->TopSticker4['image_link'] ?>">
@@ -161,7 +161,6 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                             $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 9999);
                             $ProductInCategory = $BrowseCatProducts->num_rows;
                             $CatImg = Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-1.jpg?rand=' . rand());
-
                         ?>
                             <li class="product-category product first">
                                 <a href="<?php echo $Cat->getHref() ?>">
@@ -172,7 +171,6 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                                 </a>
                             </li>
                         <?php
-
                             $remi++;
                         endwhile;
                         ?>
