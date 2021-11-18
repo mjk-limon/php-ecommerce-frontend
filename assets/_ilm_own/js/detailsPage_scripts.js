@@ -123,12 +123,13 @@ _ilm_Details_page = {
     quantityChange: function (newQty) {
         var $qtybox = $(".item_qty_input input"),
             prLimit = parseInt($("#tStock").text()),
+            minOrder = parseInt($qtybox.attr("value")),
             itemPrice = parseInt($(".pr-price").data("prs"));
 
-        if (newQty < 1) {
-            $qtybox.val("1");
-            $("#pramqty").html(itemPrice);
-            _ilm.showNotification("Minimmum quantity selection is 1.", true);
+        if (newQty < minOrder) {
+            $qtybox.val(minOrder);
+            $("#pramqty").html(itemPrice * minOrder);
+            _ilm.showNotification(`Minimmum quantity selection is ${minOrder}.` , true);
         } else if (newQty > prLimit) {
             $qtybox.val(prLimit);
             $("#pramqty").html(prLimit * itemPrice);

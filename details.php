@@ -72,12 +72,15 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                                 <small>By, <a href="<?php echo '/search/?q=&a_s_t=brand&astval=' . urlencode($PrDetails->getBrandName()) ?>"><?php echo $PrDetails->getBrandName() ?></a></small>
                                 <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>" data-prs="<?php echo $PrDetails->getPrice() ?>">
+                                    <?php if (!$PrDetails->getOthers("prtype")) : ?>
+                                        <span class="min-order">/ Minimmum Order Qty: <?php echo $PrDetails->getOthers("prminodr") ?> Pcs</span>
+                                    <?php endif; ?>
+
                                     <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
 
                                     <?php if ($PrDetails->getDiscount()) : ?>
                                         <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                     <?php endif; ?>
-
                                 </p>
                             </div>
                         </div>
@@ -140,7 +143,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                     <ul class="qty-selection">
                                         <div>Select Quantity:</div>
                                         <li class="item_minus"><a href="javascript:;">-</a></li>
-                                        <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
+                                        <li class="item_qty item_qty_input">
+                                            <input type="number" autocomplete="off" value="<?php echo $PrDetails->getOthers("prminodr") ?: 1 ?>" />
+                                        </li>
                                         <li class="item_plus"><a href="javascript:;">+</a></li>
                                     </ul>
 
@@ -149,7 +154,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <p>
                                                 Product amount total:
                                                 <strong>
-                                                    <?= Models::curr() ?><span id="pramqty"><?= round($PrDetails->getPrice()) ?></span>
+                                                    <?= Models::curr() ?>
+                                                    <span id="pramqty"><?= round($PrDetails->getPrice() * ($PrDetails->getOthers("prminodr") ?: 1)) ?></span>
                                                 </strong>
                                             </p>
                                         </div>
@@ -534,22 +540,22 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
     <link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
     <script src="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
     <script>
-        var openPhotoSwipe = function(index) {
-            var pswpElement = document.querySelectorAll('.pswp')[0],
-                items = [<?php echo $zoom_item ?>],
-                options = {
-                    index: index
-                },
-                gallery;
+    var openPhotoSwipe = function(index) {
+        var pswpElement = document.querySelectorAll('.pswp')[0],
+            items = [<?php echo $zoom_item ?>],
+            options = {
+                index: index
+            },
+            gallery;
 
-            gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-            gallery.init();
-        }
+        gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.init();
+    }
 
-        $('[data-imagezoom]').click(function() {
-            var index = $(this).closest("li").index();
-            openPhotoSwipe(index);
-        });
+    $('[data-imagezoom]').click(function() {
+        var index = $(this).closest("li").index();
+        openPhotoSwipe(index);
+    });
     </script>
 <?php else : ?>
 
@@ -557,18 +563,18 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>
 <script defer type="text/javascript">
-    $(document).ready(function() {
-        <?php if ($this->checkJump('jumpToRvw')) : ?>
-            $('#DRRvwBtn').trigger("click");
-            _ilm.jumpToSection('#DRRvwBtn', function() {
-                $('#rv-main-area .media:first-child').addClass('animated flash');
-            });
-        <?php endif; ?>
+$(document).ready(function() {
+    <?php if ($this->checkJump('jumpToRvw')) : ?>
+        $('#DRRvwBtn').trigger("click");
+        _ilm.jumpToSection('#DRRvwBtn', function() {
+            $('#rv-main-area .media:first-child').addClass('animated flash');
+        });
+    <?php endif; ?>
 
-        <?php if ($this->checkJump('jumpToQstn')) : ?>
-            _ilm.jumpToSection('#Rating', function() {
-                $('#rv-qus-area .media:first-child').addClass('animated flash');
-            });
-        <?php endif; ?>
-    });
+    <?php if ($this->checkJump('jumpToQstn')) : ?>
+        _ilm.jumpToSection('#Rating', function() {
+            $('#rv-qus-area .media:first-child').addClass('animated flash');
+        });
+    <?php endif; ?>
+});
 </script>
