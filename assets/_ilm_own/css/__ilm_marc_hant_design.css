@@ -1,3 +1,8 @@
+header {
+	background: #3a1c71;
+ 	background: -webkit-linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+	background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+}
 .marchant-corner {background: url('../images/seller.jpg');background-size: cover;}
 .marchant-corner .mc-reg {color: #e0e0e0;background: rgba(0,0,0,.6);padding: 15px;}
 .marchant-corner .mc-login {color: #e2e2e2;background: rgba(0,0,0,.6);padding: 15px;margin-top: 2em;margin-bottom: 2em;border-radius: 5px;}
