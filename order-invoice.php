@@ -81,7 +81,7 @@ if (isset($_GET['pdf'])) {
                         <table class="table invoice-top" style="width:100%">
                             <tr>
                                 <td width="25%" class="_inv_logo" style="padding:0 10px;vertical-align:top" align="middle">
-                                    <img style="max-width:100%;max-height:100px" src="<?php echo Models::baseUrl('images/logo.png') ?>">
+                                    <img style="max-width:100%;max-height:100px" src="<?php echo Models::getLogo() ?>">
                                 </td>
                                 <td width="60%" style="padding:0 10px;vertical-align:top" class="tagline">
                                     <h2 class="company-name" style="margin:0;font-weight:700;font-size:28px;line-height:1em;text-transform:none"><?php echo COMPANY_NAME ?></h2>

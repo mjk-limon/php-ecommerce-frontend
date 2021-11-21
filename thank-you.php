@@ -94,10 +94,10 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                 <div class="section-mb">
                     <div class="mb-content">
                         <div class="invoice">
-                            <img src="<?php echo Models::asset("images/logo.png") ?>" class="_invoice_watermark">
+                            <img src="<?php echo Models::getLogo() ?>" class="_invoice_watermark">
                             <div class="row invoice-top">
                                 <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <img src="<?php echo Models::asset("images/logo.png") ?>" style="height: auto">
+                                    <img src="<?php echo Models::getLogo() ?>" style="height: auto">
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6 tagline">
                                     <h2 class="company-name"><?php echo COMPANY_NAME ?></h2>

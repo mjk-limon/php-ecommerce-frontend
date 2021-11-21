@@ -158,7 +158,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                 <div class="row flex branding-flex deskv-hm">
                     <div class="col-md-3 col-xs-5 cols logo-cols">
                         <div class="logo">
-                            <a href="/" id="home-btn"><img src="<?php echo Models::asset("images/logo.svg") ?>"></a>
+                            <a href="/" id="home-btn"><img src="<?php echo Models::getLogo() ?>"></a>
                         </div>
                     </div>
 
