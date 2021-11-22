@@ -1,8 +1,16 @@
-header {
-	background: #3a1c71;
- 	background: -webkit-linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
-	background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
-}
+header{background:#3a1c71;background:-webkit-linear-gradient(to right,#3a1c71,#d76d77,#ffaf7b);background:linear-gradient(to right,#3a1c71,#d76d77,#ffaf7b);box-shadow:0 1px 4px #020202}
+.marchant-brading .manue{margin:5px}
+.marchant-brading .logo img{background:#fff;margin:5px 0;height:45px}
+.marchant-brading .charcebox{padding:6px 0}
+.marchant-brading .charcebox .subs{top:6px}
+.marchant-brading .charcebox .subsi{padding:16px 15px}
+.marchant-brading .wishlistall{margin:5px 0}
+.marchant-brading .wishlistall li{background-color:transparent;margin:0}
+.marchant-brading .wishlistall li i,.manue i{color:#fff}
+.clickable-row{cursor:pointer}
+.table-link{color:#333}
+.td-actions a:hover{font-weight:600}
+
 .marchant-corner {background: url('../images/seller.jpg');background-size: cover;}
 .marchant-corner .mc-reg {color: #e0e0e0;background: rgba(0,0,0,.6);padding: 15px;}
 .marchant-corner .mc-login {color: #e2e2e2;background: rgba(0,0,0,.6);padding: 15px;margin-top: 2em;margin-bottom: 2em;border-radius: 5px;}
