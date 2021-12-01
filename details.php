@@ -2,11 +2,12 @@
 
 namespace _ilmComm;
 
+use _ilmComm\Category\FetchCategories;
+
 $sp = $this->SingleProduct;
+$cat = new FetchCategories;
 $PrDetails = $this->ProductDetails;
-$PrDetails->processStock();
-$PrDetails->processDiscount();
-$PrDetails->processRating();
+$cat->setMain($PrDetails->getCategory("main"));
 
 $ratClass = !Models::getSiteSettings('prat') ? 'hidden' : null;
 $qusClass = !Models::getSiteSettings('qtpr') ? 'hidden' : null;
@@ -20,10 +21,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 <div class="page-navigator">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Makeup</a></li>
-            <li><a href="#">Lips</a></li>
-            <li class="active">Current</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Mainc; $cat->setSubGroup($PrDetails->getCategory("header")); ?></a></li>
+            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->SubGroup; $cat->setSub($PrDetails->getCategory("sub")); ?></a></li>
+            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Sub ?></a></li>
+            <li class="active"><?php echo $PrDetails->getName() ?></li>
         </ol>
     </div>
 </div>
