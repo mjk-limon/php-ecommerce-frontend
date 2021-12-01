@@ -338,6 +338,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     <a href="<?php echo $Cat->getHref() ?>">View All</a>
                                     <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></span>
                                 </div>
+                                
                                 <div class="grid-row">
                                     <?php
                                     $Ct_i = 1;

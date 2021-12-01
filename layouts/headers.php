@@ -61,7 +61,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
         --header: <?= $this->ColrData['header'] ?>;
         --menubar: <?= $this->ColrData['menubar'] ?>;
     }
-
     </style>
 </head>
 

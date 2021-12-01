@@ -350,7 +350,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .empty-product-page > h4{font-size:2.5rem;color:#a2a2a2}
 .product-page-products{padding:1rem}
 .pp-nav{text-align: center;padding: 1rem;}
-.pp-nav a{padding: .375rem .75rem;color: #fff;background: #9b9b9b;border-radius;border-radius: 3px;}
+.pp-nav a{padding: .375rem .75rem;color: #fff;background: #9b9b9b;border-radius: 3px;}
 .more-pr-by-ajax > div {min-height: 150px}
 
 /*=========== Details Page =======*/
