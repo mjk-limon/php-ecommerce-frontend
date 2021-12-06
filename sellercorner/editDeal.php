@@ -2,82 +2,7 @@
 
 namespace _ilmComm;
 
-if (isset($_POST['update_deal_info'])) {
-    exit();
-    $prid = $conn->real_escape_string($_POST['pid']);
-    $uploadOk = 0;
-    $cwi_array = array();
-
-    $r_prevImageCount = get_single_data("products", "id='{$prid}'", "images,colors");
-    $prevColorArray = explode(',', $r_prevImageCount['colors']);
-    $prevCountArray = explode(',', $r_prevImageCount['images']);
-    foreach ($prevColorArray as $colorkey => $color) {
-        $imageSl = 1;
-        for ($i = 1; $i <= $prevCountArray[$colorkey]; $i++) {
-            if (file_exists("../../proimg/" . $prid . "/" . $color . $i . ".jpg")) {
-                rename("../../proimg/" . $prid . "/" . $color . $i . ".jpg", "../../proimg/" . $prid . "/" . $color . $imageSl . ".jpg");
-                $imageSl++;
-            }
-        }
-        $prevCountArray[$colorkey] = $imageSl - 1;
-    }
-    $uFields['colors'] = implode(",", $prevColorArray);
-    $uFields['images'] = implode(",", $prevCountArray);
-    $conn->query(UpdateTable("products", $uFields, "id='{$prid}'"));
-
-    $fields['name'] = $conn->real_escape_string($_POST['pr_name']);
-    $fields['brand'] = $conn->real_escape_string($_POST['pr_brname']);
-    $fields['size'] = $conn->real_escape_string($_POST['pr_sizes']);
-    $fields['description'] = $conn->real_escape_string($_POST['pr_dis']);
-    $fields['price'] = $conn->real_escape_string($_POST['pr_price']);
-    $fields['discount'] = $conn->real_escape_string($_POST['pr_dicount']);
-    $fields['item_left'] = $conn->real_escape_string($_POST['pr_stock']);
-
-    if (!empty($_FILES["pr_img"]['name'][0])) {
-        if (!empty($_POST['pr_colors'])) {
-            foreach ($prevColorArray as $prevKey => $prevColor) {
-                for ($pri = 0; $pri < $prevCountArray[$prevKey]; $pri++)
-                    $cwi_array[] = $prevColor;
-            }
-
-            foreach ($_FILES["pr_img"]['name'] as $img_key => $img) {
-                $img_color = $cwi_array[] = $conn->real_escape_string($_POST['imgclr' . $img_key]);
-                $img_sa = array_count_values($cwi_array)[$img_color];
-                $uploaded_file = upload_image("pr_img", $img_key, "../");
-                resize_image(1536, 0, "../../proimg/{$prid}/{$img_color}{$img_sa}", $uploaded_file, true, "jpg");
-                //watermark_image("../proimg/{$prid}/{$img_color}{$img_sa}.jpg", "img/wtmrk.png");
-            }
-            $cwi_acv = array_count_values($cwi_array);
-            $fields['colors'] = $conn->real_escape_string(implode(",", array_keys($cwi_acv)));
-            $fields['images'] = $conn->real_escape_string(implode(",", $cwi_acv));
-        } else {
-            $fields['colors'] = "";
-            $fields['images']   = count($_FILES["pr_img"]['name']) + $prevCountArray[0];
-            for ($j = 0; $j < count($_FILES["pr_img"]['name']); $j++) {
-                $imageArray   = $prevCountArray[0] + $j + 1;
-                $uploaded_file = upload_image("pr_img", $j, "../");
-                resize_image(1536, 0, "../../proimg/{$prid}/{$imageArray}", $uploaded_file, true, "jpg");
-                //watermark_image("../../proimg/{$prid}/{$imageArray}.jpg", "img/wtmrk.png");
-            }
-        }
-    }
-    if (isset($_POST['dis_qty_from']) && !empty($_POST['dis_qty_from'])) {
-        $dFields['prid'] = $prid;
-        $dFields['msr_unit'] = $conn->real_escape_string($_POST['msr_unit']);
-        $conn->query(DeleteTable("pr_discounts", "prid='{$prid}'"));
-        foreach (array_filter($_POST['dis_qty_from']) as $key => $dqtyf) {
-            $dFields['item_from'] = $conn->real_escape_string($dqtyf);
-            $dFields['item_to'] = ($_POST['dis_qty_to'][$key]) ? $conn->real_escape_string($_POST['dis_qty_to'][$key]) : 0;
-            $dFields['discount_amount'] = $conn->real_escape_string($_POST['dis_amount'][$key]);
-            $conn->query(InsertInTable('pr_discounts', $dFields));
-        }
-    }
-
-    $sql = UpdateTable('products', $fields, " id = '{$prid}' ");
-    if ($conn->query($sql) == true) header('Location: ' . $base . 'sellercorner/deal-management/?smsg=' . urlencode('Successfully Updated Product'));
-    else header('Location: ' . $base . 'sellercorner/deal-management/?emsg=' . urlencode($conn->error));
-}
-
+$AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
 ?>
 
 <div class="main">
@@ -89,7 +14,7 @@ if (isset($_POST['update_deal_info'])) {
                 <input type="hidden" name="pid" value="<?php echo $this->Prid ?>">
 
                 <div class="col-md-12">
-                    <div class="product-tab-1">
+                    <div class="ptoggletab product-tab-1">
                         <div class="form-group">
                             <label>Product Name</label>
                             <input type="text" name="pr_name" class="form-control" value="<?php echo htmlspecialchars($this->Di->getName()) ?>" required />
@@ -124,10 +49,10 @@ if (isset($_POST['update_deal_info'])) {
                             </div>
                         </div>
 
-                        <a href="" class="btn btn-info">Next</a>
+                        <a href="" class="btn btn-info dealdata-toggle-input" data-t="product-tab-2">Next</a>
                     </div>
 
-                    <div class="product-tab-2">
+                    <div class="ptoggletab product-tab-2" style="display: none;">
                         <div class="my-2" id="primg-area" style="margin:2rem 0;">
                             <div class="bg-light" style="background-color:#fcfcfc;">
                                 <div class="form-group bmd-form-group">
@@ -205,20 +130,110 @@ if (isset($_POST['update_deal_info'])) {
                                     </tr>
                                 </thead>
                                 <tbody id="strElem">
-                                    <tr id="snrElem">
-                                        <td>
-                                            <input type="hidden" class="stk_size" name="stk_size[]" value="" />
-                                            <input type="hidden" class="stk_color" name="stk_color[]" value="" />
-                                            <span class="lblsizecolor">Default</span>
-                                        </td>
-                                        <td><input type="text" class="stk_amount" name="stk_amount[]" required /></td>
-                                        <td><input type="text" class="stk_price" name="stk_price[]" required /></td>
-                                    </tr>
+
+                                    <?php
+                                    $stkA = $this->Di->getStockChart($this->Di->getProductId()) ?: [["i_s" => null, "i_c" => null, "s_p" => null, "s_a" => null]];
+                                    foreach ($stkA as $stk) {
+                                        if (!$stk['i_c'] && !$stk['i_s']) $lblsizecolor = 'Default';
+                                        else if ($stk['i_c']) $lblsizecolor = $stk['i_s'] ? $stk['i_c'] . ' - ' . $stk['i_s'] : $stk['i_c'];
+                                        else $lblsizecolor = $stk['i_s'];
+                                    ?>
+                                        <tr id="snrElem">
+                                            <td>
+                                                <input type="hidden" class="stk_size" name="stk_size[]" value="<?= $stk['i_s'] ?>" />
+                                                <input type="hidden" class="stk_color" name="stk_color[]" value="<?= $stk['i_c'] ?>" />
+                                                <span class="lblsizecolor"><?= $lblsizecolor ?></span>
+                                            </td>
+                                            <td><input type="text" class="stk_amount" name="stk_amount[]" value="<?= $stk['s_a'] ?>" required /></td>
+                                            <td><input type="text" class="stk_price" name="stk_price[]" value="<?= $stk['s_p'] ?>" required /></td>
+                                        </tr>
+                                    <?php } ?>
+
                                 </tbody>
                             </table>
                         </div>
 
+                        <div class="row form-group">
+
+                            <?php
+                            if (isset($addPrOthers) && $addPrOthers) {
+                                foreach ($addPrOthers as $othKey => $othFields) {
+                                    if (is_array($othFields)) {
+                                        $othValue = $this->Di->getOthers($othFields['name']);
+
+                                        switch ($othFields['type']) {
+                                            case "number":
+                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
+                                                $fieldsHtml = "<input type='number' class='form-control' name='pr_others[{$othFields['name']}]' value='{$othValue}' /> ";
+                                                break;
+
+                                            case "select":
+                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
+                                                $fieldsHtml = "<select name='pr_others[{$othFields['name']}]' class='form-control'>";
+                                                foreach ($othFields['options'] as $othFldSelVal => $othFldSelLbl) {
+                                                    $fieldsHtml .= "<option value='{$othFldSelVal}'";
+                                                    if ($othFldSelVal == $othValue) {
+                                                        $fieldsHtml .= " selected='true'";
+                                                    }
+                                                    $fieldsHtml .= ">{$othFldSelLbl}</option>";
+                                                }
+                                                $fieldsHtml .= "<select>";
+                                                break;
+
+                                            case "textbox-plain":
+                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
+                                                $fieldsHtml = "<textarea name='' class='form-control'>{$othValue}</textarea>";
+                                                break;
+
+                                            case "textbox-html":
+                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
+                                                $fieldsHtml = "<textarea name='pr_others[{$othFields['name']}]' class='html-editor'>{$othValue}</textarea>";
+                                        }
+                                    } else {
+                                        $labelHtml = "<label class='bmd-label-floating'>" . $othKey . "</label>";
+                                        $fieldsHtml = "<input type='text' class='form-control' name='pr_others[" . $othFields . "]' value='{$othValue}' /> ";
+                                    }
+
+                            ?>
+                                    <div class="col-md-6">
+                                        <div class="form-group bmd-form-group">
+                                            <?php echo $labelHtml ?>
+                                            <?php echo $fieldsHtml ?>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            }
+                            ?>
+
+                        </div>
+
                         <div class="form-group">
+                            <label>Product Category</label>
+                            <select name="" data-live-search="true" class="form-control categorypicker">
+                                <?php
+                                foreach ($AlCats as $Mainc => $Mv) :
+                                ?>
+                                    <optgroup label="<?php echo htmlspecialchars($Mainc) ?>">
+                                        <?php
+                                        foreach ($Mv as $SubG => $SGv) :
+                                            foreach ($SGv as $Sv) :
+                                        ?>
+                                                <option value="<?php echo $Sv['id'] ?>"
+                                                        <?php if ($Sv['id'] == $this->Di->getCategory("id")) echo 'selected="true"'; ?>>
+                                                    <?php echo htmlspecialchars($SubG . ' - ' . $Sv['lbl']) ?>
+                                                </option>
+                                        <?php
+                                            endforeach;
+                                        endforeach;
+                                        ?>
+                                    </optgroup>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <a href="" class="btn btn-warning dealdata-toggle-input" data-t="product-tab-1">Back</a>
                             <input type="submit" name="submit" value="Update" class="btn btn-success" />
                         </div>
                     </div>
@@ -228,11 +243,15 @@ if (isset($_POST['update_deal_info'])) {
     </div>
 </div>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 <link href="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/ui/trumbowyg.css') ?>" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/trumbowyg.js') ?>"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/trumbowyg.table.min.js') ?>"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/plugins/__ds_sizes_colors.js') ?>"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/plugins/sorter/Sortable.min.js') ?>"></script>
+
+
 <script src="<?php echo Models::asset('546_admin/assets/js/_ilm_File_droper.js') ?>"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/product-page-scripts.js') ?>"></script>
 <script src="<?php echo Models::asset('546_admin/assets/js/__ds_admin_plugins.js') ?>"></script>
@@ -245,5 +264,6 @@ $(document).ready(function() {
     _ilm_Tags_input.init();
     _ilm_File_droper.init();
     _ilm_Product_page.initAdvStk();
+    $('.categorypicker').selectpicker();
 });
 </script>
