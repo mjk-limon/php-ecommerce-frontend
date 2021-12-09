@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace _ilmComm;
 
@@ -26,6 +26,7 @@ namespace _ilmComm;
                             <?php
                             while ($odrInfo = $this->Orders->fetch_array()) {
                                 $this->So->setOrderInfo($odrInfo);
+                                $M_Odr_Status = $this->So->writeMerchantOrderStatus();
                             ?>
                                 <tr class="poot" data-href="<?php echo $this->So->getOrderId() ?>/">
                                     <td>
@@ -38,23 +39,26 @@ namespace _ilmComm;
                                             $this->Sp->setPrid($OdrPrArr['p']);
                                         ?>
                                             <p class="mb-0">
-                                                <strong><?php echo $this->Sp->getName() ?></strong> - <?php echo $OdrPrArr['q'] ?> Unit<br />
+                                                <strong><?php echo $this->Sp->getName() ?: 'Deleted product' ?></strong> - <?php echo $OdrPrArr['q'] ?> Unit<br />
                                                 <span class="text-muted"><?php echo "(Size: " . $OdrPrArr['s'] . ", Color: " . $OdrPrArr['c'] . ")" ?></span>
                                             </p>
                                         <?php } ?>
 
                                     </td>
-                                    <td><?php echo date("j M, Y (H:iA)", strtotime($this->So->getOrderDate())) ?></td>
+                                    <td>
+                                        <?php echo date("j M, Y (H:iA)", strtotime($this->So->getOrderDate())) ?>
+                                    </td>
                                     <td class="td-actions odr">
-                                        <span class="label label-default">
-                                            <?php echo $this->So->writeOrderStatus() ?>
+                                        <span class="label label-<?php echo $M_Odr_Status[0] ?>">
+                                            <?php echo $M_Odr_Status[1] ?>
                                         </span>
 
-                                        <?php if (false) { ?>
-                                            <a href="<?php echo $self_url ?>?oisdon&z=<?php echo urlencode(base64_encode($mOdrInfo['id'])) ?>">
-                                                Mark as Proccessed !
+                                        <?php if ($M_Odr_Status[0] == 'default') { ?>
+                                            <a class="d-block text-success" href="?oisdon&z=<?php echo urlencode(base64_encode($this->So->getOrderId())) ?>">
+                                                <i class="fa fa-check"></i> Mark as Proccessed !
                                             </a>
                                         <?php } ?>
+
                                     </td>
                                 </tr>
                             <?php } ?>

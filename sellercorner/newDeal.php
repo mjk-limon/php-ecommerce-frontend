@@ -10,6 +10,7 @@ namespace _ilmComm;
         <div class="row">
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="new_product">
+                <input type="hidden" name="pr_m_id" value="<?php echo $this->MId ?>">
 
                 <div class="col-md-12">
                     <div class="ptoggletab product-tab-1">
@@ -33,7 +34,7 @@ namespace _ilmComm;
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Select Sub Catagory</label>
-                                    <select name="pr_catid" class="form-control subcat"
+                                    <select name="pr_subcategory" class="form-control subcat"
                                             title="Please select category"
                                             autocomplete="off"
                                             required>
@@ -58,7 +59,7 @@ namespace _ilmComm;
                         <div class="form-group">
                             <label>Product Discount</label>
                             <div class="input-group input-group-sm">
-                                <input class="form-control" name="pr_dis" type="number" value=""
+                                <input class="form-control" name="pr_dicount" type="number" value=""
                                        min="0"
                                        max="100"
                                        title="Please input product discount correctly (Expected type integer, Range 0 - 100)"
@@ -114,6 +115,7 @@ namespace _ilmComm;
                         </div>
 
                         <div class="form-group">
+                            <input type="hidden" name="pr_stock" value="0">
                             <table class="table table-striped table-sm dis-stock-table">
                                 <thead>
                                     <tr>
@@ -190,7 +192,7 @@ namespace _ilmComm;
 
                         <div class="form-group">
                             <a href="" class="btn btn-warning dealdata-toggle-input" data-t="product-tab-1">Back</a>
-                            <input type="submit" name="submit" value="Update" class="btn btn-success" />
+                            <input type="submit" value="Submit" class="btn btn-success" />
                         </div>
                     </div>
                 </div>

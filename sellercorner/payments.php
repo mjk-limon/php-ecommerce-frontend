@@ -1,44 +1,59 @@
+<?php 
+
+namespace _ilmComm;
+
+$OdrModel = $this->extModel("Sellercorner\\Orders");
+$So = $OdrModel->singleOrder();
+$Sp = $OdrModel->singleProduct();
+$MerOdrs = $OdrModel->getOrders();
+?>
+
 <div class="main">
     <div class="main-interface">
         <h2 class="page-header"><i class="fa fa-money"></i> Your Payments</h2>
         <div class="row">
             <div class="col-md-12">
                 <?php
-                $result_odr = $this->extModel("Sellercorner\\Orders")->getOrders();
-                if ($result_odr->num_rows > 0) {
+                if ($MerOdrs->num_rows > 0) {
                 ?>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <tr>
                                 <th class="col-md-2">#</th>
-                                <th class="col-md-2">Order No.</th>
-                                <th class="col-md-4">Order Status</th>
-                                <th class="col-md-4">Payment Status</th>
+                                <th class="col-md-3">Order No.</th>
+                                <th class="col-md-5">Order Status</th>
+                                <th class="col-md-2">Payment Status</th>
                             </tr>
                             <?php
                             $sl_i = 1;
-                            while ($odrInfo = $result_odr->fetch_array()) {
-                                //$cOdrInfo = get_single_data("p_order", "order_no = '{$odrInfo['p_odr_no']}'");
-                                $ModrStatus = ($odrInfo['status'] == 1) ? "processed" : "delivered";
-                                //$ModrStatusDate = ($odrInfo['status'] == 1) ? $odrInfo['processed_on'] : $odrInfo['delivered_on'];
-                                //$cOdrStatus = switch_status($cOdrInfo['admin_read'], 'orders', 'text');
+                            while ($odrInfo = $MerOdrs->fetch_array()) {
+                                $So->setOrderInfo($odrInfo);
+
+                                if (!in_array($So->getMerchantOrderStatus(), [2, 3])) {
+                                    continue;
+                                }
+
+                                $M_Odr_Sts = $So->writeMerchantOrderStatus();
+                                $M_Pmnt_Sts = $So->writeMerchantPaymentStatus();
                             ?>
-                                <tr class="poot" data-href="<?= $odrInfo['id'] ?>/">
-                                    <td><?= $sl_i ?></td>
-                                    <td><?= $odrInfo['order_no'] ?></td>
+                                <tr class="poot" data-href="<?php echo $So->getOrderId() ?>/">
+                                    <td><?php echo $sl_i ?></td>
+                                    <td><?php echo $So->getOrderId() ?></td>
                                     <td>
                                         <p>
-                                            You <?= $ModrStatus ?> products on <?= date("j M, Y (H:iA)", strtotime("2021-10-12")) ?>
+                                            You <?php echo $M_Odr_Sts[2] ?> products on <?php echo date("j M, Y (h:iA)", strtotime($M_Odr_Sts[3])) ?>
                                         </p>
                                         <p>
-                                            <?= COMPANY_NAME ?> status:
-                                            <span class="label label-info">
-                                                Delivered
+                                            <?php echo COMPANY_NAME ?> status:
+                                            <span class="text-info">
+                                                <?php echo $So->writeOrderStatus() ?>
                                             </span>
                                         </p>
                                     </td>
-                                    <td class="td-actions text-danger">
-                                        Delivered
+                                    <td class="td-actions">
+                                        <span class="label label-<?php echo $M_Pmnt_Sts[0] ?>">
+                                            <?php echo $M_Pmnt_Sts[1] ?>
+                                        </span>
                                     </td>
                                 </tr>
                             <?php

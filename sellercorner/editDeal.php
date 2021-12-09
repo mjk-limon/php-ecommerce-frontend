@@ -10,7 +10,7 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
         <h2 class="page-header"><i class="fa fa-pencil"></i> Edit Product Details</h2>
         <div class="row">
             <form action="" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="update_deal_info">
+                <input type="hidden" name="edit_product">
                 <input type="hidden" name="pid" value="<?php echo $this->Prid ?>">
 
                 <div class="col-md-12">
@@ -30,7 +30,7 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
                         <div class="form-group">
                             <label>Product Discount</label>
                             <div class="input-group input-group-sm">
-                                <input class="form-control" name="pr_price" type="number" value="<?php echo $this->Di->getDiscount() ?>" min="0" max="100" required />
+                                <input class="form-control" name="pr_dicount" type="number" value="<?php echo $this->Di->getDiscount() ?>" min="0" max="100" required />
                                 <span class="input-group-addon">%</span>
                             </div>
                         </div>
@@ -121,6 +121,8 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
                         </div>
 
                         <div class="form-group">
+                            <input type="hidden" name="pr_stock" value="0">
+                            
                             <table class="table table-striped table-sm dis-stock-table">
                                 <thead>
                                     <tr>
@@ -210,7 +212,7 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
 
                         <div class="form-group">
                             <label>Product Category</label>
-                            <select name="" data-live-search="true" class="form-control categorypicker">
+                            <select name="pr_subcategory" data-live-search="true" class="form-control categorypicker">
                                 <?php
                                 foreach ($AlCats as $Mainc => $Mv) :
                                 ?>
