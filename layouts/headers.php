@@ -5,6 +5,12 @@ namespace _ilmComm;
 Head\DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
 $body_class = $this->mobileView ? 'class="htmlformb"' : '';
+
+$BrandList = $this->extModel("Brands")->brandLists(true);
+$BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
+$AllAboutBeauty = $this->extModel("Home")->getSliders(1);
+$TopBrands = array_slice($BrandGroups, 0, 9);
+
 ?>
 
 <!DOCTYPE html>
@@ -97,71 +103,146 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="position: static;">
                                 <div class="mainmenu-area-quicklinks">
                                     <ul class="m-a-links">
                                         <li><a href="/">CATEGORIES</a></li>
                                         <li>
-                                            <a href="/">BRANDS</a>
-                                            <div class="header-floating-menu animated fadeInUp slimScroll">
-                                                <div class="hfm-brands">
-                                                    <h5 class="hfm-title">ALL BRANDS</h5>
+                                            <a href="javascript:;">BRANDS</a>
+                                            <div class="header-floating-menu animated fadeInUp">
+                                                <div class="hfm-brands" style="display:flex;height:100%;">
+                                                    <div class="hfm-brandsection-left slimScroll" style="width:27.5%;height:100%;flex:0 0 27.5%">
+                                                        <div class="hfm-bl-sec">
+                                                            <h5 class="hfm-title">TOP BRANDS</h5>
 
-                                                    <?php
-                                                    $BrandList = $this->extModel("Brands")->brandLists(true);
-                                                    $BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
-                                                    foreach ($BrandGroups as $GK => $GK_Val) :
-                                                    ?>
-                                                        <div class="brand-group" style="margin-bottom: 1rem">
-                                                            <div class="bc-cat-name" style="color:var(--accent)"><?php echo $GK ?></div>
-                                                            <div class="flex brand-flex">
+                                                            <div class="brand-group" style="margin-bottom: 1rem">
 
-                                                                <?php
-                                                                foreach ($GK_Val as $BrName) :
-                                                                    $BrLink = $BrandList[$BrName]['link'];
-                                                                    $BrImg = $BrandList[$BrName]['image'];
-                                                                ?>
-                                                                    <div class="single-brand">
-                                                                        <div class="single-brand-info">
-                                                                            <a href="<?php echo $BrLink ?>">
-                                                                                <div class="sb-brand-image-placeholder">
-                                                                                    <div class="sb-brand-image" style="background-image:url('<?php echo $BrImg ?>')"></div>
+                                                                <?php foreach ($TopBrands as $GK_Val) : ?>
+                                                                    <div class="brand-flex">
+                                                                        <?php
+                                                                        foreach ($GK_Val as $BrName) :
+                                                                            $BrLink = $BrandList[$BrName]['link'];
+                                                                            $BrImg = $BrandList[$BrName]['image'];
+                                                                            $BrCnt = $BrandList[$BrName]['total_prs'];
+                                                                        ?>
+                                                                            <div class="single-brand">
+                                                                                <div class="single-brand-info">
+                                                                                    <a href="<?php echo $BrLink ?>">
+                                                                                        <div class="sb-brand-title">
+                                                                                            <?php echo $BrName ?>
+                                                                                            <span class="label label-default"><?php echo $BrCnt ?></span>
+                                                                                        </div>
+                                                                                    </a>
                                                                                 </div>
-                                                                                <div class="sb-brand-title"><?php echo $BrName ?></div>
-                                                                            </a>
-                                                                        </div>
+                                                                            </div>
+                                                                        <?php endforeach; ?>
                                                                     </div>
                                                                 <?php endforeach; ?>
 
                                                             </div>
                                                         </div>
-                                                    <?php endforeach; ?>
+                                                        <div class="hfm-bl-sec">
+                                                            <h5 class="hfm-title">ALL BRANDS</h5>
 
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!--li>
-                                            <a href="/">ALL ABOUT BEAUTY</a>
-                                            <div class="header-floating-menu animated fadeInUp slimScroll">
-                                                <div class="hfm-brands">
-                                                    <div class="flex">
-                                                        <div class="flex-item">
-                                                            <div class="single-layout-grid">
-                                                                <div class="slg-image">
-                                                                    <a href="">
-                                                                        <img src="" />
-                                                                    </a>
+                                                            <?php foreach ($BrandGroups as $GK => $GK_Val) : ?>
+                                                                <div class="brand-group" style="margin-bottom: 1rem" id="<?php echo $GK . "1" ?>">
+                                                                    <div class="bc-cat-name" style="color:var(--accent)">
+                                                                        <?php echo $GK ?>
+                                                                    </div>
+                                                                    <div class="brand-flex">
+                                                                        <?php
+                                                                        foreach ($GK_Val as $BrName) :
+                                                                            $BrLink = $BrandList[$BrName]['link'];
+                                                                            $BrImg = $BrandList[$BrName]['image'];
+                                                                            $BrCnt = $BrandList[$BrName]['total_prs'];
+                                                                        ?>
+                                                                            <div class="single-brand">
+                                                                                <div class="single-brand-info">
+                                                                                    <a href="<?php echo $BrLink ?>">
+                                                                                        <div class="sb-brand-title">
+                                                                                            <?php echo $BrName ?>
+                                                                                            <span class="label label-default"><?php echo $BrCnt ?></span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        <?php endforeach; ?>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="slg-text">
-                                                                    <h5>Hello</h5>
-                                                                    <p>Hanji</p>
-                                                                </div>
-                                                            </div> 
+                                                            <?php endforeach; ?>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="hfm-brandsection-right" style="width:72.5%;flex:0 0 72.5%">
+                                                        <div class="hfmr-lnav">
+                                                            <ul class="nav brand-env-nav">
+                                                                <li><a href="">#</a></li>
+
+                                                                <?php foreach (range('A', 'Z') as $Char) : ?>
+                                                                    <li>
+                                                                        <a href="javascript:;"
+                                                                           onclick="_ilm.jumpToSection('#<?php echo $Char ?>1', null, '.hfm-brandsection-left')">
+                                                                            <?php echo $Char ?>
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+
+                                                            </ul>
+                                                        </div>
+                                                        <div class="hfmr-full">
+                                                            <h5 class="hfm-title">TOP BRANDS</h5>
+                                                            <div class="flex brand-flex flex-wrap top-brands">
+                                                                <?php
+                                                                foreach ($TopBrands as $GK_Val) :
+                                                                    foreach ($GK_Val as $BrName) :
+                                                                        $BrLink = $BrandList[$BrName]['link'];
+                                                                        $BrImg = $BrandList[$BrName]['image'];
+                                                                ?>
+                                                                        <div class="single-brand">
+                                                                            <div class="single-brand-info">
+                                                                                <a href="<?php echo $BrLink ?>">
+                                                                                    <div class="sb-brand-image-placeholder">
+                                                                                        <div class="sb-brand-image" style="background-image:url('<?php echo $BrImg ?>')"></div>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                <?php
+                                                                    endforeach;
+                                                                endforeach;
+                                                                ?>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li-->
+                                        </li>
+                                        <li>
+                                            <a href="/">ALL ABOUT BEAUTY</a>
+                                            <div class="header-floating-menu beauty-menu animated fadeInUp">
+                                                <div class="hfm-brands">
+                                                    <div class="flex">
+
+                                                        <?php while ($AbArr = $AllAboutBeauty->fetch_assoc()) : ?>
+                                                            <div class="flex-item ">
+                                                                <div class="single-layout-grid">
+                                                                    <div class="slg-image">
+                                                                        <a class="noRoute" href="<?php echo $AbArr['image_link'] ?>" target="_blank">
+                                                                            <img src="<?php echo Models::asset($AbArr['image']) ?>" />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="slg-text slg-text-ps">
+                                                                        <h5><?php echo $AbArr['image_heading'] ?></h5>
+                                                                        <p><?php echo $AbArr['image_text1'] ?></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php endwhile; ?>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -176,7 +257,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     </form>
                                 </div>
                                 <div class="ht-right-icon icon-my-account">
-                                    <a class="cb chp db" href="https://shop.shajgoj.com/my-account/">
+                                    <a class="cb chp db" href="">
                                         <i class="pe-7s-user"></i>
                                     </a>
                                 </div>
@@ -227,6 +308,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                     <li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
                                                 </ul>
                                             </li>
+
                                             <?php if (!$this->UserData) : ?>
                                                 <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
                                                 <li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
@@ -237,6 +319,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                 <li><a href="/my-account/?c=90.03">Order History</a></li>
                                                 <li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
                                             <?php endif; ?>
+
                                             <li><a href="/brands/">Brands</a></li>
                                             <li><a href="/track-order/">Track Order</a></li>
                                         </ul>
@@ -244,6 +327,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                 </ul>
                             </div>
                         <?php endif; ?>
+
                     </div>
                 </div>
             </div>
@@ -319,4 +403,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
         <div class="indeterminate"></div>
     </div>
     <section id="skmbcontent" style="display:block">
-        <?php if ($this->HeadData['content']) echo $this->HeadData['content'] ?>
+        <?php
+        if ($this->HeadData['content']) {
+            echo $this->HeadData['content'];
+        }
+        ?>

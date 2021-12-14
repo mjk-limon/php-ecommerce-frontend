@@ -178,6 +178,15 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
     <div class="spd">
         <div class="container">
+            <div class="section-mb text-center">
+                <h4>See personalized recommendation</h4>
+                <button data-toggle="modal" data-target="#loginPhone">LOGIN WITH PHONE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="spd">
+        <div class="container">
             <div class="section-browse-cat">
                 <div class="bc-title">
                     <div class="bc-main-title">IN THE SPOTLIGHT</div>
@@ -342,6 +351,48 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
         </div>
     </div>
 </section>
+
+<div class="modal modal-center animated fadeInUp" id="loginPhone" style="animation-duration: .2s">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Login With Phone</h4>
+            </div>
+            <div class="modal-body">
+                <form class="_ilmForm" id="otpLoginForm" action="" method="POST">
+                    <input type="hidden" name="otpLoginUser">
+                    <input type="hidden" class="refPage" name="ref" value="/">
+
+                    <div class="form-group widget_input">
+                        <label>Your Mobile Number</label>
+                        <div class="input-group" id="verf-num">
+                            <div class="input-group-addon">+88</div>
+                            <input class="form-control" name="mobile_number" placeholder="01XXXXXXXXX" required="">
+                        </div>
+                    </div>
+
+                    <div class="verification-section">
+                        <div id="verify-slider">
+                            <button class="submit-btn">Send OTP</button>
+                        </div>
+
+                        <div class="form-group verification-code">
+                            <label>Verification Code</label>
+                            <input class="form-control" name="otp" pattern="[0-9]+" required="">
+                            <span class="form-helper"><a href="javascript:;" class="reset disabled">Resend Verification Code (<span>20 </span>s)</a></span>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="submit-btn iFSubmitBtn">Verify</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <link href="<?php echo Models::asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />
 <script type="text/javascript">
