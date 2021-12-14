@@ -2,7 +2,7 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans:400";
 
 /*== Basic ===*/
-body{font-family:'Quicksand', sans-serif;font-weight:400}
+body{font-family:'Quicksand', sans-serif;font-weight:500}
 ul li{list-style:none}
 a{color:#333;-webkit-transition:300ms;transition:300ms}
 a:hover{outline:none;text-decoration:none}
@@ -130,7 +130,7 @@ header{box-shadow:0 3px 5px -4px #666;position: fixed;top:0;left:0;width:100%;ba
 .mainmenu ul{/* min-height:413px */}
 .mainmenu ul li{float:none;width:100%;padding-bottom:0;border-bottom:1px solid #eee}
 
-.mainmenu ul li a{color:#333;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:14px;font-weight:400;padding:9px;text-transform:capitalize}
+.mainmenu ul li a{color:#333;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:14px;font-weight:400;padding:5px 9px;text-transform:capitalize}
 .mainmenu ul li a span{padding-right:10px}
 .mainmenu ul li a i{text-align:right}
 .mainmenu ul li a:hover, .mainmenu ul li a.active, .shop-menu ul li a.active{background:none;color:var(--accent)}
@@ -206,7 +206,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .sp-dis{position:absolute;right:0;color:#fff;background:var(--accent);border-bottom-left-radius:100%;padding:.4rem .7rem;text-align:right;display:inline-block;padding-right:0;font-size:14px}
 .sp-image img{display:block;margin:0 auto;max-width:100%;max-height:100%}
 .sp-pr{position:relative;padding:.75rem;top:0;transition:all .5s ease}
-.sp-pr-info h5{margin:0 0 .5rem;font-weight:300;font-size:1.4rem;line-height:1.5rem;max-height:3rem;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;line-clamp:2}
+.sp-pr-info h5{margin:0 0 .5rem;font-weight:500;font-size:1.4rem;line-height:1.5rem;max-height:3rem;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;line-clamp:2}
 .sp-pr-info p{font-size:13px;font-weight:400;color:#737373;margin:0}
 .sp-pr-info p .price{font-size:115%;color:var(--accent)}
 .sp-pr-info .p-old{font-size:95%;margin-left:8px;color:#b0b0b0;text-decoration:line-through}

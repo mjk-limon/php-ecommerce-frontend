@@ -71,6 +71,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <?php endif; ?>
 
                                 <p>By, <a href="<?php echo '/search/?q=&a_s_t=brand&astval=' . urlencode($PrDetails->getBrandName()) ?>"><?php echo $PrDetails->getBrandName() ?></a></p>
+                                <p><?php echo $PrDetails->getOthers("f2") ?></p>
                                 <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>">
                                     <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
 
