@@ -1,13 +1,17 @@
 <?php
 
 namespace _ilmComm;
+
 ?>
 
 <section class="filter-form section-mb">
     <h4>filter by price</h4>
     <div class="ff-main">
         <div class="price-range-box">
-            <form id="priceSort-form" action="" method="POST">
+            <div style="padding: 2rem">
+                <div id="slider"></div>
+            </div>
+            <form id="priceSort-form" action="" method="POST" style="display:none">
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="min" placeholder="Min" /></li>
                 <li class="hypen">-</li>
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="max" placeholder="Max" /></li>

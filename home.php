@@ -179,8 +179,10 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     <div class="spd">
         <div class="container">
             <div class="section-mb text-center">
-                <h4>See personalized recommendation</h4>
-                <button data-toggle="modal" data-target="#loginPhone">LOGIN WITH PHONE</button>
+                <div class="personal-suggestion">
+                    <h4>See personalized recommendation</h4>
+                    <button data-toggle="modal" class="limbutton" data-target="#loginPhone">LOGIN WITH PHONE</button>
+                </div>
             </div>
         </div>
     </div>
@@ -355,7 +357,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <div class="modal modal-center animated fadeInUp" id="loginPhone" style="animation-duration: .2s">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="border-bottom: 0;padding-bottom: 0;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Login With Phone</h4>
             </div>
@@ -374,7 +376,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
                     <div class="verification-section">
                         <div id="verify-slider">
-                            <button class="submit-btn">Send OTP</button>
+                            <button class="submit-btn limbutton">Send OTP</button>
                         </div>
 
                         <div class="form-group verification-code">

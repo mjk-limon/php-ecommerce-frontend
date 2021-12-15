@@ -440,6 +440,7 @@ body.elem-loader{padding-right:18px}
 .modal.modal-center{text-align:center}
 @media screen and (min-width: 768px) {.modal.modal-center:before{display:inline-block;vertical-align:middle;content:" ";height:100%}}
 .modal-center .modal-dialog{display:inline-block;text-align:left;vertical-align:middle}
+.limbutton{cursor:pointer;padding:0 25px;color:var(--accent);border-radius:0px;font-size:14px;font-weight:normal;height:35px!important;border:0px;line-height:35px !important;text-transform:uppercase;background-image:linear-gradient(75.96deg,#58595b,#58595b 51%,#58595b 100%) !important;background-position:left !important;background-size:350% auto !important;transition: .5s}
 
 /*== Floating Cart ===*/
 .floating-sc{position:fixed;right:0;height:100%;z-index:10000}
@@ -531,7 +532,8 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 
 .header-floating-menu{position:absolute;width:100%;height:80vh;left:0;background:#fff;z-index:1;animation-duration:.5s;display:none;border-top:1px solid #aaa;}
 .header-floating-menu.beauty-menu{height:auto}
-.m-a-links li:hover .header-floating-menu{display:block}
+.header-floating-menu.login-menu{width:auto;height:auto;left:auto;right:0}
+.m-a-links li:hover .header-floating-menu,.ht-right-icon:hover .header-floating-menu{display:block}
 .hfm-bl-sec{margin-bottom:20px}
 .hfm-title{margin-top:0;border-bottom:1px solid #eee;padding-bottom:5px;font-weight:bold}
 .hfm-brands{padding:2rem}
@@ -542,7 +544,9 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .hfmr-lnav .brand-env-nav li a{padding:0;font-weight:bold;font-size:12px}
 .hfmr-lnav .brand-env-nav li a:hover{color:var(--accent);background-color:transparent}
 .hfmr-full .hfm-title{text-align:center;font-size:15px;border-bottom-width:2px;border-bottom-color:#333;}
-.beauty-menu .hfm-brands .flex-item{padding:0 1rem;}
+.beauty-menu .hfm-brands .flex-item{padding:0 1rem}
+.login-menu li{display:block;border-bottom:1px solid #ddd;text-align:center;}
+.login-menu li a{padding:1rem 3rem}
 
 .wishlistall{padding:0;margin:0;text-align:right}
 .wishlistall > li{height:35px;width:35px;line-height:36px;text-align:center;list-style-type:none;display:inline-block}
@@ -633,6 +637,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .single-brand-info .sb-brand-image{padding:50%;background-position:center;background-size:80%;background-repeat:no-repeat}
 .sb-brand-title{color:#000}
 .sb-brand-title span{margin-left:5px;padding:0.1em 0.9em 0.1em;background-color:#ddd;color:#333}
+.personal-suggestion{padding:5rem 0;background-color:#fff}
 
 .single-product {overflow:hidden}
 .grid-row{display:grid;grid-template-columns:repeat(6, 1fr);grid-gap:2.5rem;align-items:start;justify-items:center;margin:0}
@@ -951,6 +956,11 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .login_registration_widget .swap-btn{margin-top:15px;padding-top:5px;border-top:1px dashed #ccc}
 .login_registration_widget .swap-btn a{display:inline-block;color:#333;font-weight:bold;transition:all .4s}
 .login_registration_widget .swap-btn a:hover{word-spacing:5px;letter-spacing:2px}
+
+.verification-section .form-group, .verification-section.verified #verify-slider{display:none}
+.verification-section.verified .form-group{display:block}
+.verification-code .form-helper{margin-top:2px;display:block}
+.verification-code .form-helper .disabled{color:#888}
 
 .registration-page .social-login-btns{margin-top:2em}
 .social-login-btns .sl-btn{display:block;width:100%;text-align:center;border:0;color:#fff;font-weight:bold;line-height:40px;height:40px;border-radius:5px;font-size:16px;margin-bottom:10px}
