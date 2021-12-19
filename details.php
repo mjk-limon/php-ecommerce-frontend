@@ -41,7 +41,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="empty-product-page">
-                                <img src="<?= Models::asset("images/pp-empty.png") ?>" alt="" />
+                                <img src="<?php echo Models::asset("images/pp-empty.png") ?>" alt="" />
                                 <h4>PRODUCT NOT FOUND</h4>
                                 <h4>INVALID PRODUCT ID OR PRODUCT MAY BE DELETED</h4>
                             </div>
@@ -58,7 +58,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             <div class="row">
                                 <div class="col-md-5 single-top-left">
                                     <?php if ($this->mobileView) : ?>
-                                        <h2 class="pr-name"><?= $PrDetails->getName() ?></h2>
+                                        <h2 class="pr-name"><?php echo $PrDetails->getName() ?></h2>
                                     <?php endif; ?>
                                     <div class="flexslider" id="flexslider">
                                         <ul class="slides">
@@ -67,9 +67,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             foreach ($this->ProductImages as $Image) :
                                                 $zoom_item .= "{src: '" . Models::asset($Image) . "',w: 1200,h: 1200},";
                                             ?>
-                                                <li data-thumb="<?= Models::asset($Image) ?>">
+                                                <li data-thumb="<?php echo Models::asset($Image) ?>">
                                                     <div class="thumb-image detail_images">
-                                                        <img src="<?= Models::asset($Image) ?>" data-zoom="true" class="img-responsive" alt="<?= $Image ?>">
+                                                        <img src="<?php echo Models::asset($Image) ?>" data-zoom="true" class="img-responsive" alt="<?php echo $Image ?>">
                                                     </div>
                                                 </li>
                                             <?php endforeach; ?>
@@ -81,17 +81,17 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                     <div class="product-title">
                                         <div class="pt-area">
                                             <?php if (!$this->mobileView) : ?>
-                                                <h2 class="pr-name"><?= $PrDetails->getName() ?></h2>
+                                                <h2 class="pr-name"><?php echo $PrDetails->getName() ?></h2>
                                             <?php endif; ?>
-                                            <p>Brand: Nirvana Color</p>
+                                            <p>Brand: <?php echo $PrDetails->getBrandName() ?></p>
                                             <p>(45gm)</p>
                                         </div>
                                         <div class="pt-area">
                                             <div class="flex price-review-flex" style="justify-content: space-between">
-                                                <p class="pr-price" data-dis="<?= $PrDetails->getDiscount() ?>">
-                                                    <span><?= Models::curr($PrDetails->getPrice()) ?></span>
+                                                <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>">
+                                                    <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
                                                     <?php if ($PrDetails->getDiscount()) : ?>
-                                                        <span class="pre-price"><?= Models::curr($PrDetails->getPrice(0)) ?></span>
+                                                        <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                                     <?php endif; ?>
                                                 </p>
                                                 <p><span style="color: #ffc168;">☆☆☆☆☆</span> (19 customer review)</p>
@@ -103,8 +103,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         $AvaClass = $PrDetails->getStock() ? '' : 'notava';
                                         $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                         ?>
-                                        <p class="pr-entl">Availability: <span class="entl-data ava <?= $AvaClass ?>"><?= $Availability ?></span></p>
-                                        <p class="pr-entl">Product Code: <span class="entl-data" id="tPrId"><?= $this->Prid ?></span></p>
+                                        <p class="pr-entl">Availability: <span class="entl-data ava <?php echo $AvaClass ?>"><?php echo $Availability ?></span></p>
+                                        <p class="pr-entl">Product Code: <span class="entl-data" id="tPrId"><?php echo $this->Prid ?></span></p>
 
                                         <div class="pr-size-color">
                                             <?php
@@ -114,7 +114,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                 <ul class="pr-sc-ul size-selection">
                                                     <div>Select size:</div>
                                                     <?php foreach ($Sizes as $Size) : ?>
-                                                        <li class="ss-btn"><?= $Size ?></li>
+                                                        <li class="ss-btn"><?php echo $Size ?></li>
                                                     <?php endforeach; ?>
                                                 </ul>
                                             <?php endif; ?>
@@ -134,7 +134,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                             $background);
                                                     ?>
                                                         <li class="cs-btn">
-                                                            <i style="background:<?= $colrPrev ?>"></i> <?= $Color ?>
+                                                            <i style="background:<?php echo $colrPrev ?>"></i> <?php echo $Color ?>
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -150,7 +150,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                         <li class="item_plus"><a href="javascript:;">+</a></li>
                                                     </ul>
                                                     <ul class="bnav-btns">
-                                                        <em data-prid="<?= $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
+                                                        <em data-prid="<?php echo $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
                                                             <img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
                                                         </em>
                                                         <li class="add-to-cart add-cart cAddBuyNav">ADD TO CART</li>
@@ -166,34 +166,45 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         <?php endif; ?>
 
                                         <div class="pr-meta-info">
-                                            <span>SKU: <span>13706</span></span>
-                                            <span>Categories: <span>Liquid Lipsticks, Lips, Makeup</span></span>
-                                            <span>Tags: <span>Face, Acne</span></span>
+                                            <span>SKU: <span><?php echo $PrDetails->getOthers("sku") ?></span></span>
+                                            <span>Categories: <span><?php echo $PrDetails->getCategory("main") . ', ' . $PrDetails->getCategory("header") ?></span></span>
+                                            <span>
+                                                Tags: 
+                                                <?php foreach (explode(',', $PrDetails->getOthers("tags")) as $PrTag): ?>
+                                                    <span>
+                                                        <a href="/search/?q=&a_s_t=tags&astval=<?php echo urlencode($PrTag) ?>">
+                                                            <?php echo $PrTag ?>
+                                                        </a>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </span>
                                         </div>
                                     </div>
 
                                     <ul class="share">
                                         <li>
-                                            <a href="https://www.facebook.com/sharer.php?u=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="https://www.facebook.com/sharer.php?u=<?php echo urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-facebook"></i></a>
                                         </li>
                                         <li>
-                                            <a href="http://twitter.com/share?text=<?= urlencode(COMPANY_NAME) ?>+Product&url=<?= urlencode($SelfUrl); ?>&hashtags=<?= urlencode(COMPANY_NAME) ?>,Ecommerce,Products,<?= urlencode($this->Mainc); ?>" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="http://twitter.com/share?text=<?php echo urlencode(COMPANY_NAME) ?>+Product&url=<?php echo urlencode($SelfUrl); ?>&hashtags=<?php echo urlencode(COMPANY_NAME) ?>,Ecommerce,Products,<?php echo urlencode($this->Mainc); ?>" target="_blank"><i class="fa fa-twitter"></i></a>
                                         </li>
                                         <li>
-                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode($SelfUrl); ?>&title=<?= urlencode(COMPANY_NAME) ?>+Products&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode($SelfUrl); ?>&title=<?php echo urlencode(COMPANY_NAME) ?>+Products&summary=&source=" target="_blank"><i class="fa fa-linkedin"></i></a>
                                         </li>
                                         <li>
-                                            <a href="https://pinterest.com/pin/create/button/?url=<?= urlencode($SelfUrl); ?>&media=<?= urlencode(Models::baseUrl("proimg/" . $this->Prid . "/thumb.jpg")); ?>&description=" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                            <a href="https://pinterest.com/pin/create/button/?url=<?php echo urlencode($SelfUrl); ?>&media=<?php echo urlencode(Models::baseUrl("proimg/" . $this->Prid . "/thumb.jpg")); ?>&description=" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
                                         </li>
+
                                         <?php if ($this->mobileView) : ?>
                                             <li>
-                                                <a class="noRoute" href="whatsapp://send?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                                                <a class="noRoute" href="whatsapp://send?text=<?php echo urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
                                             </li>
                                         <?php else : ?>
                                             <li>
-                                                <a href="https://wa.me/?text=<?= urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
+                                                <a href="https://wa.me/?text=<?php echo urlencode($SelfUrl); ?>" target="_blank"><i class="fa fa-whatsapp"></i></a>
                                             </li>
                                         <?php endif; ?>
+
                                     </ul>
                                 </div>
                             </div>
@@ -256,7 +267,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <span><a href="javascript:;" id="DRRvwBtn" data-target="#pr-rvw" class="true" data-toggle="DRtab">Ratings &amp; Reviews (5)</a></span>
                 </h4>
                 <div class="discription-review-body">
-                    <div id="pr-dis"><?= $PrDetails->getDescription(); ?></div>
+                    <div id="pr-dis"><?php echo $PrDetails->getDescription(); ?></div>
                     <div id="pr-rvw" style="display:none">
                         <div class="row">
 
@@ -265,10 +276,10 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                     <h4>Product Rating</h4>
                                     <div class="row ratings">
                                         <div class="col-md-4 col-xs-5 rating-review text-center">
-                                            <h1><?= $PrDetails->getRating("r_r") ?></h1>
+                                            <h1><?php echo $PrDetails->getRating("r_r") ?></h1>
                                             <h4>/5</h4>
-                                            <span class="stars"><?= $PrDetails->getRating("r_r") ?></span>
-                                            <p><small><em>(Total Ratings: <?= $PrDetails->getRating("r_t") ?>)</em></small></p>
+                                            <span class="stars"><?php echo $PrDetails->getRating("r_r") ?></span>
+                                            <p><small><em>(Total Ratings: <?php echo $PrDetails->getRating("r_t") ?>)</em></small></p>
                                         </div>
                                         <div class="col-md-8 col-xs-7 user-rating">
 
@@ -277,9 +288,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                 $BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
                                             ?>
                                                 <div class="row-rat">
-                                                    <?= $RI ?> Star
+                                                    <?php echo $RI ?> Star
                                                     <span class="rating-progress">
-                                                        <span style="width:<?= $BarWidth ?>%"></span>
+                                                        <span style="width:<?php echo $BarWidth ?>%"></span>
                                                     </span>
                                                 </div>
                                             <?php endfor; ?>
@@ -299,9 +310,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                                         <?php if ($this->UserData) : ?>
                                             <form class="replyRvwForm" action="" method="POST">
-                                                <input type="hidden" name="name" value="<?= $this->UserData->getFullName() ?>" />
-                                                <input type="hidden" name="email" value="<?= $this->UserData->getUserName() ?>" />
-                                                <input type="hidden" name="prid" value="<?= $this->Prid ?>" />
+                                                <input type="hidden" name="name" value="<?php echo $this->UserData->getFullName() ?>" />
+                                                <input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
+                                                <input type="hidden" name="prid" value="<?php echo $this->Prid ?>" />
                                                 <input type="hidden" name="reply_product_rvw" />
                                                 <input type="hidden" name="rtp" value="rvw" />
 
@@ -355,10 +366,10 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                                         <?php if ($this->UserData) : ?>
                                             <form class="replyRvwForm" action="" method="POST">
-                                                <input type="hidden" name="name" value="<?= $this->UserData->getFullName() ?>" />
-                                                <input type="hidden" name="email" value="<?= $this->UserData->getUserName() ?>" />
+                                                <input type="hidden" name="name" value="<?php echo $this->UserData->getFullName() ?>" />
+                                                <input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
                                                 <input type="hidden" name="qid" value="0" />
-                                                <input type="hidden" name="prid" value="<?= $this->Prid ?>" />
+                                                <input type="hidden" name="prid" value="<?php echo $this->Prid ?>" />
                                                 <input type="hidden" name="reply_product_rvw" />
                                                 <input type="hidden" name="rtp" value="qstn" />
 
@@ -398,6 +409,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                 <div class="product-page-products" style="padding-left: 0;padding-right: 0;">
                     <h4>CUSTOMER ALSO VIEWED</h4>
                     <div class="grid-row grid4">
+
                         <?php
                         $Suggestions = $this->ProductSuggestion;
                         while ($Rpr = $Suggestions->fetch_array()) :
@@ -406,33 +418,33 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             $sp->processStock();
                         ?>
                             <div class="grids">
-                                <div class="single-product <?= $spAddClass ?>">
+                                <div class="single-product <?php echo $spAddClass ?>">
                                     <div class="sp-image">
                                         <?php if ($sp->getDiscount()) : ?>
-                                            <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
+                                            <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
-                                        <a href="<?= $sp->getHref() ?>">
-                                            <img src="<?= $sp->getProductImage() ?>" />
+                                        <a href="<?php echo $sp->getHref() ?>">
+                                            <img src="<?php echo $sp->getProductImage() ?>" />
                                         </a>
                                     </div>
                                     <div class="has-sp-nav">
                                         <div class="sp-pr">
                                             <div class="sp-pr-info">
-                                                <a href="<?= $sp->getHref() ?>">
-                                                    <h5><?= $sp->getName() ?></h5>
+                                                <a href="<?php echo $sp->getHref() ?>">
+                                                    <h5><?php echo $sp->getName() ?></h5>
                                                 </a>
                                                 <p>
                                                     <?php if ($sp->getDiscount()) : ?>
-                                                        <strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
+                                                        <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                     <?php endif; ?>
-                                                    <strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
+                                                    <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="sp-nav">
-                                            <em data-prid="<?= $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                                            <a href="javascript:;" class="buy-now cAddBuyNav">ADD TO CART</a>
+                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
+                                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
                                         </div>
                                     </div>
                                 </div>
@@ -454,6 +466,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                 <div class="product-page-products" style="padding-left: 0;padding-right: 0;">
                     <h4>YOU MAY ALSO LIKE</h4>
                     <div class="grid-row grid4">
+
                         <?php
                         $Suggestions = $this->productSuggestion(false);
                         while ($Rpr = $Suggestions->fetch_array()) :
@@ -462,33 +475,33 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             $sp->processStock();
                         ?>
                             <div class="grids">
-                                <div class="single-product <?= $spAddClass ?>">
+                                <div class="single-product <?php echo $spAddClass ?>">
                                     <div class="sp-image">
                                         <?php if ($sp->getDiscount()) : ?>
                                             <span class="sp-dis">SALE</span>
                                         <?php endif; ?>
-                                        <a href="<?= $sp->getHref() ?>">
-                                            <img src="<?= $sp->getProductImage() ?>" />
+                                        <a href="<?php echo $sp->getHref() ?>">
+                                            <img src="<?php echo $sp->getProductImage() ?>" />
                                         </a>
                                     </div>
                                     <div class="has-sp-nav">
                                         <div class="sp-pr">
                                             <div class="sp-pr-info">
-                                                <a href="<?= $sp->getHref() ?>">
-                                                    <h5><?= $sp->getName() ?></h5>
+                                                <a href="<?php echo $sp->getHref() ?>">
+                                                    <h5><?php echo $sp->getName() ?></h5>
                                                 </a>
                                                 <p>
                                                     <?php if ($sp->getDiscount()) : ?>
-                                                        <strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
+                                                        <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                     <?php endif; ?>
-                                                    <strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
+                                                    <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="sp-nav">
-                                            <em data-prid="<?= $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                                            <a href="javascript:;" class="buy-now cAddBuyNav">ADD TO CART</a>
+                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
+                                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
                                         </div>
                                     </div>
                                 </div>
@@ -514,7 +527,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                 <li class="item_plus"><a href="javascript:;">+</a></li>
             </ul>
             <ul class="bnav-btns">
-                <em data-prid="<?= $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
+                <em data-prid="<?php echo $this->Prid ?>" data-size="" data-colr="" data-qty="1" data-page3="true">
                     <img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
                 </em>
                 <li class="add-to-cart add-cart cAddBuyNav mb-details">Add To Cart</li>
@@ -559,13 +572,13 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
     </div>
 </div>
 
-<link rel="stylesheet" href="<?= Models::asset('assets/vendors/photoswipe/photoswipe.css') ?>">
-<link rel="stylesheet" href="<?= Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
-<script src="<?= Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
+<link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.css') ?>">
+<link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
+<script src="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
 <script>
 var openPhotoSwipe = function(index) {
     var pswpElement = document.querySelectorAll('.pswp')[0],
-        items = [<?= $zoom_item ?>],
+        items = [<?php echo $zoom_item ?>],
         options = {
             index: index
         },
@@ -581,7 +594,7 @@ $('[data-zoom]').click(function() {
 });
 </script>
 
-<script defer src="<?= Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>
+<script defer src="<?php echo Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>
 <script defer type="text/javascript">
 $(document).ready(function() {
     <?php if ($this->checkJump('jumpToRvw')) : ?>

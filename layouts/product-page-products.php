@@ -42,6 +42,10 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         <select id="sortVal" name="fpCbox" name="sort" value="">
                             <option value="1">Default Sorting</option>
                             <option value="2">Sort By Popularity</option>
+                            <option value="4">Sort By Average Rating</option>
+                            <option value="5">Sort By Newness</option>
+                            <option value="6">Sort By Price: Low to High</option>
+                            <option value="7">Sort By Price: High to Low</option>
                         </select>
                     </div>
                 </div>
@@ -85,14 +89,14 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                                 </p>
                                 <div style="color: #FF5722;text-align: center;font-weight: bold;">&nbsp;</div>
                                 <p style="color: #ffc168;">☆☆☆☆☆</p>
-                                <p>50ml</p>
+                                <p><?php echo implode(', ', $this->SingleProduct->getSizes()) ?></p>
                             </div>
                         </div>
 
                         <div class="sp-nav">
                             <em data-prid="<?= $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                            <a href="javascript:;" class="add-cart cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                            <a href="javascript:;" class="buy-now cAddBuyNav">ADD TO CART</a>
+                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
+                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
                         </div>
                     </div>
                 </div>

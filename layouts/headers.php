@@ -75,8 +75,8 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
     <div class="floating-sc">
         <div class="sc-btn">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <div><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
-            <div><span id="fcAmnt"><?php echo Models::curr($this->CartData->getSubTotal()) ?></span></div>
+            <div><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
+            <div class="fcamount"><?php echo Models::curr() ?><span id="fcAmnt" class="odometer"><?php echo $this->CartData->getSubTotal() ?></span></div>
         </div>
         <div class="sc-body">
             <div class="clearfix sc-body-top">
@@ -257,11 +257,11 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                     </form>
                                 </div>
                                 <div class="ht-right-icon icon-my-account">
-                                    <a class="cb chp db" href=""><i class="pe-7s-user"></i></a>
+                                    <a class="cb chp db" href="/my-account/"><i class="pe-7s-user"></i></a>
                                     <div class="header-floating-menu login-menu animated fadeInUp">
                                         <ul class="nav">
-                                            <?php if ($this->UserData) : ?>
-                                                <li><a href="">Login/Registration</a></li>
+                                            <?php if (!$this->UserData) : ?>
+                                                <li><a href="/login/">Login/Registration</a></li>
                                             <?php else : ?>
                                                 <li><a href="">Dashboard</a></li>
                                                 <li><a href="">Order History</a></li>

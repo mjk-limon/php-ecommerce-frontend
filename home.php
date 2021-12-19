@@ -24,8 +24,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
                     <div>
-                        <a href="<?= $ArrSlider['image_link'] ?>">
-                            <img u="image" src="<?= Models::asset($ArrSlider['image']) ?>" />
+                        <a href="<?php echo $ArrSlider['image_link'] ?>">
+                            <img u="image" src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                         </a>
                     </div>
                 <?php
@@ -54,10 +54,10 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     <div class="ft-title">
                         <div class="ft-title-left">
                             <span class="ft-ft-title">
-                                <img src="<?= Models::asset("images/flash-sales.gif") ?>" alt="Flash Sales" />
+                                <img src="<?php echo Models::asset("images/flash-sales.gif") ?>" alt="Flash Sales" />
                             </span>
                             <div class="ft-timer">
-                                <span class="fdt-timer">&#9673; Ends in <span id="fdl-timer" data-endin="<?= $this->FlashSalesTimer['end_in'] ?>">00:00:00</span></span>
+                                <span class="fdt-timer">&#9673; Ends in <span id="fdl-timer" data-endin="<?php echo $this->FlashSalesTimer['end_in'] ?>">00:00:00</span></span>
                             </div>
                         </div>
                         <div class="ft-right-nav">
@@ -65,8 +65,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         </div>
                     </div>
                     <div class="ft-pr-sliders">
-                        <div <?= !$this->mobileView ? 'id="flashsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;visibility:hidden;"' : null ?>>
-                            <div <?= !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
+                        <div <?php echo !$this->mobileView ? 'id="flashsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;visibility:hidden;"' : null ?>>
+                            <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
                                 <?php
                                 while ($FsPr = $this->FlashSales->fetch_assoc()) :
@@ -78,31 +78,31 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                         <div class="sp-image">
 
                                             <?php if ($sp->getDiscount()) : ?>
-                                                <span class="sp-dis">-<?= $sp->getDiscount() ?>%</span>
+                                                <span class="sp-dis">-<?php echo $sp->getDiscount() ?>%</span>
                                             <?php endif; ?>
 
-                                            <a href="<?= $sp->getHref() ?>">
-                                                <img src="<?= $sp->getProductImage() ?>" />
+                                            <a href="<?php echo $sp->getHref() ?>">
+                                                <img src="<?php echo $sp->getProductImage() ?>" />
                                             </a>
                                         </div>
                                         <div class="has-sp-nav">
                                             <div class="sp-pr">
                                                 <div class="sp-pr-info">
-                                                    <a href="<?= $sp->getHref() ?>">
-                                                        <h5><?= $sp->getName() ?></h5>
+                                                    <a href="<?php echo $sp->getHref() ?>">
+                                                        <h5><?php echo $sp->getName() ?></h5>
                                                     </a>
                                                     <p>
-                                                        <strong class="price"><?= Models::curr($sp->getPrice()) ?></strong>
+                                                        <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
 
                                                         <?php if ($sp->getDiscount()) : ?>
-                                                            <strong class="p-old"><?= Models::curr($sp->getPrice(0)) ?></strong>
+                                                            <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                         <?php endif; ?>
 
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="sp-nav">
-                                                <em data-prid="<?= $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                                <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                                 <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
                                                 <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
                                             </div>
@@ -138,8 +138,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
         <div class="container">
             <div class="section-mb">
                 <div class="prgrid-ads-section">
-                    <a href="<?= $this->TopSticker1['image_link'] ?>" class="prgrid-ad-img">
-                        <img src="<?= $this->TopSticker1['image'] ?>" alt="Banner 1">
+                    <a href="<?php echo $this->TopSticker1['image_link'] ?>" class="prgrid-ad-img">
+                        <img src="<?php echo $this->TopSticker1['image'] ?>" alt="Banner 1">
                     </a>
                 </div>
             </div>
@@ -157,8 +157,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="col-md-4">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
-                                    <a href="<?= $ArrSlider['image_link'] ?>">
-                                        <img src="<?= Models::asset($ArrSlider['image']) ?>" />
+                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
+                                        <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                                 <div class="slg-text">
@@ -201,8 +201,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="col-md-4">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
-                                    <a href="<?= $ArrSlider['image_link'] ?>">
-                                        <img src="<?= Models::asset($ArrSlider['image']) ?>" />
+                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
+                                        <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                                 <div class="slg-text">
@@ -234,8 +234,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="col-md-4">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
-                                    <a href="<?= $ArrSlider['image_link'] ?>">
-                                        <img src="<?= Models::asset($ArrSlider['image']) ?>" />
+                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
+                                        <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                                 <div class="slg-text">
@@ -267,8 +267,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="col-md-3">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
-                                    <a href="<?= $ArrSlider['image_link'] ?>">
-                                        <img src="<?= Models::asset($ArrSlider['image']) ?>" />
+                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
+                                        <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                                 <div class="slg-text slg-text-ps">
@@ -300,8 +300,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="col-md-4">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
-                                    <a href="<?= $ArrSlider['image_link'] ?>">
-                                        <img src="<?= Models::asset($ArrSlider['image']) ?>" />
+                                    <a href="<?php echo $ArrSlider['image_link'] ?>">
+                                        <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                                 <div class="slg-text">
@@ -363,30 +363,30 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
             </div>
             <div class="modal-body">
                 <form class="_ilmForm" id="otpLoginForm" action="" method="POST">
-                    <input type="hidden" name="otpLoginUser">
-                    <input type="hidden" class="refPage" name="ref" value="/">
+                    <input type="hidden" name="otpLoginUser" />
+                    <input type="hidden" class="refPage" name="ref" value="/" />
 
                     <div class="form-group widget_input">
                         <label>Your Mobile Number</label>
-                        <div class="input-group" id="verf-num">
+                        <div class="input-group">
                             <div class="input-group-addon">+88</div>
-                            <input class="form-control" name="mobile_number" placeholder="01XXXXXXXXX" required="">
+                            <input class="form-control verf-input" name="mobile_number" placeholder="01XXXXXXXXX" required />
                         </div>
                     </div>
 
                     <div class="verification-section">
                         <div id="verify-slider">
-                            <button class="submit-btn limbutton">Send OTP</button>
+                            <button class="limbutton">Send OTP</button>
                         </div>
 
                         <div class="form-group verification-code">
                             <label>Verification Code</label>
-                            <input class="form-control" name="otp" pattern="[0-9]+" required="">
+                            <input class="form-control" name="otp" pattern="[0-9]+" required />
                             <span class="form-helper"><a href="javascript:;" class="reset disabled">Resend Verification Code (<span>20 </span>s)</a></span>
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="submit-btn iFSubmitBtn">Verify</button>
+                            <button type="submit" class="limbutton iFSubmitBtn">Verify</button>
                         </div>
                     </div>
                 </form>
@@ -399,10 +399,11 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <link href="<?php echo Models::asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />
 <script type="text/javascript">
 slideSize = {
-    width: <?= $slideSize[0] ?>,
-    height: <?= $slideSize[1] ?>
+    width: <?php echo $slideSize[0] ?>,
+    height: <?php echo $slideSize[1] ?>
 };
 </script>
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
-<script defer src="<?= Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
+<script defer src="<?php echo Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
+<script defer src="<?php echo Models::asset('assets/_ilm_own/js/app/_ilm_Otp_login.js') ?>"></script>

@@ -9,7 +9,9 @@ namespace _ilmComm;
     <div class="ff-main">
         <div class="price-range-box">
             <div style="padding: 2rem">
-                <div id="slider"></div>
+                <div id="slider"
+                     data-min="<?php echo reset($this->PriceSortData) ?>"
+                     data-max="<?php echo end($this->PriceSortData) ?>"></div>
             </div>
             <form id="priceSort-form" action="" method="POST" style="display:none">
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="min" placeholder="Min" /></li>
@@ -24,7 +26,7 @@ namespace _ilmComm;
 
 <section class="filter-form brand-filter-form section-mb">
     <h4>Product categories</h4>
-    <div class="ff-main scroll-pane slimScroll">
+    <div class="ff-main scroll-pane slimScroll" style="max-height:600px;">
 
         <?php
         $Cat = $this->AllCategories;
@@ -36,6 +38,7 @@ namespace _ilmComm;
             $Cat->setSub(null);
         ?>
             <label class="checkbox bb-check">
+                <span><?php echo $this->getFilterTotalProduct('category', 'main', $Cat->CatId) ?></span>
                 <?php echo $Cat->Mainc ?>
 
                 <?php
@@ -48,6 +51,7 @@ namespace _ilmComm;
                     $Cat->setSub(null);
                 ?>
                     <label class="checkbox bb-check">
+                        <span><?php echo $this->getFilterTotalProduct('category', 'header', $Cat->CatId) ?></span>
                         <?php echo $Cat->SubGroup ?>
 
                         <?php
@@ -59,6 +63,7 @@ namespace _ilmComm;
                             $Cat->setSub($ArrSub['sub']);
                         ?>
                             <label class="checkbox bb-check">
+                                <span><?php echo $this->getFilterTotalProduct('category', 'sub', $Cat->CatId) ?></span>
                                 <?php echo $Cat->Sub ?>
                             </label>
                         <?php endwhile; ?>
@@ -83,60 +88,11 @@ namespace _ilmComm;
             $bImage = $this->SingleBrand->getBrandImage();
         ?>
             <label class="checkbox bb-check">
+                <span><?php echo $this->getFilterTotalProduct('brand', $bName) ?></span>
                 <input class="fpCbox" type="checkbox" name="brand" value="<?= $bName ?>" <?= $this->checkFieldBySortval("brand", $bName) ?> />
                 <i></i> <?php echo $bName ?>
             </label>
         <?php endforeach; ?>
 
-    </div>
-</section>
-
-
-<section class="filter-form section-mb">
-    <h4>filter by size</h4>
-    <div class="ff-main scroll-pane slimScroll">
-
-        <?php
-        $AllSizes = $this->AllSizes;
-        foreach ($AllSizes as $Size) :
-        ?>
-            <label class="checkbox">
-                <input class="fpCbox" type="checkbox" name="size" value="<?= $Size ?>" <?= $this->checkFieldBySortval("size", $Size) ?> />
-                <i></i> <?php echo htmlspecialchars($Size) ?>
-            </label>
-
-        <?php endforeach; ?>
-
-    </div>
-</section>
-
-<section class="filter-form colr-filter-form section-mb">
-    <h4>filter by colour</h4>
-    <div class="ff-main scroll-pane slimScroll">
-
-        <?php
-        $AllColors = $this->AllColors;
-        foreach ($AllColors as $Color) :
-            $Background = str_replace(" ", ", ", $Color, $count);
-            if ($count)
-                $Background = 'linear-gradient(to right, ' . $Background . ')';
-        ?>
-            <label class="checkbox">
-                <input class="fpCbox" type="checkbox" name="colors" value="<?php echo $Color ?>" <?php echo $this->checkFieldBySortval("colors", $Color) ?> />
-                <i style="background:<?php echo $Background ?>"></i>
-                <?php echo htmlspecialchars($Color) ?>
-            </label>
-        <?php endforeach; ?>
-
-    </div>
-</section>
-
-<section class="filter-form section-mb">
-    <h4>Availability</h4>
-    <div class="ff-main">
-        <label class="checkbox">
-            <input class="fpCbox" type="checkbox" name="availability" value="1" <?php echo $this->checkFieldBySortval("availability", "1") ?> />
-            <i></i> In Stock Only
-        </label>
     </div>
 </section>

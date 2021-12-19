@@ -656,7 +656,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sp-pr-info .p-old{font-size:95%;margin-left:8px;color:#b0b0b0;text-decoration:line-through}
 .sp-nav{opacity:0;display: flex;position: absolute;bottom: 0;width: 100%;overflow:hidden;background: #fff;transition: all .5s ease;border: 1px solid #58595b;height:47px;line-height:45px;}
 .sp-nav .add-cart, .sp-nav .buy-now{width: 25%;font-size: 25px; color: #58595b; font-weight: 600;font-family: 'open sans', sans-serif; text-align: center;}
-.sp-nav .buy-now{width:75%;background:#58595b;color: var(--accent);font-size: 15px;}
+.sp-nav .add-cart{width:75%;background:#58595b;color: var(--accent);font-size: 15px;}
 /* .single-product:hover .has-sp-nav .sp-pr, .single-product.fixed-nav .has-sp-nav .sp-pr{top:-20px;background:rgb(255,255,255)} */
 .single-product:hover .sp-image img{max-width:100%}
 .single-product:hover .has-sp-nav .sp-nav, .single-product.fixed-nav .has-sp-nav .sp-nav{opacity:1}
@@ -741,6 +741,8 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .filter-form .radio,.filter-form .checkbox,.filter-form .toggle,.filter-form .button{position:relative;display:block}
 .filter-form .radio i,.filter-form .checkbox i,.filter-form .toggle i{border-color:#e5e5e5;transition:border-color .3s;-o-transition:border-color .3s;-ms-transition:border-color .3s;-moz-transition:border-color .3s;-webkit-transition:border-color .3s}
 .filter-form .radio,.filter-form .checkbox{outline:none;border:none;margin-bottom:0px;padding-left:27px;font-size:13px;line-height:27px;color:#555;cursor:pointer;text-transform:capitalize;font-weight:400;margin-top:0}
+.filter-form .checkbox.bb-check:before,.filter-form .checkbox.bb-check:after{display:table;content:' ';clear:both}
+.filter-form .bb-check span{float:right;padding:0px 11px;background:#e1e1e1;color:#000;line-height:1.9rem;border-radius:20px}
 .filter-form .radio{text-transform:none}
 .filter-form .radio:last-child,.filter-form .checkbox:last-child{margin-bottom:0}
 .filter-form .radio input,.filter-form .checkbox input{position:absolute;left:-9999px}
@@ -776,6 +778,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sorter-label{color:#666;margin:0 10px;font-weight:400}
 .sort-options._desV{display:inline-block}
 .sort-options select{background:#fff;border:0;padding:.25em 2.5em .25em .9375em;height:36px;font-weight:600;font-family:'open sans',sans-serif;box-shadow:0 1px 1px 0 rgba(85,95,110,.2);border-radius:4px;color:#697782}
+.sort-options select{background-image:url('../../images/sel-caret.svg');background-repeat:no-repeat;background-position:right 13px center;background-size:15px;appearance:none;-webkit-appearance:none;-moz-appearance:none}
 .sort-options li{display:inline-block;position:relative;list-style-type:none;padding:0 .5rem;font-size:14px;border-bottom:2px solid transparent}
 .sort-options a{color:#333}
 .sort-options li.active {border-bottom-color:var(--accent)}
@@ -941,7 +944,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 
 /*===== Login Registration =====*/
 .login_registration_body{display:block}
-.login_registration_widget{width:80%;margin:3rem auto;padding:3rem;box-shadow:0px 0px 3px #cacaca}
+.login_registration_widget{width:80%;margin:3rem auto;padding:3rem;box-shadow:0px 0px 3px #cacaca;background-color:#fff}
 .login_registration_widget.pd-0{padding:0rem}
 .registration-page .login_registration_widget, .reset-account .login_registration_widget{width:100%;}
 .reset-account .login_registration_widget{margin:0;padding:0;box-shadow:none}
@@ -956,7 +959,9 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .login_registration_widget .swap-btn{margin-top:15px;padding-top:5px;border-top:1px dashed #ccc}
 .login_registration_widget .swap-btn a{display:inline-block;color:#333;font-weight:bold;transition:all .4s}
 .login_registration_widget .swap-btn a:hover{word-spacing:5px;letter-spacing:2px}
-
+.logintabs .nav-tabs > li > a{border:0}
+.logintabs .nav-tabs > li.active > a{border:0;border-bottom:1px solid var(--accent);background-color:#f5f5f5;}
+.logintabs .tab-content{padding:2rem 0}
 .verification-section .form-group, .verification-section.verified #verify-slider{display:none}
 .verification-section.verified .form-group{display:block}
 .verification-code .form-helper{margin-top:2px;display:block}
@@ -1025,7 +1030,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sqo-cat ul li a{color:#888}
 
 .support-more{text-align:center}
-.support-more .supm-box {display: inline-block;margin: .5rem 1rem;padding: 1rem;border: 1px solid#ccc;border-radius: 20px;background: #fcfcfc;}
+.support-more .supm-box{display: inline-block;margin: .5rem 1rem;padding: 1rem;border: 1px solid#ccc;border-radius: 20px;background: #fcfcfc;}
 
 /*===== Order Track =====*/
 .order-track{background:transparent url(../../images/track.png) bottom right 6px/250px no-repeat;text-align: center;padding: 8rem;}
@@ -1035,3 +1040,17 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .track-timeline > p{font-size:18px}
 .track-timeline > .timeline-ul{padding-left:0}
 .track-timeline > .timeline-ul li span{color:#999;margin-right:1.5rem}
+
+/*===== Odometer =====*/
+.odometer.odometer-auto-theme,.odometer.odometer-theme-minimal{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;position:relative}
+.odometer.odometer-auto-theme .odometer-digit,.odometer.odometer-theme-minimal .odometer-digit{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;position:relative}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;visibility:hidden}
+.odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0)}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}
+.odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform 2s;-moz-transition:-moz-transform 2s;-ms-transition:-ms-transform 2s;-o-transition:-o-transform 2s;transition:transform 2s}
+.odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}
+.odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}
+.odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform 2s;-moz-transition:-moz-transform 2s;-ms-transition:-ms-transform 2s;-o-transition:-o-transform 2s;transition:transform 2s;-webkit-transform:translateY(0);-moz-transform:translateY(0);-ms-transform:translateY(0);-o-transform:translateY(0);transform:translateY(0)}

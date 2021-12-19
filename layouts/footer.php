@@ -123,6 +123,7 @@ $shippingMethods = $this->shippingMethods();
 <script src="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
 <script src="<?= Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?= Models::asset('assets/vendors/counterup/odometer.min.js') ?>"></script>
 
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
@@ -135,7 +136,7 @@ $shippingMethods = $this->shippingMethods();
 
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
-    lazyLoadInstance.update()
+lazyLoadInstance.update()
 </script>
 
 <?php
@@ -144,7 +145,7 @@ if ($notification) :
     Session::Destroy("msg");
 ?>
     <script type="text/javascript">
-        showPageAlert("Alert !", "<?= htmlspecialchars($notification) ?>");
+    showPageAlert("Alert !", "<?= htmlspecialchars($notification) ?>");
     </script>
 <?php endif; ?>
 

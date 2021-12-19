@@ -118,20 +118,25 @@ $Prs = $this->AllProducts;
 
 <script defer type="text/javascript">
 $(document).ready(function() {
-    var mergingTooltipSlider = document.getElementById('slider');
+    var mergingTooltipSlider = document.getElementById('slider'),
+        sliderData = mergingTooltipSlider.dataset,
+        sliderMin = parseInt(sliderData.min),
+        sliderMax = parseInt(sliderData.max);
 
     noUiSlider.create(mergingTooltipSlider, {
-        start: [20, 32],
+        start: [sliderMin, sliderMax],
         connect: true,
         step: 1,
         tooltips: [wNumb({
-            prefix: '৳'
+            prefix: '৳',
+            decimals: 0
         }), wNumb({
-            prefix: '৳'
+            prefix: '৳',
+            decimals: 0
         })],
         range: {
-            'min': 0,
-            'max': 100
+            'min': sliderMin,
+            'max': sliderMax
         }
     });
 
