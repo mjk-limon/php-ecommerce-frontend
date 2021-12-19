@@ -748,7 +748,11 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .filter-form .radio input,.filter-form .checkbox input{position:absolute;left:-9999px}
 .filter-form .radio i,.filter-form .checkbox i{position:absolute;top:5px;left:0;display:block;width:17px;height:17px;outline:none;border-width:2px;border-style:solid;background:#fff}
 .filter-form .checkbox i{width:15px;height:15px}
-.colr-filter-form .checkbox i{border:0;border-radius:50%;width:20px;height:20px;top:3px}
+.filter-form.categories-filter-form label > label{display:none}
+.filter-form.categories-filter-form label.current > label{display:block}
+.filter-form.categories-filter-form label.current > a{color:var(--accent)}
+.filter-form.categories-filter-form label.current > span{color:#fff;background-color:var(--accent)}
+
 .brand-filter-form .brand-box{display: inline-block;vertical-align:bottom;width: 47%;margin: 3% 1%;padding: 0;text-align: center;}
 .brand-filter-form .brand-box .bb-check{padding:3px;border:1px solid #ddd;line-height:1.2em}
 .brand-filter-form .brand-box .bb-check i{top:auto;left:auto;bottom:-1px;right:-1px}

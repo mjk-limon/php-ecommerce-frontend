@@ -24,7 +24,7 @@ namespace _ilmComm;
 </section>
 
 
-<section class="filter-form brand-filter-form section-mb">
+<section class="filter-form categories-filter-form section-mb">
     <h4>Product categories</h4>
     <div class="ff-main scroll-pane slimScroll" style="max-height:600px;">
 
@@ -39,7 +39,7 @@ namespace _ilmComm;
         ?>
             <label class="checkbox bb-check">
                 <span><?php echo $this->getFilterTotalProduct('category', 'main', $Cat->CatId) ?></span>
-                <?php echo $Cat->Mainc ?>
+                <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->Mainc ?></a>
 
                 <?php
                 $SubGroupCats = $Cat->fetchSubGroup();
@@ -52,7 +52,7 @@ namespace _ilmComm;
                 ?>
                     <label class="checkbox bb-check">
                         <span><?php echo $this->getFilterTotalProduct('category', 'header', $Cat->CatId) ?></span>
-                        <?php echo $Cat->SubGroup ?>
+                        <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->SubGroup ?></a>
 
                         <?php
                         $SubCats = $Cat->fetchSub();
@@ -64,7 +64,7 @@ namespace _ilmComm;
                         ?>
                             <label class="checkbox bb-check">
                                 <span><?php echo $this->getFilterTotalProduct('category', 'sub', $Cat->CatId) ?></span>
-                                <?php echo $Cat->Sub ?>
+                                <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->Sub ?></a>
                             </label>
                         <?php endwhile; ?>
 

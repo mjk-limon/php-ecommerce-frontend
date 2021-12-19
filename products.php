@@ -115,38 +115,65 @@ $Prs = $this->AllProducts;
 <script src="<?= Models::asset("assets/vendors/noUiSlider/nouislider.min.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/noUiSlider/wNumb.min.js") ?>"></script>
 <script defer src="<?= Models::asset("assets/_ilm_own/js/productPage_scripts.js") ?>"></script>
-
-<script defer type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
-    var mergingTooltipSlider = document.getElementById('slider'),
-        sliderData = mergingTooltipSlider.dataset,
-        sliderMin = parseInt(sliderData.min),
-        sliderMax = parseInt(sliderData.max);
+    var mergingTooltipSlider = document.getElementById('slider');
 
-    noUiSlider.create(mergingTooltipSlider, {
-        start: [sliderMin, sliderMax],
-        connect: true,
-        step: 1,
-        tooltips: [wNumb({
-            prefix: '৳',
-            decimals: 0
-        }), wNumb({
-            prefix: '৳',
-            decimals: 0
-        })],
-        range: {
-            'min': sliderMin,
-            'max': sliderMax
+    if (mergingTooltipSlider) {
+        var sliderData = mergingTooltipSlider.dataset,
+            sliderMin = parseInt(sliderData.min),
+            sliderMax = parseInt(sliderData.max)
+
+        noUiSlider.create(mergingTooltipSlider, {
+            start: [sliderMin, sliderMax],
+            connect: true,
+            step: 1,
+            tooltips: [wNumb({
+                prefix: '৳',
+                decimals: 0
+            }), wNumb({
+                prefix: '৳',
+                decimals: 0
+            })],
+            range: {
+                'min': sliderMin,
+                'max': sliderMax
+            }
+        });
+
+        mergingTooltipSlider.noUiSlider.on('set', function(values) {
+            var lightVal = parseInt(values[0]),
+                masterVal = parseInt(values[1]);
+
+            $('#priceSort-form [name=min]').val(lightVal);
+            $('#priceSort-form [name=max]').val(masterVal);
+            $('#priceSort-form').submit();
+        });
+    }
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var url = window.location.pathname;
+    url = url.substring(0, (url.indexOf("#") == -1) ? url.length : url.indexOf("#"));
+    url = url.substring(0, (url.indexOf("?") == -1) ? url.length : url.indexOf("?"));
+    url = url.replace(projectfolder, "");
+
+    $('.categories-filter-form label').each(function() {
+        var href = $(this).find('> a').attr('href'),
+            $parentLbl = $(this).parent();
+
+        if (url == href) {
+            $(this).addClass('current');
+
+            if ($parentLbl.hasClass("checkbox")) {
+                $parentLbl.addClass("current");
+
+                if ($parentLbl.parent().hasClass("checkbox")) {
+                    $parentLbl.parent().addClass("current")
+                }
+            }
         }
-    });
-
-    mergingTooltipSlider.noUiSlider.on('set', function(values) {
-        var lightVal = parseInt(values[0]),
-            masterVal = parseInt(values[1]);
-
-        $('#priceSort-form [name=min]').val(lightVal);
-        $('#priceSort-form [name=max]').val(masterVal);
-        $('#priceSort-form').submit();
     });
 });
 </script>
