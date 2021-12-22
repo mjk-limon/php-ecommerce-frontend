@@ -13,6 +13,8 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 
 $this->updateViewCounter();
 $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
+$VimeoId = strrev(explode("/", strrev($PrDetails->getOthers('prvid')), 2)[0]);
+$VimeoInfo = $VimeoId ? unserialize(file_get_contents("http://vimeo.com/api/v2/video/$VimeoId.php")) : [];
 ?>
 
 <section class="main-body bg-white">
@@ -21,8 +23,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
             <div class="features_items">
 
                 <?php
-				if (!$PrDetails->getProductId()) :
-				?>
+                if (!$PrDetails->getProductId()) :
+                ?>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="empty-product-page">
@@ -33,9 +35,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </div>
                     </div>
                 <?php
-					return;
-				endif;
-				?>
+                    return;
+                endif;
+                ?>
 
                 <div class="row">
                     <div class="col-md-5 single-top-left">
@@ -49,16 +51,26 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <ul class="slides">
 
                                     <?php
-									$zoom_item = "";
-									foreach ($this->ProductImages as $Image) :
-										$zoom_item .= "{src: '" . Models::asset($Image) . "',w: 1200,h: 1200},";
-									?>
+                                    $zoom_item = "";
+                                    foreach ($this->ProductImages as $Image) :
+                                        $zoom_item .= "{src: '" . Models::asset($Image) . "',w: 1200,h: 1200},";
+                                    ?>
                                         <li data-thumb="<?= Models::asset($Image) ?>">
                                             <div class="thumb-image detail_images">
                                                 <img src="<?= Models::asset($Image) ?>" data-imagezoom="true" class="img-responsive" alt="<?= $Image ?>">
                                             </div>
                                         </li>
                                     <?php endforeach; ?>
+
+                                    <?php if ($VimeoInfo) : ?>
+                                        <li data-thumb="<?php echo @$VimeoInfo[0]['thumbnail_medium'] ?>">
+                                            <div class="thumb-image detail_images">
+                                                <img src="<?php echo @$VimeoInfo[0]['thumbnail_medium'] ?>" style="width:100%"
+                                                    data-vimeourl="<?php echo $PrDetails->getOthers("prvid") ?>"
+                                                    data-imagezoom="true">
+                                            </div>
+                                        </li>
+                                    <?php endif; ?>
 
                                     <div class="clearfix"></div>
                                 </ul>
@@ -96,27 +108,27 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                         <div class="product-buy-section">
                             <?php
-							$AvaClass = $PrDetails->getStock() ? '' : 'notava';
-							$Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
-							?>
+                            $AvaClass = $PrDetails->getStock() ? '' : 'notava';
+                            $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
+                            ?>
 
                             <div class="pr-size-color">
                                 <?php
-								$Colors = $PrDetails->getColors();
-								if (array_filter($Colors)) :
-								?>
+                                $Colors = $PrDetails->getColors();
+                                if (array_filter($Colors)) :
+                                ?>
                                     <ul class="pr-sc-ul color-selection">
                                         <div>Style:</div>
 
                                         <?php
-										foreach ($Colors as $Color) :
-											$resColor = Models::restyleUrl($Color, true);
-											$background = str_replace(" ", ", ", $Color, $count);
-											if ($count) $background = 'linear-gradient(45deg, ' . $background . ')';
-											$colrPrev = (file_exists(Models::docRoot("proimg/{$this->Prid}/{$resColor}-texture.png")) ?
-												"url('" . Models::asset("proimg/{$this->Prid}/{$resColor}-texture.png") . "') no-repeat center / 100% 100%" :
-												$background);
-										?>
+                                        foreach ($Colors as $Color) :
+                                            $resColor = Models::restyleUrl($Color, true);
+                                            $background = str_replace(" ", ", ", $Color, $count);
+                                            if ($count) $background = 'linear-gradient(45deg, ' . $background . ')';
+                                            $colrPrev = (file_exists(Models::docRoot("proimg/{$this->Prid}/{$resColor}-texture.png")) ?
+                                                "url('" . Models::asset("proimg/{$this->Prid}/{$resColor}-texture.png") . "') no-repeat center / 100% 100%" :
+                                                $background);
+                                        ?>
                                             <li class="cs-btn">
                                                 <i style="background:<?php echo $colrPrev ?>"></i>
                                                 <div><?php echo $Color ?><span>2 images</span></div>
@@ -126,19 +138,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                     </ul>
                                 <?php endif; ?>
 
-                                <?php
-								$Sizes = $PrDetails->getSizes();
-								if (array_filter($Sizes)) :
-								?>
-                                    <!--ul class="pr-sc-ul size-selection">
-										<div>Select size:</div>
-
-										<?php foreach ($Sizes as $Size) : ?>
-											<li class="ss-btn"><?= $Size ?></li>
-										<?php endforeach; ?>
-
-									</ul-->
-                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -178,8 +177,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                                 <p class="pr-entl">
                                     <span class="entl-data ava <?= $AvaClass ?>" style="font-size:2.1rem;font-weight:normal;">
-										<?= $Availability ?>
-									</span>
+                                        <?= $Availability ?>
+                                    </span>
                                 </p>
 
                                 <?php if (!$this->mobileView) : ?>
@@ -271,13 +270,13 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <div class="grid-row">
 
                         <?php
-						$sp = $this->SingleProduct;
-						$Suggestions = $this->ProductSuggestion;
-						while ($Rpr = $Suggestions->fetch_array()) :
-							$sp->setPrInfo($Rpr);
-							$sp->processDiscount();
-							$sp->processStock();
-						?>
+                        $sp = $this->SingleProduct;
+                        $Suggestions = $this->ProductSuggestion;
+                        while ($Rpr = $Suggestions->fetch_array()) :
+                            $sp->setPrInfo($Rpr);
+                            $sp->processDiscount();
+                            $sp->processStock();
+                        ?>
                             <div class="grids">
                                 <div class="single-product <?= $spAddClass ?>">
                                     <div class="sp-image">
@@ -285,14 +284,14 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
                                         <a href="<?= $sp->getHref() ?>">
-											<img src="<?= $sp->getProductImage() ?>" />
-										</a>
+                                            <img src="<?= $sp->getProductImage() ?>" />
+                                        </a>
                                     </div>
                                     <div class="sp-pr">
                                         <div class="sp-pr-info">
                                             <a href="<?= $sp->getHref() ?>">
-												<h5><?= $sp->getName() ?></h5>
-											</a>
+                                                <h5><?= $sp->getName() ?></h5>
+                                            </a>
                                             <div style="margin-bottom:.5rem;">
                                                 <span class="stars" style="margin:0"><?php echo rand(30, 50) / 10 ?></span>
                                                 14
@@ -308,9 +307,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 </div>
                             </div>
                         <?php
-						endwhile;
-						$Suggestions->free();
-						?>
+                        endwhile;
+                        $Suggestions->free();
+                        ?>
 
                     </div>
                 </div>
@@ -405,13 +404,13 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             <div class="col-md-8 col-xs-7 user-rating">
 
                                 <?php
-								for ($RI = 5; $RI > 0; $RI--) :
-									$BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
-								?>
+                                for ($RI = 5; $RI > 0; $RI--) :
+                                    $BarWidth = @($PrDetails->getRating("r_" . $RI) / $PrDetails->getRating("r_t")) * 100;
+                                ?>
                                     <div class="row-rat">
                                         <?= $RI ?> Star
                                         <span class="rating-progress">
-											<span style="width:<?= $BarWidth ?>%"></span>
+                                            <span style="width:<?= $BarWidth ?>%"></span>
                                         </span>
                                     </div>
                                 <?php endfor; ?>
@@ -476,13 +475,13 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <div class="grid-row">
 
                         <?php
-						$sp = $this->SingleProduct;
-						$Suggestions = $this->ProductSuggestion2;
-						while ($Rpr = $Suggestions->fetch_array()) :
-							$sp->setPrInfo($Rpr);
-							$sp->processDiscount();
-							$sp->processStock();
-						?>
+                        $sp = $this->SingleProduct;
+                        $Suggestions = $this->productSuggestion();
+                        while ($Rpr = $Suggestions->fetch_array()) :
+                            $sp->setPrInfo($Rpr);
+                            $sp->processDiscount();
+                            $sp->processStock();
+                        ?>
                             <div class="grids">
                                 <div class="single-product <?= $spAddClass ?>">
                                     <div class="sp-image">
@@ -490,14 +489,14 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
                                         <a href="<?= $sp->getHref() ?>">
-											<img src="<?= $sp->getProductImage() ?>" />
-										</a>
+                                            <img src="<?= $sp->getProductImage() ?>" />
+                                        </a>
                                     </div>
                                     <div class="sp-pr">
                                         <div class="sp-pr-info">
                                             <a href="<?= $sp->getHref() ?>">
-												<h5><?= $sp->getName() ?></h5>
-											</a>
+                                                <h5><?= $sp->getName() ?></h5>
+                                            </a>
                                             <div style="margin-bottom:.5rem;">
                                                 <span class="stars" style="margin:0"><?php echo rand(30, 50) / 10 ?></span>
                                             </div>
@@ -512,9 +511,9 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 </div>
                             </div>
                         <?php
-						endwhile;
-						$Suggestions->free();
-						?>
+                        endwhile;
+                        $Suggestions->free();
+                        ?>
 
                     </div>
                 </div>
@@ -599,6 +598,110 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
     });
     </script>
 <?php else : ?>
+    <div class="modal modal-center animated fadeInUp" style="animation-duration:.3s;" id="all-image-slider">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span class="close" data-dismiss="modal">&times;</span>
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#gallery-images" aria-controls="gallery-images" role="tab" data-toggle="tab">Images</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#gallery-videos" aria-controls="gallery-videos" role="tab" data-toggle="tab">Videos</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="gallery-images">
+                                <div class="dpGallery">
+                                    <div class="dpGallery-viewport">
+                                        <div id="dpgvpimg">
+                                            <img src="" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="dpGallery-sidenav">
+                                        <div class="title">
+                                            <?php echo $PrDetails->getName() ?>
+                                        </div>
+                                        <div class="image-nav">
+                                            <?php
+                                            foreach ($PrDetails->getAllPrImages() as $Images) :
+                                                foreach ($Images as $Image) :
+                                            ?>
+                                                    <div class="dpGallery-navitem">
+                                                        <div class="dpGallery-ni-thumb">
+                                                            <a href="javascript:;" data-dpgtoggle="<?php echo Models::asset($Image) ?>">
+                                                                <img src="<?php echo Models::asset($Image) ?>">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                            <?php
+                                                endforeach;
+                                            endforeach;
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="gallery-videos">
+                                <div class="dpGallery">
+                                    <div class="dpGallery-viewport">
+                                        <div id="dpgvpvideo"></div>
+                                    </div>
+                                    <div class="dpGallery-sidenav">
+                                        <div class="video-nav">
+                                            <div class="videonav-title">Product Videos</div>
+                                            <div class="dpGallery-navitem">
+                                                <div class="dpGallery-ni-thumb">
+                                                    <a href="javascript:;" data-dpgtoggle="<?php echo $PrDetails->getOthers('prvid') ?>" data-vid="true">
+                                                        <img src="<?php echo @$VimeoInfo[0]['thumbnail_medium'] ?>">
+                                                    </a>
+                                                </div>
+                                                <div class="dpGallery-ni-title">
+                                                    <a href="javascript:;" data-dpgtoggle="<?php echo $PrDetails->getOthers('prvid') ?>" data-vid="true">
+                                                        <h5><?php echo @$VimeoInfo[0]['title'] ?></h5>
+                                                        <span>Uploaded on: <?php echo @$VimeoInfo[0]['upload_date'] ?></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="videonav-title">More To Watch</div>
+
+                                            <?php
+                                            $Suggestions = $this->productSuggestion(null, 2);
+                                            while ($PrArr = $Suggestions->fetch_assoc()) :
+                                                $sp->setPrInfo($PrArr);
+                                                $VimeoId = strrev(explode("/", strrev($sp->getOthers('prvid')), 2)[0]);
+                                                $VimeoInfo = $VimeoId ? unserialize(file_get_contents("http://vimeo.com/api/v2/video/$VimeoId.php")) : [];
+                                            ?>
+                                                <div class="dpGallery-navitem">
+                                                    <div class="dpGallery-ni-thumb">
+                                                        <a href="javascript:;" data-dpgtoggle="<?php echo $sp->getOthers('prvid') ?>" data-vid="true">
+                                                            <img src="<?php echo @$VimeoInfo[0]['thumbnail_medium'] ?>">
+                                                        </a>
+                                                    </div>
+                                                    <div class="dpGallery-ni-title">
+                                                        <a href="javascript:;" data-dpgtoggle="<?php echo $sp->getOthers('prvid') ?>" data-vid="true">
+                                                            <h5><?php echo @$VimeoInfo[0]['title'] ?></h5>
+                                                            <span>Uploaded on: <?php echo @$VimeoInfo[0]['upload_date'] ?></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            <?php endwhile; ?>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
     $(document).ready(function() {
         $("#sticky").sticky({

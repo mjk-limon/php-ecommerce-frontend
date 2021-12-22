@@ -13,9 +13,9 @@ $NaPr = $this->newArrivals(1, 'id,name,category,discount,price,item_left,others'
     </div>
 <?php endif; ?>
 
-<div class="homepage-top-section">
-    <div style="width: 100%;overflow: hidden;background-color: #000;">
-        <div style="width: 50%;margin:0 auto;text-align:center">
+<div class="homepage-top-section" id="htt_holder">
+    <div class="video-area" id="htt_area">
+        <div class="video-playback">
             <?php
             $sp->setPrInfo($NaPr);
             $sp->processRating();
@@ -29,21 +29,49 @@ $NaPr = $this->newArrivals(1, 'id,name,category,discount,price,item_left,others'
         <div class="video-controls">
             <div style="display:flex;justify-content:end;">
                 <div class="vc-top-padding">
-                    <div class="vc-group">
+                    <div class="vc-group m0">
                         <a href="javascript:;" class="prLikeBtn" data-prid="<?php echo $sp->getProductId() ?>">Like (<span><?php echo $sp->getRating("r_t") ?></span>)</a>
-                        <a href="javascript:;">Total Order (<?php echo $sp->getRating("r_s") ?>)</a>
-                    </div>
-                    <div class="vc-group m0 lightlink">
-                        <a href="<?php echo $sp->getHref() ?>">Order Now</a>
-                        <a href="<?php echo $sp->getHref() . '?cmntid=1' ?>">Reviews</a>
+                        <a href="<?php echo $sp->getHref() . '?qstnid=1' ?>" class="qna">Question &amp Answers</a>
+                        <a href="<?php echo $sp->getHref() ?>">Own It</a>
+                        <a href="<?php echo $sp->getHref() . '?cmntid=1' ?>">Ratings</a>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="playback-playlist">
+            <div class="playlist-title">Trending</div>
+            <?php
+            while ($TrPrInfo = $TrPr->fetch_assoc()) :
+                $sp->setPrInfo($TrPrInfo);
+                $sp->processRating(true);
+            ?>
+                <div class="playlist-single"
+                     data-prid="<?php echo $sp->getProductId() ?>"
+                     data-prlike="<?php echo $sp->getRating("r_t") ?>"
+                     data-prtodr="<?php echo $sp->getRating("r_s") ?>"
+                     data-prvid="<?php echo $sp->getOthers("prvid") ?>"
+                     data-prlink="<?php echo $sp->getHref() ?>">
+                    <div class="ps-image">
+                        <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                    </div>
+                    <div class="ps-title">
+                        <?php echo $sp->getName() ?>
+                    </div>
+                </div>
+            <?php endwhile; ?>
         </div>
     </div>
 </div>
 
 <section class="main-body bg-dark">
+    <div class="spd">
+        <div class="container">
+            <div class="section-product-title">
+                <h4 class="prtitle-headline"><?php echo $sp->getName() ?></h4>
+                <p class="prtitle-postedon">Posted <?php echo date("F d, Y", strtotime($sp->getProductUploadedDate())) ?></p>
+            </div>
+        </div>
+    </div>
     <div class="spd">
         <div class="container">
             <div class="section-browse-cat">
@@ -95,44 +123,7 @@ $NaPr = $this->newArrivals(1, 'id,name,category,discount,price,item_left,others'
                         </div>
                         <div class="col-md-3">
                             <div id="sticky" style="height:calc(100vh - 40px);display:flex;flex-direction:column">
-                                <div class="playback-area">
-                                    <div class="playback-viewport">
-                                        <div id="trending-playback"></div>
-                                        <div class="video-controls vc-mini">
-                                            <div class="vc-group lightlink">
-                                                <a href="javascript:;" class="prLikeBtn">Like (<span id="prLikeTotal">0</span>)</a>
-                                                <a href="javascript:;">Total Order (<span id="prTotalOrder"></span>)</a>
-                                            </div>
-                                            <div class="vc-group m0">
-                                                <a href="" id="prOrderNow">Order Now</a>
-                                                <a href="" id="prReviews">Reviews</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h4>Trending</h4>
-                                </div>
 
-                                <div class="playback-playlist">
-                                    <?php
-                                    while ($TrPrInfo = $TrPr->fetch_assoc()) :
-                                        $sp->setPrInfo($TrPrInfo);
-                                        $sp->processRating(true);
-                                    ?>
-                                        <div class="playlist-single"
-                                             data-prid="<?php echo $sp->getProductId() ?>"
-                                             data-prlike="<?php echo $sp->getRating("r_t") ?>"
-                                             data-prtodr="<?php echo $sp->getRating("r_s") ?>"
-                                             data-prvid="<?php echo $sp->getOthers("prvid") ?>"
-                                             data-prlink="<?php echo $sp->getHref() ?>">
-                                            <div class="ps-image">
-                                                <img src="<?php echo $sp->getProductImage() ?>" alt="">
-                                            </div>
-                                            <div class="ps-title">
-                                                <?php echo $sp->getName() ?>
-                                            </div>
-                                        </div>
-                                    <?php endwhile; ?>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,10 +196,6 @@ $(document).ready(function() {
         }
     });
 
-    if ($htt_video.length) {
-        initVimeoPlayer($htt_video);
-    }
-
     $('.playlist-single').click(function() {
         var vid_data = $(this).data(),
             $trn_video = $('<div />');
@@ -218,18 +205,41 @@ $(document).ready(function() {
             "data-vimeourl": vid_data.prvid
         });
 
-        $("#trending-playback").html($trn_video);
+        $("#htt-area .video-playback").html($trn_video);
         $("#prOrderNow").attr("href", vid_data.prlink);
         $("#prReviews").attr("href", vid_data.prlink + '?cmntid=1');
         $("#prLikeTotal").html(vid_data.prlike);
         $("#prLikeTotal").parent().attr("data-prid", vid_data.prid);
         $("#prTotalOrder").html(vid_data.prtodr);
-        //initVimeoPlayer($trn_video);
+        initVimeoPlayer($trn_video);
         initLikedButton();
     });
 
-    $('.playlist-single:first-child').trigger("click");
+    if ($htt_video.length) {
+        initVimeoPlayer($htt_video);
+    }
     initLikedButton();
+});
+
+$(window).load(function() {
+    var htt_holder_height = $('#htt_holder').height();
+    $('#htt_holder').height(htt_holder_height);
+});
+$(window).on("scroll", function() {
+    var delta = 5,
+        htt_holder_height = $('#htt_holder').height(),
+        st = $(this).scrollTop();
+
+    if (Math.abs(lastScrollTop - st) <= delta)
+        return;
+
+    if (st > lastScrollTop && st > htt_holder_height) {
+        $('#htt_area').addClass("fixed-video-area");
+    } else {
+        $('#htt_area').removeClass("fixed-video-area");
+    }
+
+    lastScrollTop = st;
 });
 </script>
 

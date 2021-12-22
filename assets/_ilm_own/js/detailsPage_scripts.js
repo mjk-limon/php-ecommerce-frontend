@@ -1,4 +1,6 @@
 _ilm_Details_page = {
+	$RtopElem: null,
+
 	init: function() {
 		_ilm_Details_page.prid = $('#tPrId').text();
 		_ilm_Details_page.outStockInit($('#tStock').text());
@@ -117,6 +119,23 @@ _ilm_Details_page = {
 			});
 			
 			e.preventDefault();
+		});
+
+		$("#all-image-slider").on('hide.bs.modal', function () {
+			$('#dpgvpvideo').html('');
+			$('#dpgvpimg').attr('src', '');
+		});
+
+		$('a[href="#gallery-images"]').on('shown.bs.tab', function (e) {
+			if (_ilm_Details_page.$RtopElem) {
+				_ilm_Details_page.$RtopElem.RTOP_VideoPlayer('pause');
+			}
+		});
+
+		$('a[href="#gallery-videos"]').on('shown.bs.tab', function (e) {
+			if (_ilm_Details_page.$RtopElem) {
+				_ilm_Details_page.$RtopElem.RTOP_VideoPlayer('play');
+			}
 		});
 	},
 	
@@ -240,6 +259,19 @@ _ilm_Details_page = {
 				});
 			} else _ilm.showNotification(result.error, true);
 			_ilm.globLoader("hide", ".single-top-left");
+		});
+	},
+
+	initVimeoPlayer: function (vimeourl, autoplay = true) {
+		_ilm_Details_page.$RtopElem = $('<div/>');
+		$('#dpgvpvideo').html(_ilm_Details_page.$RtopElem);
+
+		_ilm_Details_page.$RtopElem.RTOP_VideoPlayer({
+			showFullScreen: true,
+			showTimer: true,
+			showSoundControl: true,
+			autoPlay: autoplay,
+			vimeo_url: vimeourl
 		});
 	}
 }
