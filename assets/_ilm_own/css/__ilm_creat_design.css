@@ -212,6 +212,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .grid-row .grids.large-grid{grid-row:span 2;grid-column:span 2}
 .grid-row .grids.large-grid.onlycolspan{grid-row:span 1;grid-column:span 2}
 .sp-image {height:75%;position:relative}
+.sp-type{position:absolute;left:0;top:0;color:#fff;background:#b00;font-size:15px;font-weight:700;padding:1px 6px;transform:rotate(-90deg);transform-origin:41px 42px;border-bottom-left-radius:5px}
 .sp-dis{position:absolute;right:5px;color:#fff;background:var(--accent);border-radius:50%;text-align:center;font-size:14px;top:5px;width:35px;height:32px;line-height:32px;font-weight:700;box-shadow:1px 1px 2px #aaa}
 .sp-image img{display:block;margin:0 auto;max-width:100%;max-height:100%}
 .sp-pr{position:relative;padding:.75rem;top:0;transition:all .5s ease}

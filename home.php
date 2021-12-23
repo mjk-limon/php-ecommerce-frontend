@@ -175,7 +175,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1349px;height:' . $slideSize[1] . 'px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
                             <?php
-                            $TrendingProducts = $this->Trendings;
+                            $TrendingProducts = $this->TrendingsWO;
                             while ($TrPr = $TrendingProducts->fetch_assoc()) :
                                 $sp->setPrInfo($TrPr);
                                 $sp->processDiscount();
@@ -184,7 +184,11 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                 <div class="single-product">
                                     <div class="sp-image">
 
-                                        <?php if ($sp->getDiscount()) : ?>
+                                        <?php if ($sp->getOthers("prtype") === '0') : ?>
+                                            <span class="sp-type">Wholesale</span>
+                                        <?php endif; ?>
+
+                                        <?php if (!$sp->getDiscount()) : ?>
                                             <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
 
@@ -250,7 +254,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         <div class="grid-row">
                             <?php
                             $St_i = 1;
-                            $newArrivals = $this->newArrivals();
+                            $newArrivals = $this->newArrivals(0, 'id,name,category,discount,others');
                             while ($NaPr = $newArrivals->fetch_assoc()) :
                                 $sp->setPrInfo($NaPr);
                                 $sp->processDiscount();
@@ -260,9 +264,15 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     <div class="bc-products">
                                         <div class="single-product">
                                             <div class="sp-image">
+
+                                                <?php if ($sp->getOthers("prtype") === '0') : ?>
+                                                    <span class="sp-type">Wholesale</span>
+                                                <?php endif; ?>
+
                                                 <?php if ($sp->getDiscount()) : ?>
                                                     <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
                                                 <?php endif; ?>
+
                                                 <a href="<?php echo $sp->getHref() ?>">
                                                     <img src="<?php echo $sp->getProductImage() ?>" />
                                                 </a>
@@ -330,7 +340,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         $Cat->setSubGroup(null);
                         $Cat->setSub(null);
 
-                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId);
+                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 10, 'id,name,category,discount,others');
                         if ($BrowseCatProducts->num_rows) :
                     ?>
                             <div class="bc-single">
@@ -338,7 +348,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     <a href="<?php echo $Cat->getHref() ?>">View All</a>
                                     <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></span>
                                 </div>
-                                
+
                                 <div class="grid-row">
                                     <?php
                                     $Ct_i = 1;
@@ -362,6 +372,10 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                             <div class="bc-products">
                                                 <div class="single-product <?php echo $spAddClass ?>">
                                                     <div class="sp-image">
+
+                                                        <?php if ($sp->getOthers("prtype") === '0') : ?>
+                                                            <span class="sp-type">Wholesale</span>
+                                                        <?php endif; ?>
 
                                                         <?php if ($sp->getDiscount()) : ?>
                                                             <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
@@ -417,9 +431,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script type="text/javascript">
-    slideSize = {
-        width: <?php echo $slideSize[0] ?>,
-        height: <?php echo $slideSize[1] ?>
-    };
+slideSize = {
+    width: <?php echo $slideSize[0] ?>,
+    height: <?php echo $slideSize[1] ?>
+};
 </script>
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
