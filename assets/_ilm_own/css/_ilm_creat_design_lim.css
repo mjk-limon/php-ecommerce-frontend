@@ -47,7 +47,7 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .limlog-form input[type="text"]:focus,.limlog-form input[type="password"]:focus,
 .limlog-form select:focus,.limlog-form textarea:focus{border-color:#888;transition: border-color .4s}
 .limlog-form button{margin:10px 0 20px auto;padding:3px 60px;font-size:18px;background-color:#0469a7;color:#fff;outline:0;border:2px solid #0469a7}
-.limlog-form button:hover{color:#0469a7;background-color:transparent;border:2px solid #0469a7}
+.limlog-form button:hover{color:#0469a7;background-color:transparent;border-color:#0469a7!important}
 
 /*========== Checkout ==========*/
 .mainContentpanel{position:relative;border:0;min-height:10vh}

@@ -146,6 +146,11 @@ namespace _ilmComm;
                             <?php
                             if (isset($addPrOthers) && $addPrOthers) {
                                 foreach ($addPrOthers as $othKey => $othFields) {
+                                    if ($othFields['name'] == 'prtype') {
+                                        echo "<input type='hidden' name='pr_others[{$othFields['name']}]' value='0' />";
+                                        continue;
+                                    }
+
                                     if (is_array($othFields)) {
                                         switch ($othFields['type']) {
                                             case "number":

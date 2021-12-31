@@ -205,7 +205,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .single-brand-info .sb-brand-image{padding:50%;background-position:center;background-size:80%;background-repeat:no-repeat}
 .sb-brand-title{text-align:center;padding:.25rem 0;font-size:16px;font-weight:400;letter-spacing:0.5px}
 
-.single-product {overflow:hidden}
+.single-product{overflow:hidden}
 .grid-row{display:grid;grid-template-columns:repeat(6, 1fr);grid-column-gap:1.5rem;align-items:start;justify-items:center;margin:0}
 .grid-row.grid4{grid-template-columns:repeat(4, 1fr);}
 .grid-row .grids{width:100%;height:100%;padding:1.5rem 0}
@@ -494,7 +494,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 
 /*===== Login Registration =====*/
 .login_registration_body{display:block}
-.login_registration_widget{width:80%;margin:3rem auto;padding:3rem;box-shadow:0px 0px 3px #cacaca}
+.login_registration_widget{width:80%;margin:3rem auto;padding:3rem;box-shadow:0px 0px 3px #cacaca;background-color:#fff}
 .login_registration_widget.pd-0{padding:0rem}
 .registration-page .login_registration_widget, .reset-account .login_registration_widget{width:100%;}
 .reset-account .login_registration_widget{margin:0;padding:0;box-shadow:none}
@@ -509,6 +509,15 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .login_registration_widget .swap-btn{margin-top:15px;padding-top:5px;border-top:1px dashed #ccc}
 .login_registration_widget .swap-btn a{display:inline-block;color:#333;font-weight:bold;transition:all .4s}
 .login_registration_widget .swap-btn a:hover{word-spacing:5px;letter-spacing:2px}
+.logintabs .nav-tabs > li > a{border:0}
+.logintabs .nav-tabs > li.active > a{border:0;border-bottom:1px solid var(--accent);background-color:#f5f5f5;}
+.logintabs .tab-content{padding:2rem 0}
+.verification-section .form-group, .verification-section.verified #verify-slider{display:none}
+.verification-section.verified .form-group{display:block}
+.limlog-form .verification-section .submit-btn{border:2px solid transparent;font-size:14px}
+.verification-code .form-helper{margin-top:2px;display:block}
+.verification-code .form-helper .disabled{color:#888}
+.swapotploginbtn{display:block}
 
 .registration-page .social-login-btns{margin-top:2em}
 .social-login-btns .sl-btn{display:block;width:100%;text-align:center;border:0;color:#fff;font-weight:bold;line-height:40px;height:40px;border-radius:5px;font-size:16px;margin-bottom:10px}

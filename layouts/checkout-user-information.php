@@ -5,11 +5,43 @@ namespace _ilmComm;
 ?>
 
 <?php if (!$this->CustomerData) : ?>
-    <!--Not Logged In-->
     <div class="not-logged-in">
         <div class="row">
             <div class="col-md-6 checkout-login checkout-login-left">
-                <div class="limlog-form">
+                <div class="otp-login-form swap-otp-form limlog-form">
+                    <form class="_ilmForm" id="otpLoginForm" action="" method="POST">
+                        <input type="hidden" name="otpLoginUser" />
+                        <input type="hidden" class="refPage" name="ref" value="/checkout" />
+
+                        <div class="form-group widget_input">
+                            <label>Your Mobile Number</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">+88</div>
+                                <input class="form-control verf-input" name="mobile_number" placeholder="01XXXXXXXXX" required />
+                            </div>
+                        </div>
+
+                        <div class="verification-section">
+                            <div id="verify-slider">
+                                <button class="submit-btn">Send OTP</button>
+                            </div>
+
+                            <div class="form-group verification-code">
+                                <label>Verification Code</label>
+                                <input class="form-control" name="otp" pattern="[0-9]+" required />
+                                <span class="form-helper"><a href="javascript:;" class="reset disabled">Resend Verification Code (<span>20 </span>s)</a></span>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="submit-btn iFSubmitBtn">Verify</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <a href="javascript:;" class="swapotploginbtn email">Login Using Email Address</a>
+                </div>
+
+                <div class="email-login-form swap-otp-form limlog-form" style="display: none;">
                     <form action="#" method="post" class="_ilmForm">
                         <input type="hidden" name="loginUser" />
                         <input type="hidden" class="refPage" name="ref" value="/checkout" />
@@ -23,16 +55,9 @@ namespace _ilmComm;
                         <a href="/login/?ref=p.05#forgotPassword" class="pass">Forgot Password ?</a>
                         <button type="submit" class="iFSubmitBtn">Login</button>
                     </form>
+
+                    <a href="javascript:;" class="swapotploginbtn">Login Using Mobile Number</a>
                     <a href="/register/?ref=p.05" class="newacc">Create New Account</a>
-                </div>
-            </div>
-            <div class="col-md-6 hidden-xs checkout-login checkout-login-right">
-                <div class="limlog-form">
-                    <ul class="large-block-grid-2 small-block-grid-1 large-social-buttons">
-                        <li class="fb"><a href="https://www.facebook.com/" class="disabled"><span aria-hidden="true" class="fa fa-facebook"></span> Login With Facebook</a></li>
-                        <li class="tw"><a href="https://twitter.com/" class="disabled"> <span aria-hidden="true" class="fa fa-twitter"></span> Login With Twitter</a></li>
-                        <li class="gp"><a href="https://plus.google.com/" class="disabled"><span aria-hidden="true" class="fa fa-google-plus">&nbsp;</span>Login With Google Plus</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -47,7 +72,8 @@ namespace _ilmComm;
         <?php endif; ?>
 
     </div>
-    <!--Quick Checkout-->
+    
+    <!-- Quick Checkout -->
     <div class="quick-checkout">
         <form class="checkOutUserInfo" action="" method="post">
             <input type="hidden" name="email" value="" />
@@ -61,8 +87,8 @@ namespace _ilmComm;
                                 <select name="orderLocation" id="orderLoc">
 
                                     <?php foreach ($DeliveryLocations as $Loc) : ?>
-                                        <option value="<?= htmlspecialchars($Loc) ?>">
-                                            <?= htmlspecialchars($Loc) ?>
+                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" data-description="<?php echo $Loc['city'] ?>" <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> autocomplete="off">
+                                            <?php echo htmlspecialchars($Loc['location']) ?>
                                         </option>
                                     <?php endforeach; ?>
 
@@ -100,49 +126,83 @@ namespace _ilmComm;
 <?php
 else :
     $Sc->SetCusArr($this->CustomerData);
+    $lgaddClass = !$Sc->getCity() ? 'noAddress' : null;
 ?>
     <!--Logged In-->
-    <div class="logged-in">
+    <div class="logged-in <?php echo $lgaddClass ?>">
         <form class="checkOutUserInfo" id="ckcontex" action="" method="post">
-            <input type="hidden" name="email" value="<?= $Sc->getUserName() ?>" />
-            <input type="hidden" name="fullName" value="<?= $Sc->getFullName() ?>" />
-            <input type="hidden" name="mobileNumber" value="<?= $Sc->getMobileNumber() ?>" />
-            <input type="hidden" name="orderLocation" value="<?= $Sc->getState() ?>" />
-            <input type="hidden" name="fullAddress" value="<?= htmlspecialchars($Sc->getFullAddress()) ?>" />
+            <input type="hidden" name="userid" id="user-id" value="<?php echo $Sc->getCusId() ?>" />
+            <input type="hidden" name="email" value="<?php echo $Sc->getUserName() ?>" />
+            <input type="hidden" name="fullName" value="<?php echo $Sc->getFullName() ?>" />
+            <input type="hidden" name="mobileNumber" value="<?php echo $Sc->getMobileNumber() ?>" />
+            <input type="hidden" name="orderLocation" value="<?php echo $Sc->getState() ?>" />
+            <input type="hidden" name="fullAddress" value="<?php echo htmlspecialchars($Sc->getFullAddress()) ?>" />
 
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-8 col-md-offset-2">
                     <div class="login-success">
-                        <h3>You are logged in with <?= $Sc->getLastName() ?></h3>
+                        <h3>You are logged in with <?php echo $Sc->getLastName() ?></h3>
                         <div class="limlog-form">
-                            <table class="" border="0">
-                                <tr>
-                                    <td>Full Name:</td>
-                                    <td><input type="text" name="shippingName" value="<?= $Sc->getFullName() ?>" disabled /></td>
-                                </tr>
-                                <tr>
-                                    <td>Email Address:</td>
-                                    <td><?= $Sc->getUserName() ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Mobile Number:</td>
-                                    <td><input type="text" name="shippingNumber" value="<?= $Sc->getMobileNumber() ?>" disabled /></td>
-                                </tr>
-                                <tr>
-                                    <td>Shipping Address: </td>
-                                    <td>
-                                        <textarea name="shippingAddress" disabled><?= $Sc->getFullAddress() ?></textarea>
-                                        <p><a href="javascript:;" class="shippingChangeBtn"><i class="fa fa-pencil"></i> Change</a></p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a href="/my-account/?logout=1&ref=p.05">Not You ? Login Again</a> </td>
-                                </tr>
-                            </table>
+                            <div class="loggedindata-edit">
+                                <div class="logged-in-userdata">
+                                    <table class="" border="0">
+                                        <tr>
+                                            <td>Full Name:</td>
+                                            <td><input type="text" name="shippingName" id="full-name" value="<?php echo $Sc->getFullName() ?>" disabled /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Address:</td>
+                                            <td><?php echo $Sc->getUserName() ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile Number:</td>
+                                            <td><?php echo $Sc->getMobileNumber() ?></td>
+                                        </tr>
+                                        <tr class="hideonnoedit">
+                                            <td>Shipping Location</td>
+                                            <td>
+                                                <select name="orderLocation" id="orderLoc">
+                                                    <?php foreach ($DeliveryLocations as $Loc) : ?>
+                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" data-description="<?php echo $Loc['city'] ?>" <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> autocomplete="off">
+                                                            <?php echo htmlspecialchars($Loc['location']) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping Address: </td>
+                                            <td><textarea name="shippingAddress" id="shipping-address" disabled><?php echo $Sc->getAddress() ?></textarea></td>
+                                        </tr>
+                                        <tr class="hideonnoedit">
+                                            <td>&nbsp;</td>
+                                            <td>
+                                                <div class="form-element">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="saveUserData" checked>
+                                                        Save this data
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>
+                                                <div class="loggedindatanav">
+                                                    <a href="javascript:;" class="shippingChangeBtn">
+                                                        <span class="editinfo">Edit Address</span>
+                                                        <span class="saveinfo submit-btn">Save Changes</span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                            <select name="orderLocation" id="orderLoc">
-                                <option value="<?= $Sc->getCity() ?>"><?= $Sc->getCity() ?></option>
-                            </select>
+                                    <div class="loggedindatanav">
+                                        <a href="/my-account/?logout=1&ref=p.05">Not You ? Login Again</a>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="shippingIdCont">
                                 <label>Delivery Option</label>

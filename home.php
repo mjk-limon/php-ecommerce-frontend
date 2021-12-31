@@ -188,7 +188,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                             <span class="sp-type">Wholesale</span>
                                         <?php endif; ?>
 
-                                        <?php if (!$sp->getDiscount()) : ?>
+                                        <?php if ($sp->getDiscount()) : ?>
                                             <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
 

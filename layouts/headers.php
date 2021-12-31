@@ -61,6 +61,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
         --header: <?= $this->ColrData['header'] ?>;
         --menubar: <?= $this->ColrData['menubar'] ?>;
     }
+
     </style>
 </head>
 
@@ -95,13 +96,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                 <ul class="nav nav-pills">
                                     <li>
                                         <a href="#" onclick="window.open('tel:<?= Models::getContactInformation("mobile1") ?>')">
-											Hotline: <span><?= Models::getContactInformation("mobile1") ?></span>
-										</a>
+                                            Hotline: <span><?= Models::getContactInformation("mobile1") ?></span>
+                                        </a>
                                     </li>
                                     <li>
                                         <a href="#" onclick="window.open('mailto:<?= Models::getContactInformation("email") ?>')">
-											Mail Us: <span><?= Models::getContactInformation("email") ?></span>
-										</a>
+                                            Mail Us: <span><?= Models::getContactInformation("email") ?></span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -113,7 +114,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <?php if ($this->UserData) : ?>
                                         <li class="dropdown">
                                             <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-												<span class="key"><i class="fa fa-user"></i> My Account</span><b class="caret"></b></a>
+                                                <span class="key"><i class="fa fa-user"></i> My Account</span><b class="caret"></b></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="/my-account/">Update Account</a></li>
                                                 <li><a href="/my-account/?c=90.02">My Wishlists</a></li>
@@ -124,29 +125,31 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <?php endif; ?>
 
                                     <li>
-                                        <a href="/my-account/?c=90.02">
-											Wishlist
-										</a>
+                                        <a href="<?php echo Models::baseUrl("/sellercorner/login/") ?>" target="_blank">
+                                            Seller Corner
+                                        </a>
                                     </li>
-
+                                    <li>
+                                        <a href="/my-account/?c=90.02">
+                                            Wishlist
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="javascript:;" onclick="alert('Apps is coming soon !');">
-											Download App
-										</a>
+                                            Download App
+                                        </a>
                                     </li>
-
                                     <li class="dropdown dropdown-small">
                                         <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-											<span class="key">English (US)</span><b class="caret"></b></a>
+                                            <span class="key">English (US)</span><b class="caret"></b></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="?lang=en">English</a></li>
-                                            <!--li><a href="?lang=bn">বাংলা</a></li-->
                                         </ul>
                                     </li>
                                     <li class="dropdown dropdown-small">
                                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-											<span class="key"><?= Models::curr(); ?></span><b class="caret"></b>
-										</a>
+                                            <span class="key"><?= Models::curr(); ?></span><b class="caret"></b>
+                                        </a>
                                         <ul class="dropdown-menu">
                                             <li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
                                             <li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
@@ -188,17 +191,17 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             <div class="campaignarea">
                                                 <div class="campaign-sticker">
                                                     <a href="/track-order/">
-														Track order
-													</a>
+                                                        Track order
+                                                    </a>
 
                                                     <?php if (Models::admFet("_ilm_cmp")) : ?>
                                                         <a href="/campaign/">
-															Campagins
-														</a>
+                                                            Campagins
+                                                        </a>
                                                     <?php else : ?>
                                                         <a href="/search/?q=&a_s_t=flash_sales">
-															Flash Sales
-														</a>
+                                                            Flash Sales
+                                                        </a>
                                                     <?php endif; ?>
 
                                                 </div>
@@ -269,8 +272,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                             <div class="col-md-3" id="all-dept-btn" style="padding-right:0px">
                                 <div class="manue dropdown mainmenu cacaallpaje">
                                     <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="javascript:;">
-										<i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
-									</a>
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
+                                    </a>
                                     <ul class="nav navbar-nav dropdown-menu">
 
                                         <?php
