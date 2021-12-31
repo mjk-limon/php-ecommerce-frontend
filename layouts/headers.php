@@ -125,8 +125,9 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <?php endif; ?>
 
                                     <li>
-                                        <a href="<?php echo Models::baseUrl("/sellercorner/login/") ?>" target="_blank">
-                                            Seller Corner
+                                        <a href="<?php echo Models::baseUrl("/sellercorner/login/") ?>" target="_blank"
+                                           style="color:var(--accent)">
+                                            Sell With <?php echo COMPANY_NAME ?>
                                         </a>
                                     </li>
                                     <li>
