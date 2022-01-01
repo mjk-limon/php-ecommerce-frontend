@@ -2,6 +2,8 @@
 
 namespace _ilmComm;
 
+use _ilmComm\AdminApp\Basic\Models as AppModel;
+
 ?>
 
 <div class="main">
@@ -59,7 +61,7 @@ namespace _ilmComm;
                         <div class="form-group">
                             <label>Product Discount</label>
                             <div class="input-group input-group-sm">
-                                <input class="form-control" name="pr_dicount" type="number" value=""
+                                <input class="form-control" name="pr_dicount" type="number" value="0"
                                        min="0"
                                        max="100"
                                        title="Please input product discount correctly (Expected type integer, Range 0 - 100)"
@@ -144,48 +146,19 @@ namespace _ilmComm;
                         <div class="row form-group">
 
                             <?php
-                            if (isset($addPrOthers) && $addPrOthers) {
-                                foreach ($addPrOthers as $othKey => $othFields) {
+                            if (isset($this->AddPrsOthers) && $this->AddPrsOthers) {
+                                foreach ($this->AddPrsOthers as $othKey => $othFields) {
                                     if ($othFields['name'] == 'prtype') {
                                         echo "<input type='hidden' name='pr_others[{$othFields['name']}]' value='0' />";
                                         continue;
                                     }
 
-                                    if (is_array($othFields)) {
-                                        switch ($othFields['type']) {
-                                            case "number":
-                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
-                                                $fieldsHtml = "<input type='number' class='form-control' name='pr_others[{$othFields['name']}]' /> ";
-                                                break;
-
-                                            case "select":
-                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
-                                                $fieldsHtml = "<select name='pr_others[{$othFields['name']}]' class='form-control'>";
-                                                foreach ($othFields['options'] as $othFldSelVal => $othFldSelLbl) {
-                                                    $fieldsHtml .= "<option value='{$othFldSelVal}'>{$othFldSelLbl}</option>";
-                                                }
-                                                $fieldsHtml .= "<select>";
-                                                break;
-
-                                            case "textbox-plain":
-                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
-                                                $fieldsHtml = "<textarea name='' class='form-control'></textarea>";
-                                                break;
-
-                                            case "textbox-html":
-                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
-                                                $fieldsHtml = "<textarea name='pr_others[{$othFields['name']}]' class='html-editor'></textarea>";
-                                        }
-                                    } else {
-                                        $labelHtml = "<label class='bmd-label-floating'>" . $othKey . "</label>";
-                                        $fieldsHtml = "<input type='text' class='form-control' name='pr_others[" . $othFields . "]' /> ";
-                                    }
-
+                                    $othFieldData = AppModel::addPrsOtherLableFieldGenerator($othKey, $othFields);
                             ?>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
-                                            <?php echo $labelHtml ?>
-                                            <?php echo $fieldsHtml ?>
+                                            <?php echo $othFieldData['lbl'] ?>
+                                            <?php echo $othFieldData['fld'] ?>
                                         </div>
                                     </div>
                             <?php

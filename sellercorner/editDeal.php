@@ -2,7 +2,11 @@
 
 namespace _ilmComm;
 
-$AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
+use _ilmComm\AdminApp\Basic\Models as AppModel;
+
+$NewDealModel = $this->extModel("Sellercorner\\Newdeal");
+$AlCats = $NewDealModel->getAllCategories();
+$AddPrOthers = $NewDealModel->getAllPrsOthers();
 ?>
 
 <div class="main">
@@ -122,7 +126,7 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
 
                         <div class="form-group">
                             <input type="hidden" name="pr_stock" value="0">
-                            
+
                             <table class="table table-striped table-sm dis-stock-table">
                                 <thead>
                                     <tr>
@@ -158,49 +162,19 @@ $AlCats = $this->extModel("Sellercorner\\Newdeal")->getAllCategories();
                         <div class="row form-group">
 
                             <?php
-                            if (isset($addPrOthers) && $addPrOthers) {
-                                foreach ($addPrOthers as $othKey => $othFields) {
-                                    if (is_array($othFields)) {
-                                        $othValue = $this->Di->getOthers($othFields['name']);
-
-                                        switch ($othFields['type']) {
-                                            case "number":
-                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
-                                                $fieldsHtml = "<input type='number' class='form-control' name='pr_others[{$othFields['name']}]' value='{$othValue}' /> ";
-                                                break;
-
-                                            case "select":
-                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
-                                                $fieldsHtml = "<select name='pr_others[{$othFields['name']}]' class='form-control'>";
-                                                foreach ($othFields['options'] as $othFldSelVal => $othFldSelLbl) {
-                                                    $fieldsHtml .= "<option value='{$othFldSelVal}'";
-                                                    if ($othFldSelVal == $othValue) {
-                                                        $fieldsHtml .= " selected='true'";
-                                                    }
-                                                    $fieldsHtml .= ">{$othFldSelLbl}</option>";
-                                                }
-                                                $fieldsHtml .= "<select>";
-                                                break;
-
-                                            case "textbox-plain":
-                                                $labelHtml = "<label class='bmd-label-floating'>{$othKey}</label>";
-                                                $fieldsHtml = "<textarea name='' class='form-control'>{$othValue}</textarea>";
-                                                break;
-
-                                            case "textbox-html":
-                                                $labelHtml = "<label class='bmd-label-static'>{$othKey}</label>";
-                                                $fieldsHtml = "<textarea name='pr_others[{$othFields['name']}]' class='html-editor'>{$othValue}</textarea>";
-                                        }
-                                    } else {
-                                        $labelHtml = "<label class='bmd-label-floating'>" . $othKey . "</label>";
-                                        $fieldsHtml = "<input type='text' class='form-control' name='pr_others[" . $othFields . "]' value='{$othValue}' /> ";
+                            if (isset($AddPrOthers) && $AddPrOthers) {
+                                foreach ($AddPrOthers as $othKey => $othFields) {
+                                    if ($othFields['name'] == 'prtype') {
+                                        echo "<input type='hidden' name='pr_others[{$othFields['name']}]' value='0' />";
+                                        continue;
                                     }
 
+                                    $othFieldData = AppModel::addPrsOtherLableFieldGenerator($othKey, $othFields, $this->Di);
                             ?>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
-                                            <?php echo $labelHtml ?>
-                                            <?php echo $fieldsHtml ?>
+                                            <?php echo $othFieldData['lbl'] ?>
+                                            <?php echo $othFieldData['fld'] ?>
                                         </div>
                                     </div>
                             <?php
