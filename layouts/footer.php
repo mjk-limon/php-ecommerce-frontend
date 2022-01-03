@@ -123,6 +123,7 @@ $shippingMethods = $this->shippingMethods();
 <script src="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
 <script src="<?= Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
@@ -135,7 +136,26 @@ $shippingMethods = $this->shippingMethods();
 
 <script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
-    lazyLoadInstance.update()
+lazyLoadInstance.update();
+
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: "en",
+        autoDisplay: false
+    }, 'google_translate_element');
+}
+
+function changeLanguageByButtonClick(language) {
+    var selectField = document.querySelector("#google_translate_element select");
+    for (var i = 0; i < selectField.children.length; i++) {
+        var option = selectField.children[i];
+        if (option.value == language) {
+            selectField.selectedIndex = i;
+            selectField.dispatchEvent(new Event('change'));
+            break;
+        }
+    }
+}
 </script>
 
 <?php
@@ -144,7 +164,7 @@ if ($notification) :
     Session::Destroy("msg");
 ?>
     <script type="text/javascript">
-        showPageAlert("Alert !", "<?= htmlspecialchars($notification) ?>");
+    showPageAlert("Alert !", "<?= htmlspecialchars($notification) ?>");
     </script>
 <?php endif; ?>
 

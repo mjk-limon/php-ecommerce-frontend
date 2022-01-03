@@ -29,6 +29,11 @@ namespace _ilmComm;
                                                 <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
 
                                                 <div class="form-group widget_input">
+                                                    <label>Your Name</label>
+                                                    <input class="form-control" name="first_name" required />
+                                                </div>
+
+                                                <div class="form-group widget_input">
                                                     <label>Your Mobile Number</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">+88</div>

@@ -66,6 +66,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 </head>
 
 <body <?= $body_class ?>>
+    <div id="google_translate_element" style="display: none;"></div>
     <?php if (!$this->mobileView) : ?>
         <div class="floating-sc">
             <div class="sc-btn">
@@ -144,7 +145,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
                                             <span class="key">English (US)</span><b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="?lang=en">English</a></li>
+                                            <li><a href="javascript:;" onclick="changeLanguageByButtonClick('en')">English</a></li>
+                                            <li><a href="javascript:;" onclick="changeLanguageByButtonClick('bn')">বাংলা</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown dropdown-small">

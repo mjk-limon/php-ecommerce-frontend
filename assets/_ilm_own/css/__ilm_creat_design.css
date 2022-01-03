@@ -133,7 +133,6 @@ header{box-shadow: 0px 3px 5px #d2d2d2;position: fixed;top:0;left:0;width:100%;b
 
 .home-floating-menu-container{position:relative;z-index:1000}
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
-.mainmenu ul{/* min-height:413px */}
 .mainmenu ul li{float:none;width:100%;padding-bottom:0;border-bottom:1px solid #eee}
 
 .mainmenu ul li a{color:#333;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:400;padding:5px 9px;text-transform:capitalize}
@@ -150,7 +149,6 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .sub-menu > .sub-cols > a{padding:0}
 .sub-menu h3{font-size:15px;color:#333;padding:5px;margin:2px 0;text-transform:capitalize}
 
-.fixed-menu-bar header{/* animation:slideDown .4s */}
 .fixed-menu-bar .header_top{display:none}
 .fixed-menu-bar .searchfld{margin:5px auto} 
 .fixed-menu-bar .wishlistall > li{margin:4px 6px}
@@ -234,7 +232,6 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .prgrid-ads-section .prgrid-ad-img{display:block;height:100%;background-size:cover;background-position:center;transition:all .4s;transform:scale(1)}
 .prgrid-ads-section .prgrid-ad-img:hover{transform:scale(1.1)}
 
-.section-browse-cat{}
 .bc-single{margin-bottom:2rem;position:relative}
 .bc-main-title{font-size: 2.5rem;font-weight: 300;margin-bottom: 10px;}
 .bc-cat-name{font-weight: 400;font-size: 1.7rem;}
@@ -420,7 +417,9 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .discription-review-title span{margin-left:3px;}
 .discription-review-title span a{color:#bbb;font-weight:300}
 .discription-review-title span a.active{color:#fff;font-weight:400}
-.discription-review-body{padding:1.5rem;font-size:1em}
+.discription-review-body{padding:1.5rem;line-height:1.5em}
+.description-review-body img{max-width:100%}
+.description-review-body ul li{list-style-type:disc}
 
 .row.ratings .rating-review h1{font-size:3rem;display:inline-block}
 .row.ratings .rating-review h4{display:inline-block}

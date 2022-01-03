@@ -124,6 +124,7 @@ use _ilmComm\AdminApp\Basic\Models as AppModel;
                                         <th width="35%">Variant</th>
                                         <th>Stock</th>
                                         <th>Price(<?php echo CURRENCY ?>)</th>
+                                        <th>Selling Price</th>
                                     </tr>
                                 </thead>
                                 <tbody id="strElem">
@@ -134,13 +135,11 @@ use _ilmComm\AdminApp\Basic\Models as AppModel;
                                             <span class="lblsizecolor">Default</span>
                                         </td>
                                         <td><input type="text" class="stk_amount" name="stk_amount[]" required /></td>
-                                        <td><input type="text" class="stk_price" name="stk_price[]" required /></td>
+                                        <td><input type="text" class="stk_original_price" required /></td>
+                                        <td><input type="text" class="stk_price" name="stk_price[]" required readonly style="background-color:#eee;" /></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <span class="bmd-help d-block text-warning">
-                                <?php echo COMPANY_NAME ?> add 20% to the original value
-                            </span>
                         </div>
 
                         <div class="row form-group">

@@ -41,6 +41,12 @@ _ilm_Mer_deals = {
                 });
             });
         }
+
+        $('.dis-stock-table').on('input', '.stk_original_price', function () { 
+            var orgPrice = parseInt($(this).val()),
+                sellPrice = orgPrice ? Math.round(orgPrice + (orgPrice * 0.2)) : 0;
+            $(this).closest("tr").find(".stk_price").val(sellPrice);
+        });
     },
 
     categorySelectInit: function (AllCats) {
