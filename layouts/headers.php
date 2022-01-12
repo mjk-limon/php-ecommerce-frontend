@@ -5,7 +5,7 @@ namespace _ilmComm;
 Head\DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
 $body_class = $this->mobileView ? 'class="htmlformb"' : '';
-$HeadCampaignIcon = $this->extModel('Home')->getSticker(7);
+$HeadCampaignIcon = $this->extModel('Home')->getStickers(7);
 ?>
 
 <!DOCTYPE html>
