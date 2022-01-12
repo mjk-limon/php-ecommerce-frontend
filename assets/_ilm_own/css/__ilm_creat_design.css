@@ -120,6 +120,8 @@ header{box-shadow: 0px 3px 5px #d2d2d2;position: fixed;top:0;left:0;width:100%;b
 .searchfld.focussed .srch-datalist{display:block;min-height:30px;max-height:70vh}
 
 .campaignarea .campaign-sticker a{padding:5px 15px;border:1px solid var(--accent);margin-right:10px;font-weight:500;color:var(--accent);display:inline-block}
+.campaignarea .campaign-sticker a img{max-height:40px}
+.campaignarea .campaign-sticker a:first-child{padding:0;border:0}
 .campaignarea .campaign-sticker a:last-child{margin-right:0;color:#fff;background-color:var(--accent);transition:all .2s;}
 .campaignarea .campaign-sticker a:last-child:hover{color:var(--accent);background-color:#fff;}
 
@@ -141,7 +143,7 @@ header{box-shadow: 0px 3px 5px #d2d2d2;position: fixed;top:0;left:0;width:100%;b
 .mainmenu ul li a:hover, .mainmenu ul li a.active, .shop-menu ul li a.active{background:none;color:var(--accent)}
 ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;background:var(--menubar);list-style:none;padding:10px;margin-left:0;width:700px;border:1px solid #e5e5e5;box-shadow:0 3px 3px rgba(0,0,0,0.1);display:none;z-index:999;min-height:100%}
 .navbar-nav li ul.sub-menu li{padding:3px 8px;border:0;line-height:1.1em}
-.navbar-nav li ul.sub-menu li a{font-weight:400;color:#444;font-size:14px}
+.navbar-nav li ul.sub-menu li a{display:block;padding:0px 8px;line-height:1.2;white-space:normal;font-weight:400;color:#444;font-size:14px}
 .navbar-nav li ul.sub-menu li a:hover{color:var(--accent)}
 .manue .fa-angle-down{float:none;position:absolute;right:6px;top:50%;transform:translateY(-50%)}
 .nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu{display:block}
@@ -418,8 +420,8 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .discription-review-title span a{color:#bbb;font-weight:300}
 .discription-review-title span a.active{color:#fff;font-weight:400}
 .discription-review-body{padding:1.5rem;line-height:1.5em}
-.description-review-body img{max-width:100%}
-.description-review-body ul li{list-style-type:disc}
+.discription-review-body img{max-width:100%}
+.discription-review-body ul li{list-style-type:disc}
 
 .row.ratings .rating-review h1{font-size:3rem;display:inline-block}
 .row.ratings .rating-review h4{display:inline-block}

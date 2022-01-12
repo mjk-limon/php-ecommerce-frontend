@@ -5,6 +5,7 @@ namespace _ilmComm;
 Head\DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
 $body_class = $this->mobileView ? 'class="htmlformb"' : '';
+$HeadCampaignIcon = $this->extModel('Home')->getSticker(7);
 ?>
 
 <!DOCTYPE html>
@@ -136,11 +137,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             Wishlist
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:;" onclick="alert('Apps is coming soon !');">
-                                            Download App
-                                        </a>
-                                    </li>
                                     <li class="dropdown dropdown-small">
                                         <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
                                             <span class="key">English (US)</span><b class="caret"></b></a>
@@ -173,7 +169,9 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                 <div class="row flex branding-flex deskv-hm">
                     <div class="col-md-3 col-xs-5 cols logo-cols">
                         <div class="logo">
-                            <a href="/" id="home-btn"><img src="<?php echo Models::getLogo() ?>"></a>
+                            <a href="/" id="home-btn">
+                                <img src="<?php echo Models::getLogo() ?>">
+                            </a>
                         </div>
                     </div>
 
@@ -193,8 +191,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                             </div>
                                             <div class="campaignarea">
                                                 <div class="campaign-sticker">
-                                                    <a href="/track-order/">
-                                                        Track order
+                                                    <a href="<?php $HeadCampaignIcon['image_link'] ?>">
+                                                        <img src="<?php echo Models::asset($HeadCampaignIcon['image']) ?>">
                                                     </a>
 
                                                     <?php if (Models::admFet("_ilm_cmp")) : ?>
@@ -242,7 +240,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         </li>
 
                                         <?php if (!$this->UserData) : ?>
-                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Up</a></li>
                                             <li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
                                         <?php else : ?>
                                             <li><a href="/my-account/?c=90.04">Notifications (<?= $this->NotificationBadge ?>)</a></li>
@@ -294,7 +292,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         <li><a href="/track-order/">Track Order</a></li>
 
                                         <?php if (!$this->UserData) : ?>
-                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Up</a></li>
                                             <li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
                                         <?php else : ?>
                                             <li><a href="/my-account/">User Account</a></li>
