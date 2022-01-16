@@ -19,7 +19,7 @@ $shippingMethods = $this->shippingMethods();
                             <li><i class="fa fa-chevron-right"></i><a href="/page/about-us/">About Us</a></li>
                             <li><i class="fa fa-chevron-right"></i><a href="/page/term-of-use/">Terms and Conditions</a></li>
                             <li><i class="fa fa-chevron-right"></i><a href="/page/payment-methods/">How to Pay</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/blog/">Blog</a></li>
+                            <li><i class="fa fa-chevron-right"></i><a target="_blank" href="https://blog.<?php echo $_SERVER['HTTP_HOST'] ?>">Blog</a></li>
                             <li><i class="fa fa-chevron-right"></i><a href="/page/photo-confirmations/">Photo Confirmations</a></li>
                         </ul>
                     </div>
