@@ -18,7 +18,7 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
     <li class="dropdown">
         <a href="<?php echo $Cat->getHref() ?>">
             <span><img src="<?php echo Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-1.png?rand=' . rand()) ?>"></span>
-            <?php echo htmlspecialchars($Cat->Mainc) ?> <i class="fa fa-angle-down"></i>
+            <?php echo htmlspecialchars($Cat->Mainc) ?> <i class="fa fa-angle-right"></i>
         </a>
         <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
             <div class="col-xs-12 sub-cols view-all hidden-md hidden-lg">
@@ -52,6 +52,7 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
                     ?>
                         <li>
                             <a href="<?php echo $Cat->getHref() ?>">
+                                <i class="fa fa-angle-right"></i>
                                 <?php echo htmlspecialchars($Cat->Sub); ?>
                             </a>
                         </li>

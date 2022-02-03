@@ -52,15 +52,16 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     ?>
 
     <style type="text/css">
-        :root {
-            --accent: <?php echo $this->ColrData['accent'] ?>;
-            --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
-            --secondary: <?php echo $this->ColrData['secondary'] ?>;
-            --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
-            --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
-            --header: <?php echo $this->ColrData['header'] ?>;
-            --menubar: <?php echo $this->ColrData['menubar'] ?>;
-        }
+    :root {
+        --accent: rgba(35, 56, 81, 1);
+        --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
+        --secondary: <?php echo $this->ColrData['secondary'] ?>;
+        --mainbody: rgba(242, 244, 248, 1);
+        --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
+        --header: rgba(35, 47, 62, 1);
+        --menubar: rgba(35, 47, 62, 1);
+    }
+
     </style>
 </head>
 
@@ -68,9 +69,15 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 
     <?php if (!$this->mobileView) : ?>
         <div class="floating-sc">
+            <div class="sc-btn sc-btn-comp">
+                <i class="pbl-icon icn-comp" style="margin-bottom: 0;"></i>
+                <div class="fclbl"><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span></div>
+                <div style="padding-bottom:1rem;font-size:13px;">Compare</div>
+            </div>
             <div class="sc-btn">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <div><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
+                <div class="fclbl"><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span></div>
+                <div class="fcamount">Tk.<span id="fcAmnt" class="odometer">0</span></div>
             </div>
             <div class="sc-body">
                 <div class="clearfix sc-body-top">
@@ -84,81 +91,14 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     <?php endif; ?>
 
     <header id="header">
-        <?php
-        if (!$this->mobileView) :
-            //Desktop view header top
-        ?>
-            <div class="header_top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6 hidden-xs">
-                            <div class="top-user-nav">
-                                <ul class="nav nav-pills">
-                                    <li>
-                                        <a href="#" onclick="window.open('tel:<?php echo Models::getContactInformation("mobile1") ?>')">
-                                            Hotline: <span><?php echo Models::getContactInformation("mobile1") ?></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" onclick="window.open('mailto:<?php echo Models::getContactInformation("email") ?>')">
-                                            Mail Us: <span><?php echo Models::getContactInformation("email") ?></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <div class="header-right">
-                                <ul class="list-unstyled list-inline">
-
-                                    <?php if ($this->UserData) : ?>
-                                        <li class="dropdown">
-                                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-                                                <span class="key"><i class="fa fa-user"></i> My Account</span><b class="caret"></b></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="/my-account/">Update Account</a></li>
-                                                <li><a href="/my-account/?c=90.02">My Wishlists</a></li>
-                                                <li><a href="/my-account/?c=90.03">Order History</a></li>
-                                                <li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?php echo urlencode($this->HeadData['ref']) ?>">Logout</a></li>
-                                            </ul>
-                                        </li>
-                                    <?php endif; ?>
-
-                                    <li><a href="/my-account/?c=90.02">Wishlists</a></li>
-                                    <li class="dropdown dropdown-small">
-                                        <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-                                            <span class="key">English (US)</span><b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="?lang=en">English</a></li>
-                                            <!--li><a href="?lang=bn">বাংলা</a></li-->
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown dropdown-small">
-                                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                            <span class="key"><?php echo Models::curr(); ?></span><b class="caret"></b>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li id="cur_BDT"><a href="<?php echo Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-                                            <li id="cur_USD"><a href="<?php echo Models::baseUrl('?cur=USD') ?>">USD</a></li>
-                                            <li id="cur_INR"><a href="<?php echo Models::baseUrl('?cur=INR') ?>">INR</a></li>
-                                            <li id="cur_GBP"><a href="<?php echo Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
         <div class="site-branding-area">
             <div class="container">
                 <div class="row flex branding-flex deskv-hm">
                     <div class="col-md-3 col-xs-5 cols logo-cols">
                         <div class="logo">
-                            <a href="/" id="home-btn"><img src="<?php echo Models::getLogo() ?>"></a>
+                            <a href="/" id="home-btn">
+                                <img src="<?php echo Models::getLogo(2) ?>" alt="Logo-White">
+                            </a>
                         </div>
                     </div>
 
@@ -167,24 +107,50 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                         //Desktop view header middle
                     ?>
                         <div class="col-md-9 deskv-hm-movable">
-                            <div class="row">
-                                <div class="col-md-9 hidden-xs">
-                                    <div class="serachbox">
-                                        <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
-                                            <div class="searchfld deskv">
-                                                <input type="text" placeholder="Search here" name="q" autocomplete="off" class="input-text search-q" />
-                                                <button type="submit" class="subs"><i class="fa fa-search subsi"></i></button>
-                                                <div id="search-suggestions" class="srch-datalist slimScroll"></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 hidden-xs">
-                                    <ul class="wishlistall">
-                                        <li><a href="/my-account/?c=90.04" title="Notification"><i class="fa fa-bell"></i> <span class="badge"><?php echo $this->NotificationBadge ?></span></a></li>
-                                        <li><a href="/contact/" title="Support"><i class="fa fa-question-circle"></i></a></li>
-                                    </ul>
-                                </div>
+                            <div class="mainmenu-area-quicklinks">
+                                <ul class="m-a-links">
+                                    <li>
+                                        <a href="/">
+                                            <span class="malinks-icon">
+                                                <i class="pbl-icon icn-tel"></i>
+                                            </span>
+                                            <span class="malinks-text">
+                                                <span><?php echo Models::getContactInformation('mobile1') ?></span>
+                                                <span class="tag">24/7 Support</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/search/?q=?q=&a_s_t=special_offer">
+                                            <span class="malinks-text">
+                                                <span>Special Offers</span>
+                                                <span class="tag">Enjoy the best deals</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/">
+                                            <span class="malinks-icon">
+                                                <i class="pbl-icon icn-gift"></i>
+                                            </span>
+                                            <span class="malinks-text">
+                                                <span>Flash Deals</span>
+                                                <span class="tag">Live Offers</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/">
+                                            <span class="malinks-icon">
+                                                <i class="pbl-icon icn-com"></i>
+                                            </span>
+                                            <span class="malinks-text">
+                                                <span>Explore Laptop</span>
+                                                <span class="tag">Perfect For You</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     <?php
@@ -199,7 +165,10 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-right animated slideDown">
                                         <li>
-                                            <a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
+                                            <a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">
+                                                Currency
+                                                <span class="caret"></span>
+                                            </a>
                                             <ul class="collapse" id="ht-currency">
                                                 <li id="cur_BDT"><a href="<?php echo Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
                                                 <li id="cur_USD"><a href="<?php echo Models::baseUrl('?cur=USD') ?>">USD</a></li>
@@ -234,38 +203,58 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
         <div class="sticky-wrapper">
             <div class="mainmenu-area1">
                 <div class="container">
-                    <div class="row deskv-hb">
+                    <div class="row deskv-hb" style="display:flex;align-items:center">
                         <?php
                         if (!$this->mobileView) :
                             //Desktop view header bottom
                         ?>
-                            <div class="col-md-3" id="all-dept-btn" style="padding-right:0px">
+                            <div class="col-md-2p5 col-md-3" id="all-dept-btn" style="padding-right:0">
                                 <div class="manue dropdown mainmenu cacaallpaje">
                                     <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="javascript:;">
-                                        <i class="fa fa-list-ul" aria-hidden="true"></i> ALL DEPARTMENTS
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i> ALL CATEGORIES
                                     </a>
                                     <ul class="nav navbar-nav dropdown-menu">
                                         <?php include "menu.php"; ?>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-9 cols hidden-xs">
-                                <div class="mainmenu-area-quicklinks">
-                                    <ul class="m-a-links">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="/brands/">Brands</a></li>
-                                        <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
-                                        <li><a href="/track-order/">Track Order</a></li>
-
-                                        <?php if (!$this->UserData) : ?>
-                                            <li><a class="_ph_RegBtn" href="/register/?ref=<?php echo urlencode($this->HeadData['ref']) ?>">Join free</a></li>
-                                            <li><a class="_ph_LoginBtn" href="/login/?ref=<?php echo urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
-                                        <?php else : ?>
-                                            <li><a href="/my-account/">User Account</a></li>
-                                        <?php endif; ?>
-
-                                        <li><a href="/contact/">Support</a></li>
-                                    </ul>
+                            <div class="col-md-9p5 col-md-9 cols hidden-xs" style="padding-left: 30px;">
+                                <div class="row" style="display:flex;align-items:center">
+                                    <div class="col-md-8">
+                                        <div class="serachbox">
+                                            <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
+                                                <div class="searchfld deskv">
+                                                    <input type="text" placeholder="Search here" name="q" autocomplete="off" class="input-text search-q" />
+                                                    <button type="submit" class="subs"><i class="fa fa-search subsi"></i></button>
+                                                    <div id="search-suggestions" class="srch-datalist slimScroll"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="wishlistall">
+                                            <li>
+                                                <a href="/my-account/?c=90.04">
+                                                    <i class="pbl-icon icn-acc"></i>
+                                                    <span>Account</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/contact/" title="Support">
+                                                    <i class="pbl-icon icn-wsh"></i>
+                                                    <span>Wishlists</span>
+                                                    <span class="badge"><?php echo $this->NotificationBadge ?></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/contact/" title="Support">
+                                                    <i class="pbl-icon icn-comp"></i>
+                                                    <span>Compare</span>
+                                                    <span class="badge"><?php echo $this->NotificationBadge ?></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         <?php
@@ -289,6 +278,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <span id="fcTot" class="badge"><?php echo $this->CartData->getTotalItem() ?></span>
                                     <i class="fa fa-shopping-cart "></i> Cart
                                 </div>
+                            </div>
+
+                            <div class="col-xs-4 m-hb-grid tb-4" data-target="#skmbcart">
+                                <span id="fcTotal">
+                                    <span class="badge badge-span"><?php echo $this->CartData->getTotal() ?></span>
+                                    <i class="fa fa-cart"></i>
+                                </span>
                             </div>
                             <div class="tabbed-section__highlighter"></div>
                         <?php endif; ?>
