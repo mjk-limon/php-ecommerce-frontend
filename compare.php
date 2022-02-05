@@ -1,6 +1,8 @@
 <?php
 
 namespace _ilmComm;
+
+$Cmp = $this->getComp();
 ?>
 
 <section class="main-body inner-page">

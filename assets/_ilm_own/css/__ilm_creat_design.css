@@ -155,19 +155,17 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .mainmenu ul{/* min-height:413px */}
 .mainmenu ul li{float:none;width:100%;padding-bottom:0}
 
-.mainmenu ul li a{color:#fff;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:400;padding:5px 9px;text-transform:capitalize}
+.mainmenu ul li a{display:block;position:relative;color:#fff;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:400;line-height:20px;padding:3px 9px;text-transform:capitalize}
 .mainmenu ul li a span{padding-right:10px}
 .mainmenu ul li a i{text-align:right}
-.mainmenu ul li :is(a:hover, a:focus, a.active), .shop-menu ul li a.active{background:var(--header);color:#fff}
-ul.sub-menu{position:absolute;top:0;left:100%;background:var(--menubar);list-style:none;padding:10px;margin-left:0;width:700px;box-shadow:0 3px 3px rgba(0,0,0,0.1);display:none;z-index:999;min-height:100%}
-.navbar-nav li ul.sub-menu li{padding:3px 8px;border:0;line-height:1.1em}
+.mainmenu ul li:hover > a, .sub-col-group:hover > a, .shop-menu ul li a.active{background:rgba(255, 255, 255, 0.12);color:#fff}
+ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;background:var(--menubar);list-style:none;padding:5px 0;margin-left:0;min-width:80%;box-shadow:0 3px 3px rgba(0, 0, 0, 0.52);display:none;z-index:999;min-height:100%}
 .navbar-nav li ul.sub-menu li a{font-weight:400;font-size:13px}
-.navbar-nav li ul.sub-menu li a:hover{color:#ccc}
-.manue .dropdown > a .fa-angle-right{font-weight:700;float:none;position:absolute;right:6px;top:50%;transform:translateY(-50%)}
-.nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu{display:block}
+.manue .dropdown a .fa-angle-right{font-weight:700;float:none;position:absolute;right:6px;top:50%;transform:translateY(-50%)}
+.nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu, .sub-col-group:hover .sub-cols{display:block}
 .sub-menu > .sub-cols{padding:5px}
 .sub-menu > .sub-cols > a{padding:0}
-.sub-menu h3{font-size:15px;padding:5px;margin:2px 0;text-transform:capitalize;background-color:var(--accent)}
+.sub-menu h3{font-size:14px;margin:0;line-height:inherit;text-transform:capitalize}
 
 .fixed-menu-bar header{/* animation:slideDown .4s */}
 .fixed-menu-bar .header_top{display:none}
@@ -199,10 +197,10 @@ ul.sub-menu{position:absolute;top:0;left:100%;background:var(--menubar);list-sty
 .bt-tagline .bt-animated-text{display:inline-block;white-space:nowrap;padding-left:100%;animation:scrollText 20s linear infinite}
 .fet-cats{display:flex;flex-wrap:wrap}
 .fet-cats .fet-cat-item{max-width:12.5%;flex:0 12.5%;padding:7px}
+.fet-cats.fet-prs .fet-cat-item {max-width:33.33333%;flex:0 33.33333%}
 .fet-cat-item .fet-cat-item-inner{background-color:#fff;padding:25px 5px;box-shadow:1px 1px 2px #ccc;border-radius:5px;text-align:center}
 .fet-cat-name .fcn-title{font-weight:500;font-size:16px}
 .fet-cat-name .fcn-btn{margin-top:10px}
-.fet-cats.fet-prs .fet-cat-item {max-width:33.33333%;flex:0 33.33333%}
 
 .trending-categories{max-width:100%}
 .tc-list{display:flex;flex-direction:row;justify-content:center}

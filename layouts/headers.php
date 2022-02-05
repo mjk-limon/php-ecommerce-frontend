@@ -279,13 +279,6 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <i class="fa fa-shopping-cart "></i> Cart
                                 </div>
                             </div>
-
-                            <div class="col-xs-4 m-hb-grid tb-4" data-target="#skmbcart">
-                                <span id="fcTotal">
-                                    <span class="badge badge-span"><?php echo $this->CartData->getTotal() ?></span>
-                                    <i class="fa fa-cart"></i>
-                                </span>
-                            </div>
                             <div class="tabbed-section__highlighter"></div>
                         <?php endif; ?>
 

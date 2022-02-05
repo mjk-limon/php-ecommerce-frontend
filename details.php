@@ -137,16 +137,6 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                             <div class="pr-short-description">
                                 <h5>Key Features:</h5>
                                 <?php echo $PrDetails->getOthers('prshortdis') ?>
-                                <ul>
-                                    <li>Super liquid matte lipstick</li>
-                                    <li>Ultra-moisture to lips</li>
-                                    <li>Easy to apply </li>
-                                    <li>High pigmented and has a good texture</li>
-                                    <li>Leaves a matte finish</li>
-                                    <li>Long lasting</li>
-                                    <li>Does not crack</li>
-                                    <li>Comes in eight sophisticated shades- Nancy, Melania, Barbara, Elizabeth, Michelle, Laura, Hillary, Roslyn.</li>
-                                </ul>
                             </div>
 
                             <div class="pr-size-color">

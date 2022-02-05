@@ -78,7 +78,7 @@ $(document).ready(function () {
         var hasSub = false,
             $Relative = $(this),
             $SubMenu = $(".sub-menu", this),
-            $SubCols = $SubMenu.find(".sub-cols:not(.view-all)");
+            $SubColGrp = $SubMenu.find(".sub-col-group");
 
         if ($SubMenu.find(".no-cathead").length && !mobileView) {
             $Relative.addClass("no-submenu");
@@ -86,13 +86,12 @@ $(document).ready(function () {
             return;
         }
 
-        $SubCols.each(function () {
-            if (!$(this).find(".no-catsub").length)
-                hasSub = true;
+        $SubColGrp.each(function () {
+            if ($(this).find(".no-catsub").length) {
+                $(".sub-cols", this).remove();
+                $(this).find("> a > i").remove();
+            }
         });
-
-        if (!hasSub)
-            $SubMenu.addClass("tiny-sub-menu");
     });
 
     $('.deskv .input-text').on('focus', function (e) {

@@ -23,7 +23,8 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
         <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
             <div class="col-xs-12 sub-cols view-all hidden-md hidden-lg">
                 <a href="<?php echo $Cat->getHref() ?>">
-                    View All <?php echo htmlspecialchars($Cat->Mainc) ?> &nbsp;<i class="fa fa-long-arrow-right"></i>
+                    View All <?php echo htmlspecialchars($Cat->Mainc) ?>
+                    <i class="fa fa-long-arrow-right"></i>
                 </a>
             </div>
 
@@ -37,39 +38,36 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
                 $Cat->setSubGroup($ArrSubGrp['header']);
                 $Cat->setSub(null);
             ?>
-                <div class="col-md-4 col-xs-6 sub-cols">
+                <div class="sub-col-group">
                     <a href="<?php echo $Cat->getHref() ?>">
                         <h3><?php echo htmlspecialchars($Cat->SubGroup)  ?></h3>
+                        <i class="fa fa-angle-right"></i>
                     </a>
 
-                    <?php
-                    $SubCats = $Cat->fetchSub();
-                    $TotalSubCats = $SubCats->num_rows;
+                    <div class="sub-cols">
+                        <?php
+                        $SubCats = $Cat->fetchSub();
+                        $TotalSubCats = $SubCats->num_rows;
 
-                    while ($ArrSub = $SubCats->fetch_array()) {
-                        $Cat->setCatId($ArrSub['id']);
-                        $Cat->setSub($ArrSub['sub']);
-                    ?>
-                        <li>
-                            <a href="<?php echo $Cat->getHref() ?>">
-                                <i class="fa fa-angle-right"></i>
-                                <?php echo htmlspecialchars($Cat->Sub); ?>
-                            </a>
-                        </li>
-                    <?php
-                        if ($TotalSubCats == 1  && empty($Cat->Sub)) {
-                            echo '<div class="no-catsub"></div>';
+                        while ($ArrSub = $SubCats->fetch_array()) {
+                            $Cat->setCatId($ArrSub['id']);
+                            $Cat->setSub($ArrSub['sub']);
+                        ?>
+                            <li>
+                                <a href="<?php echo $Cat->getHref() ?>">
+                                    <?php echo htmlspecialchars($Cat->Sub); ?>
+                                </a>
+                            </li>
+                        <?php
+                            if ($TotalSubCats == 1  && empty($Cat->Sub)) {
+                                echo '<div class="no-catsub"></div>';
+                            }
                         }
-                    }
-                    $SubCats->free();
-                    ?>
-
+                        $SubCats->free();
+                        ?>
+                    </div>
                 </div>
             <?php
-                if ($col4i % $menu_clearfix == 0) {
-                    echo '<div class="clearfix"></div>';
-                }
-
                 if (($TotalSubGroupCats == 1)  && empty($Cat->SubGroup)) {
                     echo '<div class="no-cathead"></div>';
                 }
@@ -78,8 +76,6 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
             }
             $SubGroupCats->free();
             ?>
-
-            <div class="clearfix"></div>
         </ul>
     </li>
 <?php
