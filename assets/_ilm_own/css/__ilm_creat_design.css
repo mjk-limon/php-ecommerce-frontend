@@ -152,7 +152,6 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 
 .home-floating-menu-container{position:relative;z-index:1000}
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
-.mainmenu ul{/* min-height:413px */}
 .mainmenu ul li{float:none;width:100%;padding-bottom:0}
 
 .mainmenu ul li a{display:block;position:relative;color:#fff;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:400;line-height:20px;padding:3px 9px;text-transform:capitalize}
@@ -165,9 +164,8 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu, .sub-col-group:hover .sub-cols{display:block}
 .sub-menu > .sub-cols{padding:5px}
 .sub-menu > .sub-cols > a{padding:0}
-.sub-menu h3{font-size:14px;margin:0;line-height:inherit;text-transform:capitalize}
+.sub-menu h3{font-size:13px;font-weight:300;margin:0;line-height:inherit;text-transform:capitalize}
 
-.fixed-menu-bar header{/* animation:slideDown .4s */}
 .fixed-menu-bar .header_top{display:none}
 .fixed-menu-bar .searchfld{margin:5px auto} 
 .fixed-menu-bar .wishlistall > li{margin:4px 6px}
@@ -207,8 +205,8 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .tc-list .tc-single{flex:0 1%;min-width:130px;text-align:center;padding:1.4rem}
 .tc-list .tc-single:first-child{text-align:left}
 .tc-single .tc-single-img{width:100%;padding-top:100%;border-radius:50%;background-size:100%;background-color:#ccc;background-position:center;background-repeat:no-repeat}
-.tc-single .tc-single-title{padding:5px 0;line-clamp: 2;-webkit-line-clamp:2;line-height:1.1em;max-height:2.4em;overflow:hidden;text-overflow:ellipsis}
-.ft-title{padding: 1.5rem;padding-right: 0;}
+.tc-single .tc-single-title{padding:5px 0;line-clamp:2;-webkit-line-clamp:2;line-height:1.1em;max-height:2.4em;overflow:hidden;text-overflow:ellipsis}
+.ft-title{padding:1.5rem;padding-right:0}
 .ft-title .ft-title-left, .ft-title .ft-right-nav{display:inline-block}
 .ft-title-left{width:50%}
 .ft-title .ft-ft-title{margin-right:20px;font-size:18px}
