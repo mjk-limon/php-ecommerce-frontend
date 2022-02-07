@@ -151,11 +151,11 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="ft-pr-sliders">
                     <div class="new-arrivals">
-                        <div class="grid-row">
+                        <div class="grid-row grid5">
 
                             <?php
                             $St_i = 1;
-                            $newArrivals = $this->newArrivals();
+                            $newArrivals = $this->newArrivals(10, "id,name,category,discount,price,item_left,others");
                             while ($NaPr = $newArrivals->fetch_assoc()) :
                                 $sp->setPrInfo($NaPr);
                                 $sp->processDiscount();
@@ -200,14 +200,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     </div>
                                 </div>
 
-                                <?php if ($St_i == 2) : ?>
-                                    <div class="grids large-grid">
-                                        <div class="prgrid-ads-section">
-                                            <a href="<?php echo $this->TopSticker2['image_link'] ?>" class="prgrid-ad-img" style="background-image:url('<?php echo $this->TopSticker2['image'] ?>')"></a>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-
                             <?php
                                 $St_i++;
                             endwhile;
@@ -239,12 +231,12 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         $Cat->setSubGroup(null);
                         $Cat->setSub(null);
 
-                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId);
+                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId, 8, "id,name,category,discount,price,item_left,others");
                         if ($BrowseCatProducts->num_rows) :
                     ?>
                             <div class="bc-single">
                                 <div class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></div>
-                                <div class="grid-row">
+                                <div class="grid-row grid5">
 
                                     <?php
                                     $Ct_i = 1;
@@ -284,6 +276,15 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                                 <a href="<?php echo $sp->getHref() ?>">
                                                                     <h5><?php echo $sp->getName() ?></h5>
                                                                 </a>
+
+                                                                <ul class="spprinfo-specs">
+                                                                    <?php if ($sp->getOthers('prspec')) : ?>
+                                                                        <?php foreach ($sp->getOthers('prspec') as $Spec) : ?>
+                                                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                                                        <?php endforeach; ?>
+                                                                    <?php endif; ?>
+                                                                </ul>
+
                                                                 <p>
                                                                     <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
 
@@ -297,7 +298,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                         <div class="sp-nav">
                                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                                             <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                            <a href="javascript:;" class="oth-nav cCompareNav cmpadd"><i class="fa fa-plus-square"></i></a>
+                                                            <a href="javascript:;" class="oth-nav cAddWishNav"><i class="fa fa-heart-o"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -2,7 +2,7 @@
 
 namespace _ilmComm;
 
-$Prs = $this->AllProducts;
+$AllProducts = $this->fetchProducts("id,name,price,item_left,brand,category,discount,price,size,colors,others");
 ?>
 
 <section class="main-body">

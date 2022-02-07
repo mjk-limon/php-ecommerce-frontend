@@ -38,6 +38,7 @@ $(document).ready(function () {
     _ilm_Form_handler.init();
     _ilm_Paging.init();
 
+    $('span.stars').stars({starSize:13});
     $(window).on("popstate", function (e) { location.reload() });
 
     /*======= Basic =========*/

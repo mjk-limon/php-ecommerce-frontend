@@ -34,6 +34,18 @@ _ilm_Cart = {
                 _ilm.globLoader("hide", env, true);
             });
         });
+
+        $(document).on('click', '.cCompareNav', function () {
+            var itemInfo, optType, env = this;
+            _ilm.globLoader("show", env, true);
+            
+            optType = $(env).hasClass("cmpadd") ? { addItemToCompare: true} : { removeItemFromCompare: true};
+            itemInfo = $.extend($(this).parent().parent().find("em").data(), optType);           
+            
+            _ilm_Cart.initComparison(itemInfo, function () {
+                _ilm.globLoader("hide", env, true);
+            });
+        });
     },
 
     addToCart: function (itemInfo, successCallback = null) {
@@ -165,6 +177,24 @@ _ilm_Cart = {
         }
 
         ajaxPost(ajaxData, ajaxCallback);
+    },
+
+    initComparison: function (ajaxData, successCallback = null) {
+        ajaxPost(ajaxData, function (data) {
+            var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
+            if (result.success) {
+                if (result.optType == 'add') {
+                    _ilm.showNotification("Product added to compare.");
+                } else {
+                    location.reload();
+                }
+            } else {
+                _ilm.showNotification(result.error, true);
+            }
+
+            if (isCallable(successCallback)) successCallback();
+            return true;
+        });
     }
 }
 

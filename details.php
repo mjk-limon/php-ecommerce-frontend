@@ -124,19 +124,28 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
 
                         <div class="product-buy-section">
                             <div class="pr-compare-wishlist">
-                                <a href="" class="pr-cw-item">
-                                    <i class="fa fa-bookmark-o"></i>
-                                    Add To Wishlist
-                                </a>
-                                <a href="" class="pr-cw-item">
-                                    <i class="fa fa-plus-square"></i>
-                                    Add To Compare
-                                </a>
+                                <div class="pcw-group">
+                                    <em data-prid="<?php echo $PrDetails->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
+                                    <a href="" class="pr-cw-item cAddWishNav">
+                                        <i class="fa fa-bookmark-o"></i>
+                                        Add To Wishlist
+                                    </a>
+                                    <a href="javascript:;" class="pr-cw-item cCompareNav cmpadd">
+                                        <i class="fa fa-plus-square"></i>
+                                        Add To Compare
+                                    </a>
+                                </div>
                             </div>
 
                             <div class="pr-short-description">
-                                <h5>Key Features:</h5>
-                                <?php echo $PrDetails->getOthers('prshortdis') ?>
+                                <?php if ($PrDetails->getOthers('prspec')) : ?>
+                                    <h5>Key Features:</h5>
+                                    <ul>
+                                        <?php foreach ($PrDetails->getOthers('prspec') as $Spec) : ?>
+                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
                             </div>
 
                             <div class="pr-size-color">
@@ -399,18 +408,22 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                                     <a href="<?php echo $sp->getHref() ?>">
                                                         <h5><?php echo $sp->getName() ?></h5>
                                                     </a>
+
                                                     <p>
                                                         <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
+
                                                         <?php if ($sp->getDiscount()) : ?>
                                                             <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
                                                         <?php endif; ?>
+
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="sp-nav">
-                                                <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
+                                                <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                                 <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                <a href="javascript:;" class="oth-nav cCompareNav cmpadd"><i class="fa fa-plus-square"></i></a>
+                                                <a href="javascript:;" class="oth-nav cAddWishNav"><i class="fa fa-heart-o"></i></a>
                                             </div>
                                         </div>
                                     </div>

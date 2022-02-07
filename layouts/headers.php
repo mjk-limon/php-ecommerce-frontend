@@ -69,11 +69,11 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 
     <?php if (!$this->mobileView) : ?>
         <div class="floating-sc">
-            <div class="sc-btn sc-btn-comp">
+            <!--div class="sc-btn sc-btn-comp">
                 <i class="pbl-icon icn-comp" style="margin-bottom: 0;"></i>
                 <div class="fclbl"><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span></div>
                 <div style="padding-bottom:1rem;font-size:13px;">Compare</div>
-            </div>
+            </div-->
             <div class="sc-btn">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <div class="fclbl"><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span></div>
@@ -240,17 +240,16 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/contact/" title="Support">
+                                                <a href="/my-account/?c=90.02" title="Support">
                                                     <i class="pbl-icon icn-wsh"></i>
                                                     <span>Wishlists</span>
                                                     <span class="badge"><?php echo $this->NotificationBadge ?></span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/contact/" title="Support">
+                                                <a href="<?php echo PROJECT_FOLDER . 'compare/'; ?>" class="noRoute" title="Support">
                                                     <i class="pbl-icon icn-comp"></i>
                                                     <span>Compare</span>
-                                                    <span class="badge"><?php echo $this->NotificationBadge ?></span>
                                                 </a>
                                             </li>
                                         </ul>

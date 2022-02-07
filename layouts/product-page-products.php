@@ -56,7 +56,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 <div class="product-page-products">
     <div class="grid-row grid4">
         <?php
-        foreach ($this->AllProducts as $Product) :
+        foreach ($AllProducts as $Product) :
             $this->SingleProduct->setPrInfo($Product);
             $this->SingleProduct->processDiscount();
             $this->SingleProduct->processStock();
@@ -79,19 +79,30 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                                 <a href="<?php echo $this->SingleProduct->getHref() ?>">
                                     <h5><?php echo $this->SingleProduct->getName() ?></h5>
                                 </a>
+
+                                <ul class="spprinfo-specs">
+                                    <?php if ($this->SingleProduct->getOthers('prspec')) : ?>
+                                        <?php foreach ($this->SingleProduct->getOthers('prspec') as $Spec) : ?>
+                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </ul>
+
                                 <p>
                                     <strong class="price"><?php echo Models::curr($this->SingleProduct->getPrice()) ?></strong>
+
                                     <?php if ($this->SingleProduct->getDiscount()) : ?>
                                         <strong class="p-old"><?php echo Models::curr($this->SingleProduct->getPrice(0)) ?></strong>
                                     <?php endif; ?>
+
                                 </p>
                             </div>
                         </div>
-
                         <div class="sp-nav">
                             <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                             <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                            <a href="javascript:;" class="oth-nav cCompareNav cmpadd"><i class="fa fa-plus-square"></i></a>
+                            <a href="javascript:;" class="oth-nav cAddWishNav"><i class="fa fa-heart-o"></i></a>
                         </div>
                     </div>
                 </div>
@@ -100,7 +111,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 
     </div>
 
-    <?php if (count($this->AllProducts)) : ?>
+    <?php if (count($AllProducts)) : ?>
         <div class="ilm-paging">
             <div class="more-pr-by-ajax"></div>
             <div class="pp-nav">
