@@ -283,8 +283,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                             <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
                                         <?php endif; ?>
 
-                                        <a href="<?= $sp->getHref() ?>">
-                                            <img src="<?= $sp->getProductImage() ?>" />
+                                        <a href="<?php echo $sp->getHref() ?>">
+                                            <img src="<?php echo Models::asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getProductImage() ?>" />
                                         </a>
                                     </div>
                                     <div class="has-sp-nav">
@@ -364,8 +364,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                     <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
                                                 <?php endif; ?>
 
-                                                <a href="<?= $sp->getHref() ?>">
-                                                    <img src="<?= $sp->getProductImage() ?>" />
+                                                <a href="<?php echo $sp->getHref() ?>">
+                                                    <img src="<?php echo Models::asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getProductImage() ?>" />
                                                 </a>
                                             </div>
                                             <div class="has-sp-nav">
@@ -476,8 +476,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                             <span class="sp-dis">-<?= round($sp->getDiscount()) ?>%</span>
                                                         <?php endif; ?>
 
-                                                        <a href="<?= $sp->getHref() ?>">
-                                                            <img src="<?= $sp->getProductImage() ?>" />
+                                                        <a href="<?php echo $sp->getHref() ?>">
+                                                            <img src="<?php echo Models::asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getProductImage() ?>" />
                                                         </a>
                                                     </div>
                                                     <div class="has-sp-nav">
@@ -531,9 +531,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script type="text/javascript">
-    slideSize = {
-        width: <?php echo $slideSize[0] ?>,
-        height: <?php echo $slideSize[1] ?>
-    };
+slideSize = {
+    width: <?php echo $slideSize[0] ?>,
+    height: <?php echo $slideSize[1] ?>
+};
 </script>
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
