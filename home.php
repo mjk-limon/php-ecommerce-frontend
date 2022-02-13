@@ -40,7 +40,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                             ?>
                                 <div>
                                     <a href="<?php echo $ArrSlider['image_link'] ?>">
-                                        <img u="image" src="<?php echo Models::asset($ArrSlider['image']) ?>" />
+                                        <img u="image" src2="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
                             <?php
@@ -49,6 +49,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                             ?>
 
                         </div>
+
                         <div data-u="navigator" class="jssorb034" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
                             <div data-u="prototype" class="i" style="width:13px;height:13px;">
                                 <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
@@ -455,9 +456,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script type="text/javascript">
-slideSize = {
-    width: <?php echo $slideSize[0] ?>,
-    height: <?php echo $slideSize[1] ?>
-};
+    slideSize = {
+        width: <?php echo $slideSize[0] ?>,
+        height: <?php echo $slideSize[1] ?>
+    };
 </script>
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
