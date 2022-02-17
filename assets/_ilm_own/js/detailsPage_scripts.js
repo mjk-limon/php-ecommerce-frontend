@@ -21,7 +21,7 @@ _ilm_Details_page = {
 
 		$(".ss-btn, .cs-btn").on("click", function () {
 			var $env = $(this),
-				$qtybox = $(".item_qty_input input"),
+				$qtybox = $("#itemQtyInp input"),
 				cartkey = $env.hasClass("ss-btn") ? 'size' : 'colr',
 				cartval = $.trim($env.text());
 

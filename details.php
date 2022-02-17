@@ -468,7 +468,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
         <div class="m-flex">
             <ul class="qty-selection">
                 <li class="item_minus"><a href="javascript:;">-</a></li>
-                <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
+                <li class="item_qty item_qty_input" id="itemQtyInp"><input type="number" value="1" autocomplete="off" /></li>
                 <li class="item_plus"><a href="javascript:;">+</a></li>
             </ul>
             <ul class="bnav-btns">

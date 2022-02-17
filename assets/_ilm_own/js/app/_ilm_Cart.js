@@ -18,8 +18,8 @@ _ilm_Cart = {
                 $cartEm = $(this).parent().find("em").get(0);
                 itemInfo = $cartEm.dataset;
 
-                return _ilm_Cart.addToCart(itemInfo, function () {
-                    if ($(env).hasClass("mb-details")) {
+                return _ilm_Cart.addToCart(itemInfo, function (snap = true) {
+                    if (!snap && $(env).hasClass("mb-details")) {
                         _ilm.jumpToSection(".pr-size-color", function () {
                             $(".pr-size-color").addClass("animated flash");
                             setTimeout(function () {
@@ -74,7 +74,7 @@ _ilm_Cart = {
 
         if (!_ilm_Cart.validateItemInfo(itemInfo)) {
             _ilm.showNotification("Please select size and color.", true);
-            if (isCallable(successCallback)) successCallback();
+            if (isCallable(successCallback)) successCallback(false);
             return false;
         }
 

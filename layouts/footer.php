@@ -12,47 +12,50 @@ $shippingMethods = $this->shippingMethods();
     <div class="footer-widget">
         <div class="container">
             <div class="row">
-                <div class="col-md-2 col-xs-6">
-                    <div class="single-widget">
-                        <h2>Company</h2>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/about-us/">About Us</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/term-of-use/">Terms and Conditions</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/payment-methods/">How to Pay</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/blog/">Blog</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/photo-confirmations/">Photo Confirmations</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                    <div class="single-widget">
-                        <h2>Support</h2>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><i class="fa fa-chevron-right"></i><a href="/contact/">Customer Care</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/privacy-policy/">Privacy Policy</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/shipping-returns/">Shipping Returns</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/store-location/">Store Location</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/locations-we-ship-to/">Location we ship to</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                    <div class="single-widget">
-                        <h2>Account</h2>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><i class="fa fa-chevron-right"></i><a href="/my-account/">User Account</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/my-account/?c=90.02">User Wishlists</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/my-account/?c=90.03">Order history</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/my-account/?c=90.04">My Reviews</a></li>
-                            <li><i class="fa fa-chevron-right"></i><a href="/page/testimonials/">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2 hidden-xs"></div>
-                <div class="col-md-4 col-xs-6">
+                <div class="col-md-5 col-xs-6">
                     <div class="single-widget al-l">
-                        <h2>FOLLOW US</h2>
-                        <div class="social-icons">
+                        <div class="footer-logo">
+                            <img src="<?php echo Models::getLogo(2) ?>" class="footerlogo">
+                        </div>
+
+                        <div class="nuws">
+                            <h2>Newsletter Singup</h2>
+                            <form action="" method="POST" id="newslettersubmit" class="searchform _ilmForm">
+                                <input type="hidden" name="newsletter_add" value="1" />
+                                <div class="flex" style="max-width:350px">
+                                    <input type="text" required="" name="email" placeholder="Email Address" />
+                                    <button type="submit" class="btn btn-sub newsletter-btn iFSubmitBtn">SUBMIT</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="all-right-reserved">
+                            <?php
+                            Head\DevInfo::getDevComInfo();
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xs-6">
+                    <div class="single-widget">
+                        <h2>Cotact Info</h2>
+
+                        <ul class="nav nav-pills nav-stacked nav-addresses">
+                            <li>
+                                <span>Address:</span>
+                                <?php echo Models::getContactInformation("address") ?>
+                            </li>
+                            <li>
+                                <span>Phone:</span>
+                                <?php echo Models::getContactInformation("phone") ?>
+                            </li>
+                            <li>
+                                <span>Email:</span>
+                                <?php echo Models::getContactInformation("email") ?>
+                            </li>
+                        </ul>
+
+                        <div class="social-icons" style="margin-top:10px;">
                             <ul class="nav">
 
                                 <?php foreach ($socialLinks as $SK => $SL) : ?>
@@ -65,55 +68,20 @@ $shippingMethods = $this->shippingMethods();
 
                             </ul>
                         </div>
-                        <div class="nuws">
-                            <h2>Newsletter Singup</h2>
-                            <p>Singup to recieve latest promotions</p>
-                            <form action="" method="POST" id="newslettersubmit" class="searchform _ilmForm">
-                                <input type="hidden" name="newsletter_add" value="1" />
-                                <div class="flex">
-                                    <input type="text" required="" name="email" placeholder="Email Address" />
-                                    <button type="submit" class="btn btn-sub newsletter-btn iFSubmitBtn">SUBMIT</button>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 pm-delv">
-                    <h4>Payment Methods</h4>
-
-                    <?php foreach ($paymentMethods as $PM) : ?>
-                        <img src="<?= Models::asset($PM); ?>" class="img-responsive" />
-                    <?php endforeach; ?>
-
+                <div class="col-md-3 col-xs-6">
+                    <div class="single-widget">
+                        <h2>Account</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><i class="fa fa-chevron-right"></i><a href="/page/about-us/">About Us</a></li>
+                            <li><i class="fa fa-chevron-right"></i><a href="/page/term-of-use/">Terms and Conditions</a></li>
+                            <li><i class="fa fa-chevron-right"></i><a href="/page/payment-methods/">How to Pay</a></li>
+                            <li><i class="fa fa-chevron-right"></i><a href="/page/blog/">Blog</a></li>
+                            <li><i class="fa fa-chevron-right"></i><a href="/page/photo-confirmations/">Photo Confirmations</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-6 pm-delv">
-                    <h4>Delivered By</h4>
-
-                    <?php foreach ($shippingMethods as $SM) : ?>
-                        <img src="<?= Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?= htmlspecialchars($SM['method_name']) ?>" />
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <p class="pull-left">
-                    <img src="<?php echo Models::getLogo() ?>" class="footerlogo">
-                </p>
-                <p class="pull-right">
-                    <?php
-                    Head\DevInfo::getDevComInfo();
-                    ?>
-                </p>
             </div>
         </div>
     </div>

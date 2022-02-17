@@ -682,20 +682,21 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 
 /*=========== Footer =======*/
 #footer{background:#fcfcfc;border-top: 1px solid #ddd}
-.footer-widget{background-color:#fff;padding-bottom:40px}
-.footer-widget .container{padding-top:15px}
-.single-widget h2{color:#333;font-family:'Roboto',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
+.footer-widget{background-color:#111723;color:#fff;padding:50px 0}
+.single-widget h2{color:#fff;font-family:'Roboto',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
 .single-widget h2 i{margin-right:15px}
+.nav-addresses li{display:flex;margin-bottom:5px}
+.nav-addresses li span{color:#ccc;margin-right:10px;}
 .nav-stacked li i{display:inline-block;padding-right:5px;font-size:11px}
-.single-widget ul li a{display:inline-block;vertical-align:middle;color:#333;font-family:'Roboto',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
+.single-widget ul li a{display:inline-block;vertical-align:middle;color:#fff;font-family:'Roboto',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
 .single-widget ul li a:hover{background:none;color:var(--accent)}
 
-.nuws{padding:10px 0}
-.nuws p{color:#333}
-.nuws h2{color:#333;font-family:'Roboto',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
+.nuws{padding:15px 0}
+.nuws p{color:#fff}
+.nuws h2{color:#fff;font-family:'Roboto',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
 .social-icons ul li{display:inline-block;margin-right:3px}
 .social-icons ul li a{border:0 none;border-radius:0;color:#696763;padding:0}
-.social-icons ul li a i{font-size:20px;text-align:center;color:#fff;padding:9px;height:35px;width:35px;position:relative;overflow:hidden}
+.social-icons ul li a i{font-size:20px;text-align:center;color:#fff;height:35px;width:35px;line-height:35px;position:relative;overflow:hidden;border-radius:50%}
 .social-icons ul li a i:before{position:relative;z-index:2}
 .social-icons ul li a i:after{display:block;position:absolute;top:0;left:0;width:100%;height:100%;content:' ';background:linear-gradient(240DEG, var(--accent), #FFF);opacity:0;transition:all .4s ease}
 .fa-facebook{background: linear-gradient(120DEG, #3B599B, #3B599B, #FFFFFF)}
@@ -708,8 +709,8 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .fa-whatsapp{background: linear-gradient(120DEG, #58CF63, #3DC34D, #27B63E)}
 .fa-instagram{background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)}
 .social-icons ul li:hover a i:after{opacity:1}
-.searchform input{flex:5 0%;border:1px solid #ccc;color:#333;font-family:'Roboto',sans-serif;font-size:14px;outline:none;padding:3px 7px;border-top-left-radius:4px;border-bottom-left-radius:4px}
-.searchform button{background:var(--accent);border:medium none;padding:7px 17px}
+.searchform input{flex:5 0%;border:1px solid #ccc;color:#333;font-family:'Roboto',sans-serif;font-size:14px;outline:none;padding:3px 10px;border-top-left-radius:4px;border-bottom-left-radius:4px}
+.searchform button{background:var(--accent);border:medium none;padding:10px 17px}
 .searchform button:hover,.searchform button:focus{background-color:var(--accentsec)}
 .btn-sub{flex:1 0%;padding:7px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.428571429;text-align:center;white-space:nowrap;cursor:pointer;color:#fff;background-color:var(--accent);border-color:var(--accent);border-radius:0 4px 4px 0}
 
@@ -718,8 +719,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .footer-top .pm-delv > h4{margin-top:0;color:#272626;display:block}
 .footer-top .pm-delv > img{display:inline-block;margin-right:.5rem;height:60px;border:1px solid #ddd}
 
-.footer-bottom{background:#333;padding-top:5px}
-.footerlogo{height:30px;border-radius:5px}
+.footerlogo{height:40px}
 .footer-bottom p{color:#fcfcfc;font-family:'Roboto',sans-serif;font-weight:300;margin-left:14px;margin-bottom:0}
 .footer-bottom p a{font-size:12px;color:#fff;font-style:italic;text-decoration:underline}
 
