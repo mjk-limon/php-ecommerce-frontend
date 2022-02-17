@@ -23,62 +23,9 @@ namespace _ilmComm;
     </div>
 </section>
 
-
-<section class="filter-form categories-filter-form section-mb">
-    <h4>Product categories</h4>
-    <div class="ff-main scroll-pane slimScroll" style="max-height:600px;">
-
-        <?php
-        $Cat = $this->AllCategories;
-        $MainCats = $Cat->fetchMain();
-        while ($CatInfo = $MainCats->fetch_assoc()) :
-            $Cat->setCatId($CatInfo['id']);
-            $Cat->setMain($CatInfo['main']);
-            $Cat->setSubGroup(null);
-            $Cat->setSub(null);
-        ?>
-            <label class="checkbox bb-check">
-                <span><?php echo $this->getFilterTotalProduct('category', 'main', $Cat->CatId) ?></span>
-                <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->Mainc ?></a>
-
-                <?php
-                $SubGroupCats = $Cat->fetchSubGroup();
-                $TotalSubGroupCats = $SubGroupCats->num_rows;
-
-                while ($ArrSubGrp = $SubGroupCats->fetch_assoc()) :
-                    $Cat->setCatId($ArrSubGrp['id']);
-                    $Cat->setSubGroup($ArrSubGrp['header']);
-                    $Cat->setSub(null);
-                ?>
-                    <label class="checkbox bb-check">
-                        <span><?php echo $this->getFilterTotalProduct('category', 'header', $Cat->CatId) ?></span>
-                        <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->SubGroup ?></a>
-
-                        <?php
-                        $SubCats = $Cat->fetchSub();
-                        $TotalSubCats = $SubCats->num_rows;
-
-                        while ($ArrSub = $SubCats->fetch_array()) :
-                            $Cat->setCatId($ArrSub['id']);
-                            $Cat->setSub($ArrSub['sub']);
-                        ?>
-                            <label class="checkbox bb-check">
-                                <span><?php echo $this->getFilterTotalProduct('category', 'sub', $Cat->CatId) ?></span>
-                                <a href="<?php echo $Cat->getHref() ?>"><?php echo $Cat->Sub ?></a>
-                            </label>
-                        <?php endwhile; ?>
-
-                    </label>
-                <?php endwhile; ?>
-            </label>
-        <?php endwhile; ?>
-
-    </div>
-</section>
-
 <section class="filter-form brand-filter-form section-mb">
-    <h4>filter by brand</h4>
-    <div class="ff-main scroll-pane slimScroll">
+    <h4>brand</h4>
+    <div class="ff-main scroll-pane">
 
         <?php
         $AllBrands = $this->AllBrands;
@@ -87,12 +34,81 @@ namespace _ilmComm;
             $bName = $this->SingleBrand->getBrandName();
             $bImage = $this->SingleBrand->getBrandImage();
         ?>
-            <label class="checkbox bb-check">
-                <span><?php echo $this->getFilterTotalProduct('brand', $bName) ?></span>
-                <input class="fpCbox" type="checkbox" name="brand" value="<?= $bName ?>" <?= $this->checkFieldBySortval("brand", $bName) ?> />
-                <i></i> <?php echo $bName ?>
+            <div class="brand-box">
+                <label class="checkbox bb-check">
+                    <input class="fpCbox" type="checkbox" name="brand" value="<?= $bName ?>" <?= $this->checkFieldBySortval("brand", $bName) ?> />
+                    <i></i>
+
+                    <?php if (file_exists($bImage)) : ?>
+                        <img src="<?= Models::baseUrl($bImage) ?>" alt="<?= $bName ?>" />
+                    <?php else : ?>
+                        <h5><?= $bName ?></h5>
+                    <?php endif; ?>
+                </label>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+</section>
+
+<section class="filter-form section-mb">
+    <h4>size</h4>
+    <div class="ff-main scroll-pane slimScroll">
+
+        <?php
+        $AllSizes = $this->AllSizes;
+        foreach ($AllSizes as $Size) :
+        ?>
+            <label class="checkbox">
+                <input class="fpCbox" type="checkbox" name="size" value="<?= $Size ?>" <?= $this->checkFieldBySortval("size", $Size) ?> />
+                <i></i> <?= htmlspecialchars($Size) ?>
             </label>
         <?php endforeach; ?>
 
+    </div>
+</section>
+
+<section class="filter-form colr-filter-form section-mb">
+    <h4>colour</h4>
+    <div class="ff-main scroll-pane slimScroll">
+
+        <?php
+        $AllColors = $this->AllColors;
+        foreach ($AllColors as $Color) :
+            $Background = str_replace(" ", ", ", $Color, $count);
+            if ($count) {
+                $Background = 'linear-gradient(to right, ' . $Background . ')';
+            }
+        ?>
+            <label class="checkbox">
+                <input class="fpCbox" type="checkbox" name="colors" value="<?= $Color ?>" <?= $this->checkFieldBySortval("colors", $Color) ?> />
+                <i style="background:<?= $Background ?>"></i> <?= htmlspecialchars($Color) ?>
+            </label>
+        <?php endforeach; ?>
+
+    </div>
+</section>
+
+<section class="filter-form section-mb">
+    <h4>Discount</h4>
+    <div class="ff-main scroll-pane slimScroll">
+
+        <?php for ($psi = 1; $psi <= 9; $psi++) : ?>
+            <label class="radio">
+                <input class="fpCbox" type="radio" name="discount" value="<?= $psi * 10 ?>" <?= $this->checkFieldBySortval("discount", ($psi * 10)) ?> />
+                <i></i> More than <?= $psi * 10 ?>%
+            </label>
+        <?php endfor; ?>
+
+    </div>
+</section>
+
+<section class="filter-form section-mb">
+    <h4>Availability</h4>
+    <div class="ff-main">
+        <label class="checkbox">
+            <input class="fpCbox" type="checkbox" name="availability" value="1" <?= $this->checkFieldBySortval("availability", "1") ?> />
+            <i></i> In Stock Only
+        </label>
     </div>
 </section>

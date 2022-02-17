@@ -22,8 +22,10 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Mainc; $cat->setSubGroup($PrDetails->getCategory("header")); ?></a></li>
-            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->SubGroup; $cat->setSub($PrDetails->getCategory("sub")); ?></a></li>
+            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Mainc;
+                                                        $cat->setSubGroup($PrDetails->getCategory("header")); ?></a></li>
+            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->SubGroup;
+                                                        $cat->setSub($PrDetails->getCategory("sub")); ?></a></li>
             <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Sub ?></a></li>
             <li class="active"><?php echo $PrDetails->getName() ?></li>
         </ol>
@@ -94,7 +96,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                         <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                                     <?php endif; ?>
                                                 </p>
-                                                <p><span style="color: #ffc168;">☆☆☆☆☆</span> (19 customer review)</p>
                                             </div>
                                         </div>
                                     </div>
@@ -169,8 +170,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <span>SKU: <span><?php echo $PrDetails->getOthers("sku") ?></span></span>
                                             <span>Categories: <span><?php echo $PrDetails->getCategory("main") . ', ' . $PrDetails->getCategory("header") ?></span></span>
                                             <span>
-                                                Tags: 
-                                                <?php foreach (explode(',', $PrDetails->getOthers("tags")) as $PrTag): ?>
+                                                Tags:
+                                                <?php foreach (explode(',', $PrDetails->getOthers("tags")) as $PrTag) : ?>
                                                     <span>
                                                         <a href="/search/?q=&a_s_t=tags&astval=<?php echo urlencode($PrTag) ?>">
                                                             <?php echo $PrTag ?>
@@ -220,6 +221,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             $Recommended = $this->productSuggestion(false, 4);
                             while ($RcInfo = $Recommended->fetch_assoc()) :
                                 $sp->setPrInfo($RcInfo);
+                                $sp->processStock();
                             ?>
                                 <div class="pr-glancebox">
                                     <div class="flex">
@@ -230,7 +232,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <div class="gb-title"><?php echo $sp->getName() ?></div>
                                             <div class="gb-description">
                                                 <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
-                                                <p><strong><?php echo $sp->getPrice() ?></strong></p>
+                                                <p><strong><?php echo Models::curr($sp->getPrice()) ?></strong></p>
                                             </div>
                                         </div>
                                     </div>
@@ -408,7 +410,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
             <div class="section-mb">
                 <div class="product-page-products" style="padding-left: 0;padding-right: 0;">
                     <h4>CUSTOMER ALSO VIEWED</h4>
-                    <div class="grid-row grid4">
+                    <div class="grid-row">
 
                         <?php
                         $Suggestions = $this->ProductSuggestion;
@@ -443,65 +445,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         </div>
                                         <div class="sp-nav">
                                             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php
-                        endwhile;
-                        $Suggestions->free();
-                        ?>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="spd">
-        <div class="container">
-            <div class="section-mb">
-                <div class="product-page-products" style="padding-left: 0;padding-right: 0;">
-                    <h4>YOU MAY ALSO LIKE</h4>
-                    <div class="grid-row grid4">
-
-                        <?php
-                        $Suggestions = $this->productSuggestion(false);
-                        while ($Rpr = $Suggestions->fetch_array()) :
-                            $sp->setPrInfo($Rpr);
-                            $sp->processDiscount();
-                            $sp->processStock();
-                        ?>
-                            <div class="grids">
-                                <div class="single-product <?php echo $spAddClass ?>">
-                                    <div class="sp-image">
-                                        <?php if ($sp->getDiscount()) : ?>
-                                            <span class="sp-dis">SALE</span>
-                                        <?php endif; ?>
-                                        <a href="<?php echo $sp->getHref() ?>">
-                                            <img src="<?php echo $sp->getProductImage() ?>" />
-                                        </a>
-                                    </div>
-                                    <div class="has-sp-nav">
-                                        <div class="sp-pr">
-                                            <div class="sp-pr-info">
-                                                <a href="<?php echo $sp->getHref() ?>">
-                                                    <h5><?php echo $sp->getName() ?></h5>
-                                                </a>
-                                                <p>
-                                                    <?php if ($sp->getDiscount()) : ?>
-                                                        <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
-                                                    <?php endif; ?>
-                                                    <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="sp-nav">
-                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
+                                            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+                                            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
                                         </div>
                                     </div>
                                 </div>

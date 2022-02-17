@@ -6,18 +6,9 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 ?>
 
 <?php if (!isset($this->onlyload) || $this->onlyload != "ppp-ws") : ?>
-    <div class="serachbox product-page-filter-searchbox">
-        <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
-            <div class="searchfld deskv">
-                <input type="text" placeholder="Search for Proudcts, Categories..." name="q" autocomplete="off" class="input-text search-q" />
-                <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>
-            </div>
-        </form>
-    </div>
-
     <div class="top-title">
         <div class="top-title-left">
-            <h4><?= $this->PrsTitle ?></h4>
+            <h4><?php echo $this->PrsTitle ?></h4>
 
             <?php if ($this->Filters) : ?>
                 <div class="tt-filter">
@@ -26,36 +17,44 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         $EFVal = explode("_-_", $FVal);
                     ?>
                         <div class="ttf-single">
-                            <?= ucwords($FKey) . " : " . implode(", ", $EFVal) ?>
-                            <span class="ttf-close" data-fkey="<?= $FKey ?>" data-fval="<?= $FVal ?>">&times;</span>
+                            <?php echo ucwords($FKey) . " : " . implode(", ", $EFVal) ?>
+                            <span class="ttf-close" data-fkey="<?php echo $FKey ?>" data-fval="<?php echo $FVal ?>">&times;</span>
                         </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
-            <div class="tt-total-pr">
-                <div class="tt-total-pr-label">Total <?= $this->TotalProduct ?> Products Found.</div>
-                <div class="toolbar-sorter hidden-xs">
+            <div class="clearfix tt-total-pr">
+                <div class="toolbar-sorter pull-right hidden-xs">
                     <input type="hidden" id="sortVal" name="fpCbox" name="sort" value="" />
-
+                    <label class="sorter-label">Sort By:</label>
                     <div class="sort-options _desV">
-                        <select id="sortVal" name="fpCbox" name="sort" value="">
-                            <option value="1">Default Sorting</option>
-                            <option value="2">Sort By Popularity</option>
-                            <option value="4">Sort By Average Rating</option>
-                            <option value="5">Sort By Newness</option>
-                            <option value="6">Sort By Price: Low to High</option>
-                            <option value="7">Sort By Price: High to Low</option>
-                        </select>
+                        <li class="active"><a href="javascript:;" data-sv="1">Popular</a></li>
+                        <li><a href="javascript:;" data-sv="2">New</a></li>
+                        <li>
+                            Price
+                            <div class="hover-drop-panel">
+                                <a href="javascript:;" data-sv="3">Low to high</a>
+                                <a href="javascript:;" data-sv="4">High to low</a>
+                            </div>
+                        </li>
+                        <li>
+                            Discount
+                            <div class="hover-drop-panel">
+                                <a href="javascript:;" data-sv="5">Low to high</a>
+                                <a href="javascript:;" data-sv="6">High to low</a>
+                            </div>
+                        </li>
                     </div>
                 </div>
+                Total <?php echo $this->TotalProduct ?> Products Found.
             </div>
         </div>
     </div>
 <?php endif; ?>
 
 <div class="product-page-products">
-    <div class="grid-row grid3">
+    <div class="grid-row grid4">
         <?php
         foreach ($this->AllProducts as $Product) :
             $this->SingleProduct->setPrInfo($Product);
@@ -63,41 +62,40 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
             $this->SingleProduct->processStock();
         ?>
             <div class="grids">
-                <div class="single-product <?= $spAddClass ?> m-flex">
+                <div class="single-product <?php echo $spAddClass ?>">
                     <div class="sp-image">
 
                         <?php if ($this->SingleProduct->getDiscount()) : ?>
-                            <span class="sp-dis">SALE</span>
+                            <span class="sp-dis">-<?php echo round($this->SingleProduct->getDiscount()) ?>%</span>
                         <?php endif; ?>
 
-                        <a href="<?= $this->SingleProduct->getHref() ?>">
-                            <img src="<?= Models::asset("images/preloader.gif") ?>" data-src="<?= $this->SingleProduct->getProductImage() ?>" />
+                        <a href="<?php echo $this->SingleProduct->getHref() ?>">
+                            <img src="<?php echo Models::asset("images/preloader.gif") ?>" data-src="<?php echo $this->SingleProduct->getProductImage() ?>" />
                         </a>
                     </div>
                     <div class="has-sp-nav">
                         <div class="sp-pr">
                             <div class="sp-pr-info">
-                                <a href="<?= $this->SingleProduct->getHref() ?>">
-                                    <h5><?= $this->SingleProduct->getName() ?></h5>
+                                <a href="<?php echo $this->SingleProduct->getHref() ?>">
+                                    <h5><?php echo $this->SingleProduct->getName() ?></h5>
                                 </a>
                                 <p>
+                                    <strong class="price"><?php echo Models::curr($this->SingleProduct->getPrice()) ?></strong>
                                     <?php if ($this->SingleProduct->getDiscount()) : ?>
-                                        <strong class="p-old"><?= Models::curr($this->SingleProduct->getPrice(0)) ?></strong>
+                                        <strong class="p-old"><?php echo Models::curr($this->SingleProduct->getPrice(0)) ?></strong>
                                     <?php endif; ?>
-
-                                    <strong class="price"><?= Models::curr($this->SingleProduct->getPrice()) ?></strong>
                                 </p>
-                                <div style="color: #FF5722;text-align: center;font-weight: bold;">&nbsp;</div>
-                                <p style="color: #ffc168;">☆☆☆☆☆</p>
-                                <p><?php echo implode(', ', $this->SingleProduct->getSizes()) ?></p>
                             </div>
                         </div>
 
-                        <div class="sp-nav">
-                            <em data-prid="<?= $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
-                            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
-                        </div>
+                        <?php if (!$this->mobileView) : ?>
+                            <div class="sp-nav">
+                                <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div>

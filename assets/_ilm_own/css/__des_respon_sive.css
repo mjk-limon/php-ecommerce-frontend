@@ -20,7 +20,7 @@
 	.floatingNotification{max-width:inherit;width:90%;left:5%}
 	.main-body, .main-body.bg-white{padding:1.5rem 0}
 	.main-body .spd{margin:1rem 0}
-	#skbc-top-margin{height:85px}
+	#skbc-top-margin{height:112px}
 	#skmbcategories{position:fixed;top:0;left:0;width:100%;height:100%;overflow:auto;background:#fff;z-index:99999;animation:FloatingMenuIn .6s cubic-bezier(.25,.37,0,.99)}
 	a#scrollUp{bottom:80px}
 	
@@ -81,7 +81,7 @@
 	.ft-title{border-bottom:5px solid #f5f5f5}
 	.ft-pr-mbl{flex-wrap:wrap}
 	.grid-row{grid-gap:1.5rem}
-	.grid-row, .grid-row.grid4, .grid-row.grid3{grid-template-columns:repeat(1, 1fr)}
+	.grid-row, .grid-row.grid4, .grid-row.grid3{grid-template-columns:repeat(2, 1fr)}
 	.grid-row .grids.large-grid{height:400px}
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.ft-pr-mbl .single-product{position:relative;width:50%;padding:1rem 10px;border-right:5px solid #f6f6f6;border-bottom:5px solid #f5f5f5}

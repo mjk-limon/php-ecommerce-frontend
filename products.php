@@ -50,12 +50,12 @@ $Prs = $this->AllProducts;
             <div class="row" style="margin-top: 20px">
 
                 <?php if (!$this->mobileView) : ?>
-                    <div class="col-md-3p5 col-md-3 product-filter-sidebar">
+                    <div class="col-md-3 product-filter-sidebar">
                         <?php include "layouts/product-page-filters.php" ?>
                     </div>
                 <?php endif; ?>
 
-                <div class="col-md-8p5 col-md-9 product-main-panel">
+                <div class="col-md-9 product-main-panel">
                     <div class="section-mb features_items">
                         <div id="pp-main-area" class="v3">
                             <?php include "layouts/product-page-products.php" ?>
