@@ -191,7 +191,7 @@ $HeadCampaignIcon = $this->extModel('Home')->getStickers(7);
                                             </div>
                                             <div class="campaignarea">
                                                 <div class="campaign-sticker">
-                                                    <a href="<?php $HeadCampaignIcon['image_link'] ?>">
+                                                    <a href="<?php echo $HeadCampaignIcon['image_link'] ?>">
                                                         <img src="<?php echo Models::asset($HeadCampaignIcon['image']) ?>">
                                                     </a>
 
