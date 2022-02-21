@@ -452,8 +452,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 </section>
 
 <link href="<?php echo Models::asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script type="text/javascript">
     slideSize = {
         width: <?php echo $slideSize[0] ?>,
