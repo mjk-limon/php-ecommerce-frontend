@@ -74,11 +74,11 @@ namespace _ilmComm;
 
                             <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
                             <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-                            <script defer src="<?php echo Models::asset('assets/_ilm_own/js/merchant/dealPage_scripts.js') ?>"></script>
+                            <script defer src="<?php echo Models::asset("assets/merchant/dealPage_scripts.js") ?>"></script>
                         <?php } else { ?>
                             <div class="alert alert-danger">
                                 No deal found !<br />
-                                <a href="<?php echo Models::baseUrl('sellercorner/new-deal/') ?>">Upload New Product</a>
+                                <a href="<?php echo Models::baseUrl("sellercorner/new-deal/") ?>">Upload New Product</a>
                             </div>
                         <?php } ?>
 

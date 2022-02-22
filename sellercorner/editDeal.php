@@ -220,19 +220,19 @@ $AddPrOthers = $NewDealModel->getAllPrsOthers();
 </div>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-<link href="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/ui/trumbowyg.css') ?>" rel="stylesheet" />
+<link href="<?php echo Models::asset("assets/merchant/trumbowyg/ui/trumbowyg.css") ?>" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/trumbowyg.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/plugins/trumbowyg/trumbowyg.table.min.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/plugins/__ds_sizes_colors.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/plugins/sorter/Sortable.min.js') ?>"></script>
 
+<script src="<?php echo Models::asset("assets/merchant/trumbowyg/trumbowyg.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/trumbowyg/trumbowyg.table.min.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/__ds_sizes_colors.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/sorter/Sortable.min.js") ?>"></script>
 
-<script src="<?php echo Models::asset('546_admin/assets/js/_ilm_File_droper.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/product-page-scripts.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/__ds_admin_plugins.js') ?>"></script>
-<script src="<?php echo Models::asset('546_admin/assets/js/_ilm_Material_design_functions.js') ?>"></script>
-<script src="<?php echo Models::asset('assets/_ilm_own/js/merchant/dealPage_scripts.js') ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/_ilm_File_droper.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/product-page-scripts.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/__ds_admin_plugins.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/_ilm_Material_design_functions.js") ?>"></script>
+<script src="<?php echo Models::asset("assets/merchant/dealPage_scripts.js") ?>"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {

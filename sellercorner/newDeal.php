@@ -71,14 +71,14 @@ use _ilmComm\AdminApp\Basic\Models as AppModel;
                         </div>
                         <div class="form-group">
                             <label>Available Sizes: </label>
-                            <input type="text" class="form-control" name="pr_sizes" id="pr_sizes" data-role="tagsinput" value="" />
+                            <input type="text" class="form-control" name="pr_sizes" id="pr_sizes" data-role="tagsinput" value="" autocomplete="off" />
                             <span class="form-helper">Available products sizes. Use comma (,) or Enter key for insert multiple value.</span>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group bmd-form-group is-filled">
                                     <label class="bmd-label-floating">Available Colors</label>
-                                    <input type="text" class="form-control" name="pr_colors" id="pr_colors" value="" />
+                                    <input type="text" class="form-control" name="pr_colors" id="pr_colors" value="" autocomplete="off" />
                                     <span class="bmd-help d-block position-relative">Available products color name. Press comma (,) or Enter key for insert multiple value.</span>
                                 </div>
                             </div>
