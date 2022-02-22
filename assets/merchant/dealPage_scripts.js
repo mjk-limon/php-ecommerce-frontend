@@ -6,7 +6,6 @@ _ilm_Mer_deals = {
                 isInvalid = false;
 
             $(".product-tab-1 :input").each(function () {
-                console.log(this);
                 if (!this.checkValidity()) {
                     isInvalid = true;
                     _ilm_mer.showNotification("danger", "warning", $(this).attr("title"));
@@ -85,7 +84,6 @@ _ilm_Mer_deals = {
                     $.each(v, function (i1, v1) {
                         if (i1 == h) {
                             $.each(v1, function (i2, v2) {
-                                console.log(v2);
                                 $('.subcat').append($('<option>', {
                                     value: v2.id,
                                     text: v2.lbl
