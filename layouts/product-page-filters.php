@@ -9,7 +9,7 @@ namespace _ilmComm;
     <h4>price</h4>
     <div class="ff-main">
         <div class="price-range-box">
-            <form id="priceSort-form" action="" method="POST">
+            <form id="priceSort-form" class="flex" action="" method="POST">
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="min" placeholder="Min" /></li>
                 <li class="hypen">-</li>
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="max" placeholder="Max" /></li>

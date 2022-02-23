@@ -167,6 +167,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .htmlformb.fixed-menu-bar .sticky-wrapper{display:none}
 
 /*=========== Main body =======*/
+.skiptranslate{display:none!important}
 #skbc-top-margin{height:144px}
 .main-body{background:var(--mainbody);min-height:45rem;padding:3rem 0}
 .main-body.bg-white{background:#FFF;min-height:45rem;padding:3rem 0}
