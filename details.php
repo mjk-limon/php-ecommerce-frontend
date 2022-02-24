@@ -114,7 +114,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 if (array_filter($Colors)) :
                                 ?>
                                     <ul class="pr-sc-ul color-selection">
-                                        <div>Select Color:</div>
+                                        <div>Select Variant:</div>
 
                                         <?php
                                         foreach ($Colors as $Color) :
