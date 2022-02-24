@@ -71,17 +71,19 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <?php endif; ?>
 
                                 <small>By, <a href="<?php echo '/search/?q=&a_s_t=brand&astval=' . urlencode($PrDetails->getBrandName()) ?>"><?php echo $PrDetails->getBrandName() ?></a></small>
-                                <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>" data-prs="<?php echo $PrDetails->getPrice() ?>">
+                                <div class="pr-price-area">
                                     <?php if (!$PrDetails->getOthers("prtype")) : ?>
                                         <span class="min-order">/ Minimmum Order Qty: <?php echo $PrDetails->getOthers("prminodr") ?> Pcs</span>
                                     <?php endif; ?>
 
-                                    <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
-
-                                    <?php if ($PrDetails->getDiscount()) : ?>
-                                        <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
-                                    <?php endif; ?>
-                                </p>
+                                    <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>" data-prs="<?php echo $PrDetails->getPrice() ?>">
+                                        <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
+    
+                                        <?php if ($PrDetails->getDiscount()) : ?>
+                                            <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
                             </div>
                         </div>
 

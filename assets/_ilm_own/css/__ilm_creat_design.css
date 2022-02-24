@@ -359,9 +359,9 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .single-top-right .product-title{border-bottom:1px solid #eee;margin-bottom:1rem}
 .pt-area{font-size:14px}
 .pr-name{font-weight:300;font-size:24px;margin-bottom:2px;margin-top:0px}
-.pr-price{color:var(--accent);font-size:2.5rem;font-weight:500;margin:7px 0;}
+.pr-price{color:var(--accent);font-size:2.5rem;font-weight:500;margin:7px 0}
 .pre-price{color:#acacac;font-size:2rem;font-weight:300;margin-left:7px;text-decoration:line-through}
-.pr-price .min-order{float:right;height:3.5rem;display:flex;align-items:flex-end;font-size:1.4rem;color:#666}
+.pr-price-area .min-order{float:right;height:3.5rem;display:flex;align-items:flex-end;font-size:1.4rem;color:#666}
 
 .pr-entl{margin-bottom:.5rem}
 .pr-entl .entl-data{font-weight:bold}
