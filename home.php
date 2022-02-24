@@ -9,9 +9,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
 <div class="homepage-top-section">
     <div id="slider">
-        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 490px; overflow: hidden;">
+        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 550px; overflow: hidden;">
             <div data-u="loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-position:50% 50%;background-repeat:no-repeat;background-image:url('images/puff-x.svg');background-color:rgba(0, 0, 0, 0.7);background-size:30px 30px;"></div>
-            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 490px;overflow: hidden;">
+            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 550px;overflow: hidden;">
 
                 <?php
                 $Slider = $this->TopSlider;
