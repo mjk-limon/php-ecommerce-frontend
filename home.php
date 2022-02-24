@@ -68,10 +68,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                         <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
                                 </div>
-                                <div class="slg-text">
-                                    <h5><?php echo $ArrSlider['image_heading'] ?></h5>
-                                    <p><?php echo $ArrSlider['image_text1'] ?></p>
-                                </div>
                             </div>
                         </div>
                     <?php
@@ -101,10 +97,6 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                     <a href="<?php echo $ArrSlider['image_link'] ?>">
                                         <img src="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                     </a>
-                                </div>
-                                <div class="slg-text">
-                                    <h5><?php echo $ArrSlider['image_heading'] ?></h5>
-                                    <p><?php echo $ArrSlider['image_text1'] ?></p>
                                 </div>
                             </div>
                         </div>

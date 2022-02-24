@@ -5,7 +5,7 @@ namespace _ilmComm;
 $Sc = $this->SingleCustomer;
 $Cs = $this->CartSummery;
 $PmntGateways = $this->availablePaymentGateways();
-$DeliveryLocations = $this->getDeliveryLocations();
+$DeliveryLocations = $this->getDeliveryLocations(null);
 ?>
 <section class="main-body">
     <div id="checkout">
@@ -100,39 +100,76 @@ $DeliveryLocations = $this->getDeliveryLocations();
 </section>
 
 <style>
-    .floating-sc {
-        display: none
-    }
+.floating-sc {
+    display: none
+}
+
 </style>
+
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/checkoutPage_scripts.js") ?>"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.reset').click(function(e) {
+        e.preventDefault();
+        if ($(this).hasClass("disabled")) {
+            return;
+        }
+        initSlider();
+    });
 
-<!--script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD" data-sdk-integration-source="button-factory"></script>
-	<script>
-	function initPayPalButton() {
-	  paypal.Buttons({
-		style: {
-		  shape: 'pill',
-		  color: 'silver',
-		  layout: 'horizontal',
-		  label: 'pay',
-		},
+    $("#verify-slider button").click(function(e) {
+        e.preventDefault();
 
-		createOrder: function(data, actions) {
-		  return actions.order.create({
-			purchase_units: [{"description":"Dhaka Solution Ecommerce Payment System..","amount":{"currency_code":"USD","value":9,"breakdown":{"item_total":{"currency_code":"USD","value":1},"shipping":{"currency_code":"USD","value":8},"tax_total":{"currency_code":"USD","value":0}}}}]
-		  });
-		},
+        var mobile_number = $('#verf-num input').val(),
+            number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
+            t_i = 20,
+            timer;
 
-		onApprove: function(data, actions) {
-		  return actions.order.capture().then(function(details) {
-			alert('Transaction completed by ' + details.payer.name.given_name + '!');
-		  });
-		},
+        if (number_regex.test(mobile_number)) {
+            sendOtp(mobile_number)
+            $('.verification-section').addClass("verified");
 
-		onError: function(err) {
-		  console.log(err);
-		}
-	  }).render('#paypal-button-container');
-	}
-	initPayPalButton();
-	</script-->
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            timer = setInterval(function() {
+                t_i--;
+                $('.reset span').html(t_i);
+
+                if (t_i < 1) {
+                    $('.reset').removeClass("disabled");
+                    clearInterval(timer);
+                }
+            }, 1000);
+            return;
+        }
+
+        _ilm.showNotification("Mobile number is not valid!", true);
+        initSlider();
+    });
+
+    var initSlider = function() {
+        $('.reset').addClass("disabled");
+        $('.verification-section').removeClass("verified");
+    }
+
+    var sendOtp = function(mobile_number) {
+        ajaxPost({
+            sendVerifyOtp: mobile_number
+        }, function(data) {
+            var Result = IsJsonString(data) ? JSON.parse(data) : {
+                success: false,
+                error: data
+            };
+            
+            if (!Result.success) {
+                _ilm.showNotification(Result.error, true);
+                initSlider();
+            }
+        });
+    }
+
+    initSlider();
+});
+</script>

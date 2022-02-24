@@ -5,6 +5,54 @@ _ilm_Checkout_page = {
             $('.quick-checkout').fadeToggle('fast');
         });
 
+        $('.swaplogin').click(function (e) {
+            e.preventDefault();
+
+            if ($(this).hasClass("email")) {
+                $(".opt-login-form").hide();
+                $(".email-login-form").show();
+            } else {
+                $(".opt-login-form").show();
+                $(".email-login-form").hide();
+            }
+        });
+
+        $('.shippingChangeBtn').on('click', function (e) {
+            var $env = $(this),
+                $envPanel = $('.logged-in-userdata'),
+                $inputs = $(".login-success").find("td input, td textarea");
+
+            if ($envPanel.hasClass("editing")) {
+                if ($('#saveUserData').prop('checked') === true) {
+                    _ilm.globLoader('show', '.loggedindata-edit');
+                    ajaxPost({
+                        updadeMyAccount: 1,
+                        id: _ilm_Checkout_page.getUserDataField('#user-id'),
+                        first_name: _ilm_Checkout_page.getUserDataField('#full-name'),
+                        city: $("#orderLoc").data('ddslick').selectedData.description,
+                        state: $("#orderLoc").data('ddslick').selectedData.text,
+                        address_line_1: _ilm_Checkout_page.getUserDataField('#shipping-address')
+                    }, function (data) {
+                        var Result = IsJsonString(data) ? JSON.parse(data) : { success: false };
+
+                        if (Result.success) {
+                            $('.logged-in').removeClass('noAddress');
+                        }
+
+                        _ilm.globLoader('hide', '.loggedindata-edit');
+                    });
+                }
+
+                $inputs.prop("readonly", true);
+            } else {
+                $inputs.prop("disabled", false);
+                $inputs.prop("readonly", false);
+            }
+
+            $('.logged-in-userdata').toggleClass("editing");
+            e.preventDefault();
+        });
+
         $('.swtT').on("click", function () {
             var $env = $(this),
                 relative = $env.attr("data-relative"),
@@ -50,9 +98,21 @@ _ilm_Checkout_page = {
             }
             _ilm.globLoader("hide", "#co-order-summery");
         }, null, { async: false });
+    },
+
+    initEmptyAddress: function () {
+        if ($('.noAddress').length) {
+            $('.shippingChangeBtn').click();
+            _ilm.showNotification("Some information is missing! <br/> Please complete your profile.", true)
+        }
+    },
+
+    getUserDataField: function (type) {
+        return $(type).length ? $(type).val() : '';
     }
 }
 
 _ilm_Quick_buy.init();
 _ilm_Checkout_page.init();
+_ilm_Checkout_page.initEmptyAddress();
 _ilm_Cart_floatingcart.hideCart();

@@ -22,12 +22,12 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
 ?>
     <li class="dropdown">
         <a href="<?php echo $Cat->getHref() ?>" <?php echo $bgimg ?>>
-			<?php echo htmlspecialchars($Cat->Mainc) ?>
-            
+            <?php echo htmlspecialchars($Cat->Mainc) ?>
+
             <?php if ($this->mobileView) : ?>
                 <i class="pe-7s-angle-down toggle-sidemenuitem"></i>
             <?php endif; ?>
-		</a>
+        </a>
         <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
             <?php
             $col4i = 1;
@@ -41,8 +41,8 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
             ?>
                 <div class="col-md-2 col-xs-6 sub-cols">
                     <a href="<?php echo $Cat->getHref() ?>">
-						<h3><?php echo htmlspecialchars($Cat->SubGroup)  ?></h3>
-					</a>
+                        <h3><?php echo htmlspecialchars($Cat->SubGroup)  ?></h3>
+                    </a>
 
                     <?php
                     $SubCats = $Cat->fetchSub();
@@ -54,8 +54,8 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
                     ?>
                         <li>
                             <a href="<?php echo $Cat->getHref() ?>">
-								<?php echo htmlspecialchars($Cat->Sub); ?>
-							</a>
+                                <?php echo htmlspecialchars($Cat->Sub); ?>
+                            </a>
                         </li>
                     <?php
                         if ($TotalSubCats == 1  && empty($Cat->Sub))

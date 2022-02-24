@@ -37,7 +37,7 @@ if ($this->CartItems) :
 			Cart Total: 
 			<strong><?= Models::curr($this->CartSummery->getSubTotal()) ?></strong>
 		</div><a href="/checkout/" class="scbf-link">
-			PROCEED
+			CHECKOUT
 		</a>
 	</div>
 <?php else : ?>

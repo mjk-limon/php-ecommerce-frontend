@@ -302,8 +302,7 @@ body.elem-loader{padding-right:18px}
 .fc-tamount{text-align:center;padding:7px 0;background:#ccc;border-radius:7px 7px 0 0}
 
 /*== Header ===*/
-header{position:fixed;top:0;left:0;width:100%;background: var(--header);z-index:1030}
-.header_top_content_section{border-bottom: 1px solid #c1c1c1;}
+header{position:fixed;top:0;left:0;width:100%;background: var(--header);box-shadow:2px 0px 2px #ddd;z-index:1030}
 .site-branding-area .branding-flex{align-items:center;position:relative}
 .site-branding-area .logo{margin:1rem 0}
 .logo img{max-width:100%;max-height:50px}
@@ -338,10 +337,10 @@ header{position:fixed;top:0;left:0;width:100%;background: var(--header);z-index:
 .icon-shopping-bag .cart-contents{position:relative;display:block}
 .cart-contents .count{position:absolute;line-height:19px;width:20px;height:20px;font-size:12px;line-height:22px;left:14px;top:-3px;background-color:#333;color:#fff;border-radius:50%;text-align:center}
 
-.mainmenu-area1{font-family:'Ubuntu',sans-serif;text-transform:capitalize;width:100%}
-.mainmenu-area1 .cacaallpaje{background-color:#fff!important;padding:0rem 2.25rem}
-.mainmenu-area1 .manue{width:100%;line-height:25px;background-color:#fff;position:relative}
-.manue .nav.navbar-nav{height:auto;width:100%;white-space:nowrap;overflow:visible;float:none;border-left:0}
+.mainmenu-area1{font-family:'Ubuntu',sans-serif;background-color:#edf2f7;text-transform:capitalize;width:100%}
+.mainmenu-area1 .cacaallpaje{background-color:transparent!important}
+.mainmenu-area1 .manue{display:flex;justify-content:space-between;width:100%;line-height:25px;background-color:#fff;position:relative}
+.manue .nav.navbar-nav{height:auto;white-space:nowrap;overflow:visible;float:none;border-left:0}
 .manue .nav.navbar-nav.dropdown-menu{border-top:0;padding-top:0;border-radius:0;box-shadow:0 9px 12px -3px rgba(0,0,0,.175)}
 .manue.index-menu .nav.navbar-nav{width:100%;height:415px;overflow-y:auto;white-space:nowrap}
 
@@ -384,8 +383,9 @@ header{position:fixed;top:0;left:0;width:100%;background: var(--header);z-index:
 .home-floating-menu-container{position:relative;z-index:1000}
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
 .mainmenu ul{/* min-height:413px */}
-.mainmenu ul li{height:55px;display:block;margin:0 auto;}
-.mainmenu ul li a{color:#333;letter-spacing:0.4px;font-size:14px;font-weight:400;padding:0 25px;line-height:55px;background-position: center center;background-repeat: no-repeat;}
+.mainmenu ul li{height:50px;display:block;margin:0 auto;}
+.mainmenu ul li a{color:#333;letter-spacing:0.4px;font-size:14px;font-weight:400;padding:0 25px;line-height:50px;background-position:center center;background-repeat:no-repeat}
+.mainmenu ul.menunavright li a{padding:0 10px}
 .mainmenu > ul > li > a{text-transform:uppercase}
 .mainmenu ul li a:focus{background-color:transparent}
 .mainmenu ul li a.has-bg{color:#fff;text-shadow: 1px 1px 1px #333;}
@@ -467,9 +467,9 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .personal-suggestion{padding:5rem 0;background-color:#fff}
 
 .single-product {overflow:hidden}
-.grid-row{display:grid;grid-template-columns:repeat(5, 1fr);grid-gap:1.5rem;align-items:start;justify-items:center;margin:0}
-.grid-row.grid3{grid-template-columns:repeat(3, 1fr);}
-.grid-row.grid4{grid-template-columns:repeat(4, 1fr);}
+.grid-row{display:grid;grid-template-columns:repeat(5, 1fr);grid-gap:1rem;align-items:start;justify-items:center;margin:0}
+.grid-row.grid3{grid-template-columns:repeat(3, 1fr)}
+.grid-row.grid4{grid-template-columns:repeat(4, 1fr)}
 .grid-row .grids{width:100%;height:100%}
 .grid-row .grids.large-grid{grid-row:span 2;grid-column:span 2}
 .grid-row .grids.large-grid.onlycolspan{grid-row:span 2;grid-column:span 2}
@@ -486,7 +486,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sp-nav .buy-now{width:49%;margin-left:1%;background:var(--accent)}
 .single-product:hover .has-sp-nav .sp-pr, .single-product.fixed-nav .has-sp-nav .sp-pr{top:-20px;background:rgb(255,255,255)}
 .single-product:hover .has-sp-nav .sp-nav, .single-product.fixed-nav .has-sp-nav .sp-nav{opacity:1;bottom:0}
-.bc-products .single-product, .product-page-products .single-product{padding:1.5rem;height:300px;position:relative;box-shadow:none;transition:box-shadow .4s;background-color:#fff;box-shadow:0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)}
+.bc-products .single-product, .product-page-products .single-product{padding:1.5rem;height:320px;position:relative;box-shadow:none;transition:box-shadow .4s;background-color:#fff;box-shadow:0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)}
 .product-page-products .single-product{border: 0;}
 .col-md-3 .bc-products .single-product{height:370px}
 .col-md-4 .bc-products .single-product{height:440px}
@@ -509,30 +509,30 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 
 /*=========== Footer =======*/
 #footer{background:#fcfcfc;border-top: 1px solid #ddd}
-.footer-widget{background-color:#111723;color:#fff;padding:50px 0}
-.single-widget h2{color:#fff;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
+.footer-widget{background-color:#111723;color:#eee;padding:50px 0}
+.single-widget h2{color:#eee;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
 .single-widget h2 i{margin-right:15px}
 .nav-addresses li{display:flex;margin-bottom:5px}
 .nav-addresses li span{color:#ccc;margin-right:10px;}
 .nav-stacked li i{display:inline-block;padding-right:5px;font-size:11px}
-.single-widget ul li a{display:inline-block;vertical-align:middle;color:#fff;font-family:'Ubuntu',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
+.single-widget ul li a{display:inline-block;vertical-align:middle;color:#eee;font-family:'Ubuntu',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
 .single-widget ul li a:hover{background:none;color:var(--accent)}
 
 .nuws{padding:15px 0}
-.nuws p{color:#fff}
-.nuws h2{color:#fff;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
+.nuws p{color:#eee}
+.nuws h2{color:#eee;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
 .social-icons ul li{display:inline-block;margin-right:3px}
 .social-icons ul li a{border:0 none;border-radius:0;color:#696763;padding:0}
-.social-icons ul li a i{font-size:20px;text-align:center;color:#fff;height:35px;width:35px;line-height:35px;position:relative;overflow:hidden;border-radius:50%}
+.social-icons ul li a i{font-size:20px;text-align:center;color:#fff;height:35px;width:35px;line-height:36px;position:relative;overflow:hidden;border-radius:5px}
 .social-icons ul li a i:before{position:relative;z-index:2}
 .social-icons ul li a i:after{display:block;position:absolute;top:0;left:0;width:100%;height:100%;content:' ';background:linear-gradient(240DEG, var(--accent), #FFF);opacity:0;transition:all .4s ease}
-.fa-facebook{background: linear-gradient(120DEG, #3B599B, #3B599B, #FFFFFF)}
-.fa-twitter{background: linear-gradient(120DEG, #5BBCEC, #5BBCEC, #FFFFFF)}
+.fa-facebook{background: linear-gradient(120DEG, #3B599B, #3B599B)}
+.fa-twitter{background: linear-gradient(120DEG, #5BBCEC, #5BBCEC)}
 .fa-linkedin{background: linear-gradient(120DEG, #DA2499, #0274B0, #3edde6)}
-.fa-youtube-play{background: linear-gradient(120DEG, #F00, #F00, #FFFFFF)}
-.fa-pinterest{background: linear-gradient(120DEG, #E60023, #E60023, #FFFFFF)}
-.fa-google-plus{background: linear-gradient(120DEG, #CE3C2D, #CE3C2D, #FFFFFF)}
-.fa-skype{background: linear-gradient(120DEG, #00AFF0, #00AFF0, #FFFFFF)}
+.fa-youtube-play{background: linear-gradient(120DEG, #F00, #F00)}
+.fa-pinterest{background: linear-gradient(120DEG, #E60023, #E60023)}
+.fa-google-plus{background: linear-gradient(120DEG, #CE3C2D, #CE3C2D)}
+.fa-skype{background: linear-gradient(120DEG, #00AFF0, #00AFF0)}
 .fa-whatsapp{background: linear-gradient(120DEG, #58CF63, #3DC34D, #27B63E)}
 .fa-instagram{background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)}
 .social-icons ul li:hover a i:after{opacity:1}
