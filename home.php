@@ -47,13 +47,14 @@ $slideSize = array(($this->HomeGridNumber * 125), (($this->HomeGridNumber + 1) *
                                 ?>
                                     <div>
                                         <a href="<?php echo $ArrSlider['image_link'] ?>">
-                                            <img u="image" src="<?php echo Models::asset($ArrSlider['image']) ?>" />
+                                            <img u="image" src2="<?php echo Models::asset($ArrSlider['image']) ?>" />
                                         </a>
                                     </div>
                                 <?php
                                 endwhile;
                                 $Slider1->free();
                                 ?>
+                                
                             </div>
                             <div data-u="navigator" class="jssorb034" style="position:absolute;bottom:16px;right:16px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
                                 <div data-u="prototype" class="i" style="width:13px;height:13px;">
