@@ -28,7 +28,7 @@ _ilm_mer = {
 }
 
 function ajaxPost(data, success, url = null, addArg = {}) {
-    var url = url || projectfolder + "/546_admin/ajax.php", ajaxArg;
+    var url = url || projectfolder + "/ajax/?t=sellercorner", ajaxArg;
     ajaxArg = { type: 'POST', url: url, data: data, success: success };
     ajaxArg = $.extend({}, ajaxArg, addArg);
     return $.ajax(ajaxArg);
