@@ -1,13 +1,30 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
-@import "https://fonts.googleapis.com/css?family=Open+Sans:400";
+﻿@import "https://fonts.googleapis.com/css?family=Open+Sans:400";
+@font-face {
+    font-family: 'Larke Neue Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Larke Neue Regular'), url('../fonts/Larke Neue Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Larke Neue Bold Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Larke Neue Bold Bold'), url('../fonts/Larke Neue Bold.woff') format('woff');
+}
+@font-face {
+    font-family: 'Larke Neue Thin Thin';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Larke Neue Thin Thin'), url('../fonts/Larke Neue Thin.woff') format('woff');
+}
 
 /*== Basic ===*/
-body{font-family:'Ubuntu', sans-serif;;font-weight:400}
+body{font-family:'Larke Neue Regular', sans-serif;font-weight:400}
 ul li{list-style:none}
 a{color:#333;-webkit-transition:300ms;transition:300ms}
 a:hover{outline:none;text-decoration:none}
 a:focus{outline:none;outline-offset:0;text-decoration:none}
-h1,h2,h3,h4,h5,h6{font-family:'Ubuntu', sans-serif;}
+h1,h2,h3,h4,h5,h6{font-family:'Larke Neue Regular', sans-serif}
 .btn{padding:.375rem 1.5rem;border-radius:20px}
 .btn:hover,.btn:focus{outline:none;-webkit-box-shadow:none;box-shadow:none}
 .btn.btn-file{position:relative}
@@ -79,7 +96,7 @@ body.elem-loader{padding-right:18px}
 /*== Header ===*/
 header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index:1030}
 .header_top{background:none repeat scroll 0 0 #FFF}
-.top-user-nav ul li a{display:block;font-size:13px;padding:3px 5px;color:var(--accent);font-family:'Ubuntu', sans-serif;;font-weight:300}
+.top-user-nav ul li a{display:block;font-size:13px;padding:3px 5px;color:var(--accent);font-family:'Larke Neue Regular', sans-serif;font-weight:300}
 .top-user-nav ul li a span{font-weight:500;color:#888}
 .top-user-nav ul li a:hover{background:inherit}
 .header-right ul.list-inline{margin:0;text-align:right}
@@ -103,7 +120,7 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .logoiconp .pstrong span{color:var(--accent)}
 .logoiconp .pnormel{margin:0;font-size:11px}
 
-.mainmenu-area1{font-family:'Ubuntu', sans-serif;;text-transform:capitalize;width:100%;background-color:var(--accent);border-bottom:1px solid var(--header)}
+.mainmenu-area1{font-family:'Larke Neue Regular', sans-serif;text-transform:capitalize;width:100%;background-color:var(--accent);border-bottom:1px solid var(--header)}
 .mainmenu-area1 .cacaallpaje{background-color:#f5f5f5!important;padding:.375rem 2.25rem}
 .mainmenu-area1 .manue{width:100%;line-height:25px;background-color:#fff;position:relative}
 .manue .nav.navbar-nav{height:auto;width:100%;white-space:nowrap;overflow:visible;float:none}
@@ -154,7 +171,7 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
 .mainmenu ul li{float:none;width:100%;padding-bottom:0}
 
-.mainmenu ul li a{display:block;position:relative;color:#fff;font-family:'Open Sans',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:400;line-height:20px;padding:3px 9px;text-transform:capitalize}
+.mainmenu ul li a{display:block;position:relative;color:#fff;font-family:'Larke Neue Regular',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:600;line-height:20px;padding:3px 9px;text-transform:capitalize}
 .mainmenu ul li a span{padding-right:10px}
 .mainmenu ul li a i{text-align:right}
 .mainmenu ul li:hover > a, .sub-col-group:hover > a, .shop-menu ul li a.active{background:rgba(255, 255, 255, 0.12);color:#fff}
@@ -162,8 +179,6 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .navbar-nav li ul.sub-menu li a{font-weight:400;font-size:13px}
 .manue .dropdown a .fa-angle-right{font-weight:700;float:none;position:absolute;right:6px;top:50%;transform:translateY(-50%)}
 .nav.navbar-nav>li:hover>ul.sub-menu, .nav.navbar-nav>li.show>ul.sub-menu, .sub-col-group:hover .sub-cols{display:block}
-.sub-menu > .sub-cols{padding:5px}
-.sub-menu > .sub-cols > a{padding:0}
 .sub-menu h3{font-size:13px;font-weight:300;margin:0;line-height:inherit;text-transform:capitalize}
 
 .fixed-menu-bar .header_top{display:none}
@@ -269,15 +284,15 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 #footer{background:#fcfcfc;border-top: 1px solid #ddd}
 .footer-widget{background-color:var(--header);padding:40px 0}
 .single-widget, .single-widget :is(p, h2, ul li a){color:#fff}
-.single-widget h2{font-family:'Ubuntu', sans-serif;;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
+.single-widget h2{font-family:'Larke Neue Regular', sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
 .single-widget h2 i{margin-right:15px}
 .nav-stacked li i{display:inline-block;padding-right:5px;font-size:11px}
 .single-widget ul li{display:block;padding:10px 0}
-.single-widget ul li a{display:inline-block;font-family:'Ubuntu', sans-serif;;font-size:14px;font-weight:300;padding:0}
+.single-widget ul li a{display:inline-block;font-family:'Larke Neue Regular', sans-serif;font-size:14px;font-weight:300;padding:0}
 .single-widget ul li a:hover{background:none;color:var(--accent)}
 
 .nuws{padding:10px 0}
-.nuws h2{font-family:'Ubuntu', sans-serif;;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
+.nuws h2{font-family:'Larke Neue Regular', sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
 .social-icons ul li{display:inline-block;margin-right:3px}
 .social-icons ul li a{border:0 none;border-radius:0;color:#696763;padding:0}
 .social-icons ul li a i{font-size:20px;text-align:center;color:#fff;padding:9px;height:35px;width:35px;position:relative;overflow:hidden}
@@ -293,13 +308,13 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .fa-whatsapp{background: linear-gradient(120DEG, #58CF63, #3DC34D, #27B63E)}
 .fa-instagram{background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)}
 .social-icons ul li:hover a i:after{opacity:1}
-.searchform input{flex:5 0%;border:1px solid #ccc;color:#333;font-family:'Ubuntu', sans-serif;;font-size:14px;outline:none;padding:3px 7px;border-top-left-radius:4px;border-bottom-left-radius:4px}
+.searchform input{flex:5 0%;border:1px solid #ccc;color:#333;font-family:'Larke Neue Regular', sans-serif;font-size:14px;outline:none;padding:3px 7px;border-top-left-radius:4px;border-bottom-left-radius:4px}
 .searchform button{background:var(--accent);border:medium none;padding:7px 17px}
 .searchform button:hover,.searchform button:focus{background-color:var(--accentsec)}
 .btn-sub{flex:1 0%;padding:7px 12px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.428571429;text-align:center;white-space:nowrap;cursor:pointer;color:#fff;background-color:var(--accent);border-color:var(--accent);border-radius:0 4px 4px 0}
 
 .fs-box{margin-bottom:25px}
-.fs-box .fs-box-inner{display:flex;padding:10px;border:1px solid #666;border-radius:30px;align-items:center}
+.fs-box .fs-box-inner{display:flex;padding:10px;border:1px solid #666;align-items:center}
 .fs-box .fs-box-inner:hover{border-color:#e62020}
 .fs-box-inner :is(.fsb-icon, .fsb-lbl){padding:0 20px}
 .fsb-icon{border-right:1px solid #666;color:#fff}
@@ -308,7 +323,7 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 
 .footer-bottom{background:var(--accent);padding-top:5px}
 .footerlogo{height:30px;border-radius:5px}
-.footer-bottom p{color:#fcfcfc;font-family:'Ubuntu', sans-serif;;font-weight:300;margin-left:14px;margin-bottom:0}
+.footer-bottom p{color:#fcfcfc;font-family:'Larke Neue Regular', sans-serif;font-weight:300;margin-left:14px;margin-bottom:0}
 .footer-bottom p a{font-size:12px;color:#fff;font-style:italic;text-decoration:underline}
 
 /*=========== Product Page =======*/
@@ -385,8 +400,8 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .pr-name{font-weight:400;font-size:24px;margin-bottom:2px;margin-top:0px}
 .pr-price{color:var(--accent);font-size:2.5rem;font-weight:500;margin:7px 0;}
 .pre-price{color:#acacac;font-size:2rem;font-weight:300;margin-left:7px;text-decoration:line-through}
-.pt-tags{display:flex;margin:1rem 0}
-.pt-tag-item{flex:1;padding:3px 5px;margin-right:5px;background-color:#f3f3f3}
+.pt-tags{display:flex;justify-content:space-between;margin:1rem 0}
+.pt-tag-item{padding:3px 5px;margin-right:5px;background-color:#f3f3f3}
 .pt-tag-item .pti-info{color:#888}
 .pt-tag-item .pti-val{font-size:15px;font-weight:500;padding-left:5px}
 

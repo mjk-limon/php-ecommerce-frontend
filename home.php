@@ -31,8 +31,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
             </div>
             <div class="col-md-9p5 col-md-9 slider-section">
                 <div id="slider">
-                    <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1349px;height: 415px; overflow: hidden;">
-                        <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1349px; height: 415px;overflow: hidden;">
+                    <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1349px;height: 515px; overflow: hidden;">
+                        <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1349px; height: 515px;overflow: hidden;">
 
                             <?php
                             $Slider1 = $this->TopSlider;

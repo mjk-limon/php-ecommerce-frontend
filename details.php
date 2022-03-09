@@ -72,7 +72,11 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                 ?>
                                     <li data-thumb="<?php echo Models::asset($Image) ?>">
                                         <div class="thumb-image detail_images">
-                                            <img src="<?php echo Models::asset($Image) ?>" data-imagezoom="true" class="img-responsive" alt="<?php echo $Image ?>">
+                                            <div class="easyzoom easyzoom--overlay">
+                                                <a href="<?php echo Models::asset($Image) ?>">
+                                                    <img src="<?php echo Models::asset($Image) ?>" class="img-responsive" />
+                                                </a>
+                                            </div>
                                         </div>
                                     </li>
                                 <?php endforeach; ?>
@@ -94,6 +98,10 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                 <div class="pt-tag-item">
                                     <span class="pti-info">Price</span>
                                     <span class="pti-val"><?php echo Models::curr($PrDetails->getPrice()) ?></span>
+                                </div>
+                                <div class="pt-tag-item">
+                                    <span class="pti-info">Regular Price</span>
+                                    <span class="pti-val"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                 </div>
                                 <div class="pt-tag-item">
                                     <span class="pti-info">Status</span>
@@ -207,6 +215,10 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                             <li class="add-to-cart add-cart cAddBuyNav" style="padding:.5rem 2.5rem">Buy Now</li>
                                         </ul>
                                     </div>
+                                </div>
+                                <div class="pr-total-view" style="margin-top: .375rem;">
+                                    <i class="fa fa-signal"></i>
+                                    Total Views: <span class="gb-val"><?php echo $PrDetails->getTotalViews(); ?></span>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -517,7 +529,8 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
     });
     </script>
 <?php else : ?>
-
+    <link rel="stylesheet" href="<?php echo Models::asset("assets/vendors/imagezoom/easyzoom.css") ?>" />
+    <script src="<?php echo Models::asset("assets/vendors/imagezoom/easyzoom.js") ?>"></script>
 <?php endif; ?>
 
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>

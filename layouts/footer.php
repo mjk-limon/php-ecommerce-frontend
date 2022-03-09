@@ -98,9 +98,6 @@ $shippingMethods = $this->shippingMethods();
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <p class="pull-left">
-                    <img src="<?php echo Models::getLogo(2) ?>" class="footerlogo">
-                </p>
                 <p class="pull-right">
                     <?php
                     Head\DevInfo::getDevComInfo();

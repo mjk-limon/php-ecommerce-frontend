@@ -3,6 +3,7 @@ _ilm_Details_page = {
         _ilm_Details_page.prid = $('#tPrId').text();
         _ilm_Details_page.outStockInit($('#tStock').text());
 
+        $('.easyzoom').easyZoom();
         $('.flexslider').flexslider({
             animation: "fade",
             controlNav: "thumbnails",

@@ -53,20 +53,19 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 
     <style type="text/css">
     :root {
-        --accent: rgba(35, 56, 81, 1);
+        --accent: <?php echo $this->ColrData['accent'] ?>;
         --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
         --secondary: <?php echo $this->ColrData['secondary'] ?>;
-        --mainbody: rgba(242, 244, 248, 1);
+        --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
         --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
-        --header: rgba(35, 47, 62, 1);
-        --menubar: rgba(35, 47, 62, 1);
+        --header: <?php echo $this->ColrData['header'] ?>;
+        --menubar: <?php echo $this->ColrData['menubar'] ?>;
     }
 
     </style>
 </head>
 
 <body <?php echo $body_class ?>>
-
     <?php if (!$this->mobileView) : ?>
         <div class="floating-sc">
             <!--div class="sc-btn sc-btn-comp">
@@ -91,6 +90,9 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     <?php endif; ?>
 
     <header id="header">
+        <div class="linear-activity">
+            <div class="indeterminate"></div>
+        </div>
         <div class="site-branding-area">
             <div class="container">
                 <div class="row flex branding-flex deskv-hm">

@@ -21,10 +21,9 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
             <?php echo htmlspecialchars($Cat->Mainc) ?> <i class="fa fa-angle-right"></i>
         </a>
         <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
-            <div class="col-xs-12 sub-cols view-all hidden-md hidden-lg">
+            <div class="sub-col-group sub-cols view-all">
                 <a href="<?php echo $Cat->getHref() ?>">
                     View All <?php echo htmlspecialchars($Cat->Mainc) ?>
-                    <i class="fa fa-long-arrow-right"></i>
                 </a>
             </div>
 
