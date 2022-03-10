@@ -248,11 +248,31 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                     <span class="badge"><?php echo $this->NotificationBadge ?></span>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="<?php echo PROJECT_FOLDER . 'compare/'; ?>" class="noRoute" title="Support">
+                                            <li class="dropdown">
+                                                <a href="javascript:;" title="Compare" class="dropdown-toggle"
+                                                   data-toggle="dropdown"
+                                                   aria-expanded="false">
                                                     <i class="pbl-icon icn-comp"></i>
                                                     <span>Compare</span>
                                                 </a>
+                                                <div class="dropdown-menu dropdown-menu-right" onclick="event.stopPropagation()">
+                                                    <div class="hmm-dropdown-menu-title">
+                                                        Product Comparison
+                                                    </div>
+                                                    <div class="compare-cntrl hmm-compare deskv">
+                                                        <div class="compare-cntrl-searchbox">
+                                                            <input type="text" class="search-q input-text" data-svs="#searchset1" placeholder="Type product id, name..." />
+                                                            <div class="srch-datalist compare-data" id="searchset1"></div>
+                                                        </div>
+                                                        <div class="compare-cntrl-searchbox">
+                                                            <input type="text" class="search-q input-text" data-svs="#searchset2" placeholder="Type product id, name..." />
+                                                            <div class="srch-datalist compare-data" id="searchset2"></div>
+                                                        </div>
+                                                        <div class="compare-cntrl-submit">
+                                                            <button class="btn">Compare Now</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>

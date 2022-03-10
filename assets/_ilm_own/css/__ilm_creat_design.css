@@ -151,8 +151,8 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .single-srchdata{margin:1.5rem 0}
 .srch-datalist li a{display:block;padding:0 1rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
 .srch-datalist li a span{display:block;font-size:13px;color:#999}
-.searchfld.focussed .input-text{border-bottom-color:#eee;border-radius:5px 5px 0 0}
-.searchfld.focussed .srch-datalist{display:block;min-height:30px;max-height:70vh}
+.focussed .input-text{border-bottom-color:#eee;border-radius:5px 5px 0 0}
+.focussed .srch-datalist{display:block;min-height:30px;max-height:70vh}
 
 .wishlistall{padding:0;margin:0;display:flex;flex-wrap:nowrap;justify-content:right}
 .wishlistall > li{margin:0 .375rem;text-align:center;list-style-type:none;display:inline-block}
@@ -165,7 +165,12 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 .wishlistall > li.cart i{display:inline-block;vertical-align:middle;margin-left:5px}
 .wishlistall > li.cart span{color:#333;font-size:13px}
 .wishlistall > li.cart span.badge{top:-9px;right:-9px}
-.wishlistall > li.dropdown .dropdown-menu{left:auto;right:-50px}
+.wishlistall > li.dropdown .dropdown-menu{min-width:350px;margin-top:0;border-radius:0}
+.wishlistall > li.dropdown .dropdown-menu .hmm-dropdown-menu-title{text-align:center;background-color:var(--accent);color:#fff;font-weight:bold}
+
+.compare-cntrl{padding:10px}
+.compare-cntrl-searchbox{margin-bottom:1rem;position:relative}
+.compare-cntrl-searchbox input{width:100%;border:1px solid #ccc;padding:5px 10px}
 
 .home-floating-menu-container{position:relative;z-index:1000}
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
