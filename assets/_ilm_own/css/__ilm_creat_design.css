@@ -654,7 +654,8 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .track-timeline > .timeline-ul li span{color:#999;margin-right:1.5rem}
 
 /*===== Others Page ======*/
-.product-comparison .table :is(thead > tr > th, tbody > tr > td){vertical-align:top}
+.product-comparison .table :is(thead > tr > th, tbody > tr > td){vertical-align:top;border-right:1px solid #ddd}
+.product-comparison .table :is(thead > tr > th:last-child, tbody > tr > td:last-child){border-right:0}
 .product-comparison .intro{font-size:25px;line-height:1.1;margin-bottom:1rem}
 .product-comparison .intro-tag{color:#666;font-weight:500}
 .product-comparison .prinfo img.pr-thumbnail{max-width:70%}
