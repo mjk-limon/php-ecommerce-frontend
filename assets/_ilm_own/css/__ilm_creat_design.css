@@ -225,6 +225,7 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .fet-cats .fet-cat-item{max-width:12.5%;flex:0 12.5%;padding:7px}
 .fet-cats.fet-prs .fet-cat-item {max-width:33.33333%;flex:0 33.33333%}
 .fet-cat-item .fet-cat-item-inner{background-color:#fff;padding:25px 5px;box-shadow:1px 1px 2px #ccc;border-radius:5px;text-align:center}
+.fet-cat-icn .info-block-img{width:100%;padding-bottom:3px}
 .fet-cat-name .fcn-title{font-weight:500;font-size:16px}
 .fet-cat-name .fcn-btn{margin-top:10px}
 

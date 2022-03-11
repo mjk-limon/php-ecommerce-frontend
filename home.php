@@ -69,9 +69,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
             <div class="section-mb">
                 <div class="bt-tagline">
                     <div class="bt-animated-text">
-                        Happy New Year 2022 | সবাইকে নববর্ষের শুভেচ্ছা.
-                        নতুন বছরে Tech Shosta থেকে অনলাইনে অর্ডার করে পণ্য কিনলেই নিশ্চিত উপহার।
-                        সাথে থাকছে আকর্ষণীয় সব অফার ও ডিসকাউন্ট।
+                        <?php echo $this->TopSticker1['image_text1'] ?>
                     </div>
                 </div>
             </div>
@@ -89,19 +87,32 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="ft-pr-sliders">
                     <div class="fet-cats">
-                        <?php for ($i = 0; $i < 16; $i++) { ?>
+
+                        <?php
+                        $TrCat = $this->TrendCategories;
+                        $TcRes = $TrCat->fetchTrending();
+
+                        while ($TC = $TcRes->fetch_array()) :
+                            $TrCat->setCatId($TC['id']);
+                            $TrCat->setMain($TC['main']);
+
+                            $CatLink = $TrCat->getHref();
+                            $CatImg = $TrCat->getCatImg('Top ranking category icon')[0];
+                        ?>
                             <div class="fet-cat-item">
                                 <div class="fet-cat-item-inner">
-                                    <div class="fet-cat-icn">
-                                        <img src="https://www.techlandbd.com/image/cache/catalog/techland/banner/featured-category/laptop-1-40x40.png" class="info-block-img">
-                                    </div>
-                                    <div class="fet-cat-name">
-                                        Laptop
-                                    </div>
+                                    <a href="<?php echo $CatLink ?>">
+                                        <div class="fet-cat-icn">
+                                            <img src="<?php echo $CatImg ?>" class="info-block-img">
+                                        </div>
+                                        <div class="fet-cat-name">
+                                            <?php echo htmlspecialchars($TC['main']) ?>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                        <?php
-                        } ?>
+                        <?php endwhile; ?>
+
                     </div>
                 </div>
             </div>
@@ -114,22 +125,26 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 <div class="ft-title text-center">
                     <div class="ft-title-left">
                         <span class="ft-ft-title" style="font-weight:500;">Featured Products</span>
-                        <p>View the latest & upcoming promotions and offers at TechLand BD</p>
+                        <p>View the latest & upcoming promotions and offers at <?php echo COMPANY_NAME ?></p>
                     </div>
                 </div>
                 <div class="ft-pr-sliders">
                     <div class="fet-cats fet-prs">
 
-                        <?php for ($i = 0; $i < 3; $i++) { ?>
+                        <?php
+                        for ($i = 2; $i <= 4; $i++) {
+                            $Property = "TopSticker" . $i;
+                            $StikerInfo = $this->{$Property};
+                        ?>
                             <div class="fet-cat-item">
                                 <div class="fet-cat-item-inner">
                                     <div class="fet-cat-icn">
-                                        <img src="https://www.techlandbd.com/image/cache/catalog/techland/banner/home-page/promotion/1st-player-case-380x270w.jpg" class="info-block-img">
+                                        <img src="<?php echo Models::asset($StikerInfo['image']) ?>" class="info-block-img">
                                     </div>
                                     <div class="fet-cat-name">
-                                        <div class="fcn-title">Laptop</div>
-                                        <div class="fcn-tag">Get an Unlimited Discount on 1st Player Gaming Case</div>
-                                        <div class="fcn-btn"><a class="btn btn-info" href="">View All Products</a></div>
+                                        <div class="fcn-title"><?php echo $StikerInfo['image_heading'] ?></div>
+                                        <div class="fcn-tag"><?php echo $StikerInfo['image_text1'] ?></div>
+                                        <div class="fcn-btn"><a class="btn btn-info" href="<?php echo $StikerInfo['image_link'] ?>">View All Products</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -180,6 +195,15 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                         <a href="<?php echo $sp->getHref() ?>">
                                                             <h5><?php echo $sp->getName() ?></h5>
                                                         </a>
+
+                                                        <ul class="spprinfo-specs">
+                                                            <?php if ($sp->getOthers('prspec')) : ?>
+                                                                <?php foreach ($sp->getKeySpecs() as $Spk => $Spv) : ?>
+                                                                    <li><span><?php echo $Spk ?>:</span> <?php echo $Spv ?></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                        </ul>
+
                                                         <p>
                                                             <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
 
@@ -279,8 +303,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
                                                                 <ul class="spprinfo-specs">
                                                                     <?php if ($sp->getOthers('prspec')) : ?>
-                                                                        <?php foreach ($sp->getOthers('prspec') as $Spec) : ?>
-                                                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                                                        <?php foreach ($sp->getKeySpecs() as $Spk => $Spv) : ?>
+                                                                            <li><span><?php echo $Spk ?>:</span> <?php echo $Spv ?></li>
                                                                         <?php endforeach; ?>
                                                                     <?php endif; ?>
                                                                 </ul>
