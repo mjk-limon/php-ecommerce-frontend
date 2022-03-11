@@ -471,6 +471,11 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .inline-form input, .inline-form textarea{width: 100%;border: 1px solid #ccc;padding: .375rem 1rem;border-radius:20px;outline:none}
 .inline-form button{border-radius: 20px;border: none;position: absolute;right: 3px;padding: calc(.375rem - 1px) 1rem;top: 2px;background: var(--accent);color: #fff;box-shadow: 0px 2px 2px #bbb;}
 
+.section-mb.details-page-bottom{margin-bottom:1.5rem}
+
+.dpb-nav-group button{display:inline-block;padding:10px 15px;margin-right:5px;background-color:#eee;border:0;font-weight:600}
+.dpb-nav-group button:hover{background-color:var(--accent);color:#fff}
+
 .discription-review-title{display:block;margin:0;padding:1.25rem 1rem;font-size:18px;background:#888;color:#fff}
 .discription-review-title span{margin-left:3px;}
 .discription-review-title span a{color:#bbb;font-weight:300}
@@ -479,6 +484,8 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .pr-short-description{padding:1rem 0;color:#58595b;line-height:1.75em}
 .pr-short-description > h5{margin-top:0;font-weight:500;text-decoration:underline}
 .pr-short-description ul li{list-style:disc}
+.pr-short-description ul li.more{list-style:none}
+.pr-short-description ul li.more a{color:var(--accent);padding:3px 0;font-weight:bold;text-decoration:underline}
 .pr-compare-wishlist{text-align:right}
 .pr-compare-wishlist .pr-cw-item{display:inline-block;padding:0 10px}
 

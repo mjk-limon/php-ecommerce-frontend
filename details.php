@@ -149,9 +149,10 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                                 <?php if ($PrDetails->getOthers('prspec')) : ?>
                                     <h5>Key Features:</h5>
                                     <ul>
-                                        <?php foreach ($PrDetails->getOthers('prspec') as $Spec) : ?>
-                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                        <?php foreach ($PrDetails->getKeySpecs() as $Spk => $Spv) : ?>
+                                            <li><span><?php echo $Spk ?>:</span> <?php echo $Spv ?></li>
                                         <?php endforeach; ?>
+                                        <li class="more"><a href="javascript:;" onclick="_ilm.jumpToSection('#PrSpecs')">View More</a></li>
                                     </ul>
                                 <?php endif; ?>
                             </div>
@@ -263,7 +264,40 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
-                    <div class="section-mb details-page-bottom" style="margin-bottom: 1.5rem;">
+                    <div class="section-mb details-page-bottom">
+                        <div class="dpb-nav-group">
+                            <button onclick="_ilm.jumpToSection('#PrSpecs')">Specifications</button>
+                            <button onclick="_ilm.jumpToSection('#PrDescription')">Description</button>
+                            <button onclick="_ilm.jumpToSection('#PrRatings')">Reviews</button>
+                            <button onclick="_ilm.jumpToSection('#PrQuestions')">Questions</button>
+                        </div>
+                    </div>
+
+                    <div class="section-mb details-page-bottom" id="PrSpecs">
+                        <h4 class="discription-review-title">
+                            <span>Specifications</span>
+                        </h4>
+                        <div class="discription-review-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Spec</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($PrDetails->getOthers('prspec') as $Spec) : ?>
+                                        <tr>
+                                            <td><?php echo $Spec['t'] ?></td>
+                                            <td><?php echo $Spec['v'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="section-mb details-page-bottom" id="PrDescription">
                         <h4 class="discription-review-title">
                             <span>Product Full Description</span>
                         </h4>
@@ -274,7 +308,7 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                         </div>
                     </div>
 
-                    <div class="section-mb details-page-bottom">
+                    <div class="section-mb details-page-bottom" id="PrRatings">
                         <h4 class="discription-review-title">
                             <span>Ratings &amp; Reviews</span>
                         </h4>
@@ -359,7 +393,7 @@ $Availability = $PrDetails->getStock() ? 'In Stock' : 'Out Of Stock';
                         </div>
                     </div>
 
-                    <div class="section-mb details-page-bottom" id="Rating">
+                    <div class="section-mb details-page-bottom" id="PrQuestions">
                         <h4 class="discription-review-title">Product Questions</h4>
                         <div class="discription-review-body">
                             <div class="question-top _nrp">
