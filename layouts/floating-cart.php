@@ -25,7 +25,7 @@ if ($this->CartItems) :
 							<div><span>Product:</span><span><?php echo $Sp->getName() ?></span></div>
 							<div><span>Price:</span><span><?php echo Models::curr($Sp->getPrice()) ?></span></div>
 							<div><span>Quantity:</span><span><?php echo $CItem['q'] ?></span></div>
-							<div class="total"><span>Total:</span><span>4000Tk</span></div>
+							<div class="total"><span>Total:</span><span><?php echo Models::curr($Sp->getPrice() * $CItem['q']) ?></span></div>
 						</div>
 					</div>
 				</div>

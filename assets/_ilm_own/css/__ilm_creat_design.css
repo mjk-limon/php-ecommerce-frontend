@@ -509,18 +509,18 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 
 /*=========== Footer =======*/
 #footer{background:#fcfcfc;border-top: 1px solid #ddd}
-.footer-widget{background-color:#111723;color:#eee;padding:50px 0}
-.single-widget h2{color:#eee;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
+.footer-widget{background-color:#111723;color:#ccc;padding:50px 0}
+.single-widget h2{color:#ccc;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
 .single-widget h2 i{margin-right:15px}
 .nav-addresses li{display:flex;margin-bottom:5px}
 .nav-addresses li span{color:#ccc;margin-right:10px;}
 .nav-stacked li i{display:inline-block;padding-right:5px;font-size:11px}
-.single-widget ul li a{display:inline-block;vertical-align:middle;color:#eee;font-family:'Ubuntu',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
+.single-widget ul li a{display:inline-block;vertical-align:middle;color:#ccc;font-family:'Ubuntu',sans-serif;font-size:14px;font-weight:300;padding:5px 0}
 .single-widget ul li a:hover{background:none;color:var(--accent)}
 
 .nuws{padding:15px 0}
-.nuws p{color:#eee}
-.nuws h2{color:#eee;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
+.nuws p{color:#ccc}
+.nuws h2{color:#ccc;font-family:'Ubuntu',sans-serif;font-size:17px;font-weight:500;margin:5px 0;text-transform:uppercase}
 .social-icons ul li{display:inline-block;margin-right:3px}
 .social-icons ul li a{border:0 none;border-radius:0;color:#696763;padding:0}
 .social-icons ul li a i{font-size:20px;text-align:center;color:#fff;height:35px;width:35px;line-height:36px;position:relative;overflow:hidden;border-radius:5px}
