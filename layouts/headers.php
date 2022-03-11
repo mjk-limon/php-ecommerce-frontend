@@ -249,7 +249,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                 </a>
                                             </li>
                                             <li class="dropdown">
-                                                <a href="javascript:;" title="Compare" class="dropdown-toggle"
+                                                <a href="javascript:;" title="Compare" class="dropdown-toggle open-compare"
                                                    data-toggle="dropdown"
                                                    aria-expanded="false">
                                                     <i class="pbl-icon icn-comp"></i>
@@ -261,15 +261,45 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                                     </div>
                                                     <div class="compare-cntrl hmm-compare deskv">
                                                         <div class="compare-cntrl-searchbox">
-                                                            <input type="text" class="search-q input-text" data-svs="#searchset1" placeholder="Type product id, name..." />
-                                                            <div class="srch-datalist compare-data" id="searchset1"></div>
+                                                            <div class="ccsbox ccsbox1">
+                                                                <div class="ccsbox-thumb">
+                                                                    <img src="<?php echo Models::asset("assets/images/product-placeholder.jpg") ?>" />
+                                                                </div>
+                                                                <div class="ccsbox-label">
+                                                                    <input type="text" class="search-q input-text" data-svs="#searchset1" placeholder="Type product id, name..." />
+                                                                    <div class="srch-datalist compare-data" id="searchset1"></div>
+                                                                    <a href="javascript:;" class="ccsbox-remove">Remove</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="compare-cntrl-searchbox">
-                                                            <input type="text" class="search-q input-text" data-svs="#searchset2" placeholder="Type product id, name..." />
-                                                            <div class="srch-datalist compare-data" id="searchset2"></div>
+                                                            <div class="ccsbox ccsbox2">
+                                                                <div class="ccsbox-thumb">
+                                                                    <img src="<?php echo Models::asset("assets/images/product-placeholder.jpg") ?>" />
+                                                                </div>
+                                                                <div class="ccsbox-label">
+                                                                    <input type="text" class="search-q input-text" data-svs="#searchset2" placeholder="Type product id, name..." />
+                                                                    <div class="srch-datalist compare-data" id="searchset2"></div>
+                                                                    <a href="javascript:;" class="ccsbox-remove">Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="compare-cntrl-searchbox">
+                                                            <div class="ccsbox ccsbox3">
+                                                                <div class="ccsbox-thumb">
+                                                                    <img src="<?php echo Models::asset("assets/images/product-placeholder.jpg") ?>" />
+                                                                </div>
+                                                                <div class="ccsbox-label">
+                                                                    <input type="text" class="search-q input-text" data-svs="#searchset3" placeholder="Type product id, name..." />
+                                                                    <div class="srch-datalist compare-data" id="searchset3"></div>
+                                                                    <a href="javascript:;" class="ccsbox-remove">Remove</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="compare-cntrl-submit">
-                                                            <button class="btn">Compare Now</button>
+                                                            <a class="btn btn-default noRoute" href="<?php echo PROJECT_FOLDER . "compare/" ?>">
+                                                                Compare Now
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>

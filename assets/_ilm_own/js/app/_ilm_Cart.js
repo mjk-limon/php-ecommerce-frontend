@@ -40,7 +40,7 @@ _ilm_Cart = {
             _ilm.globLoader("show", env, true);
             
             optType = $(env).hasClass("cmpadd") ? { addItemToCompare: true} : { removeItemFromCompare: true};
-            itemInfo = $.extend($(this).parent().parent().find("em").data(), optType);           
+            itemInfo = $.extend($(this).parent().parent().find("em").data(), optType);   
             
             _ilm_Cart.initComparison(itemInfo, function () {
                 _ilm.globLoader("hide", env, true);

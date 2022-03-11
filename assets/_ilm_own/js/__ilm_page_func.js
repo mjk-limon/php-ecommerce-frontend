@@ -155,18 +155,56 @@ _ilm = {
             initCompareEvents: function () {
                 var compare = {
                     init: function () {
+                        $(".open-compare").on("click", function () {
+                            compare.updateCompareDropdown();
+                        });
+
                         $(".compare-data").on("click", "a", function (e) {
-                            var prid = $(this).data("prid");
-                            
-                            _ilm_Cart.initComparison(itemInfo, function () {
+                            var env = this,
+                                prid = $(this).data("prid"),
+                                ajaxData = { addItemToCompare: true, prid: prid };
+
+                            _ilm.globLoader("show", env, true);
+                            _ilm_Cart.initComparison(ajaxData, function () {
+                                compare.updateCompareDropdown();
                                 _ilm.globLoader("hide", env, true);
                             });
 
                             e.preventDefault();
                         });
-                    }
 
-                    // addToCompare
+                        $(".ccsbox-remove").on("click", function (e) {
+                            var prid = $(this).data("prid");
+
+                            _ilm_Cart.initComparison({ removeItemFromCompare: 1, prid: prid }, function () {
+                                compare.updateCompareDropdown();
+                            });
+
+                            e.preventDefault();
+                        });
+                    },
+
+                    updateCompareDropdown: function () {
+                        _ilm.globLoader("show", ".hmm-compare");
+
+                        ajaxPost({ getComparedItems: 1 }, function (data) {
+                            var Result = IsJsonString(data) ? JSON.parse(data) : { success: false, error: data },
+                                cbox, prInfo;
+
+                            if (Result.success) {
+                                for (let i = 0; i < Result.info.length; i++) {
+                                    cbox = ".ccsbox" + (i + 1);
+                                    prInfo = Result.info[i];
+
+                                    $(".ccsbox-thumb img", cbox).attr("src", prInfo.image);
+                                    $(".ccsbox-label .search-q", cbox).val(prInfo.name).prop("disabled", !!prInfo.id);
+                                    $(".ccsbox-label .ccsbox-remove").attr("data-prid", prInfo.id);
+                                }
+                            }
+
+                            _ilm.globLoader("hide", ".hmm-compare");
+                        });
+                    }
                 }
 
                 compare.init();
@@ -213,12 +251,13 @@ _ilm = {
                                     switch (target) {
                                         case "#searchset1":
                                         case "#searchset2":
+                                        case "#searchset3":
                                             if (!prCat) continue;
                                             $ApHtml = `<li>
-                                        <div class="single-srchdata">
-                                            <a href="" data-prid="${prId}">${prName}</a>
-                                        </div>
-                                    </li>`;
+                                                <div class="single-srchdata">
+                                                    <a href="" data-prid="${prId}">${prName}</a>
+                                                </div>
+                                            </li>`;
                                             break;
 
                                         case "#search-suggestions":
