@@ -186,6 +186,7 @@ header{position: fixed;top:0;left:0;width:100%;background: var(--header);z-index
 
 .mainmenu ul li a{display:block;position:relative;color:#fff;font-family:'Larke Neue Regular',sans-serif;letter-spacing:0.4px;font-size:13px;font-weight:600;line-height:20px;padding:3px 9px;text-transform:capitalize}
 .mainmenu ul li a span{padding-right:10px}
+.mainmenu ul li a span img{height:19px}
 .mainmenu ul li a i{text-align:right}
 .mainmenu ul li:hover > a, .sub-col-group:hover > a, .shop-menu ul li a.active{background:rgba(255, 255, 255, 0.12);color:#fff}
 ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;background:var(--menubar);list-style:none;padding:5px 0;margin-left:0;min-width:80%;box-shadow:0 3px 3px rgba(0, 0, 0, 0.52);display:none;z-index:999;min-height:100%}
@@ -225,7 +226,7 @@ ul.sub-menu,.sub-col-group .sub-cols{position:absolute;top:0;left:100%;backgroun
 .fet-cats .fet-cat-item{max-width:12.5%;flex:0 12.5%;padding:7px}
 .fet-cats.fet-prs .fet-cat-item {max-width:33.33333%;flex:0 33.33333%}
 .fet-cat-item .fet-cat-item-inner{background-color:#fff;padding:25px 5px;box-shadow:1px 1px 2px #ccc;border-radius:5px;text-align:center}
-.fet-cat-icn .info-block-img{width:100%;padding-bottom:3px}
+.fet-cat-icn .info-block-img{max-width:100%;padding-bottom:3px}
 .fet-cat-name .fcn-title{font-weight:500;font-size:16px}
 .fet-cat-name .fcn-btn{margin-top:10px}
 
