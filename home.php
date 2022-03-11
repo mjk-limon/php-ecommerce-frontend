@@ -217,7 +217,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                                 <div class="sp-nav">
                                                     <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                                     <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                    <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+                                                    <a href="javascript:;" class="oth-nav cCompareNav cmpadd"><i class="fa fa-plus-square"></i></a>
+                                                    <a href="javascript:;" class="oth-nav cAddWishNav"><i class="fa fa-heart-o"></i></a>
                                                 </div>
                                             </div>
                                         </div>
