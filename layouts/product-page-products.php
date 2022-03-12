@@ -83,8 +83,8 @@ $AllProducts = $this->AllProductsWithOtherInfo;
 
                                 <ul class="spprinfo-specs">
                                     <?php if ($this->SingleProduct->getOthers('prspec')) : ?>
-                                        <?php foreach ($this->SingleProduct->getOthers('prspec') as $Spec) : ?>
-                                            <li><span><?php echo $Spec['t'] ?>:</span> <?php echo $Spec['v'] ?></li>
+                                        <?php foreach ($this->SingleProduct->getKeySpecs() as $Spk => $Spv) : ?>
+                                            <li><span><?php echo $Spk ?>:</span> <?php echo $Spv ?></li>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </ul>
