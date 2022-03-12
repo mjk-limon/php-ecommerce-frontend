@@ -74,9 +74,12 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                         if ($this->mobileView) :
                             $HeadCampaignIcon = $this->getStickers(7);
                         ?>
-                            <div class="tc-list" style="margin-top:10px">
+                            <div class="tc-list" style="margin-top:10px;align-items:center;">
                                 <a href="<?php echo $HeadCampaignIcon['image_link'] ?>">
                                     <img src="<?php echo Models::asset($HeadCampaignIcon['image']) ?>">
+                                </a>
+                                <a href="<?php echo Models::baseUrl('sellercorner/login/') ?>">
+                                    Sell With <?php echo COMPANY_NAME ?>
                                 </a>
                             </div>
                         <?php endif; ?>
