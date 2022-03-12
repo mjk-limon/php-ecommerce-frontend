@@ -3,6 +3,7 @@
 namespace _ilmComm;
 
 $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
+$AllProducts = $this->AllProductsWithOtherInfo;
 ?>
 
 <?php if (!isset($this->onlyload) || $this->onlyload != "ppp-ws") : ?>

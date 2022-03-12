@@ -81,7 +81,7 @@
 	
 	.ft-title{border-bottom:5px solid #f5f5f5}
 	.ft-pr-mbl{flex-wrap:wrap}
-	.grid-row, .grid-row.grid4{grid-template-columns:repeat(2, 1fr)}
+	.grid-row, .grid-row.grid4, .grid-row.grid5{grid-template-columns:repeat(2, 1fr)}
 	.grid-row .grids.large-grid{height:400px}
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.fet-cats .fet-cat-item{max-width:25%;flex:0 25%;padding:7px}
@@ -122,7 +122,7 @@
 	.empty-product-page > h4{font-size:1.7rem}
 	.grid-row .grids{padding:1rem}
 	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:250px}
-	.sp-image{height:70%}
+	.sp-image{height:45%}
 	
 	
 	/* ==========================
