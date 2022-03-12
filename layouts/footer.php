@@ -12,7 +12,7 @@ $shippingMethods = $this->shippingMethods();
     <div class="footer-widget">
         <div class="container">
             <div class="row">
-                <div class="col-md-5 col-xs-6">
+                <div class="col-md-5 col-xs-12">
                     <div class="single-widget al-l">
                         <div class="footer-logo">
                             <img src="<?php echo Models::getLogo(2) ?>" class="footerlogo">
