@@ -70,6 +70,16 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                                 <img src="<?php echo $this->TopSticker4['image'] ?>" alt="Banner image">
                             </a>
                         </div>
+                        <?php
+                        if ($this->mobileView) :
+                            $HeadCampaignIcon = $this->getStickers(7);
+                        ?>
+                            <div class="tc-list" style="margin-top:10px">
+                                <a href="<?php echo $HeadCampaignIcon['image_link'] ?>">
+                                    <img src="<?php echo Models::asset($HeadCampaignIcon['image']) ?>">
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
