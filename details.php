@@ -86,7 +86,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                 <h2 class="pr-name"><?php echo $PrDetails->getName() ?></h2>
                                             <?php endif; ?>
                                             <p>Brand: <?php echo $PrDetails->getBrandName() ?></p>
-                                            <p>(45gm)</p>
                                         </div>
                                         <div class="pt-area">
                                             <div class="flex price-review-flex" style="justify-content: space-between">
@@ -106,6 +105,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         ?>
                                         <p class="pr-entl">Availability: <span class="entl-data ava <?php echo $AvaClass ?>"><?php echo $Availability ?></span></p>
                                         <p class="pr-entl">Product Code: <span class="entl-data" id="tPrId"><?php echo $this->Prid ?></span></p>
+                                        <p class="pr-entl hidden-lg hidden-xs">Item In Stock: <span class="entl-data" id="tStock"><?php echo $PrDetails->getStock(); ?></span></p>
 
                                         <div class="pr-size-color">
                                             <?php
@@ -147,7 +147,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                 <div class="flex">
                                                     <ul class="qty-selection">
                                                         <li class="item_minus"><a href="javascript:;">-</a></li>
-                                                        <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
+                                                        <li class="item_qty item_qty_input" id="itemQtyInp"><input type="number" value="1" max="<?php echo $PrDetails->getStock() ?>" autocomplete="off" /></li>
                                                         <li class="item_plus"><a href="javascript:;">+</a></li>
                                                     </ul>
                                                     <ul class="bnav-btns">
@@ -240,7 +240,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         <div class="flex">
                                             <ul class="qty-selection" style="width: 35%;">
                                                 <li class="item_minus"><a href="javascript:;">-</a></li>
-                                                <li class="item_qty item_qty_input"><input type="number" value="1" autocomplete="off" /></li>
+                                                <li class="item_qty item_qty_input"><input type="number" value="1" max="<?php echo $sp->getStock() ?>" autocomplete="off" /></li>
                                                 <li class="item_plus"><a href="javascript:;">+</a></li>
                                             </ul>
                                             <ul class="bnav-btns">
@@ -389,17 +389,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="section-mb details-page-bottom">
-                            <h4 class="discription-review-title">Seller Review</h4>
-                            <div class="discription-review-body">
-                                <div class="seller-info">
-                                    <?php include "layouts/details-page-mcntinfo.php"; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -468,7 +457,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
         <div class="m-flex">
             <ul class="qty-selection">
                 <li class="item_minus"><a href="javascript:;">-</a></li>
-                <li class="item_qty item_qty_input" id="itemQtyInp"><input type="number" value="1" autocomplete="off" /></li>
+                <li class="item_qty item_qty_input" id="itemQtyInp"><input type="number" value="1" max="<?php echo $PrDetails->getStock() ?>" autocomplete="off" /></li>
                 <li class="item_plus"><a href="javascript:;">+</a></li>
             </ul>
             <ul class="bnav-btns">
