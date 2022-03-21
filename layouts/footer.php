@@ -30,9 +30,14 @@ $shippingMethods = $this->shippingMethods();
                         </div>
 
                         <div class="all-right-reserved">
-                            <?php
-                            Head\DevInfo::getDevComInfo();
-                            ?>
+                            <p>
+                                KiteShop.com.bd using brand name of SM Unitech BD Software (Pvt) Ltd.
+                                under license No. C-132126.
+                            </p>
+                            <p>
+                                Copyright @ 2009-2022, All Rights & Reserved by "SM Unitech BD Software
+                                (Private) Limited".
+                            </p>
                         </div>
                     </div>
                 </div>
