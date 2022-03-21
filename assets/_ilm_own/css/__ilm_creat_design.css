@@ -640,7 +640,11 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .pr-entl .entl-data.ava{color:#0b0}
 .pr-entl .entl-data.ava.notava{color:#b00}
 
-.pr-size-color, .pr-buy-navs, .pr-short-description, pr-meta-info{margin: 2.5rem 0;}
+.pr-size-color, .pr-buy-navs, .pr-call-for-order, .pr-short-description, pr-meta-info{margin: 2.5rem 0}
+
+.pr-call-for-order{color:#fff}
+.pr-call-for-order > span{display:inline-block;background:var(--accent);padding:.4rem 1.5rem;font-size:12px}
+.pr-call-for-order > span > span{display:block;font-weight:bold;font-size:14px}
 
 .pr-sc-ul, .qty-selection{padding:0}
 .qty-selection{margin: 0;}
@@ -670,7 +674,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .pr-meta-info > span{display: block;margin-bottom: 5px;color: #666;}
 .pr-meta-info > span > span{font-weight: 500;color: #333;}
 
-.share{margin-top:25px;padding:0;text-align: center;}
+.share{margin-top:25px;padding:0}
 .shareli, .share li {display:inline-block;margin-right:5px;margin-bottom:0;vertical-align:bottom;line-height:1}
 .share li a i{font-size:16px;text-align:center;color:#fff;padding:4px 0;width:30px;border:1px solid #fff}
 .share li a i:hover{border-color:#333;background:transparent;color:#333}

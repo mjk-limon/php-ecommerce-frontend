@@ -7,7 +7,6 @@ use _ilmComm\Category\FetchCategories;
 $sp = $this->SingleProduct;
 $cat = new FetchCategories;
 $PrDetails = $this->ProductDetails;
-// echo '<pre>'; print_r($PrDetails); echo '</pre>';exit;
 $cat->setMain($PrDetails->getCategory("main"));
 
 $ratClass = !Models::getSiteSettings('prat') ? 'hidden' : null;
@@ -184,6 +183,13 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                     </ul>
                                                 </div>
                                             </div>
+                                            <div class="pr-call-for-order">
+                                                <span>
+                                                    Call For Order:
+                                                    <span><?php echo Models::getContactInformation("mobile1") ?></span>
+                                                    <span><?php echo Models::getContactInformation("mobile2") ?></span>
+                                                </span>
+                                            </div>
                                         <?php endif; ?>
 
                                         <?php if ($PrDetails->getOthers("prshortdes")) : ?>
@@ -195,7 +201,6 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         <div class="pr-meta-info">
                                             <span>SKU: <span><?php echo $PrDetails->getOthers("sku") ?></span></span>
                                             <span>Categories: <span><?php echo $PrDetails->getCategory("main") . ', ' . $PrDetails->getCategory("header") ?></span></span>
-                                            <span>Call For Order: <span><?php echo Models::getContactInformation("mobile1") ?></span></span>
                                         </div>
                                     </div>
 
