@@ -7,6 +7,7 @@ use _ilmComm\Category\FetchCategories;
 $sp = $this->SingleProduct;
 $cat = new FetchCategories;
 $PrDetails = $this->ProductDetails;
+// echo '<pre>'; print_r($PrDetails); echo '</pre>';exit;
 $cat->setMain($PrDetails->getCategory("main"));
 
 $ratClass = !Models::getSiteSettings('prat') ? 'hidden' : null;
@@ -17,16 +18,40 @@ $this->updateViewCounter();
 $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 ?>
 
-
 <div class="page-navigator">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="/">Home</a></li>
-            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Mainc;
-                                                        $cat->setSubGroup($PrDetails->getCategory("header")); ?></a></li>
-            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->SubGroup;
-                                                        $cat->setSub($PrDetails->getCategory("sub")); ?></a></li>
-            <li><a href="<?php echo $cat->getHref() ?>"><?php echo $cat->Sub ?></a></li>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="<?php echo $cat->getHref() ?>">
+                    <?php
+                    echo $cat->Mainc;
+                    $cat->setSubGroup($PrDetails->getCategory("header"));
+                    ?>
+                </a>
+            </li>
+
+            <?php if ($cat->SubGroup) : ?>
+                <li>
+                    <a href="<?php echo $cat->getHref() ?>">
+                        <?php
+                        echo $cat->SubGroup;
+                        $cat->setSub($PrDetails->getCategory("sub"));
+                        ?>
+                    </a>
+                </li>
+
+                <?php if ($cat->Sub) : ?>
+                    <li>
+                        <a href="<?php echo $cat->getHref() ?>">
+                            <?php echo $cat->Sub ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endif; ?>
+
             <li class="active"><?php echo $PrDetails->getName() ?></li>
         </ol>
     </div>
@@ -91,6 +116,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             <div class="flex price-review-flex" style="justify-content: space-between">
                                                 <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>">
                                                     <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
+
                                                     <?php if ($PrDetails->getDiscount()) : ?>
                                                         <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                                     <?php endif; ?>
@@ -169,16 +195,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                         <div class="pr-meta-info">
                                             <span>SKU: <span><?php echo $PrDetails->getOthers("sku") ?></span></span>
                                             <span>Categories: <span><?php echo $PrDetails->getCategory("main") . ', ' . $PrDetails->getCategory("header") ?></span></span>
-                                            <span>
-                                                Tags:
-                                                <?php foreach (explode(',', $PrDetails->getOthers("tags")) as $PrTag) : ?>
-                                                    <span>
-                                                        <a href="/search/?q=&a_s_t=tags&astval=<?php echo urlencode($PrTag) ?>">
-                                                            <?php echo $PrTag ?>
-                                                        </a>
-                                                    </span>
-                                                <?php endforeach; ?>
-                                            </span>
+                                            <span>Call For Order: <span><?php echo Models::getContactInformation("mobile1") ?></span></span>
                                         </div>
                                     </div>
 
@@ -509,7 +526,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 <link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.css') ?>">
 <link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
 <script src="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
-<script>
+<script type="text/javascript">
 var openPhotoSwipe = function(index) {
     var pswpElement = document.querySelectorAll('.pswp')[0],
         items = [<?php echo $zoom_item ?>],
