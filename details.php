@@ -248,10 +248,16 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <div class="pr-glancebox">
                                     <div class="flex">
                                         <div class="gb-image" style="width: 35%;">
-                                            <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                                            <a href="<?php echo $sp->getHref() ?>">
+                                                <img src="<?php echo $sp->getProductImage() ?>" />
+                                            </a>
                                         </div>
                                         <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                            <div class="gb-title"><?php echo $sp->getName() ?></div>
+                                            <div class="gb-title">
+                                                <a href="<?php echo $sp->getHref() ?>">
+                                                    <?php echo $sp->getName() ?>
+                                                </a>
+                                            </div>
                                             <div class="gb-description">
                                                 <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
                                                 <p><strong><?php echo Models::curr($sp->getPrice()) ?></strong></p>
