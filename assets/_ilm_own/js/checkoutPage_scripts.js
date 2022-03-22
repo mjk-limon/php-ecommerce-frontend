@@ -29,8 +29,8 @@ _ilm_Checkout_page = {
                         updadeMyAccount: 1,
                         id: _ilm_Checkout_page.getUserDataField('#user-id'),
                         first_name: _ilm_Checkout_page.getUserDataField('#full-name'),
-                        city: $("#orderLoc").data('ddslick').selectedData.description,
-                        state: $("#orderLoc").data('ddslick').selectedData.text,
+                        city: $("#orderLoc").data('ddslick').selectedData.text,
+                        state: $("#orderLoc").data('ddslick').selectedData.description,
                         address_line_1: _ilm_Checkout_page.getUserDataField('#shipping-address')
                     }, function (data) {
                         var Result = IsJsonString(data) ? JSON.parse(data) : { success: false };

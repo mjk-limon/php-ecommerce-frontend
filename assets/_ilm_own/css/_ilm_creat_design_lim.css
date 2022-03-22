@@ -106,10 +106,15 @@ a.swaplogin{color:#333}
 .logged-in .login-check{position:absolute;right:-1px;top:-1px;width:20px;text-align:center;background:#90ee90}
 .logged-in .login-check .fa{color:#fff}
 .logged-in h3{font-size:16px;margin-bottom:10px}
+.logged-in .logged-in-userdata{padding:10px;margin-bottom:10px;background-color:#fafafa;box-shadow:0px 0px 3px #c6c6c6}
 .logged-in table{width:100%;font-size:12px;color:#888}
 .logged-in table tr td{padding:5px 10px;vertical-align:top}
 .logged-in table tr td a{color:#337ab7}
-.logged-in #orderLoc{display:none}
+.logged-in .logged-in-userdata .editinfo, .logged-in .logged-in-userdata.editing .saveinfo{display:inline-block;}
+.logged-in .logged-in-userdata.editing .editinfo, .logged-in .logged-in-userdata .saveinfo{display:none;}
+.logged-in .loggedindatanav a{display:block;margin:3px 0;font-size:13.5px;}
+.logged-in .logged-in-userdata:not(.editing) .hideonnoedit{display:none}
+.logged-in.noAddress .nav-invoker, .logged-in.noAddress .shippingIdCont{display:none}
 
 #co-order-summery .order-summery .flex{display:flex;flex-wrap:wrap}
 .order-summery .order-summery-tab-1{flex:1;text-align:center}

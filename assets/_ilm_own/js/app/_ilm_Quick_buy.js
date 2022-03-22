@@ -6,21 +6,6 @@ _ilm_Quick_buy = {
         _ilm_Quick_buy.errors = [];
         _ilm_Quick_buy.initSelectMethod();
 
-        $('.shippingChangeBtn').on('click', function (e) {
-            var $env = $(this),
-                $inputs = $(".login-success").find("td input, td textarea");
-
-            if ($env.hasClass("confirm")) {
-                $inputs.prop("readonly", true);
-                $env.removeClass("confirm").html('<i class="fa fa-pencil"></i> Change');
-            } else {
-                $inputs.prop("disabled", false);
-                $inputs.prop("readonly", false);
-                $env.addClass("confirm").html('<i class="fa fa-floppy-o"></i> Save changes');
-            }
-            e.preventDefault();
-        });
-
         $(".checkOutUserInfo").on("submit", function (e) {
             e.preventDefault();
             var $form = $(this);
