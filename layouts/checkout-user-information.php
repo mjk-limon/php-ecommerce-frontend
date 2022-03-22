@@ -163,12 +163,15 @@ else :
                                             <td>Mobile Number:</td>
                                             <td><?php echo $Sc->getMobileNumber() ?></td>
                                         </tr>
-                                        <tr class="hideonnoedit">
+                                        <tr class="ordershippingloc">
                                             <td>Shipping Location</td>
                                             <td>
                                                 <select name="orderLocation" id="orderLoc">
                                                     <?php foreach ($DeliveryLocations as $Loc) : ?>
-                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>" data-description="<?php echo $Loc['city'] ?>" <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?> autocomplete="off">
+                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>"
+                                                                data-description="<?php echo $Loc['city'] ?>"
+                                                                autocomplete="off"
+                                                                <?php if ($Sc->getCity() == $Loc['location']) echo 'selected'; ?>>
                                                             <?php echo htmlspecialchars($Loc['location']) ?>
                                                         </option>
                                                     <?php endforeach; ?>
