@@ -93,7 +93,10 @@ else :
                                         </tr>
                                         <tr>
                                             <td>Mobile Number:</td>
-                                            <td><?php echo $Sc->getMobileNumber() ?></td>
+                                            <td>
+                                                <input type="hidden" name="shippingNumber" value="<?php echo $Sc->getMobileNumber() ?>">
+                                                <?php echo $Sc->getMobileNumber() ?>
+                                            </td>
                                         </tr>
                                         <tr class="ordershippingloc">
                                             <td>Shipping Location</td>
