@@ -9,9 +9,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
 <div class="homepage-top-section">
     <div id="slider">
-        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 600px; overflow: hidden;">
+        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 650px; overflow: hidden;">
             <div data-u="loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-position:50% 50%;background-repeat:no-repeat;background-image:url('images/puff-x.svg');background-color:rgba(0, 0, 0, 0.7);background-size:30px 30px;"></div>
-            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 600px;overflow: hidden;">
+            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 650px;overflow: hidden;">
 
                 <?php
                 $Slider = $this->TopSlider;
@@ -86,63 +86,61 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 <div class="bc-title">
                     <div class="bc-main-title">NEW ARRIVALS</div>
                 </div>
-                <div class="row">
-                    <div class="new-arrivals">
-                        <div class="grid-row grid5">
+                <div class="new-arrivals">
+                    <div class="grid-row grid5">
 
-                            <?php
-                            $St_i = 1;
-                            $newArrivals = $this->newArrivals(10, "id,name,category,discount,price,item_left,others");
-                            while ($NaPr = $newArrivals->fetch_assoc()) :
-                                $sp->setPrInfo($NaPr);
-                                $sp->processDiscount();
-                                $sp->processStock();
-                            ?>
-                                <div class="grids">
-                                    <div class="bc-products">
-                                        <div class="single-product <?php echo $spAddClass ?>">
-                                            <div class="sp-image">
+                        <?php
+                        $St_i = 1;
+                        $newArrivals = $this->newArrivals(10, "id,name,category,discount,price,item_left,others");
+                        while ($NaPr = $newArrivals->fetch_assoc()) :
+                            $sp->setPrInfo($NaPr);
+                            $sp->processDiscount();
+                            $sp->processStock();
+                        ?>
+                            <div class="grids">
+                                <div class="bc-products">
+                                    <div class="single-product <?php echo $spAddClass ?>">
+                                        <div class="sp-image">
 
-                                                <?php if ($sp->getDiscount()) : ?>
-                                                    <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
-                                                <?php endif; ?>
+                                            <?php if ($sp->getDiscount()) : ?>
+                                                <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
+                                            <?php endif; ?>
 
-                                                <a href="<?php echo $sp->getHref() ?>">
-                                                    <img src="<?php echo $sp->getProductImage() ?>" />
-                                                </a>
+                                            <a href="<?php echo $sp->getHref() ?>">
+                                                <img src="<?php echo $sp->getProductImage() ?>" />
+                                            </a>
+                                        </div>
+                                        <div class="has-sp-nav">
+                                            <div class="sp-pr">
+                                                <div class="sp-pr-info">
+                                                    <a href="<?php echo $sp->getHref() ?>">
+                                                        <h5><?php echo $sp->getName() ?></h5>
+                                                    </a>
+                                                    <p>
+                                                        <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
+
+                                                        <?php if ($sp->getDiscount()) : ?>
+                                                            <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
+                                                        <?php endif; ?>
+
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="has-sp-nav">
-                                                <div class="sp-pr">
-                                                    <div class="sp-pr-info">
-                                                        <a href="<?php echo $sp->getHref() ?>">
-                                                            <h5><?php echo $sp->getName() ?></h5>
-                                                        </a>
-                                                        <p>
-                                                            <strong class="price"><?php echo Models::curr($sp->getPrice()) ?></strong>
-
-                                                            <?php if ($sp->getDiscount()) : ?>
-                                                                <strong class="p-old"><?php echo Models::curr($sp->getPrice(0)) ?></strong>
-                                                            <?php endif; ?>
-
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="sp-nav">
-                                                    <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                    <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-                                                    <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
-                                                </div>
+                                            <div class="sp-nav">
+                                                <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                                <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
+                                                <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            <?php
-                                $St_i++;
-                            endwhile;
-                            ?>
+                        <?php
+                            $St_i++;
+                        endwhile;
+                        ?>
 
-                        </div>
                     </div>
                 </div>
             </div>

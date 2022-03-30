@@ -15,42 +15,41 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title><?= $this->HeadData['title']; ?></title>
+    <title><?php echo $this->HeadData['title']; ?> Quality Gift Shop In Bangladesh</title>
     <meta charset="utf-8">
-    <meta name="title" content="<?= $this->HeadData['title'];  ?>" />
+    <meta name="title" content="<?php echo $this->HeadData['title'];  ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="<?= COMPANY_NAME ?> top online shopping in bangladesh. Browse our latest products and order online with cash on delivery payment system.">
-    <meta name="author" content="<?= Head\DevInfo::getAuthor(); ?>">
-    <meta property="og:url" content="<?= $_SERVER['REQUEST_URI'] ?>" />
-    <meta property="og:title" content="<?= $ogInfo["title"] ?>" />
-    <meta property="og:description" content="<?= $ogInfo["description"] ?>" />
-    <meta property="og:image" content="<?= $ogInfo["image"] ?>" />
-    <meta property="og:image:type" content="<?= $ogInfo["image_ext"] ?>" />
-    <meta property="og:image:width" content="<?= $ogInfo["image_width"] ?>" />
-    <meta property="og:image:height" content="<?= $ogInfo["image_height"] ?>" />
-    <meta property="og:site_name" content="<?= $_SERVER['HTTP_HOST'] ?>" />
-    <meta name="keywords" content="<?= $ogInfo["description"] ?>">
+    <meta name="description" content="<?php echo COMPANY_NAME ?> top online shopping in bangladesh. Browse our latest products and order online with cash on delivery payment system.">
+    <meta name="author" content="<?php echo Head\DevInfo::getAuthor(); ?>">
+    <meta property="og:url" content="<?php echo $_SERVER['REQUEST_URI'] ?>" />
+    <meta property="og:title" content="<?php echo $ogInfo["title"] ?>" />
+    <meta property="og:description" content="<?php echo $ogInfo["description"] ?>" />
+    <meta property="og:image" content="<?php echo $ogInfo["image"] ?>" />
+    <meta property="og:image:type" content="<?php echo $ogInfo["image_ext"] ?>" />
+    <meta property="og:image:width" content="<?php echo $ogInfo["image_width"] ?>" />
+    <meta property="og:image:height" content="<?php echo $ogInfo["image_height"] ?>" />
+    <meta property="og:site_name" content="<?php echo $_SERVER['HTTP_HOST'] ?>" />
+    <meta name="keywords" content="<?php echo $ogInfo["description"] ?>">
 
-    <link rel="icon" href="<?= Models::asset("favicon.ico") ?>">
-    <link href="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
+    <link rel="icon" href="<?php echo Models::asset("favicon.ico") ?>">
+    <link href="<?php echo Models::asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
 
-    <link href="<?= Models::asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
-    <link href="<?= Models::asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
+    <link href="<?php echo Models::asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
 
-    <script src="<?= Models::asset("assets/vendors/_jquery/jqu_ilm_plugin.js") ?>"></script>
-    <script src="<?= Models::asset("assets/vendors/flexslider/__ds_jqu_flex.js") ?>"></script>
+    <script src="<?php echo Models::asset("assets/vendors/_jquery/jqu_ilm_plugin.js") ?>"></script>
+    <script src="<?php echo Models::asset("assets/vendors/flexslider/__ds_jqu_flex.js") ?>"></script>
 
     <?php if ($this->mobileView) : ?>
-        <link href="<?= Models::asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
+        <link href="<?php echo Models::asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
     <?php else : ?>
-        <script src="<?= Models::asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
+        <script src="<?php echo Models::asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
     <?php endif; ?>
 
     <?php
@@ -59,23 +58,23 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
 
     <style type="text/css">
     :root {
-        --accent: <?= $this->ColrData['accent'] ?>;
-        --accentsec: <?= $this->ColrData['accentsec'] ?>;
-        --secondary: <?= $this->ColrData['secondary'] ?>;
-        --mainbody: <?= $this->ColrData['mainbody'] ?>;
-        --innerpage: <?= $this->ColrData['innerpage'] ?>;
-        --header: <?= $this->ColrData['header'] ?>;
-        --menubar: <?= $this->ColrData['menubar'] ?>;
+        --accent: <?php echo $this->ColrData['accent'] ?>;
+        --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
+        --secondary: <?php echo $this->ColrData['secondary'] ?>;
+        --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
+        --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
+        --header: <?php echo $this->ColrData['header'] ?>;
+        --menubar: <?php echo $this->ColrData['menubar'] ?>;
     }
 
     </style>
 </head>
 
-<body <?= $body_class ?>>
+<body <?php echo $body_class ?>>
     <div class="floating-sc">
         <div class="sc-btn">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <div><span id="fcTot"><?= $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
+            <div><span id="fcTot"><?php echo $this->CartData->getTotalItem() ?></span> ITEM(S)</div>
             <div class="fcamount"><?php echo Models::curr() ?><span id="fcAmnt" class="odometer"><?php echo $this->CartData->getSubTotal() ?></span></div>
         </div>
         <div class="sc-body">
@@ -105,7 +104,7 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                             </div>
                             <div class="col-md-8 ht-right deskv-hm-movable">
                                 <div class="serachbox">
-                                    <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
+                                    <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
                                         <div class="searchfld deskv">
                                             <input type="text" placeholder="Search for Proudcts, Brands..." name="q" autocomplete="off" class="input-text search-q" />
                                             <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>
@@ -175,22 +174,22 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                             <li>
                                                 <a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
                                                 <ul class="collapse" id="ht-currency">
-                                                    <li id="cur_BDT"><a href="<?= Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-                                                    <li id="cur_USD"><a href="<?= Models::baseUrl('?cur=USD') ?>">USD</a></li>
-                                                    <li id="cur_INR"><a href="<?= Models::baseUrl('?cur=INR') ?>">INR</a></li>
-                                                    <li id="cur_GBP"><a href="<?= Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
+                                                    <li id="cur_BDT"><a href="<?php echo Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
+                                                    <li id="cur_USD"><a href="<?php echo Models::baseUrl('?cur=USD') ?>">USD</a></li>
+                                                    <li id="cur_INR"><a href="<?php echo Models::baseUrl('?cur=INR') ?>">INR</a></li>
+                                                    <li id="cur_GBP"><a href="<?php echo Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
                                                 </ul>
                                             </li>
 
                                             <?php if (!$this->UserData) : ?>
-                                                <li><a class="_ph_RegBtn" href="/register/?ref=<?= urlencode($this->HeadData['ref']) ?>">Join free</a></li>
-                                                <li><a class="_ph_LoginBtn" href="/login/?ref=<?= urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
+                                                <li><a class="_ph_RegBtn" href="/register/?ref=<?php echo urlencode($this->HeadData['ref']) ?>">Join free</a></li>
+                                                <li><a class="_ph_LoginBtn" href="/login/?ref=<?php echo urlencode($this->HeadData['ref']) ?>">Sign in</a></li>
                                             <?php else : ?>
-                                                <li><a href="/my-account/?c=90.04">Notifications (<?= $this->NotificationBadge ?>)</a></li>
+                                                <li><a href="/my-account/?c=90.04">Notifications (<?php echo $this->NotificationBadge ?>)</a></li>
                                                 <li><a href="/my-account/">Update Account</a></li>
                                                 <li><a href="/my-account/?c=90.02">My Wishlists</a></li>
                                                 <li><a href="/my-account/?c=90.03">Order History</a></li>
-                                                <li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?= urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
+                                                <li><a class="_ph_LogoutBtn" href="/my-account/?logout=1&ref=<?php echo urlencode($this->HeadData['ref']) ?>">Sign Out</a></li>
                                             <?php endif; ?>
 
                                             <li><a href="/brands/">Brands</a></li>
@@ -240,7 +239,7 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                         ?>
                             <div class="col-xs-12">
                                 <div class="serachbox">
-                                    <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
+                                    <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
                                         <div class="searchfld deskv">
                                             <input type="text" placeholder="Search for Proudcts, Brands..." name="q" autocomplete="off" class="input-text search-q" />
                                             <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>

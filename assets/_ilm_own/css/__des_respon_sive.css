@@ -98,7 +98,7 @@
 	.tt-filter .ttf-single .ttf-close, .scb-cart-area .rmv-crt-btn{text-shadow:none;display:inline-block;width:20px;height:20px;border-radius:50%;background:#e44;color:#fff;text-align:center;padding:0;margin-left:3px;font-size:14px}
 	
 	.mb-floating-filter-btns{position:fixed;bottom:0;left:0;width:100%;z-index:1000;box-shadow:0 -1px 2px #e1e1e1}
-	.mb-floating-filter-btns li{width:50%;display:inline-block;list-style-type:none;text-align:center;border-right:1px solid #e1e1e1}
+	.mb-floating-filter-btns li{width:49.5%;display:inline-block;list-style-type:none;text-align:center;border-right:1px solid #e1e1e1}
 	.mb-floating-filter-btns li:last-child{border-right:0}
 	.mb-floating-filter-btns li a{padding:8px 0;display:block;background:#fff;font-weight:300;font-size:16px}
 	.mb-floating-filter-btns li a i{margin-right:7px;font-size:13px;color:#888}
@@ -118,9 +118,9 @@
 	.filter-form > h4{padding-left:0}
 	
 	.empty-product-page > h4{font-size:1.7rem}
-	.col-xs-6 .bc-products .single-product, .product-page-products .single-product{height:200px}
+	.bc-products .single-product, .product-page-products .single-product{padding:0;height:300px}
 	.sp-image{height:70%}
-	.sp-image img{margin:15px auto;max-height:100%}
+	.sp-image img{margin:0px auto;max-height:100%}
 	.has-sp-nav{flex:1}
 	.sp-pr{padding:1em 0.75em}
 	.sp-nav{opacity:1;left:0;line-height:2}
@@ -149,7 +149,7 @@
 	 Login/Registration, My account
 	================*/
 	.floating-sc .sc-body{width:100vw}
-	.fsc-content {height:calc(100vh - 50px)}
+	.fsc-content {height:calc(100vh - 60px)}
 	.table.fc-table > tbody > tr > td{vertical-align:top}
 	.coupon-area{width:100%}
 	
