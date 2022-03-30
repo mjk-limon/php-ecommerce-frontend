@@ -2,12 +2,16 @@
 
 namespace _ilmComm;
 
+use _ilmComm\Head\AdditionalHead;
+use _ilmComm\Head\DevInfo;
+
 $socialLinks = $this->getSocialLinks();
 $paymentMethods = $this->paymentMethods();
 $shippingMethods = $this->shippingMethods();
 ?>
 
 </section>
+
 <footer id="footer">
     <div class="footer-widget">
         <div class="container">
@@ -27,17 +31,6 @@ $shippingMethods = $this->shippingMethods();
                                     <button type="submit" class="btn btn-sub newsletter-btn iFSubmitBtn">SUBMIT</button>
                                 </div>
                             </form>
-                        </div>
-
-                        <div class="all-right-reserved">
-                            <p>
-                                KiteShop.com.bd using brand name of SM Unitech BD Software (Pvt) Ltd.
-                                under license No. C-132126.
-                            </p>
-                            <p>
-                                Copyright @ 2009-2022, All Rights & Reserved by "SM Unitech BD Software
-                                (Private) Limited".
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -77,7 +70,7 @@ $shippingMethods = $this->shippingMethods();
                 </div>
                 <div class="col-md-3 col-xs-6">
                     <div class="single-widget">
-                        <h2>Account</h2>
+                        <h2>Useful Links</h2>
                         <ul class="nav nav-pills nav-stacked">
                             <li><i class="fa fa-chevron-right"></i><a href="/page/about-us/">About Us</a></li>
                             <li><i class="fa fa-chevron-right"></i><a href="/page/term-of-use/">Terms and Conditions</a></li>
@@ -88,6 +81,11 @@ $shippingMethods = $this->shippingMethods();
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright-section">
+            <p><?php echo DevInfo::getDevComInfo() ?></p>
         </div>
     </div>
 </footer>
