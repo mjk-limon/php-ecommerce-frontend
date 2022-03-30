@@ -39,7 +39,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
     </div>
 </div>
 
-<section class="main-body bg-white">
+<section class="main-body bg-white" style="min-height: auto;">
     <div class="spd">
         <div class="container">
             <div class="section-mb">
@@ -229,9 +229,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 <div class="prgrid-ads-section">
                     <div class="prgrid-ad-img">
                         <a href="<?php echo $this->TopSticker3['image_link'] ?>">
-                            <img src="<?php echo $this->TopSticker1['image'] ?>" alt="Banner 1">
+                            <img src="<?php echo $this->TopSticker3['image'] ?>" alt="Banner 1">
                             <div class="img-overlay">
-                                <span><?php echo $this->TopSticker1['image_heading'] ?></span>
+                                <span><?php echo $this->TopSticker3['image_heading'] ?></span>
                                 <span class="btn ilmbutton"><i class="pe-7s-play"></i> Watch Video</span>
                             </div>
                         </a>
