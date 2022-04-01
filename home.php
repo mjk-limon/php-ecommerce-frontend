@@ -61,7 +61,7 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     $Slider = $this->getSliders(3);
                     while ($ArrSlider = $Slider->fetch_array()) :
                     ?>
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-xs-6">
                             <div class="single-layout-grid">
                                 <div class="slg-image">
                                     <a href="<?php echo $ArrSlider['image_link'] ?>">

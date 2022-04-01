@@ -14,7 +14,6 @@
 }
 [class^="pe-7s-"], [class*=" pe-7s-"] {
 	font-family: 'Pe-icon-7-stroke';
-	speak: none;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
@@ -382,7 +381,6 @@ header{position:fixed;top:0;left:0;width:100%;background: var(--header);box-shad
 
 .home-floating-menu-container{position:relative;z-index:1000}
 .home-floating-menu-container .mainmenu{background:#fff;box-shadow:0px 1px 2px #a8a6a6}
-.mainmenu ul{/* min-height:413px */}
 .mainmenu ul li{height:50px;display:block;margin:0 auto;}
 .mainmenu ul li a{color:#333;letter-spacing:0.4px;font-size:14px;font-weight:400;padding:0 25px;line-height:50px;background-position:center center;background-repeat:no-repeat}
 .mainmenu ul.menunavright li a{padding:0 10px}
@@ -404,7 +402,6 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sub-menu > .sub-cols > a{padding:0}
 .sub-menu h3{font-size:13px;color:#333;margin:2px 0;text-transform:uppercase;font-weight:bold}
 
-.fixed-menu-bar header{/* animation:slideDown .4s */}
 .fixed-menu-bar .header_top{display:none}
 .fixed-menu-bar .searchfld{margin:5px auto} 
 .fixed-menu-bar .wishlistall > li{margin:4px 6px}
@@ -497,7 +494,6 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .prgrid-ads-section .prgrid-ad-img:hover{transform:scale(1.1)}
 .prgrid-ads-section .prgrid-ad-img img{max-width:100%}
 
-.section-browse-cat{}
 .bc-single{margin-bottom:4rem;position:relative}
 .bc-main-title{font-size:2.5rem;font-weight:300;margin-bottom:15px;text-align:center}
 .bc-cat-name{font-weight: 400;font-size: 2rem;background-color: #f5f5f5;margin-bottom:1rem;}
@@ -862,7 +858,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .sqo-cat ul li a{color:#888}
 
 .support-more{text-align:center}
-.support-more .supm-box{display: inline-block;margin: .5rem 1rem;padding: 1rem;border: 1px solid#ccc;border-radius: 20px;background: #fcfcfc;}
+.support-more .supm-box{display: inline-block;margin: .5rem 1rem;padding: 1rem;border: 1px solid #ccc;border-radius: 20px;background: #fcfcfc;}
 
 /*===== Order Track =====*/
 .order-track{background:transparent url(../../images/track.png) bottom right 6px/250px no-repeat;text-align: center;padding: 8rem;}
@@ -879,8 +875,8 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;visibility:hidden}
 .odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}
 .odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}
-.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden}
-.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0)}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;transform:translateZ(0);-webkit-transform:translateZ(0)}
 .odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}
 .odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform 2s;-moz-transition:-moz-transform 2s;-ms-transition:-ms-transform 2s;-o-transition:-o-transform 2s;transition:transform 2s}
 .odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}
