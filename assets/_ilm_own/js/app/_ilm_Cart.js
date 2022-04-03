@@ -269,8 +269,8 @@ var _ilm_Cart_floatingcart = {
         if (typeof Tawk_API !== 'undefined') {
             Tawk_API.hideWidget();
         }
-        $(".sc-body").addClass("open");
-        //$(".main-body").addClass("sc-cart-open");
+        // $(".sc-body").addClass("open");
+        $("body").addClass("sc-cart-open");
     },
 
     hideCart: function () {
@@ -278,7 +278,7 @@ var _ilm_Cart_floatingcart = {
             Tawk_API.showWidget();
         }
 
-        $(".sc-body").removeClass("open");
-        //$(".main-body").removeClass("sc-cart-open");
+        // $(".sc-body").removeClass("open");
+        $("body").removeClass("sc-cart-open");
     }
 }

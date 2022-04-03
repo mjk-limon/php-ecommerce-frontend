@@ -268,7 +268,7 @@ body.elem-loader{padding-right:18px}
 .limbutton{cursor:pointer;padding:0 25px;color:var(--accent);border-radius:0px;font-size:14px;font-weight:normal;height:35px!important;border:0px;line-height:35px !important;text-transform:uppercase;background-image:linear-gradient(75.96deg,#58595b,#58595b 51%,#58595b 100%) !important;background-position:left !important;background-size:350% auto !important;transition: .5s}
 
 /*== Floating Cart ===*/
-.floating-sc{position:fixed;right:0;height:100%;z-index:10000}
+.floating-sc{position:fixed;right:0;height:100%;z-index:10000;transition:background-color .6s}
 .floating-sc .sc-btn{position:absolute;top:25%;right:0;cursor:pointer;text-align:center;width:60px;background:#333;color:#fff;overflow:hidden;box-shadow:-2px 2px 4px #797979}
 .floating-sc .sc-btn > i{font-size:1.8em;padding:1.25rem 0;padding-bottom:0}
 .floating-sc .sc-btn > div{padding:3px 0;font-size:10px}
