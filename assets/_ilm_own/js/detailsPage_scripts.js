@@ -181,11 +181,11 @@ _ilm_Details_page = {
                     $StockElem = $("#tStock"),
                     prDis = parseInt($PriceElem.data("dis")),
                     prDisPrice = item.s_p.replace(/[0-9]{1,}/g, function (prPrice) {
-                        return prPrice - (prPrice * (prDis / 100));
+                        return Math.round(prPrice - (prPrice * (prDis / 100)));
                     }), priceLbl;
 
                 priceLbl = prDis
-                    ? Math.round(prDisPrice) + '<span class="pre-price">' + item.s_p + '</span>'
+                    ? prDisPrice + '<span class="pre-price">' + item.s_p + '</span>'
                     : item.s_p;
 
                 $PriceElem.html(priceLbl);
