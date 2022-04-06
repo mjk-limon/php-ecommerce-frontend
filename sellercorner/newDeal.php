@@ -2,8 +2,7 @@
 
 namespace _ilmComm;
 
-use _ilmComm\AdminApp\Basic\Models as AppModel;
-
+require doc_root("546_admin/includes/functions.php");
 ?>
 
 <div class="main">
@@ -152,7 +151,7 @@ use _ilmComm\AdminApp\Basic\Models as AppModel;
                                         continue;
                                     }
 
-                                    $othFieldData = AppModel::addPrsOtherLableFieldGenerator($othKey, $othFields);
+                                    $othFieldData = add_prs_other_lbl_fld_generator($othKey, $othFields);
                             ?>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">

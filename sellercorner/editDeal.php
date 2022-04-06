@@ -2,7 +2,7 @@
 
 namespace _ilmComm;
 
-use _ilmComm\AdminApp\Basic\Models as AppModel;
+require doc_root("546_admin/includes/functions.php");
 
 $NewDealModel = $this->extModel("Sellercorner\\Newdeal");
 $AlCats = $NewDealModel->getAllCategories();
@@ -67,7 +67,7 @@ $AddPrOthers = $NewDealModel->getAllPrsOthers();
                                             $Prid = $this->Prid;
                                             $PrImages = $this->Di->getAllPrImages();
                                             foreach ($PrImages as $ColorName => $ColorImages) {
-                                                $resColor = Models::restyleUrl($ColorName, true);
+                                                $resColor = restyle_url($ColorName, true);
                                                 $drpClass = $ColorName ? ' colored ' . $resColor : null;
 
                                                 $background = str_replace(" ", ", ", $ColorName, $count);
@@ -169,7 +169,7 @@ $AddPrOthers = $NewDealModel->getAllPrsOthers();
                                         continue;
                                     }
 
-                                    $othFieldData = AppModel::addPrsOtherLableFieldGenerator($othKey, $othFields, $this->Di);
+                                    $othFieldData = add_prs_other_lbl_fld_generator($othKey, $othFields, $this->Di);
                             ?>
                                     <div class="col-md-6">
                                         <div class="form-group bmd-form-group">
