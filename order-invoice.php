@@ -3,7 +3,7 @@
 namespace _ilmComm;
 
 require "../doc/includes/config.php";
-require "../doc/main/autoload.php";
+require "../doc/vendor/autoload.php";
 
 /**
  * Init page models
