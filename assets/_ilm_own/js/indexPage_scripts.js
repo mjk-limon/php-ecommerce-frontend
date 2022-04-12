@@ -5,7 +5,7 @@ _ilm_home_page = {
             flash_slider,
             trend_slider;
         
-        lazyLoadInstance.update();
+        // lazyLoadInstance.update();
 
         /**
          * FrontPage Events
