@@ -4,7 +4,9 @@ namespace _ilmComm;
 
 $socialLinks = $this->getSocialLinks();
 $paymentMethods = $this->paymentMethods();
-$shippingMethods = $this->shippingMethods();
+$shippingMethods = array_filter($this->shippingMethods(), function ($v) {
+    return $v["method_logo"];
+});
 ?>
 
 </section>
@@ -96,7 +98,8 @@ $shippingMethods = $this->shippingMethods();
                     <h4>Delivered By</h4>
 
                     <?php foreach ($shippingMethods as $SM) : ?>
-                        <img src="<?php echo Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?php echo htmlspecialchars($SM['method_name']) ?>" />
+                        <img src="<?php echo Models::asset($SM['method_logo']); ?>" class="img-responsive"
+                            alt="<?php echo htmlspecialchars($SM['method_name']) ?>" />
                     <?php endforeach; ?>
 
                 </div>
@@ -135,7 +138,7 @@ $shippingMethods = $this->shippingMethods();
 
 <script src="<?php echo Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
-    lazyLoadInstance.update()
+lazyLoadInstance.update()
 </script>
 
 <?php
@@ -144,7 +147,7 @@ if ($notification) :
     Session::Destroy("msg");
 ?>
     <script type="text/javascript">
-        showPageAlert("Alert !", "<?php echo htmlspecialchars($notification) ?>");
+    showPageAlert("Alert !", "<?php echo htmlspecialchars($notification) ?>");
     </script>
 <?php endif; ?>
 
