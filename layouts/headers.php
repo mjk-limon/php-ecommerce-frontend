@@ -261,7 +261,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <ul class="m-a-links">
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/brands/">Brands</a></li>
-                                        <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+                                        
+                                        <?php if (adm_fet("_ilm_prd", "forceflash")) : ?>
+                                            <li><a href="/search/?q=&a_s_t=flash_sales"><?php echo $this->OfferText ?></a></li>
+                                        <?php else : ?>
+                                            <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+                                        <?php endif; ?>
+
                                         <li><a href="/track-order/">Track Order</a></li>
 
                                         <?php if (!$this->UserData) : ?>
