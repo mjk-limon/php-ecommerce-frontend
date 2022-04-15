@@ -147,7 +147,7 @@ _ilm_Details_page = {
 					}), priceLbl;
 
 				priceLbl = prDis
-					? prDisPrice + '<span class="pre-price">' + item.s_p + '</span>'
+					? item.p_dp + '<span class="pre-price">' + item.s_p + '</span>'
 					: item.s_p;
 
 				$PriceElem.html(priceLbl);

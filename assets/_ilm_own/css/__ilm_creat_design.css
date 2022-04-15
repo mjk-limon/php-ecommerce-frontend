@@ -662,7 +662,7 @@ ul.sub-menu{position:absolute;left:0;right:0;background:#fff;list-style:none;pad
 .bnav-btns{padding:0; margin-bottom: 0; margin-left:1rem}
 .bnav-btns li{display:inline-block;cursor:pointer;padding:0px 25px;font-size:14px;height: 35px;line-height: 35px;}
 .bnav-btns .add-to-cart{background-color: #58595b;color:#f5f5f5}
-.bnav-btns .quick-buy{background-color:var(--secondary);border:1px solid var(--secondary)}
+.bnav-btns .quick-buy{background-color:var(--accent);border:1px solid var(--accent);color:#fff}
 .bnav-wishlist{color:#888}
 .bnav-wishlist a{padding-left:3px;color:#ff983e}
 .pr-short-description{padding: 1rem;background-color: #f3f3f3;color: #58595b;line-height: 1.75em;}

@@ -160,7 +160,8 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                             $background);
                                                     ?>
                                                         <li class="cs-btn">
-                                                            <i style="background:<?php echo $colrPrev ?>"></i> <?php echo $Color ?>
+                                                            <i style="background:<?php echo $colrPrev ?>"></i>
+                                                            <?php echo $Color ?>
                                                         </li>
                                                     <?php endforeach; ?>
                                                 </ul>
@@ -183,14 +184,15 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="pr-call-for-order">
-                                                <span>
-                                                    Call For Order:
-                                                    <span><?php echo Models::getContactInformation("mobile1") ?></span>
-                                                    <span><?php echo Models::getContactInformation("mobile2") ?></span>
-                                                </span>
-                                            </div>
                                         <?php endif; ?>
+
+                                        <div class="pr-call-for-order">
+                                            <span>
+                                                Call For Order:
+                                                <span><?php echo Models::getContactInformation("mobile1") ?></span>
+                                                <span><?php echo Models::getContactInformation("mobile2") ?></span>
+                                            </span>
+                                        </div>
 
                                         <?php if ($PrDetails->getOthers("prshortdes")) : ?>
                                             <div class="pr-short-description">
@@ -234,54 +236,57 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                         </div>
                     </div>
 
-                    <div class="col-md-3 details-top-right">
-                        <div class="glancebox-header">RECOMMENDED FOR YOU</div>
+                    <?php if (!$this->mobileView) : ?>
+                        <div class="col-md-3 details-top-right">
+                            <div class="glancebox-header">RECOMMENDED FOR YOU</div>
 
-                        <div class="section-mb">
+                            <div class="section-mb">
 
-                            <?php
-                            $Recommended = $this->productSuggestion(false, 4);
-                            while ($RcInfo = $Recommended->fetch_assoc()) :
-                                $sp->setPrInfo($RcInfo);
-                                $sp->processStock();
-                            ?>
-                                <div class="pr-glancebox">
-                                    <div class="flex">
-                                        <div class="gb-image" style="width: 35%;">
-                                            <a href="<?php echo $sp->getHref() ?>">
-                                                <img src="<?php echo $sp->getProductImage() ?>" />
-                                            </a>
-                                        </div>
-                                        <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                                            <div class="gb-title">
+                                <?php
+                                $Recommended = $this->productSuggestion(false, 4);
+                                while ($RcInfo = $Recommended->fetch_assoc()) :
+                                    $sp->setPrInfo($RcInfo);
+                                    $sp->processStock();
+                                ?>
+                                    <div class="pr-glancebox">
+                                        <div class="flex">
+                                            <div class="gb-image" style="width: 35%;">
                                                 <a href="<?php echo $sp->getHref() ?>">
-                                                    <?php echo $sp->getName() ?>
+                                                    <img src="<?php echo $sp->getProductImage() ?>" />
                                                 </a>
                                             </div>
-                                            <div class="gb-description">
-                                                <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
-                                                <p><strong><?php echo Models::curr($sp->getPrice()) ?></strong></p>
+                                            <div class="gb-info" style="width: 65%;padding-left: 10px;">
+                                                <div class="gb-title">
+                                                    <a href="<?php echo $sp->getHref() ?>">
+                                                        <?php echo $sp->getName() ?>
+                                                    </a>
+                                                </div>
+                                                <div class="gb-description">
+                                                    <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
+                                                    <p><strong><?php echo Models::curr($sp->getPrice()) ?></strong></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="gb-pr-buy-nav pr-buy-navs">
+                                            <div class="flex">
+                                                <ul class="qty-selection" style="width: 35%;">
+                                                    <li class="item_minus"><a href="javascript:;">-</a></li>
+                                                    <li class="item_qty item_qty_input"><input type="number" value="1" max="<?php echo $sp->getStock() ?>" autocomplete="off" /></li>
+                                                    <li class="item_plus"><a href="javascript:;">+</a></li>
+                                                </ul>
+                                                <ul class="bnav-btns">
+                                                    <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                                                    <li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="gb-pr-buy-nav pr-buy-navs">
-                                        <div class="flex">
-                                            <ul class="qty-selection" style="width: 35%;">
-                                                <li class="item_minus"><a href="javascript:;">-</a></li>
-                                                <li class="item_qty item_qty_input"><input type="number" value="1" max="<?php echo $sp->getStock() ?>" autocomplete="off" /></li>
-                                                <li class="item_plus"><a href="javascript:;">+</a></li>
-                                            </ul>
-                                            <ul class="bnav-btns">
-                                                <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-                                                <li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endwhile; ?>
+                                <?php endwhile; ?>
 
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>
@@ -493,6 +498,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                     <img src="images/no-stock.png" alt="" id="no-stock" style="width: 150px;display: none;" />
                 </em>
                 <li class="add-to-cart add-cart cAddBuyNav mb-details">Add To Cart</li>
+                <!-- <li class="quick-buy cAddBuyNav mb-details">Quick Buy</li> -->
             </ul>
         </div>
         <p class="bnav-wishlist">Buy Later? <a href="javascript:;" class="cAddWishNav"><i class="fa fa-heart-o"></i> Add to wishlist</a></p>
