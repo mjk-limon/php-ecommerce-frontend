@@ -79,3 +79,14 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
 }
 $MainCats->free();
 ?>
+
+<li class="dropdown">
+    <a href="/page/about-us/">
+        About Us
+    </a>
+</li>
+<li class="dropdown">
+    <a href="/contact/">
+        Contact Us
+    </a>
+</li>

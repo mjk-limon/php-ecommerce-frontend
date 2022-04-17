@@ -9,9 +9,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
 <div class="homepage-top-section">
     <div id="slider">
-        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 600px; overflow: hidden;">
+        <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1920px;height: 650px; overflow: hidden;">
             <div data-u="loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-position:50% 50%;background-repeat:no-repeat;background-image:url('images/puff-x.svg');background-color:rgba(0, 0, 0, 0.7);background-size:30px 30px;"></div>
-            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 600px;overflow: hidden;">
+            <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1920px; height: 650px;overflow: hidden;">
 
                 <?php
                 $Slider = $this->TopSlider;
@@ -252,22 +252,30 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="new-arrivals">
                     <div class="essential-grid grid5">
-                        <?php for ($i = 1; $i <= 10; $i++) { ?>
+
+                        <?php
+                        $InstagramUpdates = $this->getSliders("7");
+                        while ($ArrSlider = $InstagramUpdates->fetch_array()) :
+                        ?>
                             <div class="single-essentialgrid">
                                 <a href="">
                                     <div class="seg-inner seg-full">
                                         <div class="seg-thumb">
-                                            <img src="https://img3.nevesta.info/thumb/content/photo/911900/911814/201806/17606308/17606308_so0v3s9x77kwcc.jpg?thumb_params=c0ycgTumbSynk1DdBnKHOUCODIM=/430x430" alt="">
+                                            <img src="<?php echo asset($ArrSlider["image"]) ?>" alt="">
                                         </div>
                                         <div class="seg-content">
                                             <div class="segc-des">
-                                                <p> Hello Microphone Testing </p>
+                                                <p><?php echo $ArrSlider["image_heading"] ?></p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                        <?php } ?>
+                        <?php
+                        endwhile;
+                        $InstagramUpdates->free();
+                        ?>
+
                     </div>
                 </div>
             </div>
@@ -284,52 +292,31 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                 </div>
                 <div class="new-arrivals">
                     <div class="essential-grid">
-                        <div class="single-essentialgrid">
-                            <div class="seg-inner seg-inline">
-                                <div class="seg-thumb">
-                                    <img src="https://cdn.vox-cdn.com/thumbor/lxlzukD8v8ldk2Bz6KajYATTttE=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/21822027/106679797_1598489579145_amazon_fresh_grocery_store.jpeg" alt="">
-                                </div>
-                                <div class="seg-content">
-                                    <div class="segc-title">
-                                        <h4>Jamuna Future Park</h4>
+
+                        <?php
+                        $Branches = $this->getSliders("8");
+                        while ($ArrSlider = $Branches->fetch_array()) :
+                        ?>
+                            <div class="single-essentialgrid">
+                                <div class="seg-inner seg-inline">
+                                    <div class="seg-thumb">
+                                        <img src="<?php echo asset($ArrSlider["image"]) ?>" alt="">
                                     </div>
-                                    <div class="segc-des">
-                                        <p> Level#2, Zone C, South Court, Shop 2C-034 (Wednesday Closed) </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-essentialgrid">
-                            <div class="seg-inner seg-inline">
-                                <div class="seg-thumb">
-                                    <img src="https://cdn.vox-cdn.com/thumbor/lxlzukD8v8ldk2Bz6KajYATTttE=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/21822027/106679797_1598489579145_amazon_fresh_grocery_store.jpeg" alt="">
-                                </div>
-                                <div class="seg-content">
-                                    <div class="segc-title">
-                                        <h4>Jamuna Future Park</h4>
-                                    </div>
-                                    <div class="segc-des">
-                                        <p> Level#2, Zone C, South Court, Shop 2C-034 (Wednesday Closed) </p>
+                                    <div class="seg-content">
+                                        <div class="segc-title">
+                                            <h4><?php echo $ArrSlider["image_heading"] ?></h4>
+                                        </div>
+                                        <div class="segc-des">
+                                            <p><?php echo $ArrSlider["image_text1"] ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="single-essentialgrid">
-                            <div class="seg-inner seg-inline">
-                                <div class="seg-thumb">
-                                    <img src="https://cdn.vox-cdn.com/thumbor/lxlzukD8v8ldk2Bz6KajYATTttE=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/21822027/106679797_1598489579145_amazon_fresh_grocery_store.jpeg" alt="">
-                                </div>
-                                <div class="seg-content">
-                                    <div class="segc-title">
-                                        <h4>Jamuna Future Park</h4>
-                                    </div>
-                                    <div class="segc-des">
-                                        <p> Level#2, Zone C,
-                                            South Court, Shop 2C-034 (Wednesday Closed) </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        endwhile;
+                        $Branches->free();
+                        ?>
+
                     </div>
                 </div>
             </div>
