@@ -16,7 +16,6 @@ $bannerToEdit = array(
 );
 
 $stickersToEdit    = array(
-    "home page stickers top 1" => array("page" => "index", "position" => 2, "fields" => "2", "scale" => "450,215"),
     "home page stickers new arrival" => array("page" => "index", "position" => 3, "fields" => "2", "scale" => "460,700"),
     "offer text" => array("page" => "index", "position" => 4, "fields" => "5_-_Link Title", "omit_img" => true)
 );
