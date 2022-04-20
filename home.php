@@ -78,8 +78,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     <div class="bc-main-title">TRENDING</div>
                 </div>
                 <div class="new-arrivals">
-                    <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:380px;overflow:hidden;visibility:hidden;"' : null ?>>
-                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:380px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
+                    <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:430px;overflow:hidden;visibility:hidden;"' : null ?>>
+                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:430px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
                             <?php
                             $TrendingProducts = $this->Trendings;
@@ -154,8 +154,8 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
                     <div class="bc-main-title">RECENTLY UPLOADS</div>
                 </div>
                 <div class="new-arrivals">
-                    <div <?php echo !$this->mobileView ? 'id="flashsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:380px;overflow:hidden;visibility:hidden;"' : null ?>>
-                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:380px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
+                    <div <?php echo !$this->mobileView ? 'id="flashsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:430px;overflow:hidden;visibility:hidden;"' : null ?>>
+                        <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:430px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
 
                             <?php
                             $newArrivals = $this->newArrivals();

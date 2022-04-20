@@ -32,7 +32,7 @@ _ilm_home_page = {
 			$FillMode: 1,
 			$ArrowKeyNavigation: 3,
 			$SlideWidth: 280,
-			$SlideHeight: 375,
+			$SlideHeight: 425,
 			//   $SlideSpacing: 25,
 			$ArrowNavigatorOptions: {
 				$Class: $JssorArrowNavigator$
