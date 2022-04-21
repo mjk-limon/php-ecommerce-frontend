@@ -7,7 +7,7 @@ $BrandLists = $this->brandLists();
 
 <section class="main-body bg-white">
 
-    <?php if ($BrandLists->num_rows) : ?>
+    <?php if (is_array($BrandLists) && count($BrandLists)) : ?>
         <div class="spd">
             <div class="container">
                 <div class="section-mb">
@@ -17,15 +17,8 @@ $BrandLists = $this->brandLists();
                     <div class="ft-pr-sliders">
                         <div class="homepage-brand-section">
                             <?php
-                            $BrandList = array();
-                            while ($BrInfo = $BrandLists->fetch_assoc()) {
-                                $BrandList[$BrInfo['image_heading']] = [
-                                    'link'    => "/search/?q=&a_s_t=brand&astval=" . urlencode($BrInfo['image_heading']),
-                                    'image'    => Models::asset($BrInfo['image'])
-                                ];
-                            }
-
-                            $BrandGroups = $this->groupBrandList($BrandList);
+                            $FormattedBrandList = array_combine(array_column($BrandLists, "brand"), $BrandLists);
+                            $BrandGroups = $this->groupBrandList($FormattedBrandList);
                             foreach ($BrandGroups as $GK => $GK_Val) :
                             ?>
                                 <div class="brand-group" style="margin-bottom: 1rem">
@@ -34,8 +27,8 @@ $BrandLists = $this->brandLists();
 
                                         <?php
                                         foreach ($GK_Val as $BrName) :
-                                            $BrLink = $BrandList[$BrName]['link'];
-                                            $BrImg = $BrandList[$BrName]['image'];
+                                            $BrLink = $FormattedBrandList[$BrName]['link'];
+                                            $BrImg = $FormattedBrandList[$BrName]['image'];
                                         ?>
                                             <div class="single-brand">
                                                 <div class="single-brand-info">
