@@ -5,12 +5,6 @@ namespace _ilmComm;
 Head\DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
 $body_class = $this->mobileView ? 'class="htmlformb"' : '';
-
-$BrandList = $this->extModel("Brands")->brandLists(true);
-$BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
-$AllAboutBeauty = $this->extModel("Home")->getSliders(1);
-$TopBrands = array_slice($BrandGroups, 0, 9);
-
 ?>
 
 <!DOCTYPE html>
