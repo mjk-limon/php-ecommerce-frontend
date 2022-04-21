@@ -2,7 +2,7 @@
 
 namespace _ilmComm;
 
-use _ilmComm\Brands\FetchBrands;
+use _ilmComm\Brands\FetchBrands\FetchBrands;
 
 ?>
 
