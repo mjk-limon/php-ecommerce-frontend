@@ -357,20 +357,17 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
                     <?php
                     $St_i = 1;
-                    $Cat = new Category\FetchCategories;
-                    $MainCats = $Cat->fetchMain();
+                    $Cat = new Category\CategoryInfo\CategoryInfo;
+                    $MainCats = $Cat->getFetchable()->fetchMain();
 
                     while ($ArrMain = $MainCats->fetch_assoc()) :
-                        $Cat->setCatId($ArrMain['id']);
-                        $Cat->setMain($ArrMain['main']);
-                        $Cat->setSubGroup(null);
-                        $Cat->setSub(null);
+                        $Cat->setCatArr($ArrMain);
 
-                        $BrowseCatProducts = $this->browseCatProducts($Cat->CatId);
+                        $BrowseCatProducts = $this->browseCatProducts($Cat->getCatId());
                         if ($BrowseCatProducts->num_rows) :
                     ?>
                             <div class="bc-single">
-                                <div class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></div>
+                                <div class="bc-cat-name"><?php echo htmlspecialchars($Cat->getMain()) ?></div>
                                 <div class="grid-row">
 
                                     <?php
@@ -383,11 +380,12 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 
                                         <?php
                                         if ($Ct_i == 1) :
-                                            $CatImg = Models::asset('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-3.jpg');
+                                            $CatImg = current($Cat->getCatImg("Homepage category sample"));
                                         ?>
                                             <div class="grids large-grid onlycolspan">
                                                 <div class="prgrid-ads-section">
-                                                    <a href="<?php echo $Cat->getHref() ?>" class="prgrid-ad-img" style="background-image:url('<?php echo $CatImg ?>')"></a>
+                                                    <a href="<?php echo $Cat->getHref() ?>" class="prgrid-ad-img"
+                                                       style="background-image:url('<?php echo $CatImg ?>')"></a>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
@@ -456,9 +454,9 @@ $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) *
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.js") ?>"></script>
 <script src="<?= Models::asset("assets/vendors/jssor/jssor.slider.js") ?>"></script>
 <script type="text/javascript">
-    slideSize = {
-        width: <?php echo $slideSize[0] ?>,
-        height: <?php echo $slideSize[1] ?>
-    };
+slideSize = {
+    width: <?php echo $slideSize[0] ?>,
+    height: <?php echo $slideSize[1] ?>
+};
 </script>
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/indexPage_scripts.js") ?>"></script>
