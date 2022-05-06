@@ -2,7 +2,7 @@
 
 namespace _ilmComm;
 
-use _ilmComm\Brands\FetchBrands\FetchBrands;
+use _ilmComm\Brands\FetchBrands\AllBrands;
 
 ?>
 
@@ -46,11 +46,11 @@ use _ilmComm\Brands\FetchBrands\FetchBrands;
     <div class="ff-main scroll-pane">
 
         <?php
-        $FB = new FetchBrands;
+        $FB = new AllBrands;
         $AllBrands = $this->AllBrands;
         $FB->setBrandArr($AllBrands);
-        
-        foreach ($FB->getAllBrands($FB::OMIT_BRANDS_FROM_DB) as $Brand) :
+
+        foreach ($FB->getBrandArr() as $Brand) :
             $this->SingleBrand->setBrandArr($Brand);
             $bName = $this->SingleBrand->getBrandName();
             $bImage = $this->SingleBrand->getBrandImage();
