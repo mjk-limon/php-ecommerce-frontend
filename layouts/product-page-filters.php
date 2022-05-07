@@ -2,6 +2,8 @@
 
 namespace _ilmComm;
 
+use _ilmComm\Brands\FetchBrands\FetchFromArray;
+
 ?>
 
 <section class="filter-form section-mb">
@@ -9,9 +11,7 @@ namespace _ilmComm;
     <div class="ff-main">
         <div class="price-range-box">
             <div style="padding: 2rem">
-                <div id="slider"
-                     data-min="<?php echo reset($this->PriceSortData) ?>"
-                     data-max="<?php echo end($this->PriceSortData) ?>"></div>
+                <div id="slider" data-min="<?php echo reset($this->PriceSortData) ?>" data-max="<?php echo end($this->PriceSortData) ?>"></div>
             </div>
             <form id="priceSort-form" action="" method="POST" style="display:none">
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="min" placeholder="Min" /></li>
@@ -28,8 +28,10 @@ namespace _ilmComm;
     <div class="ff-main scroll-pane">
 
         <?php
-        $AllBrands = $this->AllBrands;
-        foreach ($AllBrands as $Brand) :
+        $FB = new FetchFromArray;
+        $FB->setBrandArr($this->AllBrands);
+
+        foreach ($FB->get() as $Brand) :
             $this->SingleBrand->setBrand($Brand);
             $bName = $this->SingleBrand->getBrandName();
             $bImage = $this->SingleBrand->getBrandImage();
