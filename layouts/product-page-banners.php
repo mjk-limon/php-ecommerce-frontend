@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace _ilmComm;
 
@@ -41,8 +41,4 @@ namespace _ilmComm;
             </div>
         </div>
     </div>
-<?php endif; ?>
-
-<?php if ($this->PrsTypeInfo['t'] == 'campaign'): ?>
-    
 <?php endif; ?>
