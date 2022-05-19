@@ -52,16 +52,15 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     ?>
 
     <style type="text/css">
-    :root {
-        --accent: <?php echo $this->ColrData['accent'] ?>;
-        --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
-        --secondary: <?php echo $this->ColrData['secondary'] ?>;
-        --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
-        --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
-        --header: <?php echo $this->ColrData['header'] ?>;
-        --menubar: <?php echo $this->ColrData['menubar'] ?>;
-    }
-
+        :root {
+            --accent: <?php echo $this->ColrData['accent'] ?>;
+            --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
+            --secondary: <?php echo $this->ColrData['secondary'] ?>;
+            --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
+            --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
+            --header: <?php echo $this->ColrData['header'] ?>;
+            --menubar: <?php echo $this->ColrData['menubar'] ?>;
+        }
     </style>
 </head>
 
@@ -224,7 +223,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         <?php if (adm_fet("_ilm_prd", "forceflash")) : ?>
                                             <li><a href="/search/?q=&a_s_t=flash_sales"><?php echo $this->OfferText ?></a></li>
                                         <?php else : ?>
-                                            <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+                                            <li><a href="/search/?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
                                         <?php endif; ?>
 
                                         <li><a href="/track-order/">Track Order</a></li>
@@ -261,11 +260,11 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <ul class="m-a-links">
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/brands/">Brands</a></li>
-                                        
+
                                         <?php if (adm_fet("_ilm_prd", "forceflash")) : ?>
                                             <li><a href="/search/?q=&a_s_t=flash_sales"><?php echo $this->OfferText ?></a></li>
                                         <?php else : ?>
-                                            <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+                                            <li><a href="/search/?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
                                         <?php endif; ?>
 
                                         <li><a href="/track-order/">Track Order</a></li>
