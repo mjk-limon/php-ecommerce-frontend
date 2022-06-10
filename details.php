@@ -78,7 +78,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
                                     <p class="pr-price" data-dis="<?php echo $PrDetails->getDiscount() ?>" data-prs="<?php echo $PrDetails->getPrice() ?>">
                                         <span><?php echo Models::curr($PrDetails->getPrice()) ?></span>
-    
+
                                         <?php if ($PrDetails->getDiscount()) : ?>
                                             <span class="pre-price"><?php echo Models::curr($PrDetails->getPrice(0)) ?></span>
                                         <?php endif; ?>
@@ -464,7 +464,7 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                             </div>
                                         </div>
                                         <div class="sp-nav">
-                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty=""></em>
+                                            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
                                             <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
                                             <a href="javascript:;" class="buy-now cAddBuyNav">Order Now</a>
                                         </div>
