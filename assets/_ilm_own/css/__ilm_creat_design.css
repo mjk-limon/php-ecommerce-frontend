@@ -22,6 +22,7 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+.pe-7s-menu:before{content:"\e645"}
 .pe-7s-user:before{content:"\e605"}
 .pe-7s-shopbag:before{content:"\e615"}
 .pe-7s-search:before{content:"\e618"}
