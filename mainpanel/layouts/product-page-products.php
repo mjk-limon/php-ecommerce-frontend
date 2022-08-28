@@ -2,25 +2,30 @@
 
 namespace _ilmComm;
 
-$spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
+$spAddClass = get_site_settings('navhover') ? 'fixed-nav' : null;
 ?>
 
-<?php if (!isset($this->onlyload) || $this->onlyload != "ppp-ws") : ?>
+<?php if ($this->onlyLoad != "ppp-ws") : ?>
     <div class="top-title">
         <div class="top-title-left">
             <h4><?php echo $this->PrsTitle ?></h4>
 
-            <?php if ($this->Filters) : ?>
+            <?php if (!empty($this->Filters)) : ?>
                 <div class="tt-filter">
+                    
                     <?php
                     foreach ($this->Filters as $FKey => $FVal) :
+                        // Parse array from filter
                         $EFVal = explode("_-_", $FVal);
                     ?>
                         <div class="ttf-single">
                             <?php echo ucwords($FKey) . " : " . implode(", ", $EFVal) ?>
-                            <span class="ttf-close" data-fkey="<?php echo $FKey ?>" data-fval="<?php echo $FVal ?>">&times;</span>
+                            <span class="ttf-close"
+                                  data-fkey="<?php echo $FKey ?>"
+                                  data-fval="<?php echo $FVal ?>">&times;</span>
                         </div>
                     <?php endforeach; ?>
+
                 </div>
             <?php endif; ?>
 
@@ -57,7 +62,10 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
     <div class="grid-row grid4">
         <?php
         foreach ($this->AllProducts as $Product) :
+            // Set product info
             $this->SingleProduct->setPrInfo($Product);
+
+            // Process discount and stock
             $this->SingleProduct->processDiscount();
             $this->SingleProduct->processStock();
         ?>
@@ -70,7 +78,7 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                         <?php endif; ?>
 
                         <a href="<?php echo $this->SingleProduct->getHref() ?>">
-                            <img src="<?php echo Models::asset("images/preloader.gif") ?>" data-src="<?php echo $this->SingleProduct->getProductImage() ?>" />
+                            <img src="<?php echo asset("images/preloader.gif") ?>" data-src="<?php echo $this->SingleProduct->getProductImage() ?>" />
                         </a>
                     </div>
                     <div class="has-sp-nav">
@@ -80,9 +88,9 @@ $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
                                     <h5><?php echo $this->SingleProduct->getName() ?></h5>
                                 </a>
                                 <p>
-                                    <strong class="price"><?php echo Models::curr($this->SingleProduct->getPrice()) ?></strong>
+                                    <strong class="price"><?php echo curr($this->SingleProduct->getPrice()) ?></strong>
                                     <?php if ($this->SingleProduct->getDiscount()) : ?>
-                                        <strong class="p-old"><?php echo Models::curr($this->SingleProduct->getPrice(0)) ?></strong>
+                                        <strong class="p-old"><?php echo curr($this->SingleProduct->getPrice(0)) ?></strong>
                                     <?php endif; ?>
                                 </p>
                             </div>

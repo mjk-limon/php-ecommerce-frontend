@@ -4,7 +4,7 @@ namespace _ilmComm;
 
 ?>
 
-<?php if (!$this->CustomerData) : ?>
+<?php if (!$this->UserData) : ?>
     <!--Not Logged In-->
     <div class="not-logged-in">
         <div class="row">
@@ -37,7 +37,7 @@ namespace _ilmComm;
             </div>
         </div>
 
-        <?php if (Models::getSiteSettings("qch")) : ?>
+        <?php if (get_site_settings("qch")) : ?>
             <div class="nav-invoker qc-inv">
                 <a class="nav-btn qchk-logchk-toggle" href="javascript:void(0)">
                     <i class="fa fa-clock-o"></i>
@@ -47,6 +47,7 @@ namespace _ilmComm;
         <?php endif; ?>
 
     </div>
+
     <!--Quick Checkout-->
     <div class="quick-checkout">
         <form class="checkOutUserInfo" action="" method="post">
@@ -61,8 +62,11 @@ namespace _ilmComm;
                                 <select name="orderLocation" id="orderLoc">
 
                                     <?php foreach ($DeliveryLocations as $Loc) : ?>
-                                        <option value="<?= htmlspecialchars($Loc) ?>">
-                                            <?= htmlspecialchars($Loc) ?>
+                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>"
+                                                data-description="<?php echo $Loc['city'] ?>"
+                                                autocomplete="off"
+                                                <?php if ($this->UserData->getCity() == $Loc['location']) echo 'selected'; ?>>
+                                            <?php echo htmlspecialchars($Loc['location']) ?>
                                         </option>
                                     <?php endforeach; ?>
 
@@ -99,50 +103,86 @@ namespace _ilmComm;
     </div>
 <?php
 else :
-    $Sc->SetCusArr($this->CustomerData);
+    $lgaddClass = !$this->UserData->getCity() ? 'noAddress' : null;
 ?>
+
     <!--Logged In-->
     <div class="logged-in">
         <form class="checkOutUserInfo" id="ckcontex" action="" method="post">
-            <input type="hidden" name="email" value="<?= $Sc->getUserName() ?>" />
-            <input type="hidden" name="fullName" value="<?= $Sc->getFullName() ?>" />
-            <input type="hidden" name="mobileNumber" value="<?= $Sc->getMobileNumber() ?>" />
-            <input type="hidden" name="orderLocation" value="<?= $Sc->getState() ?>" />
-            <input type="hidden" name="fullAddress" value="<?= htmlspecialchars($Sc->getFullAddress()) ?>" />
+            <input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
+            <input type="hidden" name="fullName" value="<?php echo $this->UserData->getFullName() ?>" />
+            <input type="hidden" name="mobileNumber" value="<?php echo $this->UserData->getMobileNumber() ?>" />
+            <input type="hidden" name="orderLocation" value="<?php echo $this->UserData->getState() ?>" />
+            <input type="hidden" name="fullAddress" value="<?php echo htmlspecialchars($this->UserData->getFullAddress()) ?>" />
 
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="login-success">
-                        <h3>You are logged in with <?= $Sc->getLastName() ?></h3>
+                        <h3>You are logged in with <?php echo $this->UserData->getLastName() ?></h3>
                         <div class="limlog-form">
-                            <table class="" border="0">
-                                <tr>
-                                    <td>Full Name:</td>
-                                    <td><input type="text" name="shippingName" value="<?= $Sc->getFullName() ?>" disabled /></td>
-                                </tr>
-                                <tr>
-                                    <td>Email Address:</td>
-                                    <td><?= $Sc->getUserName() ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Mobile Number:</td>
-                                    <td><input type="text" name="shippingNumber" value="<?= $Sc->getMobileNumber() ?>" disabled /></td>
-                                </tr>
-                                <tr>
-                                    <td>Shipping Address: </td>
-                                    <td>
-                                        <textarea name="shippingAddress" disabled><?= $Sc->getFullAddress() ?></textarea>
-                                        <p><a href="javascript:;" class="shippingChangeBtn"><i class="fa fa-pencil"></i> Change</a></p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><a href="/my-account/?logout=1&ref=p.05">Not You ? Login Again</a> </td>
-                                </tr>
-                            </table>
+                            <div class="loggedindata-edit">
+                                <div class="logged-in-userdata">
+                                    <table class="" border="0">
+                                        <tr>
+                                            <td>Full Name:</td>
+                                            <td><input type="text" name="shippingName" id="full-name" value="<?php echo $this->UserData->getFullName() ?>" disabled /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email Address:</td>
+                                            <td><?php echo $this->UserData->getUserName() ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile Number:</td>
+                                            <td><?php echo $this->UserData->getMobileNumber() ?></td>
+                                        </tr>
+                                        <tr class="ordershippingloc">
+                                            <td>Shipping Location</td>
+                                            <td>
+                                                <select name="orderLocation" id="orderLoc">
+                                                    <?php foreach ($DeliveryLocations as $Loc) : ?>
+                                                        <option value="<?php echo htmlspecialchars($Loc['location']) ?>"
+                                                                data-description="<?php echo $Loc['city'] ?>"
+                                                                autocomplete="off"
+                                                                <?php if ($this->UserData->getCity() == $Loc['location']) echo 'selected'; ?>>
+                                                            <?php echo htmlspecialchars($Loc['location']) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping Address: </td>
+                                            <td><textarea name="shippingAddress" id="shipping-address" disabled><?php echo $this->UserData->getAddress() ?></textarea></td>
+                                        </tr>
+                                        <tr class="hideonnoedit">
+                                            <td>&nbsp;</td>
+                                            <td>
+                                                <div class="form-element">
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="saveUserData" checked>
+                                                        Save this data
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>
+                                                <div class="loggedindatanav">
+                                                    <a href="javascript:;" class="shippingChangeBtn">
+                                                        <span class="editinfo">Edit Address</span>
+                                                        <span class="saveinfo submit-btn">Save Changes</span>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                            <select name="orderLocation" id="orderLoc">
-                                <option value="<?= $Sc->getCity() ?>"><?= $Sc->getCity() ?></option>
-                            </select>
+                                    <div class="loggedindatanav">
+                                        <a href="/my-account/?logout=1&ref=p.05">Not You ? Login Again</a>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="shippingIdCont">
                                 <label>Delivery Option</label>

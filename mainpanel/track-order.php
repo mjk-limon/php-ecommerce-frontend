@@ -8,7 +8,7 @@ namespace _ilmComm;
     <div class="container">
         <div class="section-mb login_registration_widget">
 
-            <?php if (!isset($_GET['track-id'])) : ?>
+            <?php if (!$this->getTrackId()) : ?>
                 <div class="order-track">
                     <h3>Track Your Order Now !</h3>
                     <div class="form-area">
@@ -22,9 +22,9 @@ namespace _ilmComm;
                 </div>
             <?php
             else :
-                $TrackId = preg_replace("/^#/", "", $_GET['track-id']);
-                $OdrStatus = $this->getOrderStatus($TrackId);
-                $StatusImage = Models::asset('images/track/track-' . $OdrStatus['status'] . '.gif');
+                $TrackId = $this->getTrackId();
+                $OdrStatus = $this->getOrderStatus();
+                $StatusImage = base_url('images/track/track-' . $OdrStatus['status'] . '.gif');
             ?>
                 <div class="order-track" style="background-image:url('<?php echo $StatusImage ?>');text-align:left">
                     <h3><?php echo $OdrStatus['text'] ?></h3>
@@ -36,7 +36,7 @@ namespace _ilmComm;
                                 Your placed order #<?php echo $TrackId ?>.
                             </li>
                             <?php
-                            $Mts = $this->getMerchantStatusTimeline($TrackId);
+                            $Mts = $this->getMerchantStatusTimeline();
                             while ($MT = $Mts->fetch_assoc()) :
                             ?>
                                 <?php if (($OdrStatus['status'] > 1) && (!$MT['company_name'] && $MT['processed_on'])) : ?>

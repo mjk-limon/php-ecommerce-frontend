@@ -7,7 +7,7 @@ namespace _ilmComm;
 <div class="support-center">
     <div class="support-bg">
         <h3 class="support-title">
-            <img src="<?php echo Models::baseUrl('images/logo.png') ?>" alt="logo" />
+            <img src="<?php echo asset('images/logo.png') ?>" alt="logo" />
             <sup>&trade;</sup> <span>Support Center</span>
         </h3>
         <p>Get 24/7 instantly support. Happy shopping.</p>
@@ -59,19 +59,19 @@ namespace _ilmComm;
                         <h5>Contact Us</h5>
                         <div class="supm-box">
                             <a href="#" class="newLiveChat">
-                                <img src="<?php echo Models::baseUrl('images/headp.png') ?>" alt="" />
+                                <img src="<?php echo asset('images/headp.png') ?>" alt="" />
                                 Live Chat
                             </a>
                         </div>
                         <div class="supm-box">
                             <a href="#" class="newFreeMessage">
-                                <img src="<?php echo Models::baseUrl('images/headp.png') ?>" alt="" />
+                                <img src="<?php echo asset('images/headp.png') ?>" alt="" />
                                 Leave a message
                             </a>
                         </div>
                         <div class="supm-box">
                             <a href="#showMap" data-toggle="modal">
-                                <img src="<?php echo Models::baseUrl('images/headp.png') ?>" alt="" />
+                                <img src="<?php echo asset('images/headp.png') ?>" alt="" />
                                 Direct contact
                             </a>
                         </div>
@@ -133,12 +133,13 @@ namespace _ilmComm;
                     <h4 class="modal-title">Our office location</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe width="100%" style="height:300px" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=<?php echo GOOGLE_MAP_API ?>&q=<?php echo urlencode(Models::getContactInformation('address')); ?>" allowfullscreen>
-                    </iframe>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?key=<?php echo GOOGLE_MAP_API ?>&q=<?php echo urlencode(get_contact_information('address')); ?>"
+                            width="100%" style="height:300px;border: 0;"
+                            frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="<?php echo Models::baseUrl('assets/_ilm_own/js/supportPage_scripts.js') ?>"></script>
+<script src="<?php echo asset('assets/_ilm_own/js/supportPage_scripts.js') ?>"></script>

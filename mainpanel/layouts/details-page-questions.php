@@ -2,69 +2,86 @@
 
 namespace _ilmComm;
 
+// Single question
 $Qus = $Rpls = $this->SingleQuestion;
+
+// Get product questions
 $PrQuestions = $this->ProductQuestions;
 ?>
 
 <?php
 if ($PrQuestions->num_rows) :
     while ($Rqs = $PrQuestions->fetch_assoc()) :
-        $Qus->setQusArr($Rqs);
+        // Set question info
+        $Qus->setQuestionInfo($Rqs);
+
+        // Get question replies
         $Replies = $Qus->getReplies();
 ?>
         <div class="media">
-            <div class="media-left"><i class="fa fa-question-circle-o fa-2x media-object"></i></div>
+            <div class="media-left">
+                <i class="fa fa-question-circle-o fa-2x media-object"></i>
+            </div>
             <div class="media-body">
-                <h4 class="media-heading"><?= $Qus->getContent() ?></h4>
-                <p><?= $Qus->getName() ?> (<?= date('F j, Y', strtotime($Qus->getQuestionTime())) ?>)</p>
+                <h4 class="media-heading"><?php echo $Qus->getQuestionContent() ?></h4>
+                <p class="media-user-description">
+                    <?php echo $Qus->getQuestionerName() ?>
+                    (<?php echo date('F j, Y', strtotime($Qus->getQuestionTime())) ?>)
+                </p>
 
-                <div class="qstn-reply-section">
-                    <h5>Replies (<?= $Replies->num_rows ?>)</h5>
-                    <div class="qstn-replies _nrp">
-                        <div class="_nrt">
+                <?php if ($TotalReplies = $Replies->num_rows) : ?>
+                    <div class="qstn-reply-section">
+                        <h5>Replies (<?php echo $TotalReplies ?>)</h5>
 
-                            <?php
-                            while ($Rqrs = $Replies->fetch_array()) :
-                                $Rpls->setQusArr($Rqrs);
-                            ?>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading"><?= $Rpls->getContent() ?></h4>
-                                        <p>
-                                            <?php
-                                            if ($Rpls->getEmail() == 'admin-panel') {
-                                                echo '<i class="fa fa-shield"></i> ';
-                                            }
-                                            echo $Rpls->getName();
-                                            ?>
-                                            (<?= date('F j, Y', strtotime($Rpls->getQuestionTime())) ?>)
-                                        </p>
+                        <div class="qstn-replies _nrp">
+                            <div class="_nrt">
+
+                                <?php
+                                while ($Rqrs = $Replies->fetch_array()) :
+                                    $Rpls->setQuestionInfo($Rqrs);
+                                ?>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h4 class="media-heading">
+                                                <?php echo $Rpls->getQuestionContent() ?>
+                                            </h4>
+                                            <p class="single-reply-info-user">
+                                                <?php
+                                                if ($Rpls->getQuestionerEmail() == 'admin-panel') {
+                                                    echo '<i class="fa fa-shield"></i> ';
+                                                }
+                                                echo $Rpls->getQuestionerName();
+                                                ?>
+                                                (<?php echo date('F j, Y', strtotime($Rpls->getQuestionTime())) ?>)
+                                            </p>
+                                        </div>
                                     </div>
+                                <?php endwhile; ?>
+
+                            </div>
+
+                            <?php if ($this->UserData) : ?>
+                                <div class="new-qus-reply">
+                                    <form class="replyRvwForm" action="" method="post">
+                                        <input type="hidden" name="name" value="<?php echo $this->UserData->getFullName() ?>" />
+                                        <input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
+                                        <input type="hidden" name="qid" value="<?php echo $Qus->getQuestionId() ?>" />
+                                        <input type="hidden" name="prid" value="<?php echo $this->Prid ?>" />
+                                        <input type="hidden" name="reply_product_rvw" />
+                                        <input type="hidden" name="rtp" value="qstn" />
+
+                                        <div class="inline-form">
+                                            <input type="text" name="message" placeholder="Write a reply..." required="">
+                                            <button class=""><i class="fa fa-paper-plane-o"></i> Reply</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            <?php endwhile; ?>
+                            <?php endif; ?>
 
                         </div>
-
-                        <?php if ($this->UserData) : ?>
-                            <div class="new-qus-reply">
-                                <form class="replyRvwForm" action="" method="post">
-                                    <input type="hidden" name="name" value="<?= $this->UserData->getFullName() ?>" />
-                                    <input type="hidden" name="email" value="<?= $this->UserData->getUserName() ?>" />
-                                    <input type="hidden" name="qid" value="<?= $Qus->getQusId() ?>" />
-                                    <input type="hidden" name="prid" value="<?= $this->Prid ?>" />
-                                    <input type="hidden" name="reply_product_rvw" />
-                                    <input type="hidden" name="rtp" value="qstn" />
-
-                                    <div class="inline-form">
-                                        <input type="text" name="message" placeholder="Write a reply..." required="">
-                                        <button class=""><i class="fa fa-paper-plane-o"></i> Reply</button>
-                                    </div>
-                                </form>
-                            </div>
-                        <?php endif; ?>
-
                     </div>
-                </div>
+                <?php endif; ?>
+
             </div>
         </div>
         <hr />

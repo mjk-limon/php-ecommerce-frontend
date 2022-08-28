@@ -2,7 +2,8 @@
 
 namespace _ilmComm;
 
-$OrderHistory = $UserInfo->getOrderHistory();
+// Get user order history
+$OrderHistory = $this->UserData->getOrderHistory();
 ?>
 
 <?php if ($OrderHistory->num_rows) : ?>
@@ -64,7 +65,7 @@ $OrderHistory = $UserInfo->getOrderHistory();
                                     </div>
                                 </td>
                                 <td><?php echo $Prs['q'] ?></td>
-                                <td><?php echo Models::curr($PrInfo->getPrice($PrInfo->getDiscount())) ?></td>
+                                <td><?php echo curr($PrInfo->getPrice($PrInfo->getDiscount())) ?></td>
                                 <td><a href="<?php echo $PrInfo->getHref() ?>">Details</a></td>
                             </tr>
                         <?php endforeach; ?>

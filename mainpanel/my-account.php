@@ -2,14 +2,14 @@
 
 namespace _ilmComm;
 
-$UserInfo = $this->SingleCustomer;
-$PrInfo = $this->singleProduct();
-$OdrInfo = $this->singleOrder();
+// Single Product var
+$PrInfo = $this->SingleProduct;
 
-$CusArr = $this->CustomerData;
-$UserInfo->setCusArr($CusArr);
+// Single order var
+$OdrInfo = $this->SingleOrder;
 
-$SwtchTab = $this->viewingTabName();
+// Viewing tab name
+$SwtchTab = $this->ViwingTabName;
 ?>
 
 <section class="main-body">
@@ -17,9 +17,15 @@ $SwtchTab = $this->viewingTabName();
         <div class="section-mb login_registration_widget pd-0">
             <div class="my-account">
                 <div class="card hovercard">
-                    <div class="card-background"><img class="card-bkimg user-ppc" src="<?php echo Models::asset($UserInfo->getUserImage()) ?>"></div>
-                    <div class="useravatar"><img class="user-ppc" src="<?php echo Models::asset($UserInfo->getUserImage()) ?>"></div>
-                    <div class="card-info"><span class="card-title">Hi, <?php echo $UserInfo->getLastName() ?></span></div>
+                    <div class="card-background">
+                        <img class="card-bkimg user-ppc" src="<?php echo asset($this->UserData->getUserImage()) ?>">
+                    </div>
+                    <div class="useravatar">
+                        <img class="user-ppc" src="<?php echo asset($this->UserData->getUserImage()) ?>">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-title">Hi, <?php echo $this->UserData->getLastName() ?></span>
+                    </div>
                 </div>
                 <div class="btn-pref btn-group btn-group-justified btn-group-lg myac-nav" role="group">
                     <div class="btn-group" role="group">

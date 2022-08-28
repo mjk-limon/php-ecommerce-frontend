@@ -2,6 +2,7 @@
 
 namespace _ilmComm;
 
+// Single product var
 $Sp = $this->SingleProduct;
 ?>
 
@@ -18,7 +19,10 @@ $Sp = $this->SingleProduct;
 
                                 <?php
                                 foreach ($this->CartItems as $CKey => $CItem) :
+                                    // Set product id
                                     $Sp->setPrid($CItem['p']);
+
+                                    // Process price, stock and discount
                                     $Sp->processDiscount($CItem['q']);
                                     $Sp->processStock($CItem['s'], $CItem['c']);
                                 ?>
@@ -31,9 +35,11 @@ $Sp = $this->SingleProduct;
                                             </div>
                                             <div style="--tlwdth: 80px; " class="cs-fi-area">
                                                 <div class="fi-name">
-                                                    <a href="<?php echo $Sp->getHref() ?>"><?php echo $Sp->getName() ?></a>
-                                                    <div>
-                                                        Unit Price: <?php echo Models::curr($Sp->getPrice()) ?>
+                                                    <a href="<?php echo $Sp->getHref() ?>">
+                                                        <?php echo $Sp->getName() ?>
+                                                    </a>
+                                                    <div class="fi-price-section">
+                                                        Unit Price: <?php echo curr($Sp->getPrice()) ?>
 
                                                         <?php if ($Sp->getDiscount()) : ?>
                                                             <span class="p-old">(-<?php echo $Sp->getDiscount() ?>%)</span>
@@ -42,12 +48,14 @@ $Sp = $this->SingleProduct;
                                                     </div>
                                                 </div>
                                                 <div class="fi-cart-data">
-                                                    Size: <?php echo $CItem['s'] ?> &nbsp; Color: <?php echo $CItem['c'] ?>
+                                                    Size: <?php echo $CItem['s'] ?> &nbsp;
+                                                    Color: <?php echo $CItem['c'] ?>
                                                 </div>
                                                 <div class="fi-cart-data fi-qty">
                                                     Quantity:
-                                                    <input type="number" name="" value="<?php echo $CItem['q'] ?>" data-ogn="<?php echo $CItem['q'] ?>" min="1" />
-                                                    <p>
+                                                    <input type="number" name="" value="<?php echo $CItem['q'] ?>"
+                                                           data-ogn="<?php echo $CItem['q'] ?>" min="1" />
+                                                    <p class="fr-cd-nav">
                                                         <a href="javascript:;" class="ucBtn" style="color:blue;">
                                                             Update Cart
                                                         </a>
@@ -66,7 +74,9 @@ $Sp = $this->SingleProduct;
                             <div class="coupon-area">
                                 <span class="ca-title">Coupon</span>
                                 <div class="cpm-area">
+
                                     <?php include "layouts/cart-page-coupons.php" ?>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -77,9 +87,9 @@ $Sp = $this->SingleProduct;
                         <h4 class="discription-review-title">Cart Summery</h4>
                         <div class="cart-area">
                             <div class="st-area">
-                                <?php
-                                include "layouts/cart-page-summery.php"
-                                ?>
+
+                                <?php include "layouts/cart-page-summery.php" ?>
+
                             </div>
                         </div>
                         <div class="checkout-proceed">
@@ -92,7 +102,7 @@ $Sp = $this->SingleProduct;
             <div class="row">
                 <div class="col-md-12">
                     <div class="empty-product-page">
-                        <img src="<?php echo Models::asset('images/cart-empty.png') ?>" alt="No cart">
+                        <img src="<?php echo asset('images/cart-empty.png') ?>" alt="No cart">
                         <h4>YOU HAVE NO ITEMS IN YOUR SHOPPING CART</h4>
                         <h4>TRY ADDING SOME ITEMS FIRST</h4>
                     </div>
@@ -103,9 +113,9 @@ $Sp = $this->SingleProduct;
     </div>
 </section>
 
-<style>
-    .floating-sc {
-        display: none
-    }
+<style type="text/css">
+.floating-sc {
+    display: none
+}
 </style>
-<script defer src="<?php echo Models::asset("assets/_ilm_own/js/cartPage_scripts.js") ?>"></script>
+<script defer src="<?php echo asset("assets/_ilm_own/js/cartPage_scripts.js") ?>"></script>
