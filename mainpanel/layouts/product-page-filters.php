@@ -2,7 +2,6 @@
 
 namespace _ilmComm;
 
-use _ilmComm\Brands\FetchBrands;
 use _ilmComm\Brands\FetchBrands\FetchFromArray;
 
 ?>
@@ -12,7 +11,7 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
     <h4>price</h4>
     <div class="ff-main">
         <div class="price-range-box">
-            <form id="priceSort-form" class="flex" action="" method="POST">
+            <form id="priceSort-form" action="" method="POST">
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="min" placeholder="Min" /></li>
                 <li class="hypen">-</li>
                 <li><input type="text" title="Price must be an integer number" pattern="[0-9]+" name="max" placeholder="Max" /></li>
@@ -23,19 +22,22 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
     <div class="ff-main scroll-pane slimScroll">
 
         <?php
-        foreach ($this->PriceSortData as $PSKey => $lblmp) :
-            if (isset($this->PriceSortData[($PSKey + 1)])) {
-                $lblmxp = $this->PriceSortData[($PSKey + 1)];
-                $prlbl = $lblmp . " - " . $lblmxp;
-                $prval = preg_replace("/\s+/", "", $prlbl);
+        foreach ($this->PriceSortData as $PSKey => $MinPrice) :
+            if ($MaxPrice = rec_arr_val($this->PriceSortData, ($PSKey + 1))) {
+                // Minprice and Max price exists
+                $SingleFilterLabel = "{$MinPrice} - {$MaxPrice}";
+                $FilterFieldValue = preg_replace("/\s+/", "", $SingleFilterLabel);
             } else {
-                $prlbl = "More than " . $lblmp;
-                $prval = $lblmp . "-";
+                // Only minprice exists
+                $SingleFilterLabel = "More than {$MinPrice}";
+                $FilterFieldValue = "{$MinPrice}-";
             }
         ?>
             <label class="radio">
-                <input class="fpCbox" type="radio" name="price" value="<?= $prval ?>" <?= $this->checkFieldBySortval("price", $prval) ?> />
-                <i></i> <?= $prlbl ?>
+                <input class="fpCbox" type="radio" name="price"
+                       value="<?php echo $FilterFieldValue ?>"
+                       <?php echo $this->checkFieldBySortval("price", $FilterFieldValue) ?> />
+                <i></i> <?php echo $SingleFilterLabel ?>
             </label>
         <?php endforeach; ?>
 
@@ -51,20 +53,26 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
         $FB->setBrandArr($this->AllBrands);
 
         foreach ($FB->get() as $Brand) :
+            // Set brand info
             $this->SingleBrand->setBrand($Brand);
+
+            // Get brand name and image
             $bName = $this->SingleBrand->getBrandName();
             $bImage = $this->SingleBrand->getBrandImage();
         ?>
             <div class="brand-box">
                 <label class="checkbox bb-check">
-                    <input class="fpCbox" type="checkbox" name="brand" value="<?= $bName ?>" <?= $this->checkFieldBySortval("brand", $bName) ?> />
+                    <input class="fpCbox" type="checkbox" name="brand"
+                           value="<?php echo $bName ?>"
+                           <?php echo $this->checkFieldBySortval("brand", $bName) ?> />
                     <i></i>
 
                     <?php if (file_exists($bImage)) : ?>
-                        <img src="<?= Models::baseUrl($bImage) ?>" alt="<?= $bName ?>" />
+                        <img src="<?php echo asset($bImage) ?>" alt="<?php echo $bName ?>" />
                     <?php else : ?>
-                        <h5><?= $bName ?></h5>
+                        <h5><?php echo $bName ?></h5>
                     <?php endif; ?>
+
                 </label>
             </div>
         <?php endforeach; ?>
@@ -76,13 +84,12 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
     <h4>size</h4>
     <div class="ff-main scroll-pane slimScroll">
 
-        <?php
-        $AllSizes = $this->AllSizes;
-        foreach ($AllSizes as $Size) :
-        ?>
+        <?php foreach ($this->AllSizes as $SingleSize) : ?>
             <label class="checkbox">
-                <input class="fpCbox" type="checkbox" name="size" value="<?= $Size ?>" <?= $this->checkFieldBySortval("size", $Size) ?> />
-                <i></i> <?= htmlspecialchars($Size) ?>
+                <input class="fpCbox" type="checkbox" name="size"
+                       value="<?php echo $SingleSize ?>"'
+                       <?php echo $this->checkFieldBySortval("size", $SingleSize) ?> />
+                <i></i> <?php echo htmlspecialchars($SingleSize) ?>
             </label>
         <?php endforeach; ?>
 
@@ -94,16 +101,19 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
     <div class="ff-main scroll-pane slimScroll">
 
         <?php
-        $AllColors = $this->AllColors;
-        foreach ($AllColors as $Color) :
-            $Background = str_replace(" ", ", ", $Color, $count);
-            if ($count) {
-                $Background = 'linear-gradient(to right, ' . $Background . ')';
-            }
+        foreach ($this->AllColors as $SingleColor) :
+            // Check multiple color
+            $Background = str_replace(" ", ", ", $SingleColor, $ColorCount);
+
+            // CSS gradient if multiple color
+            $ColorCount && $Background = 'linear-gradient(to right, ' . $Background . ')';
         ?>
             <label class="checkbox">
-                <input class="fpCbox" type="checkbox" name="colors" value="<?= $Color ?>" <?= $this->checkFieldBySortval("colors", $Color) ?> />
-                <i style="background:<?= $Background ?>"></i> <?= htmlspecialchars($Color) ?>
+                <input class="fpCbox" type="checkbox" name="colors"
+                       value="<?php echo $SingleColor ?>"
+                       <?php echo $this->checkFieldBySortval("colors", $SingleColor) ?> />
+                <i style="background:<?php echo $Background ?>"></i>
+                <?php echo htmlspecialchars($SingleColor) ?>
             </label>
         <?php endforeach; ?>
 
@@ -116,8 +126,10 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
 
         <?php for ($psi = 1; $psi <= 9; $psi++) : ?>
             <label class="radio">
-                <input class="fpCbox" type="radio" name="discount" value="<?= $psi * 10 ?>" <?= $this->checkFieldBySortval("discount", ($psi * 10)) ?> />
-                <i></i> More than <?= $psi * 10 ?>%
+                <input class="fpCbox" type="radio" name="discount"
+                       value="<?php echo $psi * 10 ?>"
+                       <?php echo $this->checkFieldBySortval("discount", ($psi * 10)) ?> />
+                <i></i> More than <?php echo $psi * 10 ?>%
             </label>
         <?php endfor; ?>
 
@@ -128,7 +140,9 @@ use _ilmComm\Brands\FetchBrands\FetchFromArray;
     <h4>Availability</h4>
     <div class="ff-main">
         <label class="checkbox">
-            <input class="fpCbox" type="checkbox" name="availability" value="1" <?= $this->checkFieldBySortval("availability", "1") ?> />
+            <input class="fpCbox" type="checkbox" name="availability"
+                   value="1"
+                   <?php echo $this->checkFieldBySortval("availability", "1") ?> />
             <i></i> In Stock Only
         </label>
     </div>

@@ -2,41 +2,46 @@
 
 namespace _ilmComm;
 
-if ($this->CartItems) :
-    $Sp = $this->SingleProduct;
+// Single product var
+$Sp = $this->SingleProduct;
 ?>
+
+<?php if ($this->CartItems) : ?>
     <div class="scb-cart-area">
         <table class="table fc-table">
             <tbody>
                 <?php
                 foreach ($this->CartItems as $CKey => $CItem) :
+                    // Set product id
                     $Sp->setPrid($CItem['p']);
+
+                    // Process discount and stock
                     $Sp->processDiscount($CItem['q']);
                     $Sp->processStock($CItem['s'], $CItem['c']);
                 ?>
                     <tr>
                         <td>
                             <span data-ciup="+">&plus;</span>
-                            <strong><?= $CItem['q'] ?></strong>
+                            <strong><?php echo $CItem['q'] ?></strong>
                             <span data-ciup="-">&minus;</span>
                         </td>
                         <td class="fc-item-dis" width="50%">
-                            <img src="<?= $Sp->getProductImage() ?>" alt="" />
+                            <img src="<?php echo $Sp->getProductImage() ?>" alt="" />
                             <div class="dis-title">
-                                <h5><?= $Sp->getName() ?></h5>
-                                <span>Size: <?= $CItem['s'] ?>, Color: <?= $CItem['c'] ?></span>
-                                <span>Unit Price: <?= Models::curr($Sp->getPrice()) ?></span>
+                                <h5><?php echo $Sp->getName() ?></h5>
+                                <span>Size: <?php echo $CItem['s'] ?>, Color: <?php echo $CItem['c'] ?></span>
+                                <span>Unit Price: <?php echo curr($Sp->getPrice()) ?></span>
                             </div>
                         </td>
-                        <td><?= $Sp->getPrice() * $CItem['q'] ?></td>
-                        <td><span class="rmv-crt-btn" data-dynamic="<?= $CKey ?>">&times;</span></td>
+                        <td><?php echo $Sp->getPrice() * $CItem['q'] ?></td>
+                        <td><span class="rmv-crt-btn" data-dynamic="<?php echo $CKey ?>">&times;</span></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
     <div class="scb-footer">
-        <div class="fc-tamount">Your Cart Total: <strong><?= Models::curr($this->CartSummery->getSubTotal()) ?></strong></div>
+        <div class="fc-tamount">Your Cart Total: <strong><?php echo curr($this->CartSummery->getSubTotal()) ?></strong></div>
         <a href="/cart/" class="scbf-link">View Full Cart</a>
         <a href="/checkout/" class="scbf-link">Place Order</a>
     </div>

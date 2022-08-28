@@ -2,61 +2,57 @@
 
 namespace _ilmComm;
 
-$Cat = new Category\FetchCategories;
+// Category 
+$ci = new Category\CategoryInfo\CategoryInfo;
 
-$MainCats = $Cat->fetchMain();
-$submenu_addClass = $this->mobileView ? ' animated slideDown' : null;
+$submenu_addClass = $this->mobileView ? 'animated slideDown' : null;
 $menu_clearfix = $this->mobileView ? 2 : 3;
-?>
-<?php
+
+$MainCats = $ci->getFetchable()->fetchMain();
 while ($ArrMain = $MainCats->fetch_assoc()) {
-    $Cat->setCatId($ArrMain['id']);
-    $Cat->setMain($ArrMain['main']);
-    $Cat->setSubGroup(null);
-    $Cat->setSub(null);
+    $ci->setCatArr($ArrMain);
 ?>
     <li class="dropdown">
-        <a href="<?php echo $Cat->getHref() ?>">
-            <span><img src="<?php echo Models::baseUrl('images/category-slides/' . Models::restyleUrl($Cat->Mainc) . '-1.png?rand=' . rand()) ?>"></span>
-            <?php echo htmlspecialchars($Cat->Mainc) ?> <i class="fa fa-angle-down"></i>
+        <a href="<?php echo $ci->getHref() ?>">
+            <span><img src="<?php echo current($ci->getCatImg("Category icon")) ?>"></span>
+            <?php echo htmlspecialchars($ci->getMain()) ?>
+            <i class="fa fa-angle-down"></i>
         </a>
-        <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
+        <ul role="menu" class="sub-menu <?php echo $submenu_addClass ?>">
             <div class="col-xs-12 sub-cols view-all hidden-md hidden-lg">
-                <a href="<?php echo $Cat->getHref() ?>">
-                    View All <?php echo htmlspecialchars($Cat->Mainc) ?> &nbsp;<i class="fa fa-long-arrow-right"></i>
+                <a href="<?php echo $ci->getHref() ?>">
+                    View All <?php echo htmlspecialchars($ci->getMain()) ?>
+                    <i class="fa fa-long-arrow-right"></i>
                 </a>
             </div>
 
             <?php
             $col4i = 1;
-            $SubGroupCats = $Cat->fetchSubGroup();
+            $SubGroupCats = $ci->getFetchable()->fetchSubGroup();
             $TotalSubGroupCats = $SubGroupCats->num_rows;
 
             while ($ArrSubGrp = $SubGroupCats->fetch_assoc()) {
-                $Cat->setCatId($ArrSubGrp['id']);
-                $Cat->setSubGroup($ArrSubGrp['header']);
-                $Cat->setSub(null);
+                $ci->setCatArr($ArrSubGrp);
             ?>
                 <div class="col-md-4 col-xs-6 sub-cols">
-                    <a href="<?php echo $Cat->getHref() ?>">
-                        <h3><?php echo htmlspecialchars($Cat->SubGroup)  ?></h3>
+                    <a href="<?php echo $ci->getHref() ?>">
+                        <h3><?php echo htmlspecialchars($ci->getSubGroup())  ?></h3>
                     </a>
 
                     <?php
-                    $SubCats = $Cat->fetchSub();
+                    $SubCats = $ci->getFetchable()->fetchSub();
                     $TotalSubCats = $SubCats->num_rows;
 
                     while ($ArrSub = $SubCats->fetch_array()) {
-                        $Cat->setCatId($ArrSub['id']);
-                        $Cat->setSub($ArrSub['sub']);
+                        $ci->setCatArr($ArrSub);
                     ?>
                         <li>
-                            <a href="<?php echo $Cat->getHref() ?>">
-                                <?php echo htmlspecialchars($Cat->Sub); ?>
+                            <a href="<?php echo $ci->getHref() ?>">
+                                <?php echo htmlspecialchars($ci->getSub()); ?>
                             </a>
                         </li>
                     <?php
-                        if ($TotalSubCats == 1  && empty($Cat->Sub)) {
+                        if ($TotalSubCats == 1  && empty($ci->getSub())) {
                             echo '<div class="no-catsub"></div>';
                         }
                     }
@@ -69,7 +65,7 @@ while ($ArrMain = $MainCats->fetch_assoc()) {
                     echo '<div class="clearfix"></div>';
                 }
 
-                if (($TotalSubGroupCats == 1)  && empty($Cat->SubGroup)) {
+                if (($TotalSubGroupCats == 1) && empty($Cat->SubGroup)) {
                     echo '<div class="no-cathead"></div>';
                 }
 

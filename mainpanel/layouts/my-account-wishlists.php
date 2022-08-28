@@ -2,7 +2,8 @@
 
 namespace _ilmComm;
 
-$WishLists = $UserInfo->getWishlistProducts();
+// Get user wishlists
+$WishLists = $this->UserData->getWishlistProducts();
 $tlwidth = $this->mobileView ? 110 : 150;
 ?>
 
@@ -12,12 +13,15 @@ $tlwidth = $this->mobileView ? 110 : 150;
 
         <?php
         foreach ($WishLists as $Prid) :
+            // Set product id
             $PrInfo->setPrid($Prid);
 
             if (!$PrInfo->checkProduct()) {
+                // Invalid product
                 continue;
             }
 
+            // Process product info
             $PrInfo->processDiscount();
             $PrInfo->processStock();
         ?>
@@ -27,21 +31,23 @@ $tlwidth = $this->mobileView ? 110 : 150;
                     <i class="fa fa-heart"></i> Remove from wishlist
                 </a>
                 <div class="tlist-fullinfo sp-pr-info">
-                    <div style="--tlwdth: <?= $tlwidth ?>px; background-image: url('<?= $PrInfo->getProductImage() ?>')" class="tl-img"></div>
-                    <div style="--tlwdth: <?= $tlwidth ?>px;" class="tl-area">
+                    <div style="--tlwdth: <?php echo $tlwidth ?>px; background-image: url('<?php echo $PrInfo->getProductImage() ?>')" class="tl-img"></div>
+                    <div style="--tlwdth: <?php echo $tlwidth ?>px;" class="tl-area">
                         <div class="fi-name">
-                            <a href="<?= $PrInfo->getHref() ?>"><?= $PrInfo->getName() ?></a>
-                            <div>
-                                Unit Price: <?= Models::curr($PrInfo->getPrice()) ?>
+                            <a href="<?php echo $PrInfo->getHref() ?>">
+                                <?php echo $PrInfo->getName() ?>
+                            </a>
+                            <div class="fi-price-discount">
+                                Unit Price: <?php echo curr($PrInfo->getPrice()) ?>
 
                                 <?php if ($PrInfo->getDiscount()) : ?>
-                                    <span class="p-old">(-<?= $PrInfo->getDiscount() ?>%)</span>
+                                    <span class="p-old">(-<?php echo $PrInfo->getDiscount() ?>%)</span>
                                 <?php endif; ?>
 
                             </div>
                         </div>
                         <div class="fi-nav">
-                            <li><a href="<?= $PrInfo->getHref() ?>">Details</a></li>
+                            <li><a href="<?php echo $PrInfo->getHref() ?>">Details</a></li>
                         </div>
                     </div>
                 </div>

@@ -326,7 +326,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <h4>Reviews</h4>
                                 <div class="user-review-section _nrp">
                                     <div id="rv-main-area" class="_nrt">
-                                        <?php include "layouts/details-page-reviews.php"; ?>
+
+                                        <?php
+                                        include "layouts/details-page-reviews.php";
+                                        ?>
+
                                     </div>
                                     <div class="new-qus-reply">
 
@@ -541,22 +545,22 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
     <link rel="stylesheet" href="<?php echo Models::asset('assets/vendors/photoswipe/skins/default-skin.css') ?>">
     <script src="<?php echo Models::asset('assets/vendors/photoswipe/photoswipe.min.js') ?>"></script>
     <script>
-    var openPhotoSwipe = function(index) {
-        var pswpElement = document.querySelectorAll('.pswp')[0],
-            items = [<?php echo $zoom_item ?>],
-            options = {
-                index: index
-            },
-            gallery;
+        var openPhotoSwipe = function(index) {
+            var pswpElement = document.querySelectorAll('.pswp')[0],
+                items = [<?php echo $zoom_item ?>],
+                options = {
+                    index: index
+                },
+                gallery;
 
-        gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
-        gallery.init();
-    }
+            gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+        }
 
-    $('[data-imagezoom]').click(function() {
-        var index = $(this).closest("li").index();
-        openPhotoSwipe(index);
-    });
+        $('[data-imagezoom]').click(function() {
+            var index = $(this).closest("li").index();
+            openPhotoSwipe(index);
+        });
     </script>
 <?php else : ?>
 
@@ -564,18 +568,18 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
 
 <script defer src="<?php echo Models::asset("assets/_ilm_own/js/detailsPage_scripts.js") ?>"></script>
 <script defer type="text/javascript">
-$(document).ready(function() {
-    <?php if ($this->checkJump('jumpToRvw')) : ?>
-        $('#DRRvwBtn').trigger("click");
-        _ilm.jumpToSection('#DRRvwBtn', function() {
-            $('#rv-main-area .media:first-child').addClass('animated flash');
-        });
-    <?php endif; ?>
+    $(document).ready(function() {
+        <?php if ($this->checkJump('jumpToRvw')) : ?>
+            $('#DRRvwBtn').trigger("click");
+            _ilm.jumpToSection('#DRRvwBtn', function() {
+                $('#rv-main-area .media:first-child').addClass('animated flash');
+            });
+        <?php endif; ?>
 
-    <?php if ($this->checkJump('jumpToQstn')) : ?>
-        _ilm.jumpToSection('#Rating', function() {
-            $('#rv-qus-area .media:first-child').addClass('animated flash');
-        });
-    <?php endif; ?>
-});
+        <?php if ($this->checkJump('jumpToQstn')) : ?>
+            _ilm.jumpToSection('#Rating', function() {
+                $('#rv-qus-area .media:first-child').addClass('animated flash');
+            });
+        <?php endif; ?>
+    });
 </script>

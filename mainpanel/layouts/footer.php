@@ -2,9 +2,17 @@
 
 namespace _ilmComm;
 
+// Social links
 $socialLinks = $this->getSocialLinks();
+
+// Payemnt methods
 $paymentMethods = $this->paymentMethods();
+
+// Shipping methods
 $shippingMethods = $this->shippingMethods();
+
+// Get notification message
+$notification = Session::Get("msg");
 ?>
 
 </section>
@@ -57,8 +65,8 @@ $shippingMethods = $this->shippingMethods();
 
                                 <?php foreach ($socialLinks as $SK => $SL) : ?>
                                     <li>
-                                        <a href="<?= $SL ?>" target="_blank">
-                                            <i class="fa fa-<?= $SK ?>"></i>
+                                        <a href="<?php echo $SL ?>" target="_blank">
+                                            <i class="fa fa-<?php echo $SK ?>"></i>
                                         </a>
                                     </li>
                                 <?php endforeach; ?>
@@ -88,7 +96,7 @@ $shippingMethods = $this->shippingMethods();
                     <h4>Payment Methods</h4>
 
                     <?php foreach ($paymentMethods as $PM) : ?>
-                        <img src="<?= Models::asset($PM); ?>" class="img-responsive" />
+                        <img src="<?php echo asset($PM); ?>" class="img-responsive" />
                     <?php endforeach; ?>
 
                 </div>
@@ -96,7 +104,8 @@ $shippingMethods = $this->shippingMethods();
                     <h4>Delivered By</h4>
 
                     <?php foreach ($shippingMethods as $SM) : ?>
-                        <img src="<?= Models::asset($SM['method_logo']); ?>" class="img-responsive" alt="<?= htmlspecialchars($SM['method_name']) ?>" />
+                        <img src="<?php echo asset($SM['method_logo']); ?>" class="img-responsive"
+                             alt="<?php echo htmlspecialchars($SM['method_name']) ?>" />
                     <?php endforeach; ?>
 
                 </div>
@@ -107,7 +116,7 @@ $shippingMethods = $this->shippingMethods();
         <div class="container">
             <div class="row">
                 <p class="pull-left">
-                    <img src="<?php echo Models::getLogo() ?>" class="footerlogo">
+                    <img src="<?php echo get_logo() ?>" class="footerlogo">
                 </p>
                 <p class="pull-right">
                     <?php
@@ -120,21 +129,21 @@ $shippingMethods = $this->shippingMethods();
 </footer>
 
 <?php include realpath(__DIR__ . "/../layouts/footer-notification-modal.php"); ?>
-<script src="<?= Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
-<script src="<?= Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
-<script src="<?= Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?php echo asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
+<script src="<?php echo asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
+<script src="<?php echo asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
-<script src="<?= Models::asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
 
-<script src="<?= Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
 lazyLoadInstance.update();
 
@@ -159,12 +168,12 @@ function changeLanguageByButtonClick(language) {
 </script>
 
 <?php
-$notification = Session::Get("msg");
-if ($notification) :
+if (!empty($notification)) :
+    // Destroy notification
     Session::Destroy("msg");
 ?>
     <script type="text/javascript">
-    showPageAlert("Alert !", "<?= htmlspecialchars($notification) ?>");
+    showPageAlert("Alert !", "<?php echo htmlspecialchars($notification) ?>");
     </script>
 <?php endif; ?>
 
