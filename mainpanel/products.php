@@ -14,9 +14,9 @@ $Prs = $this->AllProducts;
                         <div class="carousel-inner">
                             <div class="item active">
                                 <div class="ppc-single-slide">
-                                    <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[0]) ?>);"></div>
+                                    <div class="ppc-single-background" style="background-image: url('<?php echo asset($this->CatImages[0]) ?>);"></div>
                                     <div class="ppc-single-image">
-                                        <img data-src="<?php echo Models::asset($this->CatImages[0]) ?>">
+                                        <img data-src="<?php echo asset($this->CatImages[0]) ?>">
                                     </div>
                                 </div>
                             </div>
@@ -24,9 +24,9 @@ $Prs = $this->AllProducts;
                             <?php if (file_exists($this->CatImages[1])) : ?>
                                 <div class="item">
                                     <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[1]) ?>);"></div>
+                                        <div class="ppc-single-background" style="background-image: url('<?php echo asset($this->CatImages[1]) ?>);"></div>
                                         <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[1]) ?>">
+                                            <img data-src="<?php echo asset($this->CatImages[1]) ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -35,9 +35,9 @@ $Prs = $this->AllProducts;
                             <?php if (file_exists($this->CatImages[2])) : ?>
                                 <div class="item">
                                     <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[2]) ?>);"></div>
+                                        <div class="ppc-single-background" style="background-image: url('<?php echo asset($this->CatImages[2]) ?>);"></div>
                                         <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[2]) ?>">
+                                            <img data-src="<?php echo asset($this->CatImages[2]) ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@ $Prs = $this->AllProducts;
             <div class="row">
                 <div class="col-md-12">
                     <div class="empty-product-page">
-                        <img src="<?php echo Models::asset("assets/images/pp-empty.png") ?>" alt="" />
+                        <img src="<?php echo asset("assets/images/pp-empty.png") ?>" alt="" />
                         <h4>WE CAN'T SEEM TO FIND THE PRODUCT YOU ARE LOOKING FOR</h4>
                         <h4>PLEASE HAVE A LOOK OUR OTHER CATEGORIES</h4>
                     </div>
@@ -112,4 +112,4 @@ $Prs = $this->AllProducts;
     </div>
 <?php endif; ?>
 
-<script defer src="<?php echo Models::asset("assets/_ilm_own/js/productPage_scripts.js") ?>"></script>
+<script defer src="<?php echo asset("assets/_ilm_own/js/productPage_scripts.js") ?>"></script>

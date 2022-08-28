@@ -2,12 +2,16 @@
 
 namespace _ilmComm;
 
-$BrandLists = $this->brandLists();
 ?>
 
 <section class="main-body bg-white">
 
-    <?php if (is_array($BrandLists) && count($BrandLists)) : ?>
+    <?php
+    // Get Brand List
+    $BrandLists = $this->brandLists();
+    if (is_array($BrandLists) && count($BrandLists)) :
+        // Brand exists
+    ?>
         <div class="spd">
             <div class="container">
                 <div class="section-mb">
@@ -16,9 +20,15 @@ $BrandLists = $this->brandLists();
                     </div>
                     <div class="ft-pr-sliders">
                         <div class="homepage-brand-section">
+
                             <?php
+                            // Format brand list
                             $FormattedBrandList = array_combine(array_column($BrandLists, "brand"), $BrandLists);
+
+                            // Group formatted brand by A,B,C,D....
                             $BrandGroups = $this->groupBrandList($FormattedBrandList);
+                            
+                            // Fetch all brand by group name
                             foreach ($BrandGroups as $GK => $GK_Val) :
                             ?>
                                 <div class="brand-group" style="margin-bottom: 1rem">
@@ -27,8 +37,12 @@ $BrandLists = $this->brandLists();
 
                                         <?php
                                         foreach ($GK_Val as $BrName) :
-                                            $BrLink = $FormattedBrandList[$BrName]['link'];
-                                            $BrImg = $FormattedBrandList[$BrName]['image'];
+                                            // Brand info from brand name
+                                            $BrandInfo = rec_arr_val($FormattedBrandList, $BrName);
+
+                                            // Brand info var from array
+                                            $BrLink = rec_arr_val($BrandInfo, 'link');
+                                            $BrImg = rec_arr_val($BrandInfo, 'image');
                                         ?>
                                             <div class="single-brand">
                                                 <div class="single-brand-info">

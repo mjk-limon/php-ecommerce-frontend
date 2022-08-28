@@ -27,24 +27,24 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     <meta property="og:site_name" content="<?php echo $_SERVER['HTTP_HOST'] ?>" />
     <meta name="keywords" content="<?php echo $ogInfo["description"] ?>">
 
-    <link rel="icon" href="<?php echo Models::asset("favicon.ico") ?>">
-    <link href="<?php echo Models::asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
+    <link rel="icon" href="<?php echo asset("favicon.ico") ?>">
+    <link href="<?php echo asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
 
-    <link href="<?php echo Models::asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
-    <link href="<?php echo Models::asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
+    <link href="<?php echo asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
 
-    <script src="<?php echo Models::asset("assets/vendors/_jquery/jqu_ilm_plugin.js") ?>"></script>
-    <script src="<?php echo Models::asset("assets/vendors/flexslider/__ds_jqu_flex.js") ?>"></script>
+    <script src="<?php echo asset("assets/vendors/_jquery/jqu_ilm_plugin.js") ?>"></script>
+    <script src="<?php echo asset("assets/vendors/flexslider/__ds_jqu_flex.js") ?>"></script>
 
     <?php if ($this->mobileView) : ?>
-        <link href="<?php echo Models::asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
+        <link href="<?php echo asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
     <?php else : ?>
-        <script src="<?php echo Models::asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
+        <script src="<?php echo asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
     <?php endif; ?>
 
     <?php
@@ -52,15 +52,16 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     ?>
 
     <style type="text/css">
-        :root {
-            --accent: <?php echo $this->ColrData['accent'] ?>;
-            --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
-            --secondary: <?php echo $this->ColrData['secondary'] ?>;
-            --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
-            --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
-            --header: <?php echo $this->ColrData['header'] ?>;
-            --menubar: <?php echo $this->ColrData['menubar'] ?>;
-        }
+    :root {
+        --accent: <?php echo $this->ColrData['accent'] ?>;
+        --accentsec: <?php echo $this->ColrData['accentsec'] ?>;
+        --secondary: <?php echo $this->ColrData['secondary'] ?>;
+        --mainbody: <?php echo $this->ColrData['mainbody'] ?>;
+        --innerpage: <?php echo $this->ColrData['innerpage'] ?>;
+        --header: <?php echo $this->ColrData['header'] ?>;
+        --menubar: <?php echo $this->ColrData['menubar'] ?>;
+    }
+
     </style>
 </head>
 
@@ -95,13 +96,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                             <div class="top-user-nav">
                                 <ul class="nav nav-pills">
                                     <li>
-                                        <a href="#" onclick="window.open('tel:<?php echo Models::getContactInformation("mobile1") ?>')">
-                                            Hotline: <span><?php echo Models::getContactInformation("mobile1") ?></span>
+                                        <a href="#" onclick="window.open('tel:<?php echo get_contact_information("mobile1") ?>')">
+                                            Hotline: <span><?php echo get_contact_information("mobile1") ?></span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" onclick="window.open('mailto:<?php echo Models::getContactInformation("email") ?>')">
-                                            Mail Us: <span><?php echo Models::getContactInformation("email") ?></span>
+                                        <a href="#" onclick="window.open('mailto:<?php echo get_contact_information("email") ?>')">
+                                            Mail Us: <span><?php echo get_contact_information("email") ?></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -136,13 +137,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     </li>
                                     <li class="dropdown dropdown-small">
                                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                            <span class="key"><?php echo Models::curr(); ?></span><b class="caret"></b>
+                                            <span class="key"><?php echo curr(); ?></span><b class="caret"></b>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li id="cur_BDT"><a href="<?php echo Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-                                            <li id="cur_USD"><a href="<?php echo Models::baseUrl('?cur=USD') ?>">USD</a></li>
-                                            <li id="cur_INR"><a href="<?php echo Models::baseUrl('?cur=INR') ?>">INR</a></li>
-                                            <li id="cur_GBP"><a href="<?php echo Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
+                                            <li id="cur_BDT"><a href="<?php echo base_url('?cur=BDT') ?>">BDT</a></li>
+                                            <li id="cur_USD"><a href="<?php echo base_url('?cur=USD') ?>">USD</a></li>
+                                            <li id="cur_INR"><a href="<?php echo base_url('?cur=INR') ?>">INR</a></li>
+                                            <li id="cur_GBP"><a href="<?php echo base_url('?cur=GBP') ?>">GBP</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -158,7 +159,7 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                 <div class="row flex branding-flex deskv-hm">
                     <div class="col-md-3 col-xs-5 cols logo-cols">
                         <div class="logo">
-                            <a href="/" id="home-btn"><img src="<?php echo Models::getLogo() ?>"></a>
+                            <a href="/" id="home-btn"><img src="<?php echo get_logo() ?>"></a>
                         </div>
                     </div>
 
@@ -201,10 +202,10 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         <li>
                                             <a href="javascript:;" onclick="$('#ht-currency').collapse('toggle');event.stopPropagation()">Currency <span class="caret"></span></a>
                                             <ul class="collapse" id="ht-currency">
-                                                <li id="cur_BDT"><a href="<?php echo Models::baseUrl('?cur=BDT') ?>">BDT</a></li>
-                                                <li id="cur_USD"><a href="<?php echo Models::baseUrl('?cur=USD') ?>">USD</a></li>
-                                                <li id="cur_INR"><a href="<?php echo Models::baseUrl('?cur=INR') ?>">INR</a></li>
-                                                <li id="cur_GBP"><a href="<?php echo Models::baseUrl('?cur=GBP') ?>">GBP</a></li>
+                                                <li id="cur_BDT"><a href="<?php echo base_url('?cur=BDT') ?>">BDT</a></li>
+                                                <li id="cur_USD"><a href="<?php echo base_url('?cur=USD') ?>">USD</a></li>
+                                                <li id="cur_INR"><a href="<?php echo base_url('?cur=INR') ?>">INR</a></li>
+                                                <li id="cur_GBP"><a href="<?php echo base_url('?cur=GBP') ?>">GBP</a></li>
                                             </ul>
                                         </li>
                                         <?php if (!$this->UserData) : ?>
@@ -219,7 +220,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                         <?php endif; ?>
 
                                         <li><a href="/brands/">Brands</a></li>
-                                        <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+
+                                        <?php if (adm_fet("_ilm_prd", "forceflash")) : ?>
+                                            <li><a href="/search/?q=&a_s_t=flash_sales"><?php echo $this->HeaderOfferText ?></a></li>
+                                        <?php else : ?>
+                                            <li><a href="/search/?q=&a_s_t=special_offer"><?php echo $this->HeaderOfferText ?></a></li>
+                                        <?php endif; ?>
+
                                         <li><a href="/track-order/">Track Order</a></li>
                                     </ul>
                                 </li>
@@ -254,7 +261,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
                                     <ul class="m-a-links">
                                         <li><a href="/">Home</a></li>
                                         <li><a href="/brands/">Brands</a></li>
-                                        <li><a href="/search/?q=?q=&a_s_t=special_offer"><?php echo $this->OfferText ?></a></li>
+
+                                        <?php if (adm_fet("_ilm_prd", "forceflash")) : ?>
+                                            <li><a href="/search/?q=&a_s_t=flash_sales"><?php echo $this->HeaderOfferText ?></a></li>
+                                        <?php else : ?>
+                                            <li><a href="/search/?q=&a_s_t=special_offer"><?php echo $this->HeaderOfferText ?></a></li>
+                                        <?php endif; ?>
+
                                         <li><a href="/track-order/">Track Order</a></li>
 
                                         <?php if (!$this->UserData) : ?>
@@ -337,8 +350,3 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
     <?php endif; ?>
 
     <section id="skmbcontent" style="display:block">
-        <?php
-        if ($this->HeadData['content']) {
-            echo $this->HeadData['content'];
-        }
-        ?>

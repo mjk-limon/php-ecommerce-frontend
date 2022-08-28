@@ -15,7 +15,7 @@ namespace _ilmComm;
                             <div class="col-md-6 col-xs-12">
                                 <form class="_ilmForm" id="loginForm" action="" method="POST">
                                     <input type="hidden" name="loginUser" />
-                                    <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
+                                    <input type="hidden" class="refPage" name="ref" value="<?php echo $this->ReferenceUrl ?>" />
 
                                     <div class="form-group widget_input">
                                         <label>Your Email Address</label>
@@ -28,7 +28,7 @@ namespace _ilmComm;
                                     <div class="forget"><a href="#forgotPassword" data-toggle="modal">Forgot your password ?</a></div>
                                     <button type="submit" class="submit-btn iFSubmitBtn">Sign In</button>
 
-                                    <div class="swap-btn"><a href="/register/?ref=<?php echo urlencode($this->getReferences('key')) ?>">Create new account</a></div>
+                                    <div class="swap-btn"><a href="/register/?ref=<?php echo urlencode($this->ReferenceKey) ?>">Create new account</a></div>
                                 </form>
                             </div>
                             <div class="col-md-6 col-xs-12">
@@ -97,4 +97,4 @@ namespace _ilmComm;
     </div>
 </div>
 
-<script defer src="<?php echo Models::asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>
+<script defer src="<?php echo asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>

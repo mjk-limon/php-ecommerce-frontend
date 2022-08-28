@@ -319,7 +319,11 @@ $SelfUrl = Models::baseUrl('details/' . $this->Mainc . '/' . $this->Prid . '/');
                                 <h4>Reviews</h4>
                                 <div class="user-review-section _nrp">
                                     <div id="rv-main-area" class="_nrt">
-                                        <?php include "layouts/details-page-reviews.php"; ?>
+                                        
+                                        <?php
+                                        include "layouts/details-page-reviews.php";
+                                        ?>
+
                                     </div>
                                     <div class="new-qus-reply">
 

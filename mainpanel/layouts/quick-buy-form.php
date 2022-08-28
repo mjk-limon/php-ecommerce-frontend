@@ -2,13 +2,18 @@
 
 namespace _ilmComm;
 
+// Products
 $Products = array();
+
+// Payment gateways
 $PmntGateways = $this->PaymentGateways;
+
+// Seleted product info
 $Products[] = array(
     "p" => $this->Sp->getProductId(),
-    "s" => isset($this->CkData['prSize']) ? $this->CkData['prSize'] : '',
-    "c" => isset($this->CkData['prColr']) ? $this->CkData['prColr'] : '',
-    "q" => isset($this->CkData['prQty']) ? $this->CkData['prQty'] : 1
+    "s" => rec_arr_val($this->CkData, 'prSize'),
+    "c" => rec_arr_val($this->CkData, 'prColr'),
+    "q" => rec_arr_val($this->CkData, 'prQty', 1)
 );
 ?>
 
@@ -44,19 +49,20 @@ $Products[] = array(
                                 </div>
                             </td>
                             <td><?php echo $Products[0]['q'] ?> Unit</td>
-                            <td><?php echo Models::curr($this->Sp->getPrice()) ?></td>
-                            <td><?php echo Models::curr($this->Sp->getPrice() * $Products[0]['q']) ?></td>
+                            <td><?php echo curr($this->Sp->getPrice()) ?></td>
+                            <td><?php echo curr($this->Sp->getPrice() * $Products[0]['q']) ?></td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-right">
-                                <p class="mb-0"><strong>Item Total:</strong> <span class="aprstotal"><?php echo Models::curr($this->Sp->getPrice() * $Products[0]['q']) ?></span></p>
+                                <p class="mb-0"><strong>Item Total:</strong> <span class="aprstotal"><?php echo curr($this->Sp->getPrice() * $Products[0]['q']) ?></span></p>
                                 <p><strong>Delivery Cost:</strong> <span class="dcosttotal">20</span></p>
-                                <p><strong>Subtotal:</strong> <?php echo Models::curr() ?><span class="aprdcostsubtotal">0</span></p>
+                                <p><strong>Subtotal:</strong> <?php echo curr() ?><span class="aprdcostsubtotal">0</span></p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
             <div class="col-md-6 modal-grid second-grid qo-user-info">
                 <h4>Your Information</h4>
                 <div class="limlog-form">
@@ -93,36 +99,33 @@ $Products[] = array(
 
                             <label>Your Full Address</label>
                             <textarea name="fullAddress" placeholder="Enter Your Delivery Address" required=""></textarea>
-                        <?php
-                        else :
-                            $Sc = $this->UserData;
-                        ?>
+                        <?php else : ?>
                             <div class="login-success logged-in">
-                                <h3>You are logged in with <?php echo $Sc->getLastName() ?></h3>
+                                <h3>You are logged in with <?php echo $this->UserData->getLastName() ?></h3>
                                 <div class="limlog-form">
-                                    <input type="hidden" name="email" value="<?php echo $Sc->getUserName() ?>" />
-                                    <input type="hidden" name="fullName" value="<?php echo $Sc->getFullName() ?>" />
-                                    <input type="hidden" name="mobileNumber" value="<?php echo $Sc->getMobileNumber() ?>" />
-                                    <input type="hidden" name="orderLocation" value="<?php echo $Sc->getState() ?>" />
-                                    <input type="hidden" name="fullAddress" value="<?php echo htmlspecialchars($Sc->getFullAddress()) ?>" />
+                                    <input type="hidden" name="email" value="<?php echo $this->UserData->getUserName() ?>" />
+                                    <input type="hidden" name="fullName" value="<?php echo $this->UserData->getFullName() ?>" />
+                                    <input type="hidden" name="mobileNumber" value="<?php echo $this->UserData->getMobileNumber() ?>" />
+                                    <input type="hidden" name="orderLocation" value="<?php echo $this->UserData->getState() ?>" />
+                                    <input type="hidden" name="fullAddress" value="<?php echo htmlspecialchars($this->UserData->getFullAddress()) ?>" />
 
                                     <table class="" border="0">
                                         <tr>
                                             <td>Full Name:</td>
-                                            <td><input type="text" name="shippingName" value="<?php echo $Sc->getFullName() ?>" disabled /></td>
+                                            <td><input type="text" name="shippingName" value="<?php echo $this->UserData->getFullName() ?>" disabled /></td>
                                         </tr>
                                         <tr>
                                             <td>Email Address:</td>
-                                            <td><?php echo $Sc->getUserName() ?></td>
+                                            <td><?php echo $this->UserData->getUserName() ?></td>
                                         </tr>
                                         <tr>
                                             <td>Mobile Number:</td>
-                                            <td><input type="text" name="shippingNumber" value="<?php echo $Sc->getMobileNumber() ?>" disabled /></td>
+                                            <td><input type="text" name="shippingNumber" value="<?php echo $this->UserData->getMobileNumber() ?>" disabled /></td>
                                         </tr>
                                         <tr>
                                             <td>Shipping Address: </td>
                                             <td>
-                                                <textarea name="shippingAddress" disabled><?php echo $Sc->getFullAddress() ?></textarea>
+                                                <textarea name="shippingAddress" disabled><?php echo $this->UserData->getFullAddress() ?></textarea>
                                                 <p><a href="javascript:;" class="shippingChangeBtn"><i class="fa fa-pencil"></i> Change</a></p>
                                             </td>
                                         </tr>
@@ -132,7 +135,7 @@ $Products[] = array(
                                     </table>
 
                                     <select name="orderLocation" id="orderLoc">
-                                        <option value="<?php echo $Sc->getCity() ?>"><?php echo $Sc->getCity() ?></option>
+                                        <option value="<?php echo $this->UserData->getCity() ?>"><?php echo $this->UserData->getCity() ?></option>
                                     </select>
 
                                     <div class="shippingIdCont">
@@ -155,9 +158,11 @@ $Products[] = array(
             <div class="col-md-12">
                 <h4>Select Your Payment Mehtod</h4>
                 <div class="payment-information" style="padding:1.5rem">
+
                     <?php
                     include "checkout-payment-methods.php";
                     ?>
+                    
                 </div>
             </div>
         </div>

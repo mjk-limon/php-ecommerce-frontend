@@ -2,7 +2,10 @@
 
 namespace _ilmComm;
 
+// Fetch states
 $States = $this->fetchStates();
+
+// Fetch all locations
 $AllLocations = $this->fetchAllLocations();
 ?>
 
@@ -113,4 +116,4 @@ $AllLocations = $this->fetchAllLocations();
 
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6Lc0vykaAAAAAPPI-rqv0e20S-fNcKN0JOAWCdIx"></script>
-<script async src="<?php echo Models::asset('assets/_ilm_own/js/registerPage_scripts.js') ?>"></script>
+<script async src="<?php echo asset('assets/_ilm_own/js/registerPage_scripts.js') ?>"></script>

@@ -12,16 +12,13 @@ namespace _ilmComm;
             <button class="">Apply Coupon</button>
         </div>
     </form>
-<?php
-else :
-    if (!$this->CartCoupon->validate()) {
-        echo '<p class="cp-error">Coupon date expired</p>
-			<p class="cp-error"><a href="javascript:;" id="removeCoupon">Remove This</a></p>';
-        return;
-    }
-?>
+<?php elseif (!$this->CartCoupon->validate()) : ?>
+    <p class="cp-error">Coupon date expired</p>
+    <p class="cp-error"><a href="javascript:;" id="removeCoupon">Remove This</a></p>
+<?php else : ?>
     <p class="used-cp">
-        Used coupon: <?= $this->CartCoupon->getCouponCode() ?> <a href="javascript:;" id="removeCoupon">&times;</a>
-        <span>You got <span><?= Models::curr($this->CartSummery->getCouponDiscount()) ?></span> discount</span>
+        Used coupon: <?php echo $this->CartCoupon->getCouponCode() ?>
+        <a href="javascript:;" id="removeCoupon">&times;</a>
+        <span>You got <span><?php echo curr($this->CartSummery->getCouponDiscount()) ?></span> discount</span>
     </p>
 <?php endif; ?>

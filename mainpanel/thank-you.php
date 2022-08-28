@@ -2,9 +2,12 @@
 
 namespace _ilmComm;
 
+// Order info
 $OrderInfo = $this->orderInformation();
 $OrderId = $OrderInfo->getOrderId();
-$InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
+
+// Invoice url
+$InvoiceUrl = base_url('invoice/print/odr-' . $OrderId);
 ?>
 
 <section class="main-body">
@@ -94,18 +97,18 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                 <div class="section-mb">
                     <div class="mb-content">
                         <div class="invoice">
-                            <img src="<?php echo Models::getLogo() ?>" class="_invoice_watermark">
+                            <img src="<?php echo get_logo() ?>" class="_invoice_watermark">
                             <div class="row invoice-top">
                                 <div class="col-md-3 col-sm-3 col-xs-3">
-                                    <img src="<?php echo Models::getLogo() ?>" style="height: auto">
+                                    <img src="<?php echo get_logo() ?>" style="height: auto">
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6 tagline">
                                     <h2 class="company-name"><?php echo COMPANY_NAME ?></h2>
                                     <div class="separator"></div>
-                                    <p class="company-address"><?php echo Models::getContactInformation('address'); ?></p>
+                                    <p class="company-address"><?php echo get_contact_information('address'); ?></p>
                                     <p class="company-contact">
-                                        <?php echo Models::getContactInformation('mobile1'); ?> |
-                                        <?php echo Models::getContactInformation('email'); ?>
+                                        <?php echo get_contact_information('mobile1'); ?> |
+                                        <?php echo get_contact_information('email'); ?>
                                     </p>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3 qr">
@@ -136,7 +139,7 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                                         <tr>
                                             <td>Currency</td>
                                             <td>:</td>
-                                            <td> <?php echo Models::curr() ?> </td>
+                                            <td> <?php echo curr() ?> </td>
                                         </tr>
                                         <tr>
                                             <td>Payment Type</td>
@@ -179,46 +182,50 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                                         <tbody>
 
                                             <?php
-                                            $Sp = $this->singleProduct();
+                                            $Sp = $this->SingleProduct;
                                             $CpInfo = $OrderInfo->getOdrUsedCoupon();
                                             $OdredProducts = $OrderInfo->getOrderedProducts();
 
                                             $Ci = $this->orderCartInfo($OdredProducts, $CpInfo->getCouponToken());
 
                                             foreach ($OdredProducts as $i => $Prs) :
-                                                $Sp->setPrId($Prs['p']);
-                                                $Sp->processDiscount($Prs["q"]);
-                                                $Sp->processStock($Prs["s"], $Prs["c"]);
+                                                $Sp->setProductId($Prs['p']);
+                                                $Sp->buildInfo();
+                                                $Sp->buildProductDiscount($Prs["q"]);
+                                                $Sp->buildPriceAndStock($Prs["s"], $Prs["c"]);
                                             ?>
                                                 <tr>
                                                     <td><?php echo $i + 1 ?></td>
                                                     <td>
-                                                        <p class="ipnaid ipname"><?php echo htmlspecialchars($Sp->getName()) ?></p>
+                                                        <p class="ipnaid ipname"><?php echo htmlspecialchars($Sp->getProductName()) ?></p>
                                                         <p class="ipnaid">
                                                             ID: <?php echo $Sp->getProductId() ?>
-                                                            <?php
-                                                            if ($Prs["s"]) {
-                                                                echo ', Size: ' . $Prs["s"];
-                                                            }
-                                                            ?>
 
                                                             <?php
+                                                            if ($Prs["s"]) {
+                                                                //Print size
+                                                                echo ', Size: ' . $Prs["s"];
+                                                            }
+
                                                             if ($Prs["c"]) {
+                                                                // Print color
                                                                 echo ', Color: ' . ucwords($Prs["c"]);
                                                             }
                                                             ?>
+
                                                         </p>
                                                     </td>
                                                     <td><?php echo $Prs["q"] ?></td>
                                                     <td>
-                                                        <?php echo Models::curr($Sp->getPrice()) ?>
                                                         <?php
+                                                        echo curr($Sp->getPrice());
+
                                                         if ($Sp->getDiscount()) {
                                                             echo '<p class="ipnaid">' . $Sp->getDiscount() . '% off</p>';
                                                         }
                                                         ?>
                                                     </td>
-                                                    <td><?php echo Models::curr($Sp->getPrice() * $Prs["q"]) ?></td>
+                                                    <td><?php echo curr($Sp->getPrice() * $Prs["q"]) ?></td>
                                                 </tr>
                                             <?php
                                             endforeach;
@@ -234,23 +241,23 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                                     <table class="itemTotal" border="0">
                                         <tr>
                                             <td>Total</td>
-                                            <td><?php echo Models::curr($Total) ?></td>
+                                            <td><?php echo curr($Total) ?></td>
                                         </tr>
                                         <tr>
                                             <td>Delivery Cost</td>
-                                            <td><?php echo Models::curr($DCost) ?></td>
+                                            <td><?php echo curr($DCost) ?></td>
                                         </tr>
 
                                         <?php if ($CouponDiscount) : ?>
                                             <tr>
                                                 <td>Coupon Discount</td>
-                                                <td><?php echo Models::curr($CouponDiscount) ?></td>
+                                                <td><?php echo curr($CouponDiscount) ?></td>
                                             </tr>
                                         <?php endif; ?>
 
                                         <tr class="subtotal">
                                             <td>Subtotal</td>
-                                            <td><?php echo Models::curr($SubTotal) ?></td>
+                                            <td><?php echo curr($SubTotal) ?></td>
                                         </tr>
                                     </table>
 
@@ -270,7 +277,7 @@ $InvoiceUrl = Models::baseUrl('invoice/print/odr-' . $OrderId);
                                             We want to make sure that your are completely satisfied with <?php echo COMPANY_NAME ?>.<br />
                                             Delivery: If for any reason you are not, then please advise the Customer Services Team Member at the door and they will ensure that any issues will be resolve for you.<br />
                                             If there are any questions you'd like to ask, either about your order or any aspect of the <?php echo COMPANY_NAME ?> service,
-                                            Please call us on <?php echo Models::getContactInformation('mobile1') ?>, or e-mail us at <?php echo Models::getContactInformation('email') ?>. We are open seven days a week.
+                                            Please call us on <?php echo get_contact_information('mobile1') ?>, or e-mail us at <?php echo get_contact_information('email') ?>. We are open seven days a week.
                                         </p>
                                     </div>
                                 </div>

@@ -2,11 +2,17 @@
 
 namespace _ilmComm;
 
+// Social links
 $socialLinks = $this->getSocialLinks();
+
+// Payemnt methods
 $paymentMethods = $this->paymentMethods();
-$shippingMethods = array_filter($this->shippingMethods(), function ($v) {
-    return $v["method_logo"];
-});
+
+// Shipping methods
+$shippingMethods = $this->shippingMethods();
+
+// Get notification message
+$notification = Session::Get("msg");
 ?>
 
 </section>
@@ -90,7 +96,7 @@ $shippingMethods = array_filter($this->shippingMethods(), function ($v) {
                     <h4>Payment Methods</h4>
 
                     <?php foreach ($paymentMethods as $PM) : ?>
-                        <img src="<?php echo Models::asset($PM); ?>" class="img-responsive" />
+                        <img src="<?php echo asset($PM); ?>" class="img-responsive" />
                     <?php endforeach; ?>
 
                 </div>
@@ -98,8 +104,8 @@ $shippingMethods = array_filter($this->shippingMethods(), function ($v) {
                     <h4>Delivered By</h4>
 
                     <?php foreach ($shippingMethods as $SM) : ?>
-                        <img src="<?php echo Models::asset($SM['method_logo']); ?>" class="img-responsive"
-                            alt="<?php echo htmlspecialchars($SM['method_name']) ?>" />
+                        <img src="<?php echo asset($SM['method_logo']); ?>" class="img-responsive"
+                             alt="<?php echo htmlspecialchars($SM['method_name']) ?>" />
                     <?php endforeach; ?>
 
                 </div>
@@ -110,7 +116,7 @@ $shippingMethods = array_filter($this->shippingMethods(), function ($v) {
         <div class="container">
             <div class="row">
                 <p class="pull-left">
-                    <img src="<?php echo Models::getLogo() ?>" class="footerlogo">
+                    <img src="<?php echo get_logo() ?>" class="footerlogo">
                 </p>
                 <p class="pull-right">
                     <?php
@@ -123,27 +129,27 @@ $shippingMethods = array_filter($this->shippingMethods(), function ($v) {
 </footer>
 
 <?php include realpath(__DIR__ . "/../layouts/footer-notification-modal.php"); ?>
-<script src="<?php echo Models::asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
-<script src="<?php echo Models::asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
+<script src="<?php echo asset("assets/vendors/__boo_tstrap/__ilm_boot_min.js") ?>"></script>
+<script src="<?php echo asset("assets/vendors/lazyload/lazyload.min.js") ?>"></script>
+<script src="<?php echo asset('assets/vendors/dd-slick/jquery.ddslick.min.js') ?>"></script>
 
-<script src="<?php echo Models::asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_jqu_scrol-l.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_page_plugins.js") ?>"></script>
 
-<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
-<script src="<?php echo Models::asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Router.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Cart.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
 
-<script src="<?php echo Models::asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
+<script src="<?php echo asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <script type="text/javascript">
 lazyLoadInstance.update()
 </script>
 
 <?php
-$notification = Session::Get("msg");
-if ($notification) :
+if (!empty($notification)) :
+    // Destroy notification
     Session::Destroy("msg");
 ?>
     <script type="text/javascript">

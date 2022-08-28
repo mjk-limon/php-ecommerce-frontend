@@ -10,7 +10,7 @@ require "../doc/vendor/autoload.php";
  */
 $Model = new PageModels\OrderInvoice;
 $OrderNos = $Model->reqestedOrderNos();
-$InvoiceUrl = Models::baseUrl('invoice/print/odr-' . implode(",", $OrderNos));
+$InvoiceUrl = base_url('invoice/print/odr-' . implode(",", $OrderNos));
 
 /**
  * Watermark Background
@@ -55,15 +55,16 @@ if (isset($_GET['pdf'])) {
 <head>
     <title>Invoice - <?php echo intval(microtime(true)) ?></title>
     <style>
-        @media print {
-            @page {
-                size: A4;
-                margin: 0
-            }
+    @media print {
+        @page {
+            size: A4;
+            margin: 0
         }
+    }
+
     </style>
     <script>
-        window.onload = window.print()
+    window.onload = window.print()
     </script>
 </head>
 
@@ -73,7 +74,7 @@ if (isset($_GET['pdf'])) {
         foreach ($OrderNos as $oNo) {
             $OrderInfo = $Model->orderInformation($oNo);
             $OrderId = $OrderInfo->getOrderId();
-            $SingleInvoiceUrl = Models::baseUrl('invoice/print/odr-' . $oNo);
+            $SingleInvoiceUrl = base_url('invoice/print/odr-' . $oNo);
         ?>
             <div class="your-bill" style="min-height:11.693in;background:url('data:image/png;base64,<?php echo base64_encode($background) ?>') center no-repeat;background-size:40%;overflow:hidden">
                 <div class="background-white" id="uLoadAjaxP">
@@ -81,17 +82,17 @@ if (isset($_GET['pdf'])) {
                         <table class="table invoice-top" style="width:100%">
                             <tr>
                                 <td width="25%" class="_inv_logo" style="padding:0 10px;vertical-align:top" align="middle">
-                                    <img style="max-width:100%;max-height:100px" src="<?php echo Models::getLogo() ?>">
+                                    <img style="max-width:100%;max-height:100px" src="<?php echo get_logo() ?>">
                                 </td>
                                 <td width="60%" style="padding:0 10px;vertical-align:top" class="tagline">
                                     <h2 class="company-name" style="margin:0;font-weight:700;font-size:28px;line-height:1em;text-transform:none"><?php echo COMPANY_NAME ?></h2>
                                     <div class="separator"></div>
                                     <p class="company-address" style="margin:0 0 3px 0;text-align:left;color:#888;font-size:14px;margin-bottom:0;line-height:1.2em">
-                                        <?php echo Models::getContactInformation('address'); ?>
+                                        <?php echo get_contact_information('address'); ?>
                                     </p>
                                     <p class="company-contact" style="margin:0 0 3px 0;text-align:left;color:#888;font-size:14px;margin-bottom:0;line-height:1.2em">
-                                        <?php echo Models::getContactInformation('mobile1'); ?> |
-                                        <?php echo Models::getContactInformation('email'); ?>
+                                        <?php echo get_contact_information('mobile1'); ?> |
+                                        <?php echo get_contact_information('email'); ?>
                                     </p>
                                 </td>
                                 <td width="15%" class="qr" style="padding:0 10px;vertical-align:top;text-align:right">
@@ -126,7 +127,7 @@ if (isset($_GET['pdf'])) {
                                         <tr>
                                             <td style="vertical-align:top;font-size:13px;padding:1px 3px">Currency</td>
                                             <td style="vertical-align:top;font-size:13px;padding:1px 3px">:</td>
-                                            <td style="vertical-align:top;font-size:13px;padding:1px 3px"> <?php echo Models::curr() ?> </td>
+                                            <td style="vertical-align:top;font-size:13px;padding:1px 3px"> <?php echo curr() ?> </td>
                                         </tr>
                                         <tr>
                                             <td style="vertical-align:top;font-size:13px;padding:1px 3px">Payment Type</td>
@@ -196,14 +197,14 @@ if (isset($_GET['pdf'])) {
                                             </td>
                                             <td style="padding:10px;vertical-align:middle"><?php echo $Prs["q"] ?></td>
                                             <td style="padding:10px;vertical-align:middle">
-                                                <?php echo Models::curr($Sp->getPrice()) ?>
+                                                <?php echo curr($Sp->getPrice()) ?>
                                                 <?php
                                                 if ($Sp->getDiscount()) {
                                                     echo '<p style="margin:0 0 3px 0;font-size:11px;color:#333;text-align:left;margin-bottom:0" class="ipnaid">' . $Sp->getDiscount() . '% off</p>';
                                                 }
                                                 ?>
                                             </td>
-                                            <td style="padding:10px;vertical-align:middle"><?php echo Models::curr($Sp->getPrice() * $Prs["q"]) ?></td>
+                                            <td style="padding:10px;vertical-align:middle"><?php echo curr($Sp->getPrice() * $Prs["q"]) ?></td>
                                         </tr>
                                     <?php
                                     endforeach;
@@ -217,23 +218,23 @@ if (isset($_GET['pdf'])) {
                             <table class="itemTotal" border="0" style="width:35%;border-collapse:collapse;border-spacing:0;margin-top:10px;font-size:14px;float:right;color:#333">
                                 <tr>
                                     <td style="padding:3px;vertical-align:middle">Total</td>
-                                    <td style="padding:3px;vertical-align:middle"><?php echo Models::curr($Total) ?></td>
+                                    <td style="padding:3px;vertical-align:middle"><?php echo curr($Total) ?></td>
                                 </tr>
                                 <tr>
                                     <td style="padding:3px;vertical-align:middle">Delivery Cost</td>
-                                    <td style="padding:3px;vertical-align:middle"><?php echo Models::curr($DCost) ?></td>
+                                    <td style="padding:3px;vertical-align:middle"><?php echo curr($DCost) ?></td>
                                 </tr>
 
                                 <?php if ($CouponDiscount) : ?>
                                     <tr>
                                         <td style="padding:3px;vertical-align:middle">Coupon Discount</td>
-                                        <td style="padding:3px;vertical-align:middle"><?php echo Models::curr($CouponDiscount) ?></td>
+                                        <td style="padding:3px;vertical-align:middle"><?php echo curr($CouponDiscount) ?></td>
                                     </tr>
                                 <?php endif; ?>
 
                                 <tr class="subtotal" style="color:#000;border-top:2px dotted #aaa;font-size:16px">
                                     <td style="padding:3px;vertical-align:middle">Subtotal</td>
-                                    <td style="padding:3px;vertical-align:middle"><?php echo Models::curr($SubTotal) ?></td>
+                                    <td style="padding:3px;vertical-align:middle"><?php echo curr($SubTotal) ?></td>
                                 </tr>
                             </table>
 
@@ -249,13 +250,14 @@ if (isset($_GET['pdf'])) {
 
                                 </p>
                                 <p style="margin:0 0 3px 0">Payment TrxnId: <?php echo $OrderInfo->getPaymentTrxnId() ?></p>
-                                <img style="width:400px;height:60px" src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t=' . urlencode(base64_encode($OrderInfo->getPaymentTrxnId())) ?>" alt="<?php echo $OrderInfo->getPaymentTrxnId()  ?>" />
+                                <img style="width:400px;height:60px" src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t=' . urlencode(base64_encode($OrderInfo->getPaymentTrxnId())) ?>"
+                                    alt="<?php echo $OrderInfo->getPaymentTrxnId()  ?>" />
                                 <p>
                                     Your complete satisfaction<br />
                                     We want to make sure that your are completely satisfied with <?php echo COMPANY_NAME ?>.<br />
                                     Delivery: If for any reason you are not, then please advise the Customer Services Team Member at the door and they will ensure that any issues will be resolve for you.<br />
                                     If there are any questions you'd like to ask, either about your order or any aspect of the <?php echo COMPANY_NAME ?> service,
-                                    Please call us on <?php echo Models::getContactInformation('mobile1') ?>, or e-mail us at <?php echo Models::getContactInformation('email') ?>. We are open seven days a week.
+                                    Please call us on <?php echo get_contact_information('mobile1') ?>, or e-mail us at <?php echo get_contact_information('email') ?>. We are open seven days a week.
                                 </p>
                             </div>
                         </div>
@@ -263,6 +265,7 @@ if (isset($_GET['pdf'])) {
                 </div>
             </div>
         <?php } ?>
+
     </div>
 </body>
 
