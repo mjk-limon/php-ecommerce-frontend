@@ -1,10 +1,15 @@
-<?php if (get_site_settings("qch")) : ?>
-    <div class="quick-checkout">
+<?php
+
+$CnCls = !isset($QckBuyGuest) ? "col-md-8 col-md-offset-2" : "col-md-12";
+
+if (get_site_settings("qch")) :
+?>
+    <div class="quick-checkout only-checkout">
         <form class="checkOutUserInfo" action="" method="post">
             <input type="hidden" name="email" value="" />
 
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="<?php echo $CnCls ?>">
                     <div class="limlog-form">
                         <div class="row form-group">
                             <div class="col-md-12">
@@ -46,10 +51,13 @@
                     </div>
                 </div>
             </div>
-            <div class="nav-invoker">
-                <a class="nav-btn previous qchk-logchk-toggle" href="javascript:void(0)">Return to Login</a>
-                <input type="submit" class="second-tab-btn swtT nav-btn" data-relative=".checkOutUserInfo" value="Save & Continue" />
-            </div>
+
+            <?php if (!isset($QckBuyGuest)) : ?>
+                <div class="nav-invoker">
+                    <a class="nav-btn previous qchk-logchk-toggle" href="javascript:void(0)">Return to Login</a>
+                    <input type="submit" class="second-tab-btn swtT nav-btn" data-relative=".checkOutUserInfo" value="Save & Continue" />
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 <?php endif; ?>
