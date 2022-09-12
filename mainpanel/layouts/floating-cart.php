@@ -1,7 +1,5 @@
 <?php
 
-namespace _ilmComm;
-
 // Single product var
 $Sp = $this->SingleProduct;
 ?>
