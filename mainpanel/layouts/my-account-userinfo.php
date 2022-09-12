@@ -1,9 +1,3 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
 <div class="user-info" id="userinfo">
     <div class="row">
         <div class="col-md-3 col-xs-4">

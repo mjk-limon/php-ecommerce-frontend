@@ -1,7 +1,5 @@
 <?php
 
-namespace _ilmComm;
-
 // Get user order history
 $OrderHistory = $this->UserData->getOrderHistory();
 ?>
