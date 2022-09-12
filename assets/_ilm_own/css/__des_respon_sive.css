@@ -148,6 +148,7 @@
 	.coupon-area{width:100%}
 	
 	.login_registration_widget, .registration-page .login_registration_widget{width:100%;margin:1rem 0;padding:1.5em;box-shadow:none;}
+	.logintabs .login-with-social{margin-top:2rem}
 	.my-accwell .user-image .btn{padding:.375rem 1rem}
 	.my-wishlists .tlist-fullinfo .fi-name a{font-size:1.4rem;font-weight:400}
 	.my-wishlists .tlist-fullinfo .fi-name a + div{font-size:1.3rem;font-weight:300}

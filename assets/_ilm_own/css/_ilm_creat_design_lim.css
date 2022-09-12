@@ -1,20 +1,28 @@
 /*==========
-Author: Md Jahid Khan Limon
-Dhaka Solution
-Facebook: @mjk.limon
-*/
+ * @author Md Jahid Khan Limon
+ * @company Dhaka Solution
+ * @facebook /mjk.limon
+ * */
 
-/*======== Page Alert =======*/
+/*
+ * Checkout 
+ */
 body .page-alert{display:none;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999999;position:fixed}
 body .page-alert img.loading{max-width:110px;display:block;margin-left:auto;margin-right:auto}
 body .page-alert .alert-text{position:absolute;background:#fff;border:1px solid #ccc;box-shadow:2px 3px 10px #000;top:50%;left:50%;transform:translate(-50%,-50%);min-width:30%}
 body .page-alert .alert-text-header{position:relative;background-color:#f6f7f9;border-bottom:1px solid #e5e5e5;color:#1d2129;font-size:13px;font-weight:700;line-height:19px;padding:5px 12px}
 body .page-alert .alert-text-doc{padding:14px 12px}
 body .page-alert .alertClose{position:absolute;top:5px;right:5px;font-size:20px;border:1px solid red;cursor:pointer;text-align:center;border-radius:50px;width:23px;background:red;height:23px;color:#fff}
-/*-- No Products Alert --*/
+
+/*
+ * Checkout 
+ */
 .no-products{background:#FFA3A3;padding:20px;color:#252525;border-left:5px solid #ff6978;margin:5px 0}
 .no-products p{text-transform:none}
 
+/*
+ * Inner page 
+ */
 .inner-page{background: var(--innerpage)!important;background-repeat:repeat;background-size:auto}
 .inner-page .inner_page_title{margin-top:0;margin-bottom:1em}
 .inner-page .usp-img{text-align:center;padding-top:10px;width:100px}
@@ -27,29 +35,9 @@ body .page-alert .alertClose{position:absolute;top:5px;right:5px;font-size:20px;
 .inner-page .content-column{margin:0;padding:10px;display:inline-block;box-sizing:border-box;vertical-align:top}
 .inner-page .social-icon{height:30px}
 
-.limon-login{padding-top:60px;padding-bottom:60px;min-height:100vh}
-.limon-login.login-page{background:url(../../images/bg1.jpg) no-repeat;background-attachment:fixed;background-size:cover}
-.limon-login .wrapper{width:450px;margin:auto;padding:2% 15px;background-color:#fff;box-shadow:0 0 5px #ccc;min-height:60vh}
-.limon-login .wrapper.inner-page{width:80%}
-.limon-login .wrapper.my-account{width:65%;margin:auto;padding:0;background-color:#fff;box-shadow:0 0 5px #ccc}
-.limlog-form{display:block;width:350px;margin:auto}
-.limlog-form.inner-page{width:95%}
-.limlog-form label,.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form input[type="submit"]{display:block;font-family:'Open Sans',sans-serif}
-.limlog-form input[type="text"],.limlog-form input[type="password"]{outline:0;padding:12px 15px;border:1px solid #000;width:100%;letter-spacing:1px;box-sizing:border-box}
-.limon-login .wrapper > h2{text-align:center;margin-bottom:30px;text-transform:uppercase;font-size:26px;color:#13caca;font-weight:600;letter-spacing:2px}
-a.pass{font-size:13px;color:#ef4242;font-family:'Open Sans',sans-serif;letter-spacing:2px;display:block;text-align:right;margin:15px 0}
-a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Open Sans',sans-serif}
-
-.limlog-form{display:block;width:95%;margin:auto}
-.limlog-form label,.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form button{display:block;font-family:'Open Sans',sans-serif}
-.limlog-form input[type="text"],.limlog-form input[type="password"],.limlog-form select,.limlog-form textarea{outline:0;padding:8px 15px;border:1px solid #ccc;width:100%;resize:none;}
-.limlog-form label{margin:20px 0 5px;font-size:13px;color:#000;font-weight:600}
-.limlog-form input[type="text"]:focus,.limlog-form input[type="password"]:focus,
-.limlog-form select:focus,.limlog-form textarea:focus{border-color:#888;transition: border-color .4s}
-.limlog-form button{margin:10px 0 20px auto;padding:3px 60px;font-size:18px;background-color:#0469a7;color:#fff;outline:0;border:2px solid #0469a7}
-.limlog-form button:hover{color:#0469a7;background-color:transparent;border:2px solid #0469a7}
-
-/*========== Checkout ==========*/
+/*
+ * Checkout 
+ */
 .mainContentpanel{position:relative;border:0;min-height:10vh}
 .mainContentpanel .steps{box-shadow: 0px 1px 3px #ccc;}
 .steps ul{list-style:none outside none;margin:0;padding:0}
@@ -70,16 +58,45 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .nav-invoker .nav-btn:hover{box-shadow:none;transition:box-shadow .4s;}
 .nav-btn.previous{background:#888;}
 
+/* Login */
 .checkout-login{margin:0}
-#checkout .limlog-form{width:100%}
-#checkout .limlog-form label{color:#333;font-weight:500;text-transform:none;letter-spacing:1.2px}
-#checkout .limlog-form textarea{width:100%;min-height:100px;resize:none}
-#checkout .limlog-form select{width:100%}
-#checkout .login-success .limlog-form input[disabled],
-#checkout .login-success .limlog-form textarea[disabled],
-#checkout .login-success .limlog-form input[readonly],
-#checkout .login-success .limlog-form textarea[readonly]{border:0;background:#fff;padding:0;font:inherit;letter-spacing:inherit;min-height:inherit}
 
+/* Logged in */
+#checkout .userdata-panel{margin-bottom:5px}
+.logged-in .logged-in-userdata{padding:10px 0;margin-bottom:10px;background-color:#fafafa}
+
+.userdata-panel .udp-title{font-weight:normal;margin-bottom:15px;text-decoration:underline}
+.userdata-panel .udp-field, .userdata-panel .udp-field input{font-weight:normal;font-size:14px;color:#333;margin:0}
+.userdata-panel .udp-field{margin-bottom:5px}
+.userdata-panel .udp-field .udp-userfield{font-weight:bold}
+.userdata-panel textarea{min-height:100px;resize:none}
+.userdata-panel .udp-label{font-weight:normal}
+.userdata-panel .udp-table{width:100%}
+.userdata-panel .udp-table tr td{padding-bottom:5px;vertical-align:top}
+.userdata-panel .loggedindatanav a, .userdata-panel .udp-table tr td a{display:block;margin:3px 0;font-size:13px;color:var(--accent)}
+.userdata-panel .udp-table tr td .dd-container a{margin:0;font-size:14px;color:#333}
+
+.login-success .limlog-form input[disabled],
+.login-success .limlog-form textarea[disabled],
+.login-success .limlog-form input[readonly],
+.login-success .limlog-form textarea[readonly]{border:0;background:transparent;height:auto;box-shadow:none;padding:0;font-family:inherit;letter-spacing:inherit;min-height:inherit}
+
+.logged-in .logged-in-userdata .editinfo, .logged-in .logged-in-userdata.editing .saveinfo{display:inline-block;}
+.logged-in .logged-in-userdata.editing .editinfo, .logged-in .logged-in-userdata .saveinfo{display:none;}
+
+.logged-in .logged-in-userdata:not(.editing) .hideonnoedit{display:none}
+.logged-in.noAddress .nav-invoker, .logged-in.noAddress .shippingIdCont{display:none}
+.limlog-form .dd-container label{margin:0}
+.limlog-form .dd-search-filter{position:absolute;width:100%;height:100%;top:0;left:0;padding:10px 15px;border:none!important}
+.limlog-form .logged-in-userdata:not(.editing) .ordershippingloc .dd-select{border:0;border-radius:0;pointer-events:none}
+.limlog-form .logged-in-userdata:not(.editing) .ordershippingloc .dd-selected{padding:0}
+.limlog-form .logged-in-userdata:not(.editing) .ordershippingloc .dd-selected label{font-weight:normal}
+.limlog-form .logged-in-userdata:not(.editing) .ordershippingloc .dd-selected small, .limlog-form .logged-in-userdata:not(.editing) .dd-pointer{display:none}
+
+/* Guest checkout */
+.quick-checkout:not(.only-checkout){display:none}
+
+/* Quick buy modal */
 #quickbuy-form .modal-grid > h4{margin-bottom:1em}
 #quickbuy-form .modal-grid.second-grid{border-left:1px dashed #aaa;margin-left:-1px}
 .qocarttable{font-size:13px}
@@ -87,27 +104,9 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .qopinfo p{font-size:11px}
 .qopinfo p.qoPNAME{font-size:13px;font-weight:500}
 #checkout .qo-user-info .limlog-form{width:90%}
-.limlog-form .dd-container label{margin:0}
-.limlog-form .dd-search-filter {position:absolute;width:100%;height:100%;top:0;left:0;border:none!important}
 #checkout .qc-pmnt-btn{border-radius:0;margin:1em 0;background:var(--accent);color:#fff}
 
-.checkout-login .large-social-buttons {padding-left: 0;margin-top:20px}
-.checkout-login .large-social-buttons a,.large-social-buttons a:visited{display:block;text-shadow:0 1px 0 rgba(0,0,0,0.2);color:#FFF;border-radius:40px;border:1px solid;padding:15px 0;margin-bottom:10px;text-align:center;font-size:16px;font-weight:300}
-.checkout-login .large-social-buttons a.disabled,.large-social-buttons a.disabled:visited{opacity:.3;pointer-events:none;cursor:default}
-.checkout-login .large-social-buttons a span{padding-right:4px}
-.checkout-login .large-social-buttons li.fb a{background:#3b4998;border-color:#2d3773}
-.checkout-login .large-social-buttons li.tw a{background:#4099ff;border-color:#0d7eff}
-.checkout-login .large-social-buttons li.gp a{background:#dc4a36;border-color:#be3421}
-
-.quick-checkout{display:none}
-.logged-in .login-check{position:absolute;right:-1px;top:-1px;width:20px;text-align:center;background:#90ee90}
-.logged-in .login-check .fa{color:#fff}
-.logged-in h3{font-size:16px;margin-bottom:10px}
-.logged-in table{width:100%;font-size:12px;color:#888}
-.logged-in table tr td{padding:5px 10px;vertical-align:top}
-.logged-in table tr td a{color:#337ab7}
-.logged-in #orderLoc{display:none}
-
+/* Order summery */
 #co-order-summery .order-summery .flex{display:flex;flex-wrap:wrap}
 .order-summery .order-summery-tab-1{flex:1;text-align:center}
 .order-summery .order-summery-tab-1 h3{font-size:16px;margin-bottom:6px}
@@ -115,6 +114,7 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .order-summery .order-total{text-align:center;padding:20px;margin-top:20px;border:1px dotted #888;border-radius:5px}
 .order-summery .order-total h3{color:#000}
 
+/* Payment methods */
 .pmnt-methods{text-align:center}
 .pmnt-methods .method-top{margin-bottom:30px}
 .pmnt-methods .mthd-single{display: inline-block;width: 150px;margin: 0 10px;vertical-align: top;padding: 10px;box-shadow: 0px 0px 5px #ddd;}
@@ -131,6 +131,9 @@ a.newacc{font-size:15px;text-align:left!important;color:#0469a7;font-family:'Ope
 .confirm-payment-dialog .payment-info{padding-left:.5rem}
 .confirm-payment-dialog .btn.cf-btn{border-radius:0;background:var(--accent);color:#fff;font-size:16px;letter-spacing:0.7px;padding:1rem 2rem;margin:10px 0;border:0}
 
+/*
+ * Thank you
+ */
 #thank-you h2.successfull{text-align:center;margin-bottom:2em;font-size:26px;color:#333;text-shadow:1px 1px 1px #666}
 #thank-you span.p-title{text-align:center;margin:1.5em 0;background-color:#888;color:#fff;font-size:20px;padding:.3em .6em;display:inline-block}
 #thank-you .separator{height:10px}

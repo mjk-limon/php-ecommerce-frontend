@@ -500,9 +500,22 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .login_registration_widget .swap-btn{margin-top:15px;padding-top:5px;border-top:1px dashed #ccc}
 .login_registration_widget .swap-btn a{display:inline-block;color:#333;font-weight:bold;transition:all .4s}
 .login_registration_widget .swap-btn a:hover{word-spacing:5px;letter-spacing:2px}
+.logintabs .nav-tabs > li > a{border:0}
+.logintabs .nav-tabs > li.active > a{border:0;border-bottom:1px solid var(--accent);background-color:#f5f5f5;}
+.logintabs:not(.no-otp) .tab-mainc{padding:2rem 0}
+.logintabs.no-otp .nav-tabs, .logintabs.no-otp .tab-content .login-with-otp{display:none}
+.logintabs.no-otp .tab-content .login-with-email{display:block}
+.verification-section .form-group, .verification-section.verified #verify-slider{display:none}
+.verification-section.verified .form-group{display:block}
+.limlog-form .verification-section .submit-btn{border:2px solid transparent;font-size:14px}
+.verification-code .form-helper{margin-top:2px;display:block}
+.verification-code .form-helper .disabled{color:#888}
+.otp-login-form + .email-login-form{display:none}
+.swapotploginbtn{display:block;margin-top:15px}
 
 .registration-page .social-login-btns{margin-top:2em}
 .social-login-btns .sl-btn{display:block;width:100%;text-align:center;border:0;color:#fff;font-weight:bold;line-height:40px;height:40px;border-radius:5px;font-size:16px;margin-bottom:10px}
+.social-login-btns h5{margin-top:0}
 .social-login-btns a[href=""]{opacity:.15;pointer-events:none}
 .sl-btn > i{margin-right:30px;background:transparent} 
 .sl-btn.facebook{background:#3b5998}
