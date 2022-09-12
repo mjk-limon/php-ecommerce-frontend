@@ -234,8 +234,8 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .bc-cat-all > a{position: relative;z-index: 1;padding: 0.05rem 1.35rem;color: #6a6a6a;}
 
 /*=========== Footer =======*/
-#footer{background:#f5f5f5;border-top: 1px solid #ddd}
-.footer-widget{background-color:var(--accentsec);color:#fff;padding-bottom:40px}
+#footer{background:#fcfcfc;border-top: 1px solid #ddd}
+.footer-widget{background-color:#fff;padding-bottom:40px}
 .footer-widget .container{padding-top:15px}
 .single-widget{align-self:center}
 .single-widget h2{color:#fff;font-family:'Roboto',sans-serif;font-size:17px;font-weight:400;margin-bottom:1.5rem;text-transform:uppercase}
