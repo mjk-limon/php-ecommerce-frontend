@@ -1,9 +1,3 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
 <?php if ($this->CartCoupon === null) : ?>
     <form id="couponForm" action="" method="POST">
         <input type="hidden" name="couponFormSubmit" />
