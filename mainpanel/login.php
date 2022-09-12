@@ -11,36 +11,45 @@ namespace _ilmComm;
                 <div class="section-mb login_registration_widget">
                     <h2 class="widget_title">Existing User</h2>
                     <div class="registration_form">
-                        <div class="row">
-                            <div class="col-md-6 col-xs-12">
-                                <form class="_ilmForm" id="loginForm" action="" method="POST">
-                                    <input type="hidden" name="loginUser" />
-                                    <input type="hidden" class="refPage" name="ref" value="<?php echo $this->getReferences('url') ?>" />
-
-                                    <div class="form-group widget_input">
-                                        <label>Your Email Address</label>
-                                        <input class="form-control" type="email" name="username" required />
+                        <div role="tabpanel" class="logintabs <?php echo !adm_fet("_ilm_opt", "otp") ? 'no-otp' : 'hasotp'; ?>">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#OTP" aria-controls="OTP" role="tab" data-toggle="tab">Login Using Mobile Number</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#Username" aria-controls="Username" role="tab" data-toggle="tab">Login Using Email</a>
+                                </li>
+                            </ul>
+                            <div class="row tab-mainc">
+                                <div class="col-md-6">
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane login-with-otp active" id="OTP">
+                                            <?php
+                                            $this->layout(
+                                                'login.otp_login_form',
+                                                ['ref_url' => $this->getReferences('url')]
+                                            );
+                                            ?>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane login-with-email" id="Username">
+                                            <?php
+                                            $this->layout(
+                                                'login.email_login_form',
+                                                ['ref_url' => $this->getReferences('url'), 'ref_key' => $this->getReferences('key')]
+                                            );
+                                            ?>
+                                        </div>
                                     </div>
-                                    <div class="form-group widget_input">
-                                        <label>Password</label>
-                                        <input class="form-control" type="password" name="password" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="login-with-social">
+                                        <?php
+                                        $this->layout(
+                                            'login.social_logins',
+                                            ['fb_login_url' => $this->getFacebookLoginUrl(), 'google_login_url' => $this->getGoogleLoginUrl()]
+                                        );
+                                        ?>
                                     </div>
-                                    <div class="forget"><a href="#forgotPassword" data-toggle="modal">Forgot your password ?</a></div>
-                                    <button type="submit" class="submit-btn iFSubmitBtn">Sign In</button>
-
-                                    <div class="swap-btn"><a href="/register/?ref=<?php echo urlencode($this->getReferences('key')) ?>">Create new account</a></div>
-                                </form>
-                            </div>
-                            <div class="col-md-6 col-xs-12">
-                                <?php ?>
-                                <div class="social-login-btns">
-                                    <h5>or, Social Login</h5>
-                                    <a href="<?php echo $this->getFacebookLoginUrl() ?>" class="sl-btn facebook">
-                                        <i class="fa fa-facebook oc"></i> Login With Facebook
-                                    </a>
-                                    <a href="<?php echo $this->getGoogleLoginUrl() ?>" class="sl-btn google">
-                                        <i class="fa fa-google"></i> Login With Google
-                                    </a>
                                 </div>
                             </div>
                         </div>

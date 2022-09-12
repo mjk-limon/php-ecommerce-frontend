@@ -1,80 +1,18 @@
-<?php
-
-namespace _ilmComm;
-
-$Prs = $this->AllProducts;
-?>
-
 <section class="main-body">
+    <?php $this->layout('product_browse.category_slider'); ?>
+
     <div class="container">
-        <?php if (file_exists($this->CatImages[0])) : ?>
-            <div class="row" style="margin-bottom: 20px;">
-                <div class="col-md-12">
-                    <div id="myCarousel" class="carousel slide product-page-carousel" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <div class="ppc-single-slide">
-                                    <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[0]) ?>);"></div>
-                                    <div class="ppc-single-image">
-                                        <img data-src="<?php echo Models::asset($this->CatImages[0]) ?>">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <?php if (file_exists($this->CatImages[1])) : ?>
-                                <div class="item">
-                                    <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[1]) ?>);"></div>
-                                        <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[1]) ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php if (file_exists($this->CatImages[2])) : ?>
-                                <div class="item">
-                                    <div class="ppc-single-slide">
-                                        <div class="ppc-single-background" style="background-image: url('<?php echo Models::asset($this->CatImages[2]) ?>);"></div>
-                                        <div class="ppc-single-image">
-                                            <img data-src="<?php echo Models::asset($this->CatImages[2]) ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-
         <?php if ($this->TotalProduct) : ?>
             <div class="row">
 
-                <?php if (!$this->mobileView) : ?>
-                    <div class="col-md-2p5 col-md-3 product-filter-sidebar">
-                        <?php include "layouts/product-page-filters.php" ?>
-                    </div>
-                <?php endif; ?>
+                <?php $this->layout('product_browse.filters') ?>
+                <?php $this->layout('product_browse.products') ?>
 
-                <div class="col-md-9p5 col-md-9 product-main-panel">
-                    <div class="section-mb features_items">
-                        <div id="pp-main-area" class="v3">
-                            <?php include "layouts/product-page-products.php" ?>
-                        </div>
-                    </div>
-                </div>
             </div>
         <?php else : ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="empty-product-page">
-                        <img src="<?php echo asset("assets/images/pp-empty.png") ?>" alt="" />
-                        <h4>WE CAN'T SEEM TO FIND THE PRODUCT YOU ARE LOOKING FOR</h4>
-                        <h4>PLEASE HAVE A LOOK OUR OTHER CATEGORIES</h4>
-                    </div>
-                </div>
-            </div>
+
+            <?php $this->layout('product_browse.no_product') ?>
+
         <?php endif; ?>
     </div>
 </section>
