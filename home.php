@@ -2,6 +2,8 @@
 
 namespace _ilmComm;
 
+// new line added in home for test
+
 $sp = $this->SingleProduct;
 $spAddClass = Models::getSiteSettings('navhover') ? 'fixed-nav' : null;
 $slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 100));
