@@ -5,7 +5,7 @@ $socialLinks = $this->getSocialLinks();
 
 <div class="col-md-3 col-xs-6 flex">
     <div class="single-widget">
-        <img src="<?php echo get_logo(2) ?>" class="img-responsive">
+        <img src="<?php echo get_logo() ?>" class="img-responsive">
         <p style="margin-top: 20px"></p>
         <div class="social-icons text-center footer-social">
             <ul class="nav">
