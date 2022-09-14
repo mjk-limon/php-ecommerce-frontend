@@ -4,7 +4,7 @@ $CnCls = !isset($QckBuyGuest) ? "col-md-8 col-md-offset-2" : "col-md-12";
 
 if (get_site_settings("qch")) :
 ?>
-    <div class="quick-checkout only-checkout">
+    <div class="quick-checkout">
         <form class="checkOutUserInfo" action="" method="post">
             <input type="hidden" name="email" value="" />
 
