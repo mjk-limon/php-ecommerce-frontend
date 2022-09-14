@@ -2,6 +2,8 @@ _ilm_Otp = {
     OtpForm: $('#otpLoginForm'),
 
     init: function () {
+        var otp_reset_timer;
+
         $('.swapotploginbtn').click(function (e) {
             e.preventDefault();
 
@@ -23,24 +25,23 @@ _ilm_Otp = {
 
             var mobile_number = _ilm_Otp.OtpForm.find('.verf-input').val(),
                 number_regex = new RegExp(/^(01){1}[3456789]{1}(\d){8}$/i),
-                t_i = 20,
-                timer;
+                t_i = 20;
 
             if (number_regex.test(mobile_number)) {
                 _ilm_Otp.sendOtp(mobile_number)
                 _ilm_Otp.OtpForm.find('.verification-section').addClass("verified");
 
-                if (timer) {
-                    clearInterval(timer);
+                if (otp_reset_timer) {
+                    clearInterval(otp_reset_timer);
                 }
 
-                timer = setInterval(function () {
+                otp_reset_timer = setInterval(function () {
                     t_i--;
                     $('.reset span').html(t_i);
 
                     if (t_i < 1) {
                         _ilm_Otp.OtpForm.find('.reset').removeClass("disabled");
-                        clearInterval(timer);
+                        clearInterval(otp_reset_timer);
                     }
                 }, 1000);
                 return;

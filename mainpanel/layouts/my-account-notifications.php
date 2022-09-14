@@ -1,7 +1,5 @@
 <?php
 
-namespace _ilmComm;
-
 // Get User notifications
 $UserNotifications = $this->UserData->getUserNotifications();
 array_multisort(array_column($UserNotifications, "date"), SORT_DESC, $UserNotifications);

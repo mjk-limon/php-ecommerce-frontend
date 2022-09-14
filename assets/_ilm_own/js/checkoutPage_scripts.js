@@ -20,7 +20,7 @@ _ilm_Checkout_page = {
         $('.shippingChangeBtn').on('click', function (e) {
             var $env = $(this),
                 $envPanel = $('.logged-in-userdata'),
-                $inputs = $(".login-success").find("td input, td textarea");
+                $inputs = $envPanel.find(".updatbale-fld");
 
             if ($envPanel.hasClass("editing")) {
                 if ($('#saveUserData').prop('checked') === true) {
@@ -98,9 +98,21 @@ _ilm_Checkout_page = {
             }
             _ilm.globLoader("hide", "#co-order-summery");
         }, null, { async: false });
+    },
+
+    initEmptyAddress: function () {
+        if ($('.noAddress').length) {
+            $('.shippingChangeBtn').click();
+            _ilm.showNotification("Some information is missing! <br/> Please complete your profile.", true)
+        }
+    },
+
+    getUserDataField: function (type) {
+        return $(type).length ? $(type).val() : '';
     }
 }
 
 _ilm_Quick_buy.init();
 _ilm_Checkout_page.init();
+_ilm_Checkout_page.initEmptyAddress();
 _ilm_Cart_floatingcart.hideCart();

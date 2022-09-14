@@ -1,7 +1,5 @@
 <?php
 
-namespace _ilmComm;
-
 // Get user wishlists
 $WishLists = $this->UserData->getWishlistProducts();
 $tlwidth = $this->mobileView ? 110 : 150;

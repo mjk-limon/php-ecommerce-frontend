@@ -11,7 +11,11 @@ namespace _ilmComm;
                 <div class="section-mb login_registration_widget">
                     <h2 class="widget_title">Existing User</h2>
                     <div class="registration_form">
+<<<<<<<< HEAD:login.php
                         <div role="tabpanel" class="logintabs">
+========
+                        <div role="tabpanel" class="logintabs <?php echo !adm_fet("_ilm_opt", "otp") ? 'no-otp' : 'hasotp'; ?>">
+>>>>>>>> master:mainpanel/login.php
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
                                     <a href="#OTP" aria-controls="OTP" role="tab" data-toggle="tab">Login Using Mobile Number</a>
@@ -20,6 +24,7 @@ namespace _ilmComm;
                                     <a href="#Username" aria-controls="Username" role="tab" data-toggle="tab">Login Using Email</a>
                                 </li>
                             </ul>
+<<<<<<<< HEAD:login.php
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="OTP">
                                     <div class="row">
@@ -97,6 +102,38 @@ namespace _ilmComm;
                                     <a href="<?php echo $this->getGoogleLoginUrl() ?>" class="sl-btn google">
                                         <i class="fa fa-google"></i> Login With Google
                                     </a>
+========
+                            <div class="row tab-mainc">
+                                <div class="col-md-6">
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane login-with-otp active" id="OTP">
+                                            <?php
+                                            $this->layout(
+                                                'login.otp_login_form',
+                                                ['ref_url' => $this->getReferences('url')]
+                                            );
+                                            ?>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane login-with-email" id="Username">
+                                            <?php
+                                            $this->layout(
+                                                'login.email_login_form',
+                                                ['ref_url' => $this->getReferences('url'), 'ref_key' => $this->getReferences('key')]
+                                            );
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="login-with-social">
+                                        <?php
+                                        $this->layout(
+                                            'login.social_logins',
+                                            ['fb_login_url' => $this->getFacebookLoginUrl(), 'google_login_url' => $this->getGoogleLoginUrl()]
+                                        );
+                                        ?>
+                                    </div>
+>>>>>>>> master:mainpanel/login.php
                                 </div>
                             </div>
                         </div>
@@ -153,5 +190,8 @@ namespace _ilmComm;
     </div>
 </div>
 
+<<<<<<<< HEAD:login.php
 <script defer src="<?php echo Models::asset('assets/_ilm_own/js/app/_ilm_Otp_login.js') ?>"></script>
+========
+>>>>>>>> master:mainpanel/login.php
 <script defer src="<?php echo Models::asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>

@@ -102,7 +102,7 @@ $Sp = $this->SingleProduct;
             <div class="row">
                 <div class="col-md-12">
                     <div class="empty-product-page">
-                        <img src="<?php echo asset('images/cart-empty.png') ?>" alt="No cart">
+                        <img src="<?php echo asset('assets/images/cart-empty.png') ?>" alt="No cart">
                         <h4>YOU HAVE NO ITEMS IN YOUR SHOPPING CART</h4>
                         <h4>TRY ADDING SOME ITEMS FIRST</h4>
                     </div>

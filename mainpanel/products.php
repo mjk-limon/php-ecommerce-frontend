@@ -1,43 +1,18 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
-<?php
-include "layouts/product-page-banners.php";
-?>
-
 <section class="main-body">
-    <div class="container">
+    <?php $this->layout('product_browse.category_slider'); ?>
 
+    <div class="container">
         <?php if ($this->TotalProduct) : ?>
             <div class="row">
 
-                <?php if (!$this->mobileView) : ?>
-                    <div class="col-md-2p5 col-md-3 product-filter-sidebar">
-                        <?php include "layouts/product-page-filters.php" ?>
-                    </div>
-                <?php endif; ?>
+                <?php $this->layout('product_browse.filters') ?>
+                <?php $this->layout('product_browse.products') ?>
 
-                <div class="col-md-9p5 col-md-9 product-main-panel">
-                    <div class="section-mb features_items">
-                        <div id="pp-main-area" class="v3">
-                            <?php include "layouts/product-page-products.php" ?>
-                        </div>
-                    </div>
-                </div>
             </div>
         <?php else : ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="empty-product-page">
-                        <img src="<?php echo asset("assets/images/pp-empty.png") ?>" alt="" />
-                        <h4>WE CAN'T SEEM TO FIND THE PRODUCT YOU ARE LOOKING FOR</h4>
-                        <h4>PLEASE HAVE A LOOK OUR OTHER CATEGORIES</h4>
-                    </div>
-                </div>
-            </div>
+
+            <?php $this->layout('product_browse.no_product') ?>
+
         <?php endif; ?>
     </div>
 </section>

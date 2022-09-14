@@ -1,9 +1,3 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
 <div class="ft-total">
     <span class="ft-total-left">Item Total</span>
     <span class="ft-total-right"><?php echo $this->CartSummery->getTotalItem() ?> Unit</span>
