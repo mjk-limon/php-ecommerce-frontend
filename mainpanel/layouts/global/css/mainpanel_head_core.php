@@ -24,3 +24,5 @@
 }
 
 </style>
+
+<?php $this->layout('assets/style-additional', [], true); ?>
