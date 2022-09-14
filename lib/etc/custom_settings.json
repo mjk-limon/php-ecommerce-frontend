@@ -1,0 +1,74 @@
+{
+    "category_sample": {
+        "Category icon": {
+            "total": 1,
+            "type": "png",
+            "width": 19,
+            "height": 19
+        },
+        "Top ranking category icon": {
+            "total": 1,
+            "type": "png",
+            "width": 300,
+            "height": 300
+        },
+        "Homepage category sample": {
+            "total": 1,
+            "type": "jpg",
+            "width": 600,
+            "height": 430
+        },
+        "Product page banner": {
+            "total": 3,
+            "type": "jpg",
+            "width": 900,
+            "height": 300
+        }
+    },
+    "inner_pages": [
+        "about-us",
+        "store-location",
+        "term-of-use",
+        "privacy-policy",
+        "testimonials",
+        "blog",
+        "photo-confirmations",
+        "payment-methods",
+        "locations-we-ship-to",
+        "shipping-returns"
+    ],
+    "banner_to_edit": {
+        "home page banners": {
+            "page": "index",
+            "position": 1,
+            "fields": "2"
+        }
+    },
+    "stickers_to_edit": {
+        "home page stickers top 1": {
+            "page": "index",
+            "position": 2,
+            "fields": "2",
+            "scale": "450,215"
+        },
+        "home page stickers new arrival": {
+            "page": "index",
+            "position": 3,
+            "fields": "2",
+            "scale": "460,700"
+        },
+        "offer text": {
+            "page": "index",
+            "position": 4,
+            "fields": "5_-_Link Title",
+            "omit_img": true
+        }
+    },
+    "stickers_to_edit_no_db": [],
+    "add_pr_others": {
+        "SKU": {
+            "type": "text",
+            "name": "sku"
+        }
+    }
+}
