@@ -25,4 +25,4 @@
 
 </style>
 
-<?php $this->layout('assets/style-additional', [], true); ?>
+<?php $this->layout('style_additional', [], static::LAYOUT_ASSETS_CSS); ?>
