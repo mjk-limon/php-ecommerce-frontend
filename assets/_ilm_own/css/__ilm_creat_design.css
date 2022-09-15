@@ -411,7 +411,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .discription-review-title span{margin-left:3px;}
 .discription-review-title span a{color:#bbb;font-weight:300}
 .discription-review-title span a.active{color:#fff;font-weight:400}
-.discription-review-body{padding:1.5rem;font-size:1rem;line-height:1.5em}
+.discription-review-body{padding:1.5rem;line-height:1.5em}
 .discription-review-body img{max-width:100%}
 .discription-review-body ul li{list-style-type:disc}
 
