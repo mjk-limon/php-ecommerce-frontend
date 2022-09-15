@@ -1,9 +1,3 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
 <section class="main-body">
     <div class="login_registration_body">
         <div class="container">
@@ -106,4 +100,4 @@ namespace _ilmComm;
     </div>
 </div>
 
-<script defer src="<?php echo Models::asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>
+<script defer src="<?php echo asset('assets/_ilm_own/js/loginPage_scripts.js') ?>"></script>
