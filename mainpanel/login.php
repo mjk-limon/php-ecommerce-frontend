@@ -1,9 +1,3 @@
-<?php
-
-namespace _ilmComm;
-
-?>
-
 <section class="main-body">
     <div class="login_registration_body">
         <div class="container">
