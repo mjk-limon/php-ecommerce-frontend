@@ -1,0 +1,38 @@
+/*== Header ===*/
+.header_top{background:rgba(158,158,158,.2)}
+.top-user-nav ul li a, .top-user-nav ul li a span, .header-right ul.list-inline li a{color:#333}
+.serachbox > form {display: flex;justify-content: space-between;align-items: center}
+.searchfld{width: 60%; margin: 0;}
+.searchfld .input-text{background:#fff;color:#333;padding:.75rem 2.25rem;border:1px solid var(--accent);border-radius:0;}
+.searchfld .subs{background:var(--accent)}
+.subsi{color:#fff}
+.deskv .srch-datalist{border:none;border-radius:0px}
+.searchfld.focussed .input-text{border-radius:0}
+.navbar-nav li ul.sub-menu li a{display:block;padding:0px 8px;line-height:1.2;white-space:normal}
+.campaignarea .campaign-sticker a{padding:5px 15px;border:1px solid var(--accent);margin-right:10px;font-weight:500;color:var(--accent);display:inline-block}
+.campaignarea .campaign-sticker a img{max-height:40px}
+.campaignarea .campaign-sticker a:first-child{padding:0;border:0}
+.campaignarea .campaign-sticker a:last-child{margin-right:0;color:#fff;background-color:var(--accent);transition:all .2s;}
+.campaignarea .campaign-sticker a:last-child:hover{color:var(--accent);background-color:#fff;}
+
+/*=========== Main body =======*/
+.trending-categories{margin-top: 10px;}
+.tc-list > a {max-width: 50%;padding-right: 5px;}
+.tc-list > a:last-child {padding-right: 0px;padding-left: 5px;}
+.tc-list > a > img{width: 100%; border-radius: 10px;}
+.sp-type{position:absolute;left:0;top:0;color:#fff;background:#b00;font-size:15px;font-weight:700;padding:1px 6px;transform:rotate(-90deg);transform-origin:41px 42px;border-bottom-left-radius:5px}
+.sp-dis{right:5px;color:#fff;background:var(--accent);border-radius:50%;text-align:center;font-size:14px;top:5px;width:35px;height:32px;line-height:32px;font-weight:700;box-shadow:1px 1px 2px #aaa}
+.bc-cat-name{font-weight:400}
+.bc-cat-all{position: relative;border-bottom:1px solid #333;text-align:left;padding-bottom: .375rem;}
+.bc-cat-all > a{float: right; padding: 0.5rem 1.5rem;color: #fff; background-color: var(--accent); border: 1px solid var(--accent);}
+.bc-cat-all > a:hover{color: var(--accent); background-color: #fff}
+
+/*=========== Footer =======*/
+.social-icons.footer-social ul li a i, .social-icons.footer-social ul li a i:hover{background:transparent}
+
+/*=========== Details Page =======*/
+.pt-area{font-size:14px}
+.pr-price-area .min-order{float:right;height:3.5rem;display:flex;align-items:flex-end;font-size:1.4rem;color:#666}
+
+/*===== Login Registration =====*/
+.login_registration_widget{background-color:#fff}

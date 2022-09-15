@@ -123,23 +123,23 @@ _ilm_Details_page = {
     quantityChange: function (newQty) {
         var $qtybox = $(".item_qty_input input"),
             prLimit = parseInt($("#tStock").text()),
+            minOrder = parseInt($qtybox.attr("value")),
             itemPrice = parseInt($(".pr-price").data("prs"));
 
-        if (newQty < 1) {
-            $qtybox.val("1");
-            $("#pramqty").html(itemPrice);
-            _ilm.showNotification("Minimmum quantity selection is 1.", true);
+        if (newQty < minOrder) {
+            newQty = minOrder;
+            _ilm.showNotification(`Minimmum quantity selection is ${minOrder}.` , true);
         } else if (newQty > prLimit) {
-            $qtybox.val(prLimit);
-            $("#pramqty").html(prLimit * itemPrice);
+            newQty = prLimit;
             _ilm.showNotification("Stock limited!", true);
-        } else {
-            $qtybox.val(newQty);
-            $("#pramqty").html(newQty * itemPrice);
-            _ilm_Details_page.setCartData("qty", newQty);
         }
 
-        return null;
+        if($("#pramqty").length) {
+            $("#pramqty").html(newQty * itemPrice);
+        }
+
+        $qtybox.val(newQty);
+        _ilm_Details_page.setCartData("qty", newQty);
     },
 
     setCartData: function (key, value) {
@@ -180,7 +180,7 @@ _ilm_Details_page = {
                     $StockElem = $("#tStock"),
                     prDis = parseInt($PriceElem.data("dis")),
                     prDisPrice = item.s_p.replace(/[0-9]{1,}/g, function (prPrice) {
-                        return prPrice - (prPrice * (prDis / 100));
+                        return Math.round(prPrice - (prPrice * (prDis / 100)));
                     }), priceLbl;
 
                 priceLbl = prDis
