@@ -127,20 +127,19 @@ _ilm_Details_page = {
             itemPrice = parseInt($(".pr-price").data("prs"));
 
         if (newQty < minOrder) {
-            $qtybox.val(minOrder);
-            $("#pramqty").html(itemPrice * minOrder);
+            newQty = minOrder;
             _ilm.showNotification(`Minimmum quantity selection is ${minOrder}.` , true);
         } else if (newQty > prLimit) {
-            $qtybox.val(prLimit);
-            $("#pramqty").html(prLimit * itemPrice);
+            newQty = prLimit;
             _ilm.showNotification("Stock limited!", true);
-        } else {
-            $qtybox.val(newQty);
-            $("#pramqty").html(newQty * itemPrice);
-            _ilm_Details_page.setCartData("qty", newQty);
         }
 
-        return null;
+        if($("#pramqty").length) {
+            $("#pramqty").html(newQty * itemPrice);
+        }
+
+        $qtybox.val(newQty);
+        _ilm_Details_page.setCartData("qty", newQty);
     },
 
     setCartData: function (key, value) {
