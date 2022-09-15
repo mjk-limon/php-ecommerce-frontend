@@ -1,6 +1,6 @@
 <?php if ($Colors = array_filter($this->ProductDetails->getColors())) : ?>
     <div class="pr-sc-area">
-        <div>Select Color:</div>
+        <div>Select Variant:</div>
         <ul class="color-selection">
 
             <?php

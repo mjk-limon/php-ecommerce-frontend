@@ -161,6 +161,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .htmlformb.fixed-menu-bar .sticky-wrapper{display:none}
 
 /*=========== Main body =======*/
+.skiptranslate{display:none!important}
 #skbc-top-margin{height:144px}
 .main-body{background:var(--mainbody);min-height:45rem;padding:3rem 0}
 .main-body.bg-white{background:#FFF;min-height:45rem;padding:3rem 0}
@@ -196,7 +197,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .single-brand-info .sb-brand-image{padding:50%;background-position:center;background-size:80%;background-repeat:no-repeat}
 .sb-brand-title{text-align:center;padding:.25rem 0;font-size:16px;font-weight:400;letter-spacing:0.5px}
 
-.single-product {overflow:hidden}
+.single-product{overflow:hidden}
 .grid-row{display:grid;grid-template-columns:repeat(6, 1fr);grid-column-gap:1.5rem;align-items:start;justify-items:center;margin:0}
 .grid-row.grid4{grid-template-columns:repeat(4, 1fr);}
 .grid-row .grids{width:100%;height:100%;padding:1.5rem 0}
@@ -224,7 +225,6 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .prgrid-ads-section .prgrid-ad-img{display:block;height:100%;background-size:cover;background-position:center;transition:all .4s;transform:scale(1)}
 .prgrid-ads-section .prgrid-ad-img:hover{transform:scale(1.1)}
 
-.section-browse-cat{}
 .bc-single{margin-bottom:2rem;position:relative}
 .bc-main-title{font-size: 2.5rem;font-weight: 300;margin-bottom: 10px;}
 .bc-cat-name{font-weight: 300;font-size: 1.7rem;}
@@ -411,7 +411,9 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .discription-review-title span{margin-left:3px;}
 .discription-review-title span a{color:#bbb;font-weight:300}
 .discription-review-title span a.active{color:#fff;font-weight:400}
-.discription-review-body{padding:1.5rem;font-size:1em}
+.discription-review-body{padding:1.5rem;line-height:1.5em}
+.discription-review-body img{max-width:100%}
+.discription-review-body ul li{list-style-type:disc}
 
 .row.ratings .rating-review h1{font-size:3rem;display:inline-block}
 .row.ratings .rating-review h4{display:inline-block}
@@ -587,3 +589,18 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .track-timeline > p{font-size:18px}
 .track-timeline > .timeline-ul{padding-left:0}
 .track-timeline > .timeline-ul li span{color:#999;margin-right:1.5rem}
+
+/*===== Campaigns =====*/
+.campaign-col{padding-top:15px;padding-bottom:15px}
+.single-campaign{position:relative;box-shadow:2px 2px 3px -1px #a2a2a2;overflow:hidden}
+.sc-info-title,.sc-info-timer{z-index:2}
+.sc-info-timer{position:relative}
+.timer-section{position:absolute;right:10px;top:10px;background:#0a0000c7;color:rgb(255, 255, 255);padding:3px;border-radius:24px;box-shadow:2px 1px 1px -1px #333}
+.sct-unit,.sct-timertitle{display:inline-block;text-align:center;margin-right:1rem;vertical-align:middle}
+.sct-timertitle{font-size:16px;color:#FFF}
+.sct-label{display:block;font-size:15px;text-align:center;font-weight:700;color:#FFF;font-family:'Open Sans','Abel',Roboto}
+.sct-val{display:block;font-size:20px;padding-top:2px;font-weight:700;color:var(--accent)}
+.sc-info-title{position:absolute;bottom:0;left:0;width:100%;background:rgba(0,0,0,.75);padding:5px 16px;color:#fff}
+.sc-info-title h3{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-banner{height:300px;background-size:cover;background-repeat:no-repeat;background-position:center;transition:transform .4s}
+.single-campaign:hover .sc-banner{transform:scale(1.1)}

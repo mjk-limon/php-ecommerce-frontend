@@ -24,3 +24,5 @@
 }
 
 </style>
+
+<?php $this->layout('style_additional', [], static::LAYOUT_ASSETS_CSS); ?>
