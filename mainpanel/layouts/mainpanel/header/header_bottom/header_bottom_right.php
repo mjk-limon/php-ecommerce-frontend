@@ -3,7 +3,6 @@
         <div class="mainmenu-area-quicklinks">
             <ul class="m-a-links">
                 <li><a href="/">Home</a></li>
-                <li><a href="/my-account/?c=90.02">Wishlists</a></li>
                 <li><a href="/brands/">Brands</a></li>
                 <li><a href="/track-order/">Track Order</a></li>
 
