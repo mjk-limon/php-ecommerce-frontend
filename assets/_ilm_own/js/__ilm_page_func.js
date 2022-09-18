@@ -52,7 +52,7 @@ $(document).ready(function () {
         }
     });
 
-    $(window).on("scroll", function () {
+    $(window).on("scroll.navbarWithScroll", function () {
         var delta = 5,
             navbarHeight = 50,
             st = $(this).scrollTop();
