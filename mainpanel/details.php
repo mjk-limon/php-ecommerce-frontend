@@ -1,11 +1,3 @@
-<?php
-
-$this->ProductDetails->processStock();
-$this->ProductDetails->processDiscount();
-$this->ProductDetails->processRating();
-$this->updateViewCounter();
-?>
-
 <section class="main-body bg-white">
     <?php $this->layout('product_details.details_top'); ?>
 </section>
