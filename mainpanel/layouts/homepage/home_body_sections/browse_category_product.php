@@ -1,9 +1,3 @@
-<?php
-
-use _ilmComm\Category\FetchCategories;
-
-?>
-
 <div class="spd">
     <div class="container">
         <div class="section-browse-cat">
@@ -13,16 +7,10 @@ use _ilmComm\Category\FetchCategories;
             <div class="bc-product-area">
 
                 <?php
-                $Cat = new FetchCategories;
-                $MainCats = $Cat->fetchMain();
+                $MainCats = $this->AllCategories->get($this->AllCategories::FETCH_MAIN);
+                while ($Cat = $MainCats->fetch()) {
+                    $BrowseCatProducts = $this->browseCatProducts($Cat->getCategoryId());
 
-                while ($ArrMain = $MainCats->fetch_assoc()) {
-                    $Cat->setCatId($ArrMain['id']);
-                    $Cat->setMain($ArrMain['main']);
-                    $Cat->setSubGroup(null);
-                    $Cat->setSub(null);
-
-                    $BrowseCatProducts = $this->browseCatProducts($Cat->CatId);
                     if ($BrowseCatProducts->num_rows) {
                         $this->layout(
                             'homepage.home_body_sections.browse_category_product.single_category',
