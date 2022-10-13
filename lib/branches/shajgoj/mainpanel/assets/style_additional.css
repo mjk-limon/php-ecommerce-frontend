@@ -413,7 +413,7 @@ body{background-color:var(--mainbody)}
 .floating-sc .sc-btn > div:nth-child(3){background:var(--accent);color:#fff;font-weight: bold;font-size: 13px;}
 .floating-sc .sc-body{width:400px;box-shadow:-2px 0 10px #353535}
 .sc-cart-open{overflow:hidden;padding-right:15px;}
-.sc-cart-open .floating-sc{width:100%;background-color:rgba(0,0,0,.6);}
+.sc-cart-open .floating-sc{width:100%;background-color:rgba(0,0,0,.6);transition:background-color .6s}
 .sc-cart-open .sc-body{display:block}
 .sc-body-top{background:#333;height:50px}
 .sc-body-top h4{margin:0;margin-top: 3px;font-size: 20px;text-align: center;}
@@ -498,7 +498,7 @@ header{box-shadow:none}
 
 .wishlistall > li{height:35px;width:35px;line-height:36px;text-align:center;list-style-type:none;display:inline-block}
 .mainmenu ul li{height:55px;display:block;margin:0 auto;border-bottom:0}
-.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-weight:400;padding:0 25px;text-transform:capitalize;line-height:55px;background-position: center center;background-repeat: no-repeat;}
+.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-weight:400;padding:0 25px;text-transform:capitalize;line-height:55px;background-position:center center;background-repeat:no-repeat;text-align:center}
 .mainmenu ul li a:focus{background-color:transparent}
 .mainmenu ul li a.has-bg{color:#fff;text-shadow: 1px 1px 1px #333;}
 .mainmenu ul li a span{padding-right:5px}
@@ -624,3 +624,7 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}
 .odometer.odometer-auto-theme.odometer-animating-down .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}
 .odometer.odometer-auto-theme.odometer-animating-down.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-down.odometer-animating .odometer-ribbon-inner{-webkit-transition:-webkit-transform 2s;-moz-transition:-moz-transform 2s;-ms-transition:-ms-transform 2s;-o-transition:-o-transform 2s;transition:transform 2s;-webkit-transform:translateY(0);-moz-transform:translateY(0);-ms-transform:translateY(0);-o-transform:translateY(0);transform:translateY(0)}
+
+/*===== Animations =====*/
+@keyframes FloatingCartIn{from{right:-400px;}to{right:0}}
+@keyframes FloatingMenuIn{from{left:-400px;}to{left:0}}

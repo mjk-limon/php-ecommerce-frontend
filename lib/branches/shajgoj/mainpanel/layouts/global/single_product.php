@@ -1,19 +1,15 @@
-<?php
+<?php 
 
 $sp->setPrInfo($pr_info);
 $sp->processDiscount();
 $sp->processStock();
 ?>
 
-<div class="single-product <?php echo $this->spAddClass ?>">
+<div class="single-product m-flex">
     <div class="sp-image">
 
-        <?php if ($sp->getOthers("prtype") === '0') : ?>
-            <span class="sp-type">Wholesale</span>
-        <?php endif; ?>
-        
         <?php if ($sp->getDiscount()) : ?>
-            <span class="sp-dis">-<?php echo $sp->getDiscount() ?>%</span>
+            <span class="sp-dis">SALE</span>
         <?php endif; ?>
 
         <a href="<?php echo $sp->getHref() ?>">
@@ -27,19 +23,22 @@ $sp->processStock();
                     <h5><?php echo $sp->getName() ?></h5>
                 </a>
                 <p>
-                    <strong class="price"><?php echo curr($sp->getPrice()) ?></strong>
-
                     <?php if ($sp->getDiscount()) : ?>
                         <strong class="p-old"><?php echo curr($sp->getPrice(0)) ?></strong>
                     <?php endif; ?>
 
+                    <strong class="price"><?php echo curr($sp->getPrice()) ?></strong>
                 </p>
+                <div style="color: #FF5722;text-align: center;font-weight: bold;">&nbsp;</div>
+                <p style="color: #ffc168;">☆☆☆☆☆</p>
+                <p><?php echo implode(', ', $sp->getSizes()) ?></p>
             </div>
         </div>
+
         <div class="sp-nav">
             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-            <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
-            <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
+            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
+            <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
         </div>
     </div>
 </div>
