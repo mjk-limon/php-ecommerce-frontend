@@ -61,7 +61,7 @@ while ($ArrMain = $MainCats->fetch()) {
                     echo '<div class="clearfix"></div>';
                 }
 
-                if (($TotalSubGroupCats == 1) && empty($Cat->SubGroup)) {
+                if (($TotalSubGroupCats == 1) && empty($Cat->getSubGroup())) {
                     echo '<div class="no-cathead"></div>';
                 }
                 ?>
