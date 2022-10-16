@@ -1,4 +1,4 @@
-<?php if (file_exists($this->CatImages[0])) : ?>
+<?php if ($this->CatImages && file_exists($this->CatImages[0])) : ?>
     <div class="container">
         <div class="row" style="margin-bottom: 20px;">
             <div class="col-md-12">
