@@ -118,62 +118,6 @@
     src: url(https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu5mxKOzY.woff2) format('woff2');
-    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7mxKOzY.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4WxKOzY.woff2) format('woff2');
-    unicode-range: U+0370-03FF;
-}
-/* vietnamese */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7WxKOzY.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu7GxKOzY.woff2) format('woff2');
-    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxK.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 @font-face {
     font-family: 'Pe-icon-7-stroke';
     src:url('fonts/Pe-icon-7-stroke.eot?d7yf1v');
@@ -397,7 +341,8 @@
 .pe-7s-albums:before{content:"\e67d"}
 .pe-7s-alarm:before{content:"\e67e"}
 .pe-7s-airplay:before{content:"\e67f"}
-body{background-color:var(--mainbody)}
+body{background-color:var(--mainbody);font-family:'Poppins',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 .flex.flex-wrap{flex-wrap:wrap!important}
 .modal.modal-center{text-align:center}
 @media screen and (min-width: 768px) {.modal.modal-center:before{display:inline-block;vertical-align:middle;content:" ";height:100%}}
@@ -436,7 +381,7 @@ body{background-color:var(--mainbody)}
 .scbf-link:last-child{background:#58595b;font-weight: bold;}
 
 /*== Header ===*/
-header{box-shadow:none}
+header{box-shadow:2px 0px 2px #ddd}
 .site-branding-area .branding-flex{align-items:center;position:relative}
 .site-branding-area .logo{margin:1rem 0;text-align:center}
 .logo img{max-width:100%;max-height:50px}
@@ -461,7 +406,7 @@ header{box-shadow:none}
 .icon-shopping-bag .cart-contents{position:relative;display:block}
 .cart-contents .count{position:absolute;line-height:19px;width:20px;height:20px;font-size:12px;line-height:22px;left:14px;top:-3px;background-color:#333;color:#fff;border-radius:50%;text-align:center}
 
-.mainmenu-area1{font-family:"Roboto",sans-serif;text-transform:capitalize;width:100%;border-top:0}
+.mainmenu-area1{font-family:"Poppins",sans-serif;text-transform:capitalize;width:100%;border-top:0}
 .mainmenu-area1 .cacaallpaje{background-color:#fff!important;padding:0}
 .manue .nav.navbar-nav{display:flex;justify-content:center;border-left:0}
 .mainmenu-area-quicklinks .m-a-links{text-align:left}
@@ -530,14 +475,16 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .slg-text:not(.slg-text-ps){position: absolute;bottom: 12px;left: 12px; width: calc(100% - 24px);}
 .slg-text p, .slg-text h5{margin: 0;}
 .slg-text h5{margin-bottom: 5px;font-weight: bold;color: var(--accent);}
-.grid-row{grid-gap:2.5rem}
+.grid-row{grid-gap:1.2rem}
 .grid-row .grids{padding:0}
 .sp-dis{position:absolute;left:20px;top:12px;right:auto;color:#FF5722;background-color:transparent;font-size:13px;font-weight:bold;border-radius:0}
 .sp-image img{display:block;margin:0 auto;max-width:100%;max-height:100%;transition:max-width 1s}
 .sp-pr-info h5{margin:0 0 .5rem;font-weight:300;font-size:1.4rem;line-height:1.5rem;max-height:3rem;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;line-clamp:2}
 .sp-pr-info p .price{font-size:15px;color:#181818}
-.products-in-slider .single-product{position:relative;height:100%;background-color:#fff;border:1px solid #888}
-.bc-products .single-product, .product-page-products .single-product{height:490px;position:relative;border:0;box-shadow:none;transition:box-shadow .4s;background-color: #fff}
+.sp-nav .add-cart, .sp-nav .buy-now{font-size:1.25rem}
+.single-slider-product{padding:0 15px}
+.single-slider-product .single-product{position:relative;height:100%;background-color:#fff;border:1px solid #888}
+.bc-products .single-product, .product-page-products .single-product{height:320px;background-color:#fff;box-shadow:0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)}
 .prgrid-ads-section{height:auto}
 .prgrid-ads-section .prgrid-ad-img{flex:1;padding:0 1rem;background-size:100%;background-position:center;overflow:hidden}
 .prgrid-ads-section .prgrid-ad-img:hover{transform:none}
@@ -563,7 +510,6 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .top-title, .product-page-products, .product-page-filter-searchbox{padding:2rem 1.25rem;padding-bottom:0;border-bottom:0}
 .product-page-filter-searchbox{padding-top: 0;}
 .product-page-filter-searchbox .searchfld .input-text{background-color:#fff;box-shadow:0 1px 1px 0 rgba(85,95,110,.2)}
-.tt-total-pr{display:flex;justify-content:space-between;align-items:center}
 .sort-options select{background:#fff;border:0;padding:.25em 2.5em .25em .9375em;height:36px;font-weight:600;font-family:'open sans',sans-serif;box-shadow:0 1px 1px 0 rgba(85,95,110,.2);border-radius:4px;color:#697782}
 .sort-options select{background-image:url('../../images/sel-caret.svg');background-repeat:no-repeat;background-position:right 13px center;background-size:15px;appearance:none;-webkit-appearance:none;-moz-appearance:none}
 
@@ -591,7 +537,7 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .pr-meta-info > span > span{font-weight:500;color:#333}
 .share{margin-top:25px;padding:0;text-align: center;}
 .shareli, .share li{vertical-align:middle}
-.glancebox-header{text-align: center;padding: 2px 0px;background: #58595b;color: var(--accent);font-weight: bold;margin-bottom: 1.5rem}
+.glancebox-header{text-align:center;padding:2px 0px;background:#58595b;color:#fff;font-weight:bold;margin-bottom:1.5rem}
 .pr-glancebox{background-color: #fff;margin-bottom:1.5rem;padding:.725rem}
 .pr-glancebox .gb-image img{max-width: 100%;}
 .pr-glancebox .gb-title {font-size: 12.5px; line-height: 1.2; margin-bottom: 4px;text-align:left}
@@ -601,7 +547,7 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .pr-glancebox .qty-selection li{font-size:15px}
 .pr-glancebox .pr-buy-navs{line-height:1.2em}
 .pr-glancebox ul li{padding-bottom:0}
-.pr-glancebox .gb-pr-buy-nav .add-cart{margin-left:5px;line-height:1.5;text-align:center;background-color:#58595b;color:var(--accent);height:auto}
+.pr-glancebox .gb-pr-buy-nav .add-cart{margin-left:5px;line-height:1.5;text-align:center;background-color:#58595b;color:#fff;height:auto}
 .pr-glancebox ul{padding:0;text-align:left}
 .details-page-bottom{background-color: #fff}
 .discription-review-title{display:block;text-align:center;margin:0;padding:3.25rem 0;font-size:15px;background-color:transparent;color:#333}
