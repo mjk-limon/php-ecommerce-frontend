@@ -1,3 +1,6 @@
+<?php $this->layout('product_details.details_top.breadcrumb'); ?>
+
+
 <div class="spd">
     <div class="container">
         <div class="features_items">
