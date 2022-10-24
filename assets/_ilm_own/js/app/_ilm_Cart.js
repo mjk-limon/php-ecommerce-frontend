@@ -1,5 +1,16 @@
 _ilm_Cart = {
     init: function () {
+        $(document).on("click", ".item_plus, .item_minus", function (e) {
+            var $env = $(this),
+                $qtybox = $env.parent().find(".item_qty_input input"),
+                prQty = parseInt($qtybox.val());
+
+            $env.hasClass("item_plus") ? prQty++ : prQty--;
+
+            _ilm_Cart.quantityChange(prQty, $qtybox);
+            e.preventDefault();
+        });
+
         $(document).on('click', '.cAddBuyNav', function (e) {
             if ($(this).hasClass("add-cart")) {
                 var itemInfo, env = this, $cartEm;
@@ -7,8 +18,8 @@ _ilm_Cart = {
                 $cartEm = $(this).parent().find("em").get(0);
                 itemInfo = $cartEm.dataset;
 
-                return _ilm_Cart.addToCart(itemInfo, function () {
-                    if ($(env).hasClass("mb-details")) {
+                return _ilm_Cart.addToCart(itemInfo, function (snap = true) {
+                    if (!snap && $(env).hasClass("mb-details")) {
                         _ilm.jumpToSection(".pr-size-color", function () {
                             $(".pr-size-color").addClass("animated flash");
                             setTimeout(function () {
@@ -36,12 +47,34 @@ _ilm_Cart = {
         });
     },
 
+    quantityChange: function (newQty, $qtybox) {
+        var prLimit = parseInt($qtybox.prop('max'));
+
+        if (newQty < 1) {
+            $qtybox.val("1");
+            _ilm.showNotification("Minimmum quantity selection is 1.", true);
+        } else if (newQty > prLimit) {
+            $qtybox.val(prLimit);
+            _ilm.showNotification("Stock limited!", true);
+        } else {
+            $qtybox.val(newQty);
+            _ilm_Cart.setCartData("qty", newQty, $qtybox);
+        }
+
+        return null;
+    },
+
+    setCartData: function (key, value, $qtybox) {
+        var $cartEm = $qtybox.closest(".pr-buy-navs").find(".bnav-btns > em").get(0);
+        $cartEm.dataset[key] = value;
+    },
+
     addToCart: function (itemInfo, successCallback = null) {
         var ajaxData, ajaxCallback;
 
         if (!_ilm_Cart.validateItemInfo(itemInfo)) {
             _ilm.showNotification("Please select size and color.", true);
-            if (isCallable(successCallback)) successCallback();
+            if (isCallable(successCallback)) successCallback(false);
             return false;
         }
 
@@ -56,7 +89,7 @@ _ilm_Cart = {
         ajaxCallback = function (data) {
             var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
             if (result.success) {
-                _ilm.showNotification("Product successfully added to cart.");
+                //_ilm.showNotification("Product successfully added to cart.");
                 _ilm.popupContent("hide");
 
                 _ilm_Cart_floatingcart.updateCartData();
@@ -184,7 +217,7 @@ var _ilm_Cart_floatingcart = {
         $(".floating-sc, .mbl-tab-sc").on("click", ".rmv-crt-btn", function () {
             var dynamic_value = $(this).data("dynamic");
 
-            $(this).closest('tr').fadeOut('slow', function () {
+            $(this).closest('.sinlge-fc-item').fadeOut('slow', function () {
                 _ilm.globLoader("show", '.scb-cart-area');
 
                 _ilm_Cart.deleteFromCart(dynamic_value, function () {
@@ -226,6 +259,7 @@ var _ilm_Cart_floatingcart = {
                 _ilm.globLoader("hide", '#fsc-content');
                 $("#fsc-content").html(result.content);
                 $("#fcTot").html(result.ctotal);
+                $("#fcAmnt").html(result.camount);
             } else _ilm.showNotification(result.error, true);
         }
         ajaxPost({ update_cart_data: 1 }, ajaxCallback);
@@ -235,13 +269,12 @@ var _ilm_Cart_floatingcart = {
         if (typeof Tawk_API !== 'undefined') {
             Tawk_API.hideWidget();
         }
-
-        $('.sc-body').addClass('open');
-        $('body').addClass('sc-cart-open');
+        $(".sc-body").removeClass("open");
+        $("body").addClass("sc-cart-open");
     },
 
     hideCart: function () {
-        $('.sc-body').removeClass('open');
-        $('body').removeClass('sc-cart-open');
+        $(".sc-body").removeClass("open");
+        $("body").removeClass("sc-cart-open");
     }
 }
