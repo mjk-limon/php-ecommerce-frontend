@@ -10,16 +10,11 @@ $menu_clearfix = $this->mobileView ? 2 : 6;
 
 while ($ArrMain = $MainCats->fetch()) :
     // Sub group categories
-    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB);
+    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB_GROUP);
     $TotalSubGroupCats = $SubGroupCats->num_rows;
-
-    $catIcon = current($ArrMain->getCategoryImage('Category icon'));
-    $singleCatBgTexture = file_exists(doc_root($catIcon))
-        ? 'style="background-image:url(' . asset($catIcon) . ')" class="has-bg"'
-        : '';
 ?>
     <li class="dropdown">
-        <a href="<?php echo $ArrMain->getCategoryLink() ?>" <?php echo $singleCatBgTexture ?>>
+        <a href="<?php echo $ArrMain->getCategoryLink($ArrMain::CATEGORY_LINK_FMAIN) ?>">
             <?php echo htmlspecialchars($ArrMain->getMain()) ?>
 
             <?php if ($this->mobileView) : ?>
@@ -38,13 +33,13 @@ while ($ArrMain = $MainCats->fetch()) :
                 $TotalSubCats = $SubCats->num_rows;
             ?>
                 <div class="col-md-2 col-xs-6 sub-cols">
-                    <a href="<?php echo $ArrSubGrp->getCategoryLink() ?>">
+                    <a href="<?php echo $ArrSubGrp->getCategoryLink($ArrMain::CATEGORY_LINK_FSUBGROUP) ?>">
                         <h3><?php echo htmlspecialchars($ArrSubGrp->getSubGroup())  ?></h3>
                     </a>
 
                     <?php while ($ArrSub = $SubCats->fetch()) : ?>
                         <li>
-                            <a href="<?php echo $ArrSub->getCategoryLink() ?>">
+                            <a href="<?php echo $ArrSub->getCategoryLink($ArrMain::CATEGORY_LINK_FSUB) ?>">
                                 <?php echo htmlspecialchars($ArrSub->getSub()); ?>
                             </a>
                         </li>
