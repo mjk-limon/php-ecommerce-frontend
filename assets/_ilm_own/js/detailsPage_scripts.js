@@ -20,31 +20,21 @@ _ilm_Details_page = {
         });
 
         $(".ss-btn, .cs-btn").on("click", function () {
-            var $env = $(this), cartkey, cartval;
-            cartkey = $env.hasClass("ss-btn") ? 'size' : 'colr';
-            catval = $.trim($env.text());
+            var $env = $(this),
+                $qtybox = $(".product-buy-section .item_qty_input input"),
+                cartkey = $env.hasClass("ss-btn") ? 'size' : 'colr',
+                cartval = $.trim($env.text());
+
             $env.parent().find(".active").removeClass("active");
             $env.addClass("active");
 
-            _ilm_Details_page.setCartData(cartkey, catval);
+            _ilm_Cart.setCartData(cartkey, cartval, $qtybox);
             _ilm_Details_page.refreshProductPrice(this);
-        });
-
-        $(".item_plus, .item_minus").on("click", function (e) {
-            var $env = $(this), $qtybox, prQty;
-
-            $qtybox = $(".item_qty_input input");
-            prQty = parseInt($qtybox.val());
-
-            $env.hasClass("item_plus") ? prQty++ : prQty--;
-
-            _ilm_Details_page.quantityChange(prQty);
-            e.preventDefault();
         });
 
         $(".item_qty_input input").on("change", function (e) {
             var prQty = parseInt($(this).val()) || 1;
-            _ilm_Details_page.quantityChange(prQty);
+            _ilm_Cart.quantityChange(prQty, $(this));
             e.preventDefault();
         });
 
@@ -120,33 +110,6 @@ _ilm_Details_page = {
         });
     },
 
-    quantityChange: function (newQty) {
-        var $qtybox = $(".item_qty_input input"),
-            prLimit = parseInt($("#tStock").text()),
-            minOrder = parseInt($qtybox.attr("value")),
-            itemPrice = parseInt($(".pr-price").data("prs"));
-
-        if (newQty < minOrder) {
-            newQty = minOrder;
-            _ilm.showNotification(`Minimmum quantity selection is ${minOrder}.` , true);
-        } else if (newQty > prLimit) {
-            newQty = prLimit;
-            _ilm.showNotification("Stock limited!", true);
-        }
-
-        if($("#pramqty").length) {
-            $("#pramqty").html(newQty * itemPrice);
-        }
-
-        $qtybox.val(newQty);
-        _ilm_Details_page.setCartData("qty", newQty);
-    },
-
-    setCartData: function (key, value) {
-        var $cartEm = document.querySelector('.bnav-btns > em');
-        $cartEm.dataset[key] = value;
-    },
-
     refreshProductPrice: function (env) {
         var $cartEm = $('.bnav-btns > em').get(0),
             cD = $cartEm.dataset, pD,
@@ -178,13 +141,10 @@ _ilm_Details_page = {
             if (item.i_s == cD.size && item.i_c == cD.colr) {
                 var $PriceElem = $(".pr-price"),
                     $StockElem = $("#tStock"),
-                    prDis = parseInt($PriceElem.data("dis")),
-                    prDisPrice = item.s_p.replace(/[0-9]{1,}/g, function (prPrice) {
-                        return Math.round(prPrice - (prPrice * (prDis / 100)));
-                    }), priceLbl;
+                    priceLbl;
 
-                priceLbl = prDis
-                    ? prDisPrice + '<span class="pre-price">' + item.s_p + '</span>'
+                priceLbl = item.p_d
+                    ? item.p_dp + '<span class="pre-price">' + item.s_p + '</span>'
                     : item.s_p;
 
                 $PriceElem.html(priceLbl);

@@ -130,7 +130,6 @@
 }
 [class^="pe-7s-"], [class*=" pe-7s-"] {
     font-family: 'Pe-icon-7-stroke';
-    speak: none;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -364,7 +363,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 .sc-cart-open .sc-body{display:block}
 .sc-body-top{background:#333;height:50px}
 .sc-body-top h4{margin:0;margin-top: 3px;font-size: 20px;text-align: center;}
-.floating-sc-close{float:left;cursor:pointer;padding:0px 6px;background-color:transparent;color:var(--accent);font-size:30px;line-height:1}
+.floating-sc-close{float:left;cursor:pointer;padding:0px 6px;background-color:transparent;color:#fff;font-size:30px;line-height:1}
 .floating-sc-close.icon-toggle-sidemenu{float:right}
 .fsc-content{height:calc(100% - 50px);background-color:#F5F5F5;}
 .scb-cart-area{height:calc(100% - 50px);overflow-x:hidden;overflow-y:auto;padding:15px}
@@ -381,18 +380,18 @@ h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif}
 .scbf-link:last-child{background:#58595b;font-weight: bold;}
 
 /*== Header ===*/
-header{box-shadow:2px 0px 2px #ddd}
+header{box-shadow:0px 2px 2px -1px #ddd}
 .site-branding-area .branding-flex{align-items:center;position:relative}
 .site-branding-area .logo{margin:1rem 0;text-align:center}
 .logo img{max-width:100%;max-height:50px}
 .ht-right{display:flex;justify-content:flex-end;-webkit-box-pack:end;-webkit-box-align:center;align-items:center}
 .ht-right .ht-right-item{flex:3}
-.searchfld{width:100%;margin:0 auto;position:relative}
-.searchfld .input-text{display:block;width:100%;color:#777575;padding:.5rem .5rem .5rem 3.725rem;border-radius:5px;border:0;background-color:#f4f4f4;height:40px;font-family:'Poppins';font-size:13px;font-weight:400}
-.searchfld .input-text:focus{box-shadow:0px 2px 3px #bfbfbf;outline:none}
+.searchfld{width:80%;margin:0}
+.searchfld .input-text{padding:.5rem .5rem .5rem 3.725rem;border-radius:0px;border:0;border-bottom:1px solid #777575;height:40px;font-size:13px;font-weight:400}
+.searchfld .input-text:focus{box-shadow:none;border-bottom-color:#eee}
 .searchfld .subs{position:absolute;top:0;left:0;background:transparent;border:none;padding:.375rem .725rem;height:100%}
 .subsi{color:#777575;font-size:24px}
-.deskv .srch-datalist{display:none;position:absolute;top:100%;left:0;width:100%;z-index:2;background:#fff;border:1px solid #777575;border-top:0;border-radius:0px 0px 5px 5px;box-shadow:1px 4px 5px -2px #777}
+.deskv .srch-datalist{border-radius:0}
 .srch-datalist li{list-style:none}
 .srch-datalist li > img{float:left;width:45px;padding-left:1rem}
 .single-srchdata{margin:1.5rem 0}
@@ -446,7 +445,7 @@ header{box-shadow:2px 0px 2px #ddd}
 
 .wishlistall > li{height:35px;width:35px;line-height:36px;text-align:center;list-style-type:none;display:inline-block}
 .mainmenu ul li{height:50px;display:block;width:auto;margin:0;border-bottom:0}
-.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-size:14px;font-weight:500;padding:0 25px;text-transform:capitalize;line-height:50px;background-position:center center;background-repeat:no-repeat;text-align:center}
+.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-size:14px;font-weight:500;padding:0 25px;text-transform:capitalize;line-height:50px;background-position:center center;background-repeat:no-repeat}
 .mainmenu ul li a:focus{background-color:transparent}
 .mainmenu ul li a.has-bg{color:#fff;text-shadow: 1px 1px 1px #333;}
 .mainmenu ul li a span{padding-right:5px}
@@ -515,8 +514,7 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 
 /*=========== Details Page =======*/
 .page-navigator, .page-navigator .breadcrumb{background-color:#fcfcfc}
-.page-navigator .breadcrumb{padding:15px 0;margin-bottom:0}
-.details-page-feature{padding: 45px 15px;background-color: #fff;}
+.page-navigator .breadcrumb{padding:15px 0}
 .pt-area{font-size:14px;margin-bottom:1.5rem}
 .pt-area > p{margin-bottom: 5px;}
 .pt-area .price-review-flex{justify-content: space-between;align-items: center;}
@@ -532,15 +530,16 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .qty-selection .item_qty_input input{background-color:#f3f3f3;width:100%;height:100%;padding:0;appearance:none;-webkit-appearance:none;-moz-appearance:textfield;text-align:center;outline:none;box-shadow:none;border:0}
 .bnav-btns{padding:0;margin:0;margin-left:1rem}
 .bnav-btns li{display:inline-block;cursor:pointer;padding:0px 25px;font-size:14px;height: 35px;line-height:35px;border-radius:0}
-.bnav-btns .add-to-cart{background-color: #58595b;color:var(--accent);border:0}
+.bnav-btns .add-to-cart{background-color: #58595b;border:0}
 .pr-meta-info > span{display:block;margin-bottom:5px;color:#666;}
 .pr-meta-info > span > span{font-weight:500;color:#333}
 .share{margin-top:25px;padding:0;text-align: center;}
 .shareli, .share li{vertical-align:middle}
 .glancebox-header{text-align:center;padding:2px 0px;background:#58595b;color:#fff;font-weight:bold;margin-bottom:1.5rem}
-.pr-glancebox{background-color: #fff;margin-bottom:1.5rem;padding:.725rem}
+.pr-glancebox{background-color:#fff;text-align:left;margin-bottom:1.5rem;padding:.725rem}
 .pr-glancebox .gb-image img{max-width: 100%;}
 .pr-glancebox .gb-title {font-size: 12.5px; line-height: 1.2; margin-bottom: 4px;text-align:left}
+.pr-glancebox .gb-info{font-size:inherit}
 .pr-glancebox .gb-val{font-size:2rem;margin: .75rem}
 .pr-glancebox .gb-pr-buy-nav{margin-top: 15px;margin-bottom: 5px;}
 .pr-glancebox .qty-selection{margin: 0;}
@@ -562,8 +561,8 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .odometer.odometer-auto-theme .odometer-digit .odometer-digit-spacer,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-spacer{display:inline-block;vertical-align:middle;*vertical-align:auto;*zoom:1;*display:inline;visibility:hidden}
 .odometer.odometer-auto-theme .odometer-digit .odometer-digit-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-digit-inner{text-align:left;display:block;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}
 .odometer.odometer-auto-theme .odometer-digit .odometer-ribbon,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon{display:block}
-.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden}
-.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;-webkit-transform:translateZ(0)}
+.odometer.odometer-auto-theme .odometer-digit .odometer-ribbon-inner,.odometer.odometer-theme-minimal .odometer-digit .odometer-ribbon-inner{display:block;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.odometer.odometer-auto-theme .odometer-digit .odometer-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value{display:block;transform:translateZ(0);-webkit-transform:translateZ(0)}
 .odometer.odometer-auto-theme .odometer-digit .odometer-value.odometer-last-value,.odometer.odometer-theme-minimal .odometer-digit .odometer-value.odometer-last-value{position:absolute}
 .odometer.odometer-auto-theme.odometer-animating-up .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up .odometer-ribbon-inner{-webkit-transition:-webkit-transform 2s;-moz-transition:-moz-transform 2s;-ms-transition:-ms-transform 2s;-o-transition:-o-transform 2s;transition:transform 2s}
 .odometer.odometer-auto-theme.odometer-animating-up.odometer-animating .odometer-ribbon-inner,.odometer.odometer-theme-minimal.odometer-animating-up.odometer-animating .odometer-ribbon-inner{-webkit-transform:translateY(-100%);-moz-transform:translateY(-100%);-ms-transform:translateY(-100%);-o-transform:translateY(-100%);transform:translateY(-100%)}

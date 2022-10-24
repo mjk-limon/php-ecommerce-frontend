@@ -10,11 +10,11 @@ $menu_clearfix = $this->mobileView ? 2 : 3;
 
 while ($ArrMain = $MainCats->fetch()) {
     // Sub group categories
-    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB);
+    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB_GROUP);
     $TotalSubGroupCats = $SubGroupCats->num_rows;
 ?>
     <li class="dropdown">
-        <a href="<?php echo $ArrMain->getCategoryLink() ?>">
+        <a href="<?php echo $ArrMain->getCategoryLink($ArrMain::CATEGORY_LINK_FMAIN) ?>">
             <span><img src="<?php echo asset(current($ArrMain->getCategoryImage("Category icon"))) ?>"></span>
             <?php echo htmlspecialchars($ArrMain->getMain()) ?>
             <i class="fa fa-angle-down"></i>
@@ -37,13 +37,13 @@ while ($ArrMain = $MainCats->fetch()) {
                 $TotalSubCats = $SubCats->num_rows;
             ?>
                 <div class="col-md-4 col-xs-6 sub-cols">
-                    <a href="<?php echo $ArrSubGrp->getCategoryLink() ?>">
+                    <a href="<?php echo $ArrSubGrp->getCategoryLink($ArrMain::CATEGORY_LINK_FSUBGROUP) ?>">
                         <h3><?php echo htmlspecialchars($ArrSubGrp->getSubGroup())  ?></h3>
                     </a>
 
                     <?php while ($ArrSub = $SubCats->fetch()) { ?>
                         <li>
-                            <a href="<?php echo $ArrSub->getCategoryLink() ?>">
+                            <a href="<?php echo $ArrSub->getCategoryLink($ArrMain::CATEGORY_LINK_FSUB) ?>">
                                 <?php echo htmlspecialchars($ArrSub->getSub()); ?>
                             </a>
                         </li>

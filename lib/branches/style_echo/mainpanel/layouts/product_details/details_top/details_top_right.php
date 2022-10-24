@@ -16,7 +16,6 @@
                 <div class="gb-info" style="width: 65%;padding-left: 10px;">
                     <div class="gb-title"><?php echo $sp->getName() ?></div>
                     <div class="gb-description">
-                        <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
                         <p><strong><?php echo curr($sp->getPrice()) ?></strong></p>
                     </div>
                 </div>

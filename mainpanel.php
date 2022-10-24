@@ -29,8 +29,8 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : '';
 
     <link rel="icon" href="<?php echo asset("favicon.ico") ?>">
 
-    <?php $this->layout('global.css.mainpanel_head_core'); ?>    
-    <?php $this->layout('global.javascripts.mainpanel_head_core'); ?>    
+    <?php $this->layout('global.css.mainpanel_head_core'); ?>
+    <?php $this->layout('global.javascripts.mainpanel_head_core'); ?>
 </head>
 
 <body <?php echo $body_class ?>>
