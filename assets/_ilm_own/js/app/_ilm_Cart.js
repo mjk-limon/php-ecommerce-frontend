@@ -269,7 +269,8 @@ var _ilm_Cart_floatingcart = {
         if (typeof Tawk_API !== 'undefined') {
             Tawk_API.hideWidget();
         }
-        $(".sc-body").removeClass("open");
+
+        $(".sc-body").addClass("open");
         $("body").addClass("sc-cart-open");
     },
 
