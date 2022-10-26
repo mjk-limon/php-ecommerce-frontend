@@ -1,8 +1,0 @@
-<div class="col-md-9 product-main-panel">
-    <div class="section-mb features_items">
-        <div id="pp-main-area" class="v3">
-            <?php $this->layout('product_browse.products.top_title') ?>
-            <?php $this->layout('product_browse.products.product_grid') ?>
-        </div>
-    </div>
-</div>
