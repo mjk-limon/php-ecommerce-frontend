@@ -217,11 +217,14 @@ h5 {
     text-align: center;
     padding: 7px 0;
     width: 80px;
-    background-color: var(--accent);
+    background-color: var(--accent)
+}
+
+.tts-timer-body .tts-timer-single-c.play {
     animation-name: timerFlip;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-out;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0, .83, .05, .95);
 }
 
 .tts-timer-single-c span {
@@ -342,8 +345,9 @@ h5 {
         transform: rotateY(-360deg)
     }
 
-    50% {
+    100% {
         transform: rotateY(0deg)
     }
 }
+
 </style>
