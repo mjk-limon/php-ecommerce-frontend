@@ -176,6 +176,74 @@
 </section>
 
 
+<script>
+var timer_hr = document.querySelector('.tts-timer-single-c.hr'),
+    timer_min = document.querySelector('.tts-timer-single-c.min'),
+    timer_sec = document.querySelector('.tts-timer-single-c.sec');
+
+var oldHour, oldMinute;
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get today's date and time
+    var dateobj = new Date(),
+        nowTime = dateobj.getTime();
+
+    // Set target date
+    dateobj.setHours('22');
+    dateobj.setMinutes('0');
+    dateobj.setSeconds('0');
+
+    // Find the distance between now and the count down date
+    var distance = dateobj.getTime() - nowTime;
+
+    // Time calculations for days, hours, minutes and seconds
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    document.getElementById("cdown-hr").innerHTML = hours;
+    document.getElementById("cdown-min").innerHTML = minutes;
+    document.getElementById("cdown-sec").innerHTML = seconds;
+
+    //
+    if (!timer_sec.classList.contains('play')) {
+        timer_sec.classList.add('play');
+
+        setTimeout(function() {
+            timer_sec.classList.remove('play');
+        }, 600);
+    }
+
+    if (oldMinute != minutes) {
+        timer_min.classList.add('play');
+
+        setTimeout(function() {
+            timer_min.classList.remove('play');
+        }, 600);
+
+        oldMinute = minutes;
+    }
+
+    if (oldHour != hours) {
+        timer_hr.classList.add('play');
+
+        setTimeout(function() {
+            timer_hr.classList.remove('play');
+        }, 600);
+
+        oldHour = hours;
+    }
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+        clearInterval(x);
+    }
+}, 1000);
+</script>
+
 <style type="text/css">
 @import url('https://fonts.maateen.me/solaiman-lipi/font.css');
 
