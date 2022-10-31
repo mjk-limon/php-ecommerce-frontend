@@ -8,16 +8,16 @@
                             আজকের লটারির ড্র অনুষ্ঠিত হবে
                         </div>
                         <div class="tts-timer-body">
-                            <div class="tts-timer-single-c">
-                                <span>20</span>
+                            <div class="tts-timer-single-c hr">
+                                <span id="cdown-hr">--</span>
                                 <span>ঘন্টা</span>
                             </div>
-                            <div class="tts-timer-single-c">
-                                <span>10</span>
+                            <div class="tts-timer-single-c min">
+                                <span id="cdown-min">--</span>
                                 <span>মিনিট</span>
                             </div>
-                            <div class="tts-timer-single-c">
-                                <span>12</span>
+                            <div class="tts-timer-single-c sec">
+                                <span id="cdown-sec">--</span>
                                 <span>সেকেন্ড</span>
                             </div>
                         </div>
