@@ -1,3 +1,18 @@
+<?php
+
+use _ilmComm\Products\ProductInfo\SingleProduct;
+
+$lottery = $this->extModel('Home')->getSliders(3)->toArray();
+
+// Yesterday draw
+$yesterdayDraw = array_filter($lottery, function ($val) {
+    $lastDate = date('Y-m-d', strtotime('-1day'));
+    $drawDate = date('Y-m-d', strtotime($val['image_text1']));
+    return strtotime($drawDate) == strtotime($lastDate);
+});
+
+?>
+
 <section class="main-body lottery-body">
     <div class="spd">
         <div class="container">
