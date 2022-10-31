@@ -268,10 +268,6 @@ h5 {
     text-shadow: 0px 1px 1px #ccc;
 }
 
-.yws-title .yws-title-tagline-body .yws-title-tagline {
-    
-}
-
 .yws-title p img {
     max-height: 165px;
     display: block;
