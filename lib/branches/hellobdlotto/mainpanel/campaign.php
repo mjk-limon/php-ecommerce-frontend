@@ -42,86 +42,51 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
         </div>
     </div>
 
-    <div class="spd">
-        <div class="container">
-            <div class="yesterday-winners-section">
-                <div class="yws-body">
-                    <div class="row yws-row">
-                        <div class="yws-col yws-col-left col-md-6">
-                            <div class="yws-title">
-                                <h1 class="animated tada" style="animation-iteration-count: infinite;">গতকালের লটারি ড্র</h1>
-                                <p>
-                                    <span class="yws-title-tagline-body">
-                                        <span class="yws-title-tagline">
-                                            <?php echo date("F j, Y", strtotime('-1day')) ?> তারিখে লটারির ফলাফল।
-                                            ঐদিন যেসকল কাস্টমার এই প্রোডাক্টটি অর্ডার করেছেন, তারা মূল প্রোডাক্টের সাথে
-                                            আরও একটি প্রোডাক্ট পাবেন সম্পূর্ণ বিনামূল্যে।
-                                        </span>
-                                    </span>
-                                    <img src="../images/surprise-box.gif" alt="">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="yws-col yws-col-right col-md-6">
-                            <div class="yws-col-right-row row">
-                                <div class="right-row-col-left col-md-5">
-                                    <div class="yws-winner-image">
-                                        <img src="<?php echo asset('images/user/2.png') ?>" class="img-thumbnail">
-                                    </div>
-                                </div>
-                                <div class="right-row-col-right col-md-7">
-                                    <div class="yws-winner-content">
-                                        <div class="yws-sc-title">Jahid Limon</div>
-                                        <div class="yws-sc-prname">Brand: Hello</div>
-                                        <div class="yws-sc-prname">Price: Price</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php
+    if ($yesterdayDraw) :
+        // Yesterday draw data found
+        // 
+        $yesterdayDrawData = current($yesterdayDraw);
 
-    <div class="spd">
-        <div class="container">
-            <div class="recent-winners-section">
-                <div class="rws-title">
-                    <h1>গতকালের বিজয়ীদের তালিকা</h1>
-                </div>
-                <div class="rws-body">
-                    <div class="rws-row winner-list-row row">
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+        $sp = new SingleProduct;
+        $sp->setProductId($yesterdayDrawData['image_text2']);
+        $sp->buildInfo();
+        $sp->buildPriceAndStock();
+    ?>
+        <div class="spd">
+            <div class="container">
+                <div class="yesterday-winners-section">
+                    <div class="yws-body">
+                        <div class="row yws-row">
+                            <div class="yws-col yws-col-left col-md-6">
+                                <div class="yws-title">
+                                    <h1 class="animated tada" style="animation-iteration-count: infinite;">গতকালের লটারি ড্র</h1>
+                                    <p>
+                                        <span class="yws-title-tagline-body">
+                                            <span class="yws-title-tagline">
+                                                <?php echo date("F j, Y", strtotime('-1day')) ?> তারিখে লটারির ফলাফল।
+                                                ঐদিন যেসকল কাস্টমার এই প্রোডাক্টটি অর্ডার করেছেন, তারা মূল প্রোডাক্টের সাথে
+                                                আরও একটি প্রোডাক্ট পাবেন সম্পূর্ণ বিনামূল্যে।
+                                            </span>
+                                        </span>
+                                        <img src="../images/surprise-box.gif" alt="">
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+                            <div class="yws-col yws-col-right col-md-6">
+                                <div class="yws-col-right-row row">
+                                    <div class="right-row-col-left col-md-5">
+                                        <div class="yws-winner-image">
+                                            <img src="<?php echo asset($sp->getThumbnail()) ?>" class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <div class="right-row-col-right col-md-7">
+                                        <div class="yws-winner-content">
+                                            <div class="yws-sc-title"><?php echo $sp->getProductName() ?></div>
+                                            <div class="yws-sc-prname">Brand: <?php echo $sp->getBrandName() ?></div>
+                                            <div class="yws-sc-prname">Price: <?php echo $sp->getPrice() ?></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +94,55 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
                 </div>
             </div>
         </div>
-    </div>
+
+
+        <div class="spd">
+            <div class="container">
+                <div class="recent-winners-section">
+                    <div class="rws-title">
+                        <h1>গতকালের বিজয়ীদের তালিকা</h1>
+                    </div>
+                    <div class="rws-body">
+                        <div class="rws-row winner-list-row row">
+                            <div class="rws-single rws-col single-winner col-md-2">
+                                <div class="rws-single-body single-winner-body">
+                                    <div class="rws-single-image single-winner-image">
+                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
+                                    </div>
+                                    <div class="rws-single-content single-winner-content">
+                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
+                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rws-single rws-col single-winner col-md-2">
+                                <div class="rws-single-body single-winner-body">
+                                    <div class="rws-single-image single-winner-image">
+                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
+                                    </div>
+                                    <div class="rws-single-content single-winner-content">
+                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
+                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rws-single rws-col single-winner col-md-2">
+                                <div class="rws-single-body single-winner-body">
+                                    <div class="rws-single-image single-winner-image">
+                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
+                                    </div>
+                                    <div class="rws-single-content single-winner-content">
+                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
+                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="spd">
         <div class="container">
