@@ -1,8 +1,20 @@
 <?php
 
+use _ilmComm\Core\DataBase\DataBaseWithIUD_Operation;
+use _ilmComm\Orders\FetchOrders\FetchAllOrders;
 use _ilmComm\Products\ProductInfo\SingleProduct;
 
-$lottery = $this->extModel('Home')->getSliders(3)->toArray();
+// Get all lottery data
+$lottery = $this->extModel('Home')->getSliders(6)->toArray();
+rsort($lottery);
+
+// Clean old drawn data
+$db = new DataBaseWithIUD_Operation;
+$extraData = array_slice($lottery, 6);
+foreach ($extraData as $single) {
+    $db->where('id', $single['id']);
+    $db->delete('sliders', 1);
+}
 
 // Yesterday draw
 $yesterdayDraw = array_filter($lottery, function ($val) {
@@ -10,7 +22,6 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
     $drawDate = date('Y-m-d', strtotime($val['image_text1']));
     return strtotime($drawDate) == strtotime($lastDate);
 });
-
 ?>
 
 <section class="main-body lottery-body">
@@ -45,13 +56,22 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
     <?php
     if ($yesterdayDraw) :
         // Yesterday draw data found
-        // 
+        // Get yeaterday draw data
         $yesterdayDrawData = current($yesterdayDraw);
 
+        // Get product id
+        $productId = $yesterdayDrawData['image_text2'];
+
+        // Build yesterday draw proudct info
         $sp = new SingleProduct;
-        $sp->setProductId($yesterdayDrawData['image_text2']);
+        $sp->setProductId($productId);
         $sp->buildInfo();
         $sp->buildPriceAndStock();
+
+        // Fetch yesterday drawn product orders
+        $fo = new FetchAllOrders;
+        $fo->product()->setProductId($productId);
+        $yesterdayOrders = $fo->getOrders();
     ?>
         <div class="spd">
             <div class="container">
@@ -69,7 +89,7 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
                                                 আরও একটি প্রোডাক্ট পাবেন সম্পূর্ণ বিনামূল্যে।
                                             </span>
                                         </span>
-                                        <img src="../images/surprise-box.gif" alt="">
+                                        <img src="<?php echo asset('images/surprise-box.gif') ?>" alt="">
                                     </p>
                                 </div>
                             </div>
@@ -84,7 +104,7 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
                                         <div class="yws-winner-content">
                                             <div class="yws-sc-title"><?php echo $sp->getProductName() ?></div>
                                             <div class="yws-sc-prname">Brand: <?php echo $sp->getBrandName() ?></div>
-                                            <div class="yws-sc-prname">Price: <?php echo $sp->getPrice() ?></div>
+                                            <div class="yws-sc-prname">Price: <?php echo curr($sp->getPrice()) ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +115,6 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
             </div>
         </div>
 
-
         <div class="spd">
             <div class="container">
                 <div class="recent-winners-section">
@@ -104,39 +123,22 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
                     </div>
                     <div class="rws-body">
                         <div class="rws-row winner-list-row row">
-                            <div class="rws-single rws-col single-winner col-md-2">
-                                <div class="rws-single-body single-winner-body">
-                                    <div class="rws-single-image single-winner-image">
-                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                    </div>
-                                    <div class="rws-single-content single-winner-content">
-                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rws-single rws-col single-winner col-md-2">
-                                <div class="rws-single-body single-winner-body">
-                                    <div class="rws-single-image single-winner-image">
-                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                    </div>
-                                    <div class="rws-single-content single-winner-content">
-                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+
+                            <?php while ($odr = $yesterdayOrders->fetch_assoc()) : ?>
+                                <div class="rws-single rws-col single-winner col-md-2">
+                                    <div class="rws-single-body single-winner-body">
+                                        <div class="rws-single-image single-winner-image">
+                                            <img src="<?php echo asset('assets/images/man3.png') ?>" alt="User Image">
+                                        </div>
+                                        <div class="rws-single-content single-winner-content">
+                                            <div class="rws-sc-title swc-title"><?php echo $odr['name'] ?></div>
+                                            <div class="rws-sc-prname swc-tagline"><?php echo $odr['phone'] ?></div>
+                                            <div class="rws-sc-prname swc-tagline"><?php echo $odr['email'] ?></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="rws-single rws-col single-winner col-md-2">
-                                <div class="rws-single-body single-winner-body">
-                                    <div class="rws-single-image single-winner-image">
-                                        <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                    </div>
-                                    <div class="rws-single-content single-winner-content">
-                                        <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                        <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endwhile; ?>
+
                         </div>
                     </div>
                 </div>
@@ -148,7 +150,7 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
         <div class="container">
             <div class="middle-ad-section">
                 <div class="mas-content">
-                    <img src="https://img.freepik.com/free-vector/realistic-lotto-balls-horizontal-illustration_1284-59691.jpg?w=2000"
+                    <img src="<?php echo asset('images/slider/lottery-slide-3.jpg') ?>"
                         class="img-responsive">
                 </div>
             </div>
@@ -163,39 +165,35 @@ $yesterdayDraw = array_filter($lottery, function ($val) {
                 </div>
                 <div class="rws-body">
                     <div class="rws-row winner-list-row row">
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rws-single rws-col single-winner col-md-2">
-                            <div class="rws-single-body single-winner-body">
-                                <div class="rws-single-image single-winner-image">
-                                    <img src="<?php echo asset('images/user/2.png') ?>" alt="User Image">
-                                </div>
-                                <div class="rws-single-content single-winner-content">
-                                    <div class="rws-sc-title swc-title">Jahid Limon</div>
-                                    <div class="rws-sc-prname swc-tagline">Erotas Brand Denim</div>
+                        <?php
+                        foreach ($lottery as $singleLottery) :
+                            // Get product id
+                            $productId = $singleLottery['image_text2'];
+                            
+                            if (!$productId) {
+                                continue;
+                            }
+
+                            // Build yesterday draw proudct info
+                            $sp = new SingleProduct;
+                            $sp->setProductId($productId);
+                            $sp->buildInfo();
+                            $sp->buildPriceAndStock();
+                        ?>
+                            <div class="rws-single rws-col single-winner col-md-2">
+                                <div class="rws-single-body single-winner-body">
+                                    <div class="rws-single-image single-winner-image">
+                                        <img src="<?php echo asset($sp->getThumbnail()) ?>" alt="Proudct Image">
+                                    </div>
+                                    <div class="rws-single-content single-winner-content">
+                                        <div class="rws-sc-title swc-title"><?php echo $sp->getProductName() ?></div>
+                                        <div class="rws-sc-prname swc-tagline">By <?php echo $sp->getBrandName() ?></div>
+                                        <div class="rws-sc-prname swc-tagline"><?php echo curr($sp->getPrice()) ?></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
+
                     </div>
                 </div>
             </div>
