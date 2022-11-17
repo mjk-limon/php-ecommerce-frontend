@@ -5,7 +5,7 @@ use _ilmComm\Orders\FetchOrders\FetchAllOrders;
 use _ilmComm\Products\ProductInfo\SingleProduct;
 
 // Get all lottery data
-$lottery = $this->extModel('Home')->getSliders(6)->toArray();
+$lottery = $this->extModel('Home')->getSliders(5)->toArray();
 rsort($lottery);
 
 // Clean old drawn data
