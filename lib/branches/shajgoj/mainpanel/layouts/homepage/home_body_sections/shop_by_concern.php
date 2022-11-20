@@ -7,7 +7,7 @@
             <div class="row">
 
                 <?php
-                $Slider = $this->getSliders(6);
+                $Slider = $this->getSliders(10);
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
                     <div class="col-md-3">
