@@ -441,7 +441,7 @@ header{box-shadow:none}
 .ht-right{display:flex;justify-content:flex-end;-webkit-box-pack:end;-webkit-box-align:center;align-items:center}
 .ht-right .serachbox{flex:3}
 .searchfld{width:100%;margin:0 auto;position:relative}
-.searchfld .input-text{display:block;width:100%;color:#777575;padding:.5rem .5rem .5rem 3.725rem;border-radius:5px;border:0;background-color:#f4f4f4;height:40px;font-family:'Poppins';font-size:13px;font-weight:400}
+.searchfld .input-text{display:block;width:100%;color:#777575;padding:.5rem .5rem .5rem 3.725rem;border-radius:20px;border:0;background-color:#f4f4f4;height:40px;font-family:'Poppins';font-size:13px;font-weight:400;border:2px solid var(--accent)}
 .searchfld .input-text:focus{box-shadow:0px 2px 3px #bfbfbf;outline:none}
 .searchfld .subs{position:absolute;top:0;left:0;background:transparent;border:none;padding:.375rem .725rem;height:100%}
 .subsi{color:#777575;font-size:24px}
@@ -465,10 +465,6 @@ header{box-shadow:none}
 
 .m-a-links li a{display:inline;padding:0;font-weight:normal;font-size:initial;line-height:inherit}
 .m-a-links > li > a{position:relative;display:block;padding:0rem 1rem;font-weight:700;font-size:14px;line-height:50px;height:50px}
-.m-a-links > li > a::after{position:absolute;content:"\f106";display:none;bottom:-2px;left:50%;text-align:center;font-family:FontAwesome;font-size:28px;line-height:.5em;background:#fff;overflow:hidden;transform:translateX(-50%);font-weight:400;color:#888}
-.m-a-links > li:first-child > a::after{display:block;}
-.m-a-links:hover > li:first-child > a::after{display:none}
-.m-a-links > li:hover > a::after{display:block!important}
 
 .single-brand{padding:0;width:auto}
 .single-brand-info{box-shadow:none}
