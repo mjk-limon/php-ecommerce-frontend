@@ -1,13 +1,13 @@
 <?php if (!isset($this->onlyload) || $this->onlyload != "ppp-ws") : ?>
 
-    <div class="serachbox product-page-filter-searchbox">
+    <!--div class="serachbox product-page-filter-searchbox">
         <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
             <div class="searchfld deskv">
                 <input type="text" placeholder="Search for Proudcts, Categories..." name="q" autocomplete="off" class="input-text search-q" />
                 <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>
             </div>
         </form>
-    </div>
+    </div-->
 
     <div class="top-title">
         <div class="top-title-left">
