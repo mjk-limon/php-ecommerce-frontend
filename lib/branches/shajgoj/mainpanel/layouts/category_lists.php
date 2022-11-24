@@ -10,7 +10,7 @@ $menu_clearfix = $this->mobileView ? 2 : 6;
 
 while ($ArrMain = $MainCats->fetch()) :
     // Sub group categories
-    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB);
+    $SubGroupCats = $ArrMain->getFetchable()->get($ci::FETCH_SUB_GROUP);
     $TotalSubGroupCats = $SubGroupCats->num_rows;
 
     $catIcon = current($ArrMain->getCategoryImage('Category icon'));
