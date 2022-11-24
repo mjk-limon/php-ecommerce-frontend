@@ -10,7 +10,7 @@
                 $Slider = $this->getSliders(9);
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="single-layout-grid">
                             <div class="slg-image">
                                 <a href="<?php echo $ArrSlider['image_link'] ?>">
