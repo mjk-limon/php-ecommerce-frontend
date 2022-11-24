@@ -396,7 +396,7 @@ header{box-shadow:none}
 .srch-datalist li a span{display:block;font-size:13px;color:#999}
 .searchfld.focussed .input-text{border-bottom-color:#eee;border-radius:5px 5px 0 0}
 .searchfld.focussed .srch-datalist{display:block;min-height:30px;max-height:70vh}
-.ht-right-icon{padding: 0 8px;text-align:center;line-height:1}
+.ht-right-icon{padding: 0 10px;text-align:center;line-height:1}
 .ht-right-icon i{font-size:24px}
 .ht-right-icon .htricon-tag{display:block;font-weight:500}
 .icon-shopping-bag .cart-contents{position:relative;display:block}
