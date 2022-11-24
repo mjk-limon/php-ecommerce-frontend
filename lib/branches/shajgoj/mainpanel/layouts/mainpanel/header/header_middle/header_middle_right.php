@@ -1,4 +1,4 @@
-<div class="col-md-4 ht-right deskv-hm-movable">
+<div class="col-md-6 ht-right deskv-hm-movable">
     <div class="serachbox">
         <form action="<?= PROJECT_FOLDER . 'search/' ?>" method="get">
             <div class="searchfld deskv">
@@ -9,7 +9,10 @@
         </form>
     </div>
     <div class="ht-right-icon icon-my-account">
-        <a class="cb chp db" href="/my-account/"><i class="pe-7s-user"></i></a>
+        <a class="cb chp db" href="/my-account/">
+            <i class="pe-7s-user"></i>
+            <span class="htricon-tag">User Account</span>
+        </a>
         <div class="header-floating-menu login-menu animated fadeInUp">
             <ul class="nav">
                 <?php if (!$this->UserData) : ?>
@@ -26,6 +29,7 @@
     <div class="ht-right-icon icon-shopping-bag">
         <a class="cart-contents sc-btn" href="javascript:;" title="View your shopping cart">
             <i class="pe-7s-shopbag"></i>
+            <span class="htricon-tag">Cart</span>
             <span class="count">0</span>
         </a>
     </div>
