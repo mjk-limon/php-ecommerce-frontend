@@ -8,7 +8,7 @@ $AllAboutBeauty = $this->extModel("Home")->getSliders(1);
 $TopBrands = array_slice($BrandGroups, 0, 9);
 ?>
 
-<div class="col-md-6" style="position: static;">
+<div class="col-md-4" style="position: static;">
     <div class="mainmenu-area-quicklinks">
         <ul class="m-a-links">
             <li>
