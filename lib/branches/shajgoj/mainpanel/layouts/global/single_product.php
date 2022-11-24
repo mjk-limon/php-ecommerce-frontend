@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 $sp->setPrInfo($pr_info);
 $sp->processDiscount();
 $sp->processStock();
 ?>
 
-<div class="single-product m-flex">
+<div class="single-product m-flex fixed-nav">
     <div class="sp-image">
 
         <?php if ($sp->getDiscount()) : ?>
@@ -30,14 +30,12 @@ $sp->processStock();
                     <strong class="price"><?php echo curr($sp->getPrice()) ?></strong>
                 </p>
                 <div style="color: #FF5722;text-align: center;font-weight: bold;">&nbsp;</div>
-                <p style="color: #ffc168;">☆☆☆☆☆</p>
                 <p><?php echo implode(', ', $sp->getSizes()) ?></p>
             </div>
         </div>
 
         <div class="sp-nav">
             <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
-            <a href="javascript:;" onclick="event.stopPropagation();return false;" class="buy-now cAddBuyNav"><i class="fa fa-heart-o"></i></a>
             <a href="javascript:;" class="add-cart cAddBuyNav">ADD TO CART</a>
         </div>
     </div>

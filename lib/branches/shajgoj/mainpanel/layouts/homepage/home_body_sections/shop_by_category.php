@@ -1,13 +1,13 @@
 <div class="spd">
     <div class="container">
-        <div class="section-browse-cat">
+        <div class="section-mb">
             <div class="bc-title">
-                <div class="bc-main-title">PRODUCT REVIEW</div>
+                <div class="bc-main-title">SHOP BY CATEGORY</div>
             </div>
             <div class="row">
 
                 <?php
-                $Slider = $this->getSliders(7);
+                $Slider = $this->getSliders(9);
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
                     <div class="col-md-4">
@@ -23,11 +23,8 @@
                             </div>
                         </div>
                     </div>
-                <?php
-                endwhile;
-                $Slider->free();
-                ?>
-                
+                <?php endwhile; ?>
+
             </div>
         </div>
     </div>

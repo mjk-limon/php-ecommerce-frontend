@@ -8,10 +8,9 @@ $AllAboutBeauty = $this->extModel("Home")->getSliders(1);
 $TopBrands = array_slice($BrandGroups, 0, 9);
 ?>
 
-<div class="col-md-6" style="position: static;">
+<div class="col-md-4" style="position: static;">
     <div class="mainmenu-area-quicklinks">
         <ul class="m-a-links">
-            <li><a href="/">CATEGORIES</a></li>
             <li>
                 <a href="javascript:;">BRANDS</a>
                 <div class="header-floating-menu animated fadeInUp">
@@ -123,32 +122,6 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
 
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="/">ALL ABOUT BEAUTY</a>
-                <div class="header-floating-menu beauty-menu animated fadeInUp">
-                    <div class="hfm-brands">
-                        <div class="flex">
-
-                            <?php while ($AbArr = $AllAboutBeauty->fetch_assoc()) : ?>
-                                <div class="flex-item ">
-                                    <div class="single-layout-grid">
-                                        <div class="slg-image">
-                                            <a class="noRoute" href="<?php echo $AbArr['image_link'] ?>" target="_blank">
-                                                <img src="<?php echo asset($AbArr['image']) ?>" />
-                                            </a>
-                                        </div>
-                                        <div class="slg-text slg-text-ps">
-                                            <h5><?php echo $AbArr['image_heading'] ?></h5>
-                                            <p><?php echo $AbArr['image_text1'] ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endwhile; ?>
-
                         </div>
                     </div>
                 </div>
