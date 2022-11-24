@@ -17,10 +17,6 @@
                                     <img src="<?php echo asset($ArrSlider['image']) ?>" />
                                 </a>
                             </div>
-                            <div class="slg-text">
-                                <h5><?php echo $ArrSlider['image_heading'] ?></h5>
-                                <p><?php echo $ArrSlider['image_text1'] ?></p>
-                            </div>
                         </div>
                     </div>
                 <?php
