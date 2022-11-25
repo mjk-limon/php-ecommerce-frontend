@@ -20,10 +20,26 @@ $Sp = $this->SingleProduct;
                     <div class="fc-item-dis">
                         <img src="<?php echo $Sp->getProductImage() ?>" alt="" />
                         <div class="dis-title">
-                            <div><span>Product:</span><span><?php echo $Sp->getName() ?></span></div>
-                            <div><span>Price:</span><span><?php echo curr($Sp->getPrice()) ?></span></div>
-                            <div><span>Quantity:</span><span><?php echo $CItem['q'] ?></span></div>
-                            <div class="total"><span>Total:</span><span>4000Tk</span></div>
+                            <div>
+                                <span>Product:</span>
+                                <span><?php echo $Sp->getName() ?></span>
+                            </div>
+                            <div>
+                                <span>Price:</span>
+                                <span><?php echo curr($Sp->getPrice()) ?></span>
+                            </div>
+                            <div>
+                                <span>Quantity:</span>
+                                <span class="fc-qty-selection">
+                                    <span data-ciup="-">&minus;</span>
+                                    <strong><?php echo $CItem['q'] ?></strong>
+                                    <span data-ciup="+">&plus;</span>
+                                </span>
+                            </div>
+                            <div class="total">
+                                <span>Total:</span>
+                                <span><?php echo curr($Sp->getPrice() * $CItem['q']) ?></span>
+                            </div>
                         </div>
                     </div>
                 </div>
