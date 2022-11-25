@@ -363,7 +363,7 @@ body{background-color:var(--mainbody)}
 .floating-sc-close{float:left;cursor:pointer;padding:0px 6px;background-color:transparent;color:#fff;font-size:30px;line-height:1}
 .floating-sc-close.icon-toggle-sidemenu{float:right}
 .fsc-content{height:calc(100% - 50px);background-color:#F5F5F5;}
-.scb-cart-area{height:calc(100% - 50px);overflow-x:hidden;overflow-y:auto;padding:15px}
+.scb-cart-area{height:calc(100% - 70px);overflow-x:hidden;overflow-y:auto;padding:15px}
 .sinlge-fc-item{background:#fff;position:relative;padding:5px 0;margin-bottom: 1rem;box-shadow: 0 1px 1px 0 rgba(85,95,110,.2);}
 .rmv-crt-btn{padding: 2px 10px;font-size: 20px;cursor: pointer;position: absolute;right: 0}
 .fc-item-dis > img{display:block;margin:0 auto;max-height:85px;width:auto;float:none}
@@ -375,8 +375,8 @@ body{background-color:var(--mainbody)}
 .dis-title > div > span.fc-qty-selection{line-height:15px}
 .dis-title > div > span.fc-qty-selection span{width:15px;display:inline-block;background:#ededed;text-align:center;border-radius:50%;height:15px;margin-left:3px;cursor:pointer;user-select:none}
 .scb-footer{height:50px;padding:0}
-.scbf-link{display:inline-block;width:50%;text-align:center;height:50px;line-height:50px;background-color:#fff;color:var(--accent);padding:0}
-.scbf-link:last-child{background:#58595b;font-weight: bold;}
+.scbf-link{display:inline-block;width:44%;text-align:center;height:50px;line-height:50px;background-color:transparent;color:var(--accent);padding:0;margin:0 3%}
+.scbf-link:last-child{background:#58595b;font-weight:bold;border-radius:20px;color:#fff}
 
 /*== Header ===*/
 header{box-shadow:none}
@@ -405,7 +405,7 @@ header{box-shadow:none}
 .cart-contents .count{position:absolute;line-height:19px;width:20px;height:20px;font-size:12px;line-height:22px;left:14px;top:-3px;background-color:#333;color:#fff;border-radius:50%;text-align:center}
 
 .mainmenu-area1{font-family:"Roboto",sans-serif;text-transform:capitalize;width:100%}
-.mainmenu-area1 .cacaallpaje{background-color:#fff!important;padding:0rem 2.25rem}
+.mainmenu-area1 .cacaallpaje{background-color:#fff!important;padding:0rem}
 .manue .nav.navbar-nav{display:flex;border-left:0}
 .mainmenu-area-quicklinks .m-a-links{text-align:left}
 
@@ -537,6 +537,7 @@ ul.sub-menu{position:absolute;top:auto;left:0;right:0;width:auto;background:#fff
 .shareli, .share li{vertical-align:middle}
 .glancebox-header{text-align:center;padding:2px 0px;background:#58595b;color:#fff;font-weight:bold;margin-bottom:1.5rem}
 .pr-glancebox{background-color: #fff;margin-bottom:1.5rem;padding:.725rem}
+.pr-glancebox .gb-info{font-size:14px;text-align:left;margin:0}
 .pr-glancebox .gb-image img{max-width: 100%;}
 .pr-glancebox .gb-title {font-size: 12.5px; line-height: 1.2; margin-bottom: 4px;text-align:left}
 .pr-glancebox .gb-val{font-size:2rem;margin: .75rem}
