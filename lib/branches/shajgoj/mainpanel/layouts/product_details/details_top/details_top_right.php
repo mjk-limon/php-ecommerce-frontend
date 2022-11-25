@@ -10,10 +10,16 @@
         <div class="pr-glancebox">
             <div class="flex">
                 <div class="gb-image" style="width: 35%;">
-                    <img src="<?php echo asset($RcInfo->getThumbnail()) ?>" alt="">
+                    <a href="<?php echo $RcInfo->getProductLink() ?>">
+                        <img src="<?php echo asset($RcInfo->getThumbnail()) ?>" alt="">
+                    </a>
                 </div>
                 <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                    <div class="gb-title"><?php echo $RcInfo->getProductName() ?></div>
+                    <div class="gb-title">
+                        <a href="<?php echo $RcInfo->getProductLink() ?>">
+                            <?php echo $RcInfo->getProductName() ?>
+                        </a>
+                    </div>
                     <div class="gb-description">
                         <p class="text-muted"><?php echo implode(", ", $RcInfo->getSizes()) ?></p>
                         <p><strong><?php echo curr($RcInfo->getPrice()) ?></strong></p>
