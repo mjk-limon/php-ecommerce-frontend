@@ -18,6 +18,11 @@
 
         <div class="col-md-5 checkout-login checkout-login-right">
             <div class="limlog-form">
+                <div class="call-for-order text-center">
+                    <h4>Call For Order</h4>
+                    <h5 style="color: var(--accent)"><?php echo get_contact_information('mobile1') ?></h5>
+                </div>
+
                 <?php if (get_site_settings("qch")) : ?>
                     <div class="nav-invoker qc-inv">
                         <a class="nav-btn qchk-logchk-toggle" href="javascript:void(0)">
