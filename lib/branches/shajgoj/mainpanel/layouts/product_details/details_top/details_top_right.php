@@ -3,21 +3,20 @@
 <div class="section-mb">
 
     <?php
-    $sp = $this->SingleProduct;
     $Recommended = $this->productSuggestion(false, 4);
-    while ($RcInfo = $Recommended->fetch_assoc()) :
-        $sp->setPrInfo($RcInfo);
+    while ($RcInfo = $Recommended->fetch()) :
+        $RcInfo->buildPriceAndStock();
     ?>
         <div class="pr-glancebox">
             <div class="flex">
                 <div class="gb-image" style="width: 35%;">
-                    <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                    <img src="<?php echo asset($RcInfo->getThumbnail()) ?>" alt="">
                 </div>
                 <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                    <div class="gb-title"><?php echo $sp->getName() ?></div>
+                    <div class="gb-title"><?php echo $RcInfo->getProductName() ?></div>
                     <div class="gb-description">
-                        <p class="text-muted"><?php echo implode(", ", $sp->getSizes()) ?></p>
-                        <p><strong><?php echo curr($sp->getPrice()) ?></strong></p>
+                        <p class="text-muted"><?php echo implode(", ", $RcInfo->getSizes()) ?></p>
+                        <p><strong><?php echo curr($RcInfo->getPrice()) ?></strong></p>
                     </div>
                 </div>
             </div>
@@ -29,7 +28,10 @@
                         <li class="item_plus"><a href="javascript:;">+</a></li>
                     </ul>
                     <ul class="bnav-btns">
-                        <em data-prid="<?php echo $this->SingleProduct->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+                        <em data-prid="<?php echo $RcInfo->getProductId() ?>"
+                            data-size=""
+                            data-colr=""
+                            data-qty="1"></em>
                         <li class="add-to-cart add-cart cAddBuyNav">Add To Cart</li>
                     </ul>
                 </div>

@@ -230,7 +230,7 @@ var _ilm_Cart_floatingcart = {
             var dynamic_value, new_qty;
             _ilm.globLoader("show", ".scb-cart-area");
 
-            dynamic_value = $(this).closest('tr').find('.rmv-crt-btn').data('dynamic');
+            dynamic_value = $(this).closest('.sinlge-fc-item').find('.rmv-crt-btn').data('dynamic');
             new_qty = Math.abs(parseInt($(this).parent().find("strong").text()));
 
             if ($(this).data("ciup") == '+') new_qty++;
