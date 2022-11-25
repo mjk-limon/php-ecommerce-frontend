@@ -17,7 +17,7 @@ $Sp = $this->SingleProduct;
                     $Sp->processDiscount($CItem['q']);
                     $Sp->processStock($CItem['s'], $CItem['c']);
                 ?>
-                    <tr>
+                    <tr class="sinlge-fc-item">
                         <td>
                             <span data-ciup="+">&plus;</span>
                             <strong><?php echo $CItem['q'] ?></strong>
