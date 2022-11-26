@@ -80,7 +80,7 @@
 	
 	.ft-title{border-bottom:5px solid #f5f5f5}
 	.ft-pr-mbl{flex-wrap:wrap}
-	.grid-row, .grid-row.grid4{grid-template-columns:repeat(2, 1fr)}
+	.grid-row[class*='grid']{grid-gap:1.5rem;grid-template-columns:repeat(2, 1fr)}
 	.grid-row .grids.large-grid{height:400px}
 	.grid-row .grids.large-grid.onlycolspan{height:230px}
 	.ft-pr-mbl .single-product{position:relative;width:50%;padding:1rem 10px;border-right:5px solid #f6f6f6;border-bottom:5px solid #f5f5f5}

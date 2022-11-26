@@ -1,5 +1,6 @@
 <?php
 
+// Fetch all categoris
 // Main categories
 $ci = $this->AllCategories;
 $MainCats = $ci->get($ci::FETCH_MAIN);
