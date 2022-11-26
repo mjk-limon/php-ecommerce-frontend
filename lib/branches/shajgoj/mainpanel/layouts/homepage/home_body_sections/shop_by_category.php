@@ -4,13 +4,13 @@
             <div class="bc-title">
                 <div class="bc-main-title">SHOP BY CATEGORY</div>
             </div>
-            <div class="row">
+            <div class="grid-row grid4">
 
                 <?php
                 $Slider = $this->getSliders(9);
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
-                    <div class="col-md-3">
+                    <div class="grids">
                         <div class="single-layout-grid">
                             <div class="slg-image">
                                 <a href="<?php echo $ArrSlider['image_link'] ?>">
