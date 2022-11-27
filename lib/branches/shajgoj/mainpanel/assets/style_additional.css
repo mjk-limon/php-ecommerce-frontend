@@ -359,7 +359,7 @@ body{background-color:var(--mainbody)}
 .sc-cart-open .floating-sc{width:100%;background-color:rgba(0,0,0,.6);transition:background-color .6s}
 .sc-cart-open .sc-body{display:block}
 .sc-body-top{background:#333;height:50px}
-.sc-body-top h4{margin:0;margin-top: 3px;font-size: 20px;text-align: center;}
+.sc-body-top h4{margin:0;margin-top:3px;font-size:20px;text-align:center;color:#fff}
 .floating-sc-close{float:left;cursor:pointer;padding:0px 6px;background-color:transparent;color:#fff;font-size:30px;line-height:1}
 .floating-sc-close.icon-toggle-sidemenu{float:right}
 .fsc-content{height:calc(100% - 50px);background-color:#F5F5F5;}
@@ -379,7 +379,7 @@ body{background-color:var(--mainbody)}
 .scbf-link:last-child{background:#58595b;font-weight:bold;border-radius:20px;color:#fff}
 
 /*== Header ===*/
-header{box-shadow:none}
+header{box-shadow:0px 3px 6px -4px #666}
 .header_top_content_section{border-bottom: 1px solid #c1c1c1;}
 .site-branding-area .branding-flex{align-items:center;position:relative}
 .logo img{max-width:100%;max-height:25px;}
