@@ -6,7 +6,7 @@ $ci = $this->AllCategories;
 $MainCats = $ci->get($ci::FETCH_MAIN);
 
 // Menu classes and clearfixes
-$submenu_addClass = $this->mobileView ? 'animated slideDown' : null;
+$submenu_addClass = $this->mobileView ? ' animated slideDown' : null;
 $menu_clearfix = $this->mobileView ? 2 : 6;
 
 while ($ArrMain = $MainCats->fetch()) :
@@ -27,7 +27,7 @@ while ($ArrMain = $MainCats->fetch()) :
                 <i class="pe-7s-angle-down toggle-sidemenuitem"></i>
             <?php endif; ?>
         </a>
-        <ul role="menu" class="sub-menu<?php echo $submenu_addClass ?>">
+        <ul role="menu" class="<?php echo 'sub-menu' . $submenu_addClass ?>">
 
             <?php
             // Init column break
