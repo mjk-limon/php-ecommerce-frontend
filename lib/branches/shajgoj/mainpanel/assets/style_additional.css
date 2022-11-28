@@ -406,7 +406,7 @@ header{box-shadow:0px 3px 6px -4px #666}
 
 .mainmenu-area1{font-family:"Roboto",sans-serif;text-transform:capitalize;width:100%}
 .mainmenu-area1 .cacaallpaje{background-color:#fff!important;padding:0rem}
-.manue .nav.navbar-nav{display:flex;border-left:0}
+.manue .nav.navbar-nav{display:flex;justify-content:center;align-items:center;height:55px;border-left:0}
 .mainmenu-area-quicklinks .m-a-links{text-align:left}
 
 .m-a-links li a{display:inline;padding:0;font-weight:normal;font-size:initial;line-height:inherit}
@@ -439,9 +439,9 @@ header{box-shadow:0px 3px 6px -4px #666}
 .login-menu li a{padding:1rem 3rem}
 
 .wishlistall > li{height:35px;width:35px;line-height:36px;text-align:center;list-style-type:none;display:inline-block}
-.mainmenu ul li{height:55px;display:block;margin:0 auto;border-bottom:0}
-.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-weight:400;padding:0 25px;text-transform:capitalize;line-height:55px;text-align:center}
-.mainmenu ul li a, .mainmenu ul li a:hover{background-position:center center;background-repeat:no-repeat}
+.mainmenu ul li{width:auto;margin:0 3px;border-bottom:0}
+.mainmenu ul li a{font-family:'Poppins',sans-serif;letter-spacing:0.4px;font-weight:400;padding:7px 10px;text-transform:capitalize;text-align:center}
+.mainmenu ul li a, .mainmenu ul li a:hover{background-position:center center;background-repeat:no-repeat;background-size:100% 100%}
 .mainmenu ul li a:focus{background-color:transparent}
 .mainmenu ul li a.has-bg{color:#fff;text-shadow: 1px 1px 1px #333;}
 .mainmenu ul li a span{padding-right:5px}
