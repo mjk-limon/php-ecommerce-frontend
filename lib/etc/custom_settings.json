@@ -1,0 +1,13 @@
+{
+    "stickers_to_edit_no_db": {
+        "header campaign gif": {
+            "total_image": 1,
+            "old_image": "images\/header-top-campaign.gif"
+        }
+    },
+    "custom_settings": {
+        "lottery-draw": {
+            "ttl": "Lottery Draw"
+        }
+    }
+}
