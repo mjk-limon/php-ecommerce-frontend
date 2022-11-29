@@ -13,18 +13,6 @@
             "height": "130"
         }
     },
-    "inner_pages": [
-        "about-us",
-        "store-location",
-        "term-of-use",
-        "privacy-policy",
-        "testimonials",
-        "blog",
-        "photo-confirmations",
-        "payment-methods",
-        "locations-we-ship-to",
-        "shipping-returns"
-    ],
     "banner_to_edit": {
         "home page banners": {
             "page": "index",
@@ -64,7 +52,6 @@
             "fields": "2"
         }
     },
-    "stickers_to_edit_no_db": [],
     "add_pr_others": {
         "Short Description": {
             "type": "textbox-html",
