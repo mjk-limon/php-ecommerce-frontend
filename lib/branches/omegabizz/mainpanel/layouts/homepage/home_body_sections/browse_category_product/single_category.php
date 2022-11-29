@@ -1,13 +1,14 @@
 <div class="bc-single">
     <div class="bc-cat-all">
-        <a href="<?php echo $Cat->getHref() ?>">View All</a>
-        <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->Mainc) ?></span>
+        <a href="<?php echo $Cat->getCategoryLink() ?>">View All</a>
+        <span class="bc-cat-name"><?php echo htmlspecialchars($Cat->getMain()) ?></span>
     </div>
-    
+
     <div class="grid-row">
         <div class="grids large-grid onlycolspan">
             <div class="prgrid-ads-section">
-                <a href="<?php echo $Cat->getHref() ?>" class="prgrid-ad-img" style="background-image:url('<?php echo asset('images/category-slides/' . restyle_url($Cat->Mainc) . '-3.jpg') ?>')"></a>
+                <a href="<?php echo $Cat->getCategoryLink() ?>" class="prgrid-ad-img"
+                   style="background-image:url('<?php echo asset(current($Cat->getCategoryImage('Homepage category sample'))) ?>')"></a>
             </div>
         </div>
 
