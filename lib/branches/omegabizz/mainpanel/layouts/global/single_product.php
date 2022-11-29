@@ -5,11 +5,15 @@ $sp->processDiscount();
 $sp->processStock();
 ?>
 
-<div class="single-product">
+<div class="single-product <?php echo $this->spAddClass ?>">
     <div class="sp-image">
 
+        <?php if ($sp->getOthers("prtype") === '0') : ?>
+            <span class="sp-type">Wholesale</span>
+        <?php endif; ?>
+        
         <?php if ($sp->getDiscount()) : ?>
-            <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
+            <span class="sp-dis">-<?php echo $sp->getDiscount() ?>%</span>
         <?php endif; ?>
 
         <a href="<?php echo $sp->getHref() ?>">
@@ -28,6 +32,7 @@ $sp->processStock();
                     <?php if ($sp->getDiscount()) : ?>
                         <strong class="p-old"><?php echo curr($sp->getPrice(0)) ?></strong>
                     <?php endif; ?>
+
                 </p>
             </div>
         </div>
