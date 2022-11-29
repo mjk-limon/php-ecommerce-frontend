@@ -17,7 +17,7 @@
     <section id="skmbcategories" style="display:none">
         <div class="mainmenu">
             <ul class="nav navbar-nav">
-                <?php $this->layout("category_list"); ?>
+                <?php $this->layout("category_lists"); ?>
             </ul>
         </div>
     </section>

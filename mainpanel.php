@@ -4,7 +4,7 @@ use _ilmComm\Head\DevInfo;
 
 DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
-$body_class = $this->mobileView ? 'class="htmlformb"' : '';
+$body_class = $this->mobileView ? 'class="htmlformb"' : 'noclass';
 ?>
 
 <!DOCTYPE html>
