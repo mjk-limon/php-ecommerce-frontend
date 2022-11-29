@@ -3,13 +3,10 @@
         <div class="banner-slider" id="sliderb_container" style="position: relative;left: 0px; width: 1349px;height: 415px; overflow: hidden;">
             <div u="slides" style="cursor: move; position: absolute;left: 0px;top: 0px; width:1349px; height: 415px;overflow: hidden;">
 
-                <?php
-                $Slider1 = $this->TopSlider;
-                while ($ArrSlider = $Slider1->fetch_array()) :
-                ?>
+                <?php while ($ArrSlider = $this->TopSlider->fetch()) : ?>
                     <div>
-                        <a href="<?php echo $ArrSlider['image_link'] ?>">
-                            <img u="image" src="<?php echo asset($ArrSlider['image']) ?>" />
+                        <a href="<?php echo $ArrSlider->getImageLink() ?>">
+                            <img u="image" src="<?php echo asset($ArrSlider->getImage()) ?>" />
                         </a>
                     </div>
                 <?php endwhile; ?>

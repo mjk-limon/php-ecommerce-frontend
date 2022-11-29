@@ -1,4 +1,5 @@
 <?php
+
 $this->spAddClass = get_site_settings('navhover') ? 'fixed-nav' : null;
 $this->slideSize = array(($this->HomeGridNumber * 100), (($this->HomeGridNumber + 1) * 100));
 ?>

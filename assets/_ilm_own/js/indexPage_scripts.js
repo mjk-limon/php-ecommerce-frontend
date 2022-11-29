@@ -100,7 +100,7 @@ _ilm_home_page = {
             $ArrowKeyNavigation: 3,
             $SlideWidth: slideSize.width,
             $SlideHeight: slideSize.height,
-            $SlideSpacing: 9,
+            $SlideSpacing: slideSize.space,
             $ArrowNavigatorOptions: {
                 $Class: $JssorArrowNavigator$
             }

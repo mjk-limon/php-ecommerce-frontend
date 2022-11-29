@@ -2,8 +2,8 @@
 
 namespace _ilmComm;
 
-require "../doc/includes/config.php";
-require "../doc/vendor/autoload.php";
+require "../../doc/includes/config.php";
+require "../../doc/vendor/autoload.php";
 
 /**
  * Init page models
@@ -15,8 +15,8 @@ $InvoiceUrl = base_url('invoice/print/odr-' . implode(",", $OrderNos));
 /**
  * Watermark Background
  */
-$image = imagecreatefrompng('../images/logo.png');
-list($nw, $height) = getimagesize('../images/logo.png');
+$image = imagecreatefrompng('../../images/logo.png');
+list($nw, $height) = getimagesize('../../images/logo.png');
 $nh = ($height / $nw) * 300;
 $tmp = imagecreatetruecolor($nw, $nh);
 imagealphablending($tmp, false);

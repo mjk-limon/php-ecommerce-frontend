@@ -52,7 +52,7 @@ $(document).ready(function () {
         }
     });
 
-    $(window).on("scroll", function () {
+    $(window).on("scroll.navbarWithScroll", function () {
         var delta = 5,
             navbarHeight = 50,
             st = $(this).scrollTop();
@@ -108,25 +108,31 @@ $(document).ready(function () {
     $('.search-q').on('keyup', function () {
         var keyword = $(this).val().toLowerCase();
 
-        if (!keyword) return;
-        if (ajaxRequest) ajaxRequest.abort();
-        ajaxRequest = ajaxPost({ searchSuggestion: keyword }, function (data) {
-            var result, i, re, prId, prName, prCat, sLink, $ApHtml;
+        if (!keyword) {
+            return;
+        }
 
-            result = IsJsonString(data) ? JSON.parse(data) : { error: data };
+        if (ajaxRequest) {
+            ajaxRequest.abort();
+        }
+
+        ajaxRequest = ajaxPost({ searchSuggestion: keyword }, function (data) {
+            var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
 
             if (result.success) {
                 $('#search-suggestions').html('');
                 for (var i = 0; i < result.content.length; i++) {
-                    prHref = result.content[i].href;
-                    prCat = result.content[i].category;
-                    prName = result.content[i].name.replace(new RegExp(keyword, "gi"), "<b>$&</b>");
+                    var $apHtml,
+                        prHref = result.content[i].href,
+                        prCat = result.content[i].category;
+                        keywordRegPattern = keyword.split(/\s/).join('|'),
+                        prName = result.content[i].name.replace(new RegExp(`(${keywordRegPattern})`, "gi"), match => `<b>${match}</b>`);
 
-                    $ApHtml = '<li><div class="single-srchdata"><a href="' + prHref + '">' + prName;
-                    if (prCat) $ApHtml += '<span>' + prCat + '</span>';
-                    $ApHtml += '</a></div></li>';
+                    $apHtml = '<li><div class="single-srchdata"><a href="' + prHref + '">' + prName;
+                    if (prCat) $apHtml += '<span>' + prCat + '</span>';
+                    $apHtml += '</a></div></li>';
 
-                    $('#search-suggestions').append($ApHtml)
+                    $('#search-suggestions').append($apHtml)
                 }
             } else $('#search-suggestions').html(result.error);
         });
