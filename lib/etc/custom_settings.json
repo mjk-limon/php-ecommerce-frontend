@@ -1,0 +1,82 @@
+{
+    "category_sample": {
+        "Category icon": {
+            "total": 1,
+            "type": "png",
+            "width": "125",
+            "height": "25"
+        },
+        "Product page banner": {
+            "total": 1,
+            "type": "jpg",
+            "width": "1920",
+            "height": "130"
+        }
+    },
+    "inner_pages": [
+        "about-us",
+        "store-location",
+        "term-of-use",
+        "privacy-policy",
+        "testimonials",
+        "blog",
+        "photo-confirmations",
+        "payment-methods",
+        "locations-we-ship-to",
+        "shipping-returns"
+    ],
+    "banner_to_edit": {
+        "home page banners": {
+            "page": "index",
+            "position": 1,
+            "fields": "2"
+        },
+        "banner bottom sliders": {
+            "page": "index",
+            "position": 7,
+            "fields": "2"
+        },
+        "deals you can't miss": {
+            "page": "index",
+            "position": 8,
+            "fields": "2"
+        },
+        "shop by categories": {
+            "page": "index",
+            "position": 9,
+            "fields": "2"
+        },
+        "shop by concern": {
+            "page": "index",
+            "position": 10,
+            "fields": "2"
+        }
+    },
+    "stickers_to_edit": {
+        "home page stickers 1": {
+            "page": "index",
+            "position": 2,
+            "fields": "2"
+        },
+        "home page stickers 2": {
+            "page": "index",
+            "position": 3,
+            "fields": "2"
+        }
+    },
+    "stickers_to_edit_no_db": [],
+    "add_pr_others": {
+        "Short Description": {
+            "type": "textbox-html",
+            "name": "prshortdes"
+        },
+        "Product Tags": {
+            "type": "textbox-plain",
+            "name": "tags"
+        },
+        "SKU": {
+            "type": "text",
+            "name": "sku"
+        }
+    }
+}
