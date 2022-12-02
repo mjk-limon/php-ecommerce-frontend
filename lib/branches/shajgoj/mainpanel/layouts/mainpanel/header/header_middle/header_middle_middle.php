@@ -2,10 +2,7 @@
 
 $BrandList = $this->extModel("Brands")->brandLists(true);
 $BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
-$AllAboutBeauty = $this->extModel("Home")->getSliders(1);
-
-
-$TopBrands = array_slice($BrandGroups, 0, 9);
+$TopBrands = array_slice($BrandList, 0, 9);
 ?>
 
 <div class="col-md-4" style="position: static;">
@@ -41,7 +38,7 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                                     </div>
                                                 </div>
                                             <?php endforeach; ?>
-                                            
+
                                         </div>
                                     <?php endforeach; ?>
 
@@ -110,7 +107,8 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                                 <div class="single-brand-info">
                                                     <a href="<?php echo $BrLink ?>">
                                                         <div class="sb-brand-image-placeholder">
-                                                            <div class="sb-brand-image" style="background-image:url('<?php echo $BrImg ?>')"></div>
+                                                            <div class="sb-brand-image"
+                                                                 style="background-image:url('<?php echo $BrImg ?>')"></div>
                                                         </div>
                                                     </a>
                                                 </div>
