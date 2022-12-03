@@ -1,11 +1,9 @@
 <?php
 
 $BrandList = $this->extModel("Brands")->brandLists(true);
+$BrandList = array_combine(array_column($BrandList, 'brand'), $BrandList);
 $BrandGroups = $this->extModel("Brands")->groupBrandList($BrandList);
-$AllAboutBeauty = $this->extModel("Home")->getSliders(1);
-
-
-$TopBrands = array_slice($BrandGroups, 0, 9);
+$TopBrands = array_slice($BrandList, 0, 9);
 ?>
 
 <div class="col-md-4" style="position: static;">
@@ -21,30 +19,24 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
 
                                 <div class="brand-group" style="margin-bottom: 1rem">
 
-                                    <?php foreach ($TopBrands as $GK_Val) : ?>
-                                        <div class="brand-flex">
+                                    <div class="brand-flex">
 
-                                            <?php
-                                            foreach ($GK_Val as $BrName) :
-                                                $BrLink = $BrandList[$BrName]['link'];
-                                                $BrImg = $BrandList[$BrName]['image'];
-                                                $BrCnt = $BrandList[$BrName]['total_prs'];
-                                            ?>
-                                                <div class="single-brand">
-                                                    <div class="single-brand-info">
-                                                        <a href="<?php echo $BrLink ?>">
-                                                            <div class="sb-brand-title">
-                                                                <?php echo $BrName ?>
-                                                                <span class="label label-default"><?php echo $BrCnt ?></span>
-                                                            </div>
-                                                        </a>
-                                                    </div>
+                                        <?php foreach ($TopBrands as $BrName) : ?>
+                                            <div class="single-brand">
+                                                <div class="single-brand-info">
+                                                    <a href="<?php echo $BrName['link'] ?>">
+                                                        <div class="sb-brand-title">
+                                                            <?php echo $BrName['brand'] ?>
+                                                            <span class="label label-default">
+                                                                <?php echo $BrName['total_prs'] ?>
+                                                            </span>
+                                                        </div>
+                                                    </a>
                                                 </div>
-                                            <?php endforeach; ?>
-                                            
-                                        </div>
-                                    <?php endforeach; ?>
+                                            </div>
+                                        <?php endforeach; ?>
 
+                                    </div>
                                 </div>
                             </div>
                             <div class="hfm-bl-sec">
@@ -68,7 +60,9 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                                         <a href="<?php echo $BrLink ?>">
                                                             <div class="sb-brand-title">
                                                                 <?php echo $BrName ?>
-                                                                <span class="label label-default"><?php echo $BrCnt ?></span>
+                                                                <span class="label label-default">
+                                                                    <?php echo $BrCnt ?>
+                                                                </span>
                                                             </div>
                                                         </a>
                                                     </div>
@@ -100,25 +94,18 @@ $TopBrands = array_slice($BrandGroups, 0, 9);
                                 <h5 class="hfm-title">TOP BRANDS</h5>
                                 <div class="flex brand-flex flex-wrap top-brands">
 
-                                    <?php
-                                    foreach ($TopBrands as $GK_Val) :
-                                        foreach ($GK_Val as $BrName) :
-                                            $BrLink = $BrandList[$BrName]['link'];
-                                            $BrImg = $BrandList[$BrName]['image'];
-                                    ?>
-                                            <div class="single-brand">
-                                                <div class="single-brand-info">
-                                                    <a href="<?php echo $BrLink ?>">
-                                                        <div class="sb-brand-image-placeholder">
-                                                            <div class="sb-brand-image" style="background-image:url('<?php echo $BrImg ?>')"></div>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                    <?php foreach ($TopBrands as $BrName) : ?>
+                                        <div class="single-brand">
+                                            <div class="single-brand-info">
+                                                <a href="<?php echo $BrName['link'] ?>">
+                                                    <div class="sb-brand-image-placeholder">
+                                                        <div class="sb-brand-image"
+                                                             style="background-image:url('<?php echo $BrName['image'] ?>')"></div>
+                                                    </div>
+                                                </a>
                                             </div>
-                                    <?php
-                                        endforeach;
-                                    endforeach;
-                                    ?>
+                                        </div>
+                                    <?php endforeach; ?>
 
                                 </div>
                             </div>
