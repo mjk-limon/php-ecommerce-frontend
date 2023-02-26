@@ -275,7 +275,7 @@ ul.sub-menu{position:absolute;top:0;left:100%;animation:fadeInUp 400ms;backgroun
 .footer-top .pm-delv > h4{margin-top:0;color:#272626;display:block}
 .footer-top .pm-delv > img{display:inline-block;margin-right:.5rem;height:60px;border:1px solid #ddd}
 
-.footer-bottom{background:#333;padding-top:5px}
+.footer-bottom{background:#333;padding:5px 0}
 .footerlogo{height:30px;border-radius:5px}
 .footer-bottom p{color:#fcfcfc;font-family:'Roboto',sans-serif;font-weight:300;margin-left:14px;margin-bottom:0}
 .footer-bottom p a{font-size:12px;color:#fff;font-style:italic;text-decoration:underline}
