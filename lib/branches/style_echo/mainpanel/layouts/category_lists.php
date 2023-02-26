@@ -5,7 +5,7 @@ $ci = $this->AllCategories;
 $MainCats = $ci->get($ci::FETCH_MAIN);
 
 // Menu classes and clearfixes
-$submenu_addClass = $this->mobileView ? 'animated slideDown' : null;
+$submenu_addClass = $this->mobileView ? ' animated slideDown' : null;
 $menu_clearfix = $this->mobileView ? 2 : 6;
 
 while ($ArrMain = $MainCats->fetch()) :
