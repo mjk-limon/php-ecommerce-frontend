@@ -1,4 +1,5 @@
 @media (max-width: 767px) {
+	/** Main components */
 	#skbc-top-margin{height:121px}
 	#skmbcategories{position:fixed;top:0;left:0;width:100%;height:100%;overflow:auto;background:#fff;z-index:99999;animation:FloatingMenuIn .6s cubic-bezier(.25,.37,0,.99)}
 	.header_top_content_section{border:0}
@@ -13,8 +14,12 @@
 	.sub-menu > .sub-cols{width:100%;float:none}
 	.grid-row{grid-gap:1.5rem}
 	.grid-row, .grid-row.grid4, .grid-row.grid3{grid-template-columns:repeat(2, 1fr)}
+	
 	/** Floating cart */
 	.sc-body-top{background-color:#333;color:#fff}
+	
+	/** Floating cart */
+	.prgrid-ad-img .img-overlay span{font-size:1.3rem}
 
 	/** Responsive product grid */
 	.ft-pr-mbl .single-slider-product{position:relative;width:50%;padding:5px}
