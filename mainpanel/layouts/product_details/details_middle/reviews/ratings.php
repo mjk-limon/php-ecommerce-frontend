@@ -9,7 +9,9 @@
 
         <?php
         for ($RI = 5; $RI > 0; $RI--) :
-            $BarWidth = @($this->ProductDetails->getRating("r_" . $RI) / $this->ProductDetails->getRating("r_t")) * 100;
+            $netRating = $this->ProductDetails->getRating("r_" . $RI);
+            $totalRating = $this->ProductDetails->getRating("r_t");
+            $BarWidth = $totalRating ? (($netRating / $totalRating) * 100) : 0;
         ?>
             <div class="row-rat">
                 <?php echo $RI ?> Star
