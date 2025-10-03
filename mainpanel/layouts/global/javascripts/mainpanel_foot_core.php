@@ -10,3 +10,5 @@
 <script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Form_handler.js") ?>"></script>
 <script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Paging.js") ?>"></script>
 <script src="<?php echo asset("assets/_ilm_own/js/app/_ilm_Quick_buy.js") ?>"></script>
+
+<script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>

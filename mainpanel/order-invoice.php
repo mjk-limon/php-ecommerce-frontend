@@ -173,14 +173,14 @@ if (isset($_GET['pdf'])) {
 
                                     foreach ($OdredProducts as $i => $Prs) :
                                         $Sp->setPrId($Prs['p']);
-                                        $Sp->processDiscount();
-                                        $Sp->processStock($Prs["s"], $Prs["c"]);
+                                        $Sp->buildProductDiscount();
+                                        $Sp->buildPriceAndStock($Prs["s"], $Prs["c"]);
                                     ?>
                                         <tr style="border-bottom:1px solid #ccc;color:#333;font-weight:500">
                                             <td style="padding:10px;vertical-align:middle"><?php echo $i + 1 ?></td>
                                             <td style="padding:10px;vertical-align:middle">
                                                 <p class="ipnaid ipname" style="margin:0 0 3px 0;font-weight:600;font-size:13px;color:#333;text-align:left;margin-bottom:0">
-                                                    <?php echo htmlspecialchars($Sp->getName()) ?>
+                                                    <?php echo htmlspecialchars($Sp->getProductNameuctName()) ?>
                                                 </p>
                                                 <p class="ipnaid" style="margin:0 0 3px 0;font-size:11px;color:#333;text-align:left;margin-bottom:0">
                                                     ID: <?php echo $Sp->getProductId() ?>

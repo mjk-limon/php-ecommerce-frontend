@@ -6,15 +6,15 @@
     $sp = $this->SingleProduct;
     $Recommended = $this->productSuggestion(false, 4);
     while ($RcInfo = $Recommended->fetch_assoc()) :
-        $sp->setPrInfo($RcInfo);
+        $sp->setProductInfo($RcInfo);
     ?>
         <div class="pr-glancebox">
             <div class="flex">
                 <div class="gb-image" style="width: 35%;">
-                    <img src="<?php echo $sp->getProductImage() ?>" alt="">
+                    <img src="<?php echo $sp->getThumbnail() ?>" alt="">
                 </div>
                 <div class="gb-info" style="width: 65%;padding-left: 10px;">
-                    <div class="gb-title"><?php echo $sp->getName() ?></div>
+                    <div class="gb-title"><?php echo $sp->getProductName() ?></div>
                     <div class="gb-description">
                         <p><strong><?php echo curr($sp->getPrice()) ?></strong></p>
                     </div>

@@ -14,8 +14,8 @@ $Sp = $this->SingleProduct;
                     $Sp->setPrid($CItem['p']);
 
                     // Process discount and stock
-                    $Sp->processDiscount($CItem['q']);
-                    $Sp->processStock($CItem['s'], $CItem['c']);
+                    $Sp->buildProductDiscount($CItem['q']);
+                    $Sp->buildPriceAndStock($CItem['s'], $CItem['c']);
                 ?>
                     <tr class="sinlge-fc-item">
                         <td>
@@ -24,9 +24,9 @@ $Sp = $this->SingleProduct;
                             <span data-ciup="-">&minus;</span>
                         </td>
                         <td class="fc-item-dis" width="50%">
-                            <img src="<?php echo $Sp->getProductImage() ?>" alt="" />
+                            <img src="<?php echo $Sp->getThumbnail() ?>" alt="" />
                             <div class="dis-title">
-                                <h5><?php echo $Sp->getName() ?></h5>
+                                <h5><?php echo $Sp->getProductName() ?></h5>
                                 <span>Size: <?php echo $CItem['s'] ?>, Color: <?php echo $CItem['c'] ?></span>
                                 <span>Unit Price: <?php echo curr($Sp->getPrice()) ?></span>
                             </div>

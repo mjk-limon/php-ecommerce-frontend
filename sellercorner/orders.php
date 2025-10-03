@@ -39,7 +39,7 @@ namespace _ilmComm;
                                             $this->Sp->setPrid($OdrPrArr['p']);
                                         ?>
                                             <p class="mb-0">
-                                                <strong><?php echo $this->Sp->getName() ?: 'Deleted product' ?></strong> - <?php echo $OdrPrArr['q'] ?> Unit<br />
+                                                <strong><?php echo $this->Sp->getProductName() ?: 'Deleted product' ?></strong> - <?php echo $OdrPrArr['q'] ?> Unit<br />
                                                 <span class="text-muted"><?php echo "(Size: " . $OdrPrArr['s'] . ", Color: " . $OdrPrArr['c'] . ")" ?></span>
                                             </p>
                                         <?php } ?>

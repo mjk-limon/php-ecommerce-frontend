@@ -48,14 +48,14 @@ $OrderHistory = $this->UserData->getOrderHistory();
                                 continue;
                             }
 
-                            $PrInfo->processDiscount($Prs['q']);
+                            $PrInfo->buildProductDiscount($Prs['q']);
                             $PrInfo->processStock($Prs['s'], $Prs['c']);
                         ?>
                             <tr>
                                 <td class="tlist-fullinfo">
-                                    <div class="tl-img" style="--tlwdth:60px;background-image: url('<?php echo $PrInfo->getProductImage() ?>')"></div>
+                                    <div class="tl-img" style="--tlwdth:60px;background-image: url('<?php echo $PrInfo->getThumbnail() ?>')"></div>
                                     <div class="tl-area" style="--tlwdth:60px">
-                                        <?php echo $PrInfo->getName() ?>
+                                        <?php echo $PrInfo->getProductName() ?>
                                         <div class="tl-data">
                                             Size: <?php echo $Prs['s'] ?: 'N/a' ?>,
                                             Color: <?php echo $Prs['c'] ?: 'N/a' ?>
@@ -64,7 +64,7 @@ $OrderHistory = $this->UserData->getOrderHistory();
                                 </td>
                                 <td><?php echo $Prs['q'] ?></td>
                                 <td><?php echo curr($PrInfo->getPrice($PrInfo->getDiscount())) ?></td>
-                                <td><a href="<?php echo $PrInfo->getHref() ?>">Details</a></td>
+                                <td><a href="<?php echo $PrInfo->getProductLink() ?>">Details</a></td>
                             </tr>
                         <?php endforeach; ?>
 

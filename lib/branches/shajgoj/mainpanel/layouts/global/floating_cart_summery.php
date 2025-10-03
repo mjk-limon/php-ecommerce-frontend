@@ -10,19 +10,19 @@ $Sp = $this->SingleProduct;
             <?php
             foreach ($this->CartItems as $CKey => $CItem) :
                 $Sp->setPrid($CItem['p']);
-                $Sp->processDiscount($CItem['q']);
-                $Sp->processStock($CItem['s'], $CItem['c']);
+                $Sp->buildProductDiscount($CItem['q']);
+                $Sp->buildPriceAndStock($CItem['s'], $CItem['c']);
             ?>
                 <div class="sinlge-fc-item">
                     <span class="rmv-crt-btn" data-dynamic="<?php echo $CKey ?>">
                         <i class="fa fa-trash"></i>
                     </span>
                     <div class="fc-item-dis">
-                        <img src="<?php echo $Sp->getProductImage() ?>" alt="" />
+                        <img src="<?php echo $Sp->getThumbnail() ?>" alt="" />
                         <div class="dis-title">
                             <div>
                                 <span>Product:</span>
-                                <span><?php echo $Sp->getName() ?></span>
+                                <span><?php echo $Sp->getProductName() ?></span>
                             </div>
                             <div>
                                 <span>Price:</span>

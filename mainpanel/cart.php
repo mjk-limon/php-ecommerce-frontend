@@ -20,23 +20,23 @@ $Sp = $this->SingleProduct;
                                 <?php
                                 foreach ($this->CartItems as $CKey => $CItem) :
                                     // Set product id
-                                    $Sp->setPrid($CItem['p']);
+                                    $Sp->setProductId($CItem['p']);
 
                                     // Process price, stock and discount
-                                    $Sp->processDiscount($CItem['q']);
-                                    $Sp->processStock($CItem['s'], $CItem['c']);
+                                    $Sp->buildProductDiscount($CItem['q']);
+                                    $Sp->buildPriceAndStock($CItem['s'], $CItem['c']);
                                 ?>
                                     <div class="cart-single">
                                         <a class="remove" href="javascript:;" data-ckey="<?php echo $CKey ?>">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                         <div class="cs-fullinfo sp-pr-info">
-                                            <div class="cs-primg" style="--tlwdth: 80px;background-image: url('<?php echo $Sp->getProductImage() ?>')">
+                                            <div class="cs-primg" style="--tlwdth: 80px;background-image: url('<?php echo $Sp->getThumbnail() ?>')">
                                             </div>
                                             <div style="--tlwdth: 80px; " class="cs-fi-area">
                                                 <div class="fi-name">
-                                                    <a href="<?php echo $Sp->getHref() ?>">
-                                                        <?php echo $Sp->getName() ?>
+                                                    <a href="<?php echo $Sp->getProductLink() ?>">
+                                                        <?php echo $Sp->getProductName() ?>
                                                     </a>
                                                     <div class="fi-price-section">
                                                         Unit Price: <?php echo curr($Sp->getPrice()) ?>

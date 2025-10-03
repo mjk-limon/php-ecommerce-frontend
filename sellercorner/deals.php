@@ -29,17 +29,17 @@ namespace _ilmComm;
 
                                     <?php
                                     while ($PrArr = $this->MerchantDeals->fetch_array()) {
-                                        $this->Sp->setPrInfo($PrArr);
-                                        $this->Sp->processStock();
+                                        $this->Sp->setProductInfo($PrArr);
+                                        $this->Sp->buildPriceAndStock();
                                         $prStatus = ($this->Sp->getProductStatus() == '2') ? ' checked' : null;
                                     ?>
                                         <tr class="poot" data-href="<?php echo $this->Sp->getProductId() ?>/">
                                             <td>
-                                                <img src="<?php echo $this->Sp->getProductImage() ?>" class="img-thumbnail osh-order-image" />
+                                                <img src="<?php echo $this->Sp->getThumbnail() ?>" class="img-thumbnail osh-order-image" />
                                             </td>
                                             <td>
                                                 <a href="<?php echo Models::baseUrl('sellercorner/deals/?v=' . $this->Sp->getProductId()) ?>" class="table-link">
-                                                    <h4><?php echo htmlspecialchars($this->Sp->getName()) ?></h4>
+                                                    <h4><?php echo htmlspecialchars($this->Sp->getProductName()) ?></h4>
                                                     <p># <?php echo htmlspecialchars($this->Sp->getProductId()) ?></p>
                                                     <p><i class="fa fa-signal"></i> Item Left: <?php echo $this->Sp->getStock() ?></p>
                                                     <p><i class="fa fa-eye"></i> Views: <?php echo $this->Sp->getTotalViews() ?></p>
@@ -87,13 +87,13 @@ namespace _ilmComm;
                 } else {
                     $Prid = $_GET['v'];
                     $this->Sp->setPrid($Prid);
-                    $this->Sp->processStock();
+                    $this->Sp->buildPriceAndStock();
                 ?>
                     <div class="col-md-12">
                         <h4>Product Id #<?php echo sprintf('%06d', $Prid) ?></h4>
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="<?php echo $this->Sp->getProductImage() ?>" class="img-responsive" />
+                                <img src="<?php echo $this->Sp->getThumbnail() ?>" class="img-responsive" />
                             </div>
                             <div class="col-md-9 product-info">
                                 <p class="bg-danger pull-right navs">
@@ -107,7 +107,7 @@ namespace _ilmComm;
                                     </a>
                                 </p>
 
-                                <h4><?php echo $this->Sp->getName() ?></h4>
+                                <h4><?php echo $this->Sp->getProductName() ?></h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <ul class="list-group">

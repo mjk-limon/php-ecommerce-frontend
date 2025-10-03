@@ -20,8 +20,8 @@ $tlwidth = $this->mobileView ? 110 : 150;
             }
 
             // Process product info
-            $PrInfo->processDiscount();
-            $PrInfo->processStock();
+            $PrInfo->buildProductDiscount();
+            $PrInfo->buildPriceAndStock();
         ?>
             <div class="tlist-single">
                 <a class="tl-rem cRemoveWishNav" href="javascript:;">
@@ -29,11 +29,11 @@ $tlwidth = $this->mobileView ? 110 : 150;
                     <i class="fa fa-heart"></i> Remove from wishlist
                 </a>
                 <div class="tlist-fullinfo sp-pr-info">
-                    <div style="--tlwdth: <?php echo $tlwidth ?>px; background-image: url('<?php echo $PrInfo->getProductImage() ?>')" class="tl-img"></div>
+                    <div style="--tlwdth: <?php echo $tlwidth ?>px; background-image: url('<?php echo $PrInfo->getThumbnail() ?>')" class="tl-img"></div>
                     <div style="--tlwdth: <?php echo $tlwidth ?>px;" class="tl-area">
                         <div class="fi-name">
-                            <a href="<?php echo $PrInfo->getHref() ?>">
-                                <?php echo $PrInfo->getName() ?>
+                            <a href="<?php echo $PrInfo->getProductLink() ?>">
+                                <?php echo $PrInfo->getProductName() ?>
                             </a>
                             <div class="fi-price-discount">
                                 Unit Price: <?php echo curr($PrInfo->getPrice()) ?>
@@ -45,7 +45,7 @@ $tlwidth = $this->mobileView ? 110 : 150;
                             </div>
                         </div>
                         <div class="fi-nav">
-                            <li><a href="<?php echo $PrInfo->getHref() ?>">Details</a></li>
+                            <li><a href="<?php echo $PrInfo->getProductLink() ?>">Details</a></li>
                         </div>
                     </div>
                 </div>

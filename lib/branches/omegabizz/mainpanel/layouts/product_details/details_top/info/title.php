@@ -2,7 +2,7 @@
     <div class="pt-area">
 
         <?php if (!$this->mobileView) : ?>
-            <h2 class="pr-name"><?php echo $this->ProductDetails->getName() ?></h2>
+            <h2 class="pr-name"><?php echo $this->ProductDetails->getProductName() ?></h2>
         <?php endif; ?>
 
         <small>

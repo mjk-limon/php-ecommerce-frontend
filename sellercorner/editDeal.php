@@ -21,7 +21,7 @@ $AddPrOthers = $NewDealModel->getAllPrsOthers();
                     <div class="ptoggletab product-tab-1">
                         <div class="form-group">
                             <label>Product Name</label>
-                            <input type="text" name="pr_name" class="form-control" value="<?php echo htmlspecialchars($this->Di->getName()) ?>" required />
+                            <input type="text" name="pr_name" class="form-control" value="<?php echo htmlspecialchars($this->Di->getProductName()) ?>" required />
                         </div>
                         <div class="form-group">
                             <label>Brand Name</label>

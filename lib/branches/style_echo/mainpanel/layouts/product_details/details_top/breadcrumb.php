@@ -36,7 +36,7 @@ $cat->buildInfo();
 
             <?php endif; ?>
 
-            <li class="active"><?php echo $this->ProductDetails->getName() ?></li>
+            <li class="active"><?php echo $this->ProductDetails->getProductName() ?></li>
         </ol>
     </div>
 </div>

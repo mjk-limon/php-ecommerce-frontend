@@ -46,21 +46,22 @@ _ilm_Router = {
 
 	showSkeleton: function ($elem) {
 		$.ilmScroll('body');
-		$elem.addClass("skeleton").html("");
+		NProgress.start();
+		// $elem.addClass("skeleton").html("");
 	},
 
 	dataLoadSkeleton: function (result, $elem) {
 		if (typeof result.error === 'undefined') {
 			_ilm_Router.loadHeadData(result);
 
-			$elem.removeClass("skeleton").hide();
 			$elem.fadeIn().html(result.content);
 		} else {
 			//_ilm.showNotification(result.error, true);
-			$elem.removeClass("skeleton").hide();
 			$elem.fadeIn().html("<center><h3>Internal Server error</h3></center>");
 			$elem.fadeIn().html(result.error);
 		}
+
+		NProgress.done();
 	},
 
 	loadHeadData: function (result) {

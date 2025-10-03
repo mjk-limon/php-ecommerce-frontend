@@ -1,8 +1,8 @@
 <?php 
 
-$sp->setPrInfo($pr_info);
-$sp->processDiscount();
-$sp->processStock();
+$sp->setProductInfo($pr_info);
+$sp->buildProductDiscount();
+$sp->buildPriceAndStock();
 ?>
 
 <div class="single-product <?php echo $this->spAddClass ?>">
@@ -12,15 +12,15 @@ $sp->processStock();
             <span class="sp-dis">-<?php echo $sp->getDiscount() ?>%</span>
         <?php endif; ?>
 
-        <a href="<?php echo $sp->getHref() ?>">
-            <img src="<?php echo asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getProductImage() ?>" />
+        <a href="<?php echo $sp->getProductLink() ?>">
+            <img src="<?php echo asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getThumbnail() ?>" />
         </a>
     </div>
     <div class="has-sp-nav">
         <div class="sp-pr">
             <div class="sp-pr-info">
-                <a href="<?php echo $sp->getHref() ?>">
-                    <h5><?php echo $sp->getName() ?></h5>
+                <a href="<?php echo $sp->getProductLink() ?>">
+                    <h5><?php echo $sp->getProductName() ?></h5>
                 </a>
                 <p>
                     <strong class="price"><?php echo curr($sp->getPrice()) ?></strong>

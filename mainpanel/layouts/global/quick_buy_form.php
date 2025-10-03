@@ -30,11 +30,11 @@ $Products[] = array(
                     <tbody>
                         <tr>
                             <td class="qopinfo tlist-fullinfo">
-                                <div style="--tlwdth: 40px; background-image: url('<?php echo $this->Sp->getProductImage() ?>')" class="tl-img"></div>
+                                <div style="--tlwdth: 40px; background-image: url('<?php echo $this->Sp->getThumbnail() ?>')" class="tl-img"></div>
                                 <div style="--tlwdth: 40px; " class="tl-area">
                                     <div class="fi-name qopinfo">
                                         <p class="qoPNAME">
-                                            <?php echo $this->Sp->getName() ?>
+                                            <?php echo $this->Sp->getProductName() ?>
                                         </p>
                                         <p>
                                             Size: <?php echo $Products[0]['s'] ?: 'N/a' ?>,
