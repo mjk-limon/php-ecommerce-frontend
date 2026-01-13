@@ -1,10 +1,14 @@
+<?php
+$MinOrder = $this->ProductDetails->getOthers("prminodr") ?: 10;
+?>
+
 <div class="flex">
     <ul class="qty-selection">
         <li class="item_minus">
             <a href="javascript:;">-</a>
         </li>
         <li class="item_qty item_qty_input">
-            <input type="number" value="1" autocomplete="off" />
+            <input type="number" value="<?php echo $MinOrder ?>" autocomplete="off" />
         </li>
         <li class="item_plus">
             <a href="javascript:;">+</a>
