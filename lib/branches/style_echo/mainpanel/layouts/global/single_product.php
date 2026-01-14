@@ -3,6 +3,8 @@
 $sp->setProductInfo($pr_info);
 $sp->buildProductDiscount();
 $sp->buildPriceAndStock();
+
+$MinOrder = $sp->getOthers("prminodr") ?: 1;
 ?>
 
 <div class="single-product">
@@ -10,6 +12,13 @@ $sp->buildPriceAndStock();
 
         <?php if ($sp->getDiscount()) : ?>
             <span class="sp-dis">-<?php echo round($sp->getDiscount()) ?>%</span>
+        <?php endif; ?>
+
+        <?php if ($MinOrder > 1) : ?>
+            <span class="sp-dis"
+                style="background-color: var(--accent); color: #fff; top: 30px;">
+                Wholesale
+            </span>
         <?php endif; ?>
 
         <a href="<?php echo $sp->getProductLink() ?>">
@@ -32,7 +41,7 @@ $sp->buildPriceAndStock();
             </div>
         </div>
         <div class="sp-nav">
-            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="1"></em>
+            <em data-prid="<?php echo $sp->getProductId() ?>" data-size="" data-colr="" data-qty="<?php echo $MinOrder ?>"></em>
             <a href="javascript:;" class="add-cart cAddBuyNav">Add To Cart</a>
             <a href="javascript:;" class="buy-now cAddBuyNav">Buy Now</a>
         </div>
