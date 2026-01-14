@@ -16,7 +16,7 @@ $MinOrder = $sp->getOthers("prminodr") ?: 1;
 
         <?php if ($MinOrder > 1) : ?>
             <span class="sp-dis"
-                style="background-color: var(--accent); color: #fff; top: 30px;">
+                style="background-color: var(--accent); color: #fff; top: 36px;">
                 Wholesale
             </span>
         <?php endif; ?>

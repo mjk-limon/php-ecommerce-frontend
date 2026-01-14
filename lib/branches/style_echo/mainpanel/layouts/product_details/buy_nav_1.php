@@ -21,3 +21,7 @@ $MinOrder = $this->ProductDetails->getOthers("prminodr") ?: 1;
         <li class="add-to-cart add-cart cAddBuyNav">ADD TO CART</li>
     </ul>
 </div>
+
+<?php if ($MinOrder > 1): ?>
+    <span style="background-color: var(--accent); color: #fff; top: 36px; padding: 2px 10px;">Wholesale</span>
+<?php endif ?>
