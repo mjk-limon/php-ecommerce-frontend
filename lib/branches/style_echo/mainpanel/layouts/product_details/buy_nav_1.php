@@ -23,5 +23,7 @@ $MinOrder = $this->ProductDetails->getOthers("prminodr") ?: 1;
 </div>
 
 <?php if ($MinOrder > 1): ?>
-    <span style="background-color: var(--accent); color: #fff; top: 36px; padding: 2px 10px;">Wholesale</span>
+    <span style="background-color: var(--accent); color: #fff; top: 36px; padding: 2px 10px;">
+        Wholesale (Minimmum order <?php echo $MinOrder ?>)
+    </span>
 <?php endif ?>
