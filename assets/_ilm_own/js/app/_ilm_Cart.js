@@ -49,10 +49,11 @@ _ilm_Cart = {
 
     quantityChange: function (newQty, $qtybox) {
         var prLimit = parseInt($qtybox.prop('max'));
+        var prMin = parseInt($qtybox.prop('min'));
 
-        if (newQty < 1) {
-            $qtybox.val("1");
-            _ilm.showNotification("Minimmum quantity selection is 1.", true);
+        if (newQty < prMin) {
+            $qtybox.val(prMin);
+            _ilm.showNotification("Minimmum quantity selection is " + prMin, true);
         } else if (newQty > prLimit) {
             $qtybox.val(prLimit);
             _ilm.showNotification("Stock limited!", true);

@@ -2,16 +2,16 @@
     <div class="container">
         <div class="section-browse-cat">
             <div class="bc-title">
-                <div class="bc-main-title">SHOP BY CONCERN</div>
+                <div class="bc-main-title">SHOP BY BRAND</div>
             </div>
-            <div class="row">
+            <div class="layout-grid row">
 
                 <?php
                 $Slider = $this->getSliders(6);
                 while ($ArrSlider = $Slider->fetch_array()) :
                 ?>
-                    <div class="col-md-2">
-                        <div class="single-layout-grid">
+                    <div class="single-layout-grid col-md-2 col-xs-6">
+                        <div class="single-layout-grid-inner">
                             <div class="slg-image">
                                 <a href="<?php echo $ArrSlider['image_link'] ?>">
                                     <img src="<?php echo asset($ArrSlider['image']) ?>" />

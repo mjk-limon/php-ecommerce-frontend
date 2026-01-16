@@ -5,8 +5,8 @@
                 <div class="bc-main-title">TRENDING</div>
             </div>
             <div class="ft-pr-sliders">
-                <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:425px;overflow:hidden;visibility:hidden;"' : null ?>>
-                    <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:425px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl"' ?>>
+                <div <?php echo !$this->mobileView ? 'id="trendsale" style="position:relative;margin:0 auto;top:0px;left:0px;width:1400px;height:425px;overflow:hidden;visibility:hidden;"' : 'class="bc-products"' ?>>
+                    <div <?php echo !$this->mobileView ? 'data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1400px;height:425px;overflow:hidden;"' : 'class="m-flex ft-pr-mbl row"' ?>>
 
                         <?php while ($trPr = $this->Trendings->fetch_assoc()) : ?>
                             <div class="single-slider-product">

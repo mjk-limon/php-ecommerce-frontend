@@ -5,7 +5,7 @@
         <?php if ($this->TotalProduct) : ?>
             <div class="row">
 
-                <?php $this->layout('product_browse.filters') ?>
+                <?php !$this->mobileView && $this->layout('product_browse.filters') ?>
                 <?php $this->layout('product_browse.products') ?>
 
             </div>
@@ -35,13 +35,13 @@
         <li><a href="#mb-filter-modal" data-toggle="modal"><i class="fa fa-filter"></i> Filters</a></li>
     </div>
 
-    <div class="modal right fade" id="mb-filter-modal" role="dialogue" tabindex="-1">
+    <div class="modal right pr-filter-modal fade" id="mb-filter-modal" role="dialogue" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <?php
-                    include "layouts/product-page-filters.php"
-                    ?>
+                    <div class="row filters-holder">
+                        <?php $this->layout('product_browse.filters') ?>
+                    </div>
 
                     <a class="mb-ff-navs" href="javascript:;" data-dismiss="modal">Apply Filters</a>
                 </div>

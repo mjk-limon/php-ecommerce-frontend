@@ -15,6 +15,11 @@
     </div>
 
     <section id="skmbcategories" style="display:none">
+        <div class="clearfix sc-body-top">
+            <span class="floating-sc-close icon-toggle-sidemenu"><i class="pe-7s-close"></i></span>
+            <h4>Menu</h4>
+        </div>
+        
         <div class="mainmenu">
             <ul class="nav navbar-nav">
                 <?php $this->layout("category_lists"); ?>

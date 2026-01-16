@@ -1,17 +1,3 @@
-<link href="<?php echo asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
-
-<link href="<?php echo asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
-<link href="<?php echo asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
-
-<?php if ($this->mobileView) : ?>
-    <link href="<?php echo asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
-<?php endif; ?>
-
 <style type="text/css">
     :root {
         --accent: <?php echo $this->ColrData['accent'] ?>;
@@ -109,4 +95,19 @@
     }
 </style>
 
+<link href="<?php echo asset("assets/vendors/__boo_tstrap/__ilm_boo_tstrap.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/vendors/__font_aws/css/__ilm_font.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/vendors/boo_tslider/__ilm_boo_tslider.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/vendors/anim/_ilm_anim.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/vendors/flexslider/_ds_flex.css") ?>" rel="stylesheet" />
+
+<link href="<?php echo asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
+<link href="<?php echo asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
+
 <?php $this->layout('style_additional', [], static::LAYOUT_ASSETS_CSS); ?>
+
+<?php if ($this->mobileView) : ?>
+    <link href="<?php echo asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">
+    <?php $this->layout('style_responsive_additional', [], static::LAYOUT_ASSETS_CSS); ?>
+<?php endif; ?>
