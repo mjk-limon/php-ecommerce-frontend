@@ -44,12 +44,12 @@ $(document).ready(function () {
     $.scrollUp({ scrollText: '<i class="fa fa-arrow-up"></i>', zIndex: 2147483647 });
 
     $(document).on("click", "a, [data-href]", function (e) {
-        // var target = $(this).attr("href");
-        // target = (typeof target !== 'undefined') ? target : $(this).data("href");
-        // if ($(this).hasClass("noRoute")) return null;
-        // if (_ilm_Router.init(target)) {
-        //     e.preventDefault();
-        // }
+        var target = $(this).attr("href");
+        target = (typeof target !== 'undefined') ? target : $(this).data("href");
+        if ($(this).hasClass("noRoute")) return null;
+        if (_ilm_Router.init(target)) {
+            e.preventDefault();
+        }
     });
 
     $(window).on("scroll.navbarWithScroll", function () {

@@ -1,9 +1,20 @@
 <div class="ht-right-icon-pack ht-right-item">
+    <div class="serachbox">
+        <form action="<?php echo PROJECT_FOLDER . 'search/' ?>" method="get">
+            <div class="searchfld deskv">
+                <input type="text" placeholder="Search for Proudcts, Brands..." name="q"
+                    class="input-text search-q"
+                    autocomplete="off" />
+                <button type="submit" class="subs"><i class="pe-7s-search subsi"></i></button>
+                <div id="search-suggestions" class="srch-datalist slimScroll"></div>
+            </div>
+        </form>
+    </div>
     <div class="ht-right-icon icon-my-account">
         <a class="cb chp db" href="/my-account/"><i class="pe-7s-user"></i></a>
         <div class="header-floating-menu login-menu animated fadeInUp">
             <ul class="nav">
-                
+
                 <?php if (!$this->UserData) : ?>
                     <li><a href="/login/">Login/Registration</a></li>
                 <?php else : ?>
@@ -12,7 +23,7 @@
                     <li><a href="/my-account/?c=90.02">Wishlists</a></li>
                     <li><a href="/my-account/?logout">Logout</a></li>
                 <?php endif; ?>
-                
+
             </ul>
         </div>
     </div>
