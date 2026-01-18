@@ -3,11 +3,6 @@ $BrandList = $this->extModel("Brands")->brandLists(true);
 ?>
 
 <div class="cols logo-cols ht-right-item">
-    <div class="logo">
-        <a href="/" id="home-btn">
-            <img src="<?php echo get_logo() ?>">
-        </a>
-    </div>
 
     <div class="brand-group" style="margin-bottom: 1rem">
 

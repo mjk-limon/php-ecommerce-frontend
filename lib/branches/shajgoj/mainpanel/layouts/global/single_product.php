@@ -13,7 +13,7 @@ $sp->buildPriceAndStock();
         <?php endif; ?>
 
         <a href="<?php echo $sp->getProductLink() ?>">
-            <img src="<?php echo asset("images/preloader.gif") ?>" data-src="<?php echo $sp->getThumbnail() ?>" />
+            <img src="<?php echo asset("assets/images/preloader.gif") ?>" data-src="<?php echo $sp->getThumbnail() ?>" />
         </a>
     </div>
     <div class="has-sp-nav">

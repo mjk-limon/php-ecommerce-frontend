@@ -2,8 +2,13 @@
 
 namespace _ilmComm;
 
-require "../../doc/includes/config.php";
-require "../../doc/vendor/autoload.php";
+use _ilmComm\Providers\RouteProvider;
+
+require "../../vendor/autoload.php";
+
+(new _ilmComm)
+    ->exceptProvider(RouteProvider::class)
+    ->init();
 
 /**
  * Init page models
@@ -15,20 +20,20 @@ $InvoiceUrl = base_url('invoice/print/odr-' . implode(",", $OrderNos));
 /**
  * Watermark Background
  */
-$image = imagecreatefrompng('../../images/logo.png');
-list($nw, $height) = getimagesize('../../images/logo.png');
-$nh = ($height / $nw) * 300;
+$logo = doc_root('images/logo.png');
+$image = imagecreatefrompng($logo);
+list($nw, $height) = getimagesize($logo);
+$nh = intval(($height / $nw) * 300);
 $tmp = imagecreatetruecolor($nw, $nh);
 imagealphablending($tmp, false);
 imagesavealpha($tmp, true);
 $color = imagecolorallocatealpha($tmp, 0, 0, 0, 127);
 imagefill($tmp, 0, 0, $color);
 imagecopyresampled($tmp, $image, 0, 0, 0, 0, $nw, $nh, $nw, $nh);
-imagefilter($tmp, IMG_FILTER_COLORIZE, 0, 0, 0, 127 * 0.8);
+imagefilter($tmp, IMG_FILTER_COLORIZE, 0, 0, 0, intval(127 * 0.8));
 ob_start();
 imagepng($tmp);
 $background = ob_get_clean();
-imagedestroy($image);
 
 /**
  * Download pdf
@@ -55,16 +60,15 @@ if (isset($_GET['pdf'])) {
 <head>
     <title>Invoice - <?php echo intval(microtime(true)) ?></title>
     <style>
-    @media print {
-        @page {
-            size: A4;
-            margin: 0
+        @media print {
+            @page {
+                size: A4;
+                margin: 0
+            }
         }
-    }
-
     </style>
     <script>
-    window.onload = window.print()
+        window.onload = window.print()
     </script>
 </head>
 
@@ -96,7 +100,7 @@ if (isset($_GET['pdf'])) {
                                     </p>
                                 </td>
                                 <td width="15%" class="qr" style="padding:0 10px;vertical-align:top;text-align:right">
-                                    <img src="<?php echo 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . urlencode($SingleInvoiceUrl) . '&choe=UTF-8' ?>" style="width:100%;border:1px solid #e7e7e7" />
+                                    <img src="<?php echo 'https://quickchart.io/qr?text=' . urlencode($SingleInvoiceUrl) . '&choe=UTF-8' ?>" style="width:100%;border:1px solid #e7e7e7" />
                                 </td>
                             </tr>
                         </table>
@@ -106,7 +110,7 @@ if (isset($_GET['pdf'])) {
                                     <h1 style="font-size:40px;font-family:'impact';color:#000;margin:10px 0;line-height:40px">INVOICE</h1>
                                     <div class="separator"></div>
                                     <h3 style="margin-top: 10px;margin-bottom:5px">#<?php echo $OrderId ?></h3>
-                                    <img style="width:250px;height:40px" src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t' . urlencode(base64_encode($OrderId)) ?>" alt="<?php echo $OrderId ?>" />
+                                    <img style="width:250px;height:40px" src="<?php echo 'https://barcode.tec-it.com/barcode.ashx?data=' . urlencode($OrderId) ?>" alt="<?php echo $OrderId ?>" />
                                 </td>
                             </tr>
                         </table>
@@ -180,7 +184,7 @@ if (isset($_GET['pdf'])) {
                                             <td style="padding:10px;vertical-align:middle"><?php echo $i + 1 ?></td>
                                             <td style="padding:10px;vertical-align:middle">
                                                 <p class="ipnaid ipname" style="margin:0 0 3px 0;font-weight:600;font-size:13px;color:#333;text-align:left;margin-bottom:0">
-                                                    <?php echo htmlspecialchars($Sp->getProductNameuctName()) ?>
+                                                    <?php echo htmlspecialchars($Sp->getProductName()) ?>
                                                 </p>
                                                 <p class="ipnaid" style="margin:0 0 3px 0;font-size:11px;color:#333;text-align:left;margin-bottom:0">
                                                     ID: <?php echo $Sp->getProductId() ?>

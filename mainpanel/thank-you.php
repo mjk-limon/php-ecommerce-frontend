@@ -112,7 +112,7 @@ $InvoiceUrl = base_url('invoice/print/odr-' . $OrderId);
                                     </p>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3 qr">
-                                    <img src="<?php echo 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' . urlencode($InvoiceUrl) . '&choe=UTF-8' ?>" />
+                                    <img src="<?php echo 'https://quickchart.io/qr?text=' . urlencode($InvoiceUrl) . '&choe=UTF-8' ?>" />
                                 </div>
                             </div>
                             <div class="row invoice-middle">
@@ -120,7 +120,7 @@ $InvoiceUrl = base_url('invoice/print/odr-' . $OrderId);
                                     <h1>INVOICE</h1>
                                     <div class="separator"></div>
                                     <h3>#<?php echo $OrderId ?></h3>
-                                    <img src="<?php echo 'https://crm.dhakasolution.com/_ilmComm/barcode/?t' . urlencode(base64_encode($OrderId)) ?>" alt="<?php echo $OrderId ?>" />
+                                    <img src="<?php echo 'https://barcode.tec-it.com/barcode.ashx?data=' . urlencode($OrderId) ?>" alt="<?php echo $OrderId ?>" />
                                 </div>
                             </div>
                             <div class="row invoice-middle">
