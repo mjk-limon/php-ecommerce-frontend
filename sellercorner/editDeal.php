@@ -132,7 +132,7 @@ $AddPrOthers = $NewDealModel->getAllPrsOthers();
                                     <tr>
                                         <th width="35%">Variant</th>
                                         <th>Stock</th>
-                                        <th>Price(<?php echo CURRENCY ?>)</th>
+                                        <th>Price(<?php echo config('currency') ?>)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="strElem">

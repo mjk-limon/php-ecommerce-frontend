@@ -1,7 +1,5 @@
 <?php
 
-use _ilmComm\Models;
-
 $MI = $this->McntInfo;
 ?>
 
@@ -28,7 +26,7 @@ $MI = $this->McntInfo;
                     <p><strong>Bank Account Number: </strong><?php echo $MI['full_info']['bank_account'] ?></p>
                     <p><strong>Joined: </strong><?php echo date("j F, Y", strtotime($MI['joined'])) ?></p>
                     <p>&nbsp;</p>
-                    <a href="<?php echo Models::baseUrl('sellercorner/user-account/?edit') ?>" class="btn btn-info">Update Info</a>
+                    <a href="<?php echo base_url('sellercorner/user-account/?edit') ?>" class="btn btn-info">Update Info</a>
                 </div>
             </div>
         <?php } else { ?>

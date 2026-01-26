@@ -133,7 +133,7 @@ namespace _ilmComm;
                     <h4 class="modal-title">Our office location</h4>
                 </div>
                 <div class="modal-body">
-                    <iframe src="https://www.google.com/maps/embed/v1/place?key=<?php echo GOOGLE_MAP_API ?>&q=<?php echo urlencode(get_contact_information('address')); ?>"
+                    <iframe src="https://www.google.com/maps/embed/v1/place?key=<?php echo config('gmap_api') ?>&q=<?php echo urlencode(get_contact_information('address')); ?>"
                             width="100%" style="height:300px;border: 0;"
                             frameborder="0" allowfullscreen></iframe>
                 </div>

@@ -122,7 +122,7 @@ require doc_root("546_admin/includes/functions.php");
                                     <tr>
                                         <th width="35%">Variant</th>
                                         <th>Stock</th>
-                                        <th>Price(<?php echo CURRENCY ?>)</th>
+                                        <th>Price(<?php echo config('currency') ?>)</th>
                                         <th>Selling Price</th>
                                     </tr>
                                 </thead>
