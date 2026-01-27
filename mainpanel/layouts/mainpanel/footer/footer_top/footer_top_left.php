@@ -1,6 +1,6 @@
 <?php
 // Social links
-$socialLinks = $this->getSocialLinks();
+$socialLinks = $this->home->getSocialLinks();
 ?>
 
 <div class="col-md-3 col-xs-6 flex">

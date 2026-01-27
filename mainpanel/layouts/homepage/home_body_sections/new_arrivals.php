@@ -10,7 +10,7 @@
 
                         <?php
                         $St_i = 1;
-                        $newArrivals = $this->newArrivals();
+                        $newArrivals = $this->home->newArrivals();
                         while ($NaPr = $newArrivals->fetch_assoc()) :
                         ?>
                             <div class="grids">

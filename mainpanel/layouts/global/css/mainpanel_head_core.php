@@ -104,8 +104,7 @@
 <link href="<?php echo asset("assets/_ilm_own/css/_ilm_skeleton.css") ?>" rel="stylesheet">
 <link href="<?php echo asset("assets/_ilm_own/css/_ilm_creat_design_lim.css") ?>" rel="stylesheet">
 <link href="<?php echo asset("assets/_ilm_own/css/__ilm_creat_design.css") ?>" rel="stylesheet">
-
-<?php $this->layout('style_additional', [], static::LAYOUT_ASSETS_CSS); ?>
+<?php $this->additionalStyles() ?>
 
 <?php if ($this->mobileView) : ?>
     <link href="<?php echo asset("assets/_ilm_own/css/__des_respon_sive.css") ?>" rel="stylesheet">

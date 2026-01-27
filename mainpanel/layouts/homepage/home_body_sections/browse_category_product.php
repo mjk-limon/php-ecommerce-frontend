@@ -9,7 +9,7 @@
                 <?php
                 $MainCats = $this->AllCategories->get($this->AllCategories::FETCH_MAIN);
                 while ($Cat = $MainCats->fetch()) {
-                    $BrowseCatProducts = $this->browseCatProducts($Cat->getCategoryId());
+                    $BrowseCatProducts = $this->home->browseCatProducts($Cat->getCategoryId());
 
                     if ($BrowseCatProducts->num_rows) {
                         $this->layout(

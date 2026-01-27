@@ -1,6 +1,6 @@
 <?php 
 // Shipping methods
-$shippingMethods = $this->shippingMethods();
+$shippingMethods = $this->home->shippingMethods();
 ?>
 
 <div class="col-md-6 pm-delv">

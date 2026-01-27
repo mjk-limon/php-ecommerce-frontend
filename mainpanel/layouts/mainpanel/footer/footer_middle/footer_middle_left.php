@@ -1,6 +1,6 @@
 <?php 
 // Payemnt methods
-$paymentMethods = $this->paymentMethods();
+$paymentMethods = $this->home->paymentMethods();
 ?>
 
 <div class="col-md-6 pm-delv">

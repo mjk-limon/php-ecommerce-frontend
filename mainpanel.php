@@ -1,6 +1,6 @@
 <?php
 
-use _ilmComm\Head\DevInfo;
+use _ilmComm\Core\Http\Head\DevInfo;
 
 DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
@@ -47,13 +47,13 @@ $body_class = $this->mobileView ? 'class="htmlformb"' : 'noclass';
     <?php $this->layout('mainpanel.neck'); ?>
 
     <section id="skmbcontent" style="display:block">
-        
-        <?php include $this->subView; ?>
+
+        <?php include $subView; ?>
 
     </section>
 
     <footer id="footer">
-        
+
         <?php $this->layout('mainpanel.footer.footer_top'); ?>
         <?php $this->layout('mainpanel.footer.footer_middle'); ?>
         <?php $this->layout('mainpanel.footer.footer_bottom'); ?>
