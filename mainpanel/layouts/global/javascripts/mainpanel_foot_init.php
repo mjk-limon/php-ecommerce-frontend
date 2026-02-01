@@ -1,9 +1,3 @@
-<?php
-
-use _ilmComm\Core\LocalStorage\Session;
-
-?>
-
 <script src="<?php echo asset("assets/_ilm_own/js/__ilm_page_func.js") ?>"></script>
 <?php $this->additionalScripts() ?>
 
@@ -11,9 +5,8 @@ use _ilmComm\Core\LocalStorage\Session;
     lazyLoadInstance.update();
 
     <?php
-    if ($notification = Session::get("msg")) :
-        // Destroy session notification
-        Session::destroy("msg");
+    if ($notification = session()->get("msg")) :
+        session()->destroy("msg");
     ?>
         showPageAlert("Alert !", "<?php echo htmlspecialchars($notification) ?>");
     <?php endif; ?>
