@@ -125,7 +125,7 @@ $(document).ready(function () {
                     var $apHtml,
                         prHref = result.content[i].href,
                         prCat = result.content[i].category;
-                        keywordRegPattern = keyword.split(/\s/).join('|'),
+                    keywordRegPattern = keyword.split(/\s/).join('|'),
                         prName = result.content[i].name.replace(new RegExp(`(${keywordRegPattern})`, "gi"), match => `<b>${match}</b>`);
 
                     $apHtml = '<li><div class="single-srchdata"><a href="' + prHref + '">' + prName;
@@ -225,11 +225,15 @@ _ilm = {
         $('html, body').animate({ scrollTop: offsetTop }, callback);
     }
 }
-function ajaxPost(data, success, url = null, addArg = {}) {
-    var url = url || projectfolder + "/ajax", ajaxArg;
-    ajaxArg = { type: 'POST', url: url, data: data, success: success };
-    ajaxArg = $.extend({}, ajaxArg, addArg);
-    return $.ajax(ajaxArg);
+function ajaxCreate(url, method = 'get', data = {}, success = () => { }, extra = {}) {
+    const args = $.extend({ type: method, url: url, data: data, success: success }, extra);
+
+    return $.ajax(args);
+}
+function ajaxPost(data, success, url = null, extra = {}) {
+    url = url || projectfolder + "/ajax";
+
+    return ajaxCreate(url, 'post', data, success, extra);
 }
 function IsJsonString(str) {
     try { JSON.parse(str); }
