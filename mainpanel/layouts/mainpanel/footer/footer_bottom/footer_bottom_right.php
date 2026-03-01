@@ -1,3 +1,3 @@
 <p class="pull-right">
-    <?php  _ilmComm\Core\Http\Head\DevInfo::getDevComInfo(); ?>
+    <?php Ilm\Http\Head\DevInfo::getDevComInfo(); ?>
 </p>

@@ -5,4 +5,4 @@
     <script src="<?php echo asset("assets/vendors/imagezoom/__ds_details_zoom.js") ?>"></script>
 <?php endif; ?>
 
-<?php _ilmComm\Core\Http\Head\AdditionalHead::getAdditionalScripts(); ?>
+<?php Ilm\Http\Head\AdditionalHead::getAdditionalScripts(); ?>

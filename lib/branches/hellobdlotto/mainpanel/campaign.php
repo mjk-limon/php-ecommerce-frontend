@@ -1,6 +1,6 @@
 <?php
 
-use _ilmComm\Core\DataBase\DataBaseWithIUD_Operation;
+use Ilm\DataBase\DataBaseWithIUD_Operation;
 use _ilmComm\Orders\FetchOrders\FetchAllOrders;
 use _ilmComm\Products\ProductInfo\SingleProduct;
 

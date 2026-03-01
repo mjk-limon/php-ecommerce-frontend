@@ -1,6 +1,6 @@
 <?php
 
-use _ilmComm\Core\LocalStorage\Session;
+use Ilm\LocalStorage\Session;
 use _ilmComm\Products\ProductInfo\SingleProduct;
 
 ?>

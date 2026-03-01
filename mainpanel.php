@@ -1,6 +1,6 @@
 <?php
 
-use _ilmComm\Core\Http\Head\DevInfo;
+use Ilm\Http\Head\DevInfo;
 
 DevInfo::getDevInfo();
 $ogInfo = $this->HeadData['oginfo'];
