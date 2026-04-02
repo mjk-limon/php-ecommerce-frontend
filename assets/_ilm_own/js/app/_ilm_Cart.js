@@ -87,8 +87,7 @@ _ilm_Cart = {
             prQty: itemInfo.qty
         };
 
-        ajaxCallback = function (data) {
-            var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
+        ajaxCallback = function (result) {
             if (result.success) {
                 //_ilm.showNotification("Product successfully added to cart.");
                 _ilm.popupContent("hide");
@@ -168,8 +167,7 @@ _ilm_Cart = {
 
         _ilm.globLoader('show', env, true);
 
-        ajaxCallback = function (data) {
-            var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
+        ajaxCallback = function (result) {
             if (result.success) {
                 _ilm.popupContent("show", result.content, 'lg');
             } else _ilm.showNotification(result.error, true);
@@ -254,14 +252,16 @@ var _ilm_Cart_floatingcart = {
         var ajaxCallback;
         _ilm.globLoader("show", '#fsc-content');
 
-        ajaxCallback = function (data) {
-            var result = IsJsonString(data) ? JSON.parse(data) : { error: data };
+        ajaxCallback = function (result) {
             if (result.success) {
                 _ilm.globLoader("hide", '#fsc-content');
                 $("#fsc-content").html(result.content);
                 $("#fcTot").html(result.ctotal);
                 $("#fcAmnt").html(result.camount);
-            } else _ilm.showNotification(result.error, true);
+                return;
+            }
+
+            _ilm.showNotification(result.error, true);
         }
         ajaxPost({ update_cart_data: 1 }, ajaxCallback);
     },
