@@ -39,7 +39,7 @@ export default async function HomePage() {
             {trending_categories.map((category, index) => (
               <Link key={category.id} href={`/category/${category.slug}`} className="group flex flex-col items-center gap-2 text-center">
                 <span className="h-20 w-20 overflow-hidden rounded-full bg-[#f2f4f1] ring-1 ring-[#e9ece8] transition-all duration-300 group-hover:-translate-y-1 group-hover:ring-[#b8c9bd] sm:h-24 sm:w-24">
-                  <img src={category.images ? category.images[0] : ''} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  
                 </span>
                 <span className="line-clamp-2 text-xs font-medium text-[#343d36] transition-colors group-hover:text-[#68183f]">{category.name}</span>
               </Link>

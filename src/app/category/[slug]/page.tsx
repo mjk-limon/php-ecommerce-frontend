@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import CategoryClient from './CategoryClient';
 import { serverApiGet } from '@/services/serverApi';
+import { Category, Product } from '@/types';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -30,12 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const productResults = await serverApiGet<object>('products', { category_slug: slug }).catch(() => null);
+  const productResults = await serverApiGet('products', { category_slug: slug }).catch(() => null);
 
   return (
     <CategoryClient
-      initialProducts={productResults.products}
-      currentCategory={productResults.category}
+      products={productResults.products}
+      category={productResults.category}
+      filterObjects={productResults.filter_objects}
       slug={slug}
     />
   );

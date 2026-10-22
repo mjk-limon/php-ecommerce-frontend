@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { MOCK_PRODUCTS } from '@/data/mockData';
 import ProductDetailsClient from './ProductDetailsClient';
+import { serverApiGet } from '@/services/serverApi';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -8,7 +9,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = MOCK_PRODUCTS.find((p) => p.slug === slug || String(p.id) === slug) || MOCK_PRODUCTS[0];
+  const product = await serverApiGet('product/details', { slug: slug }).catch(() => null);
 
   return {
     title: `${product.name} | WellSell BD`,
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = MOCK_PRODUCTS.find((p) => p.slug === slug || String(p.id) === slug) || MOCK_PRODUCTS[0];
+  const product = await serverApiGet('product/details', { slug: slug }).catch(() => null);
 
-  return <ProductDetailsClient initialProduct={product} productSlug={slug} />;
+  return <ProductDetailsClient product={product} productSlug={slug} />;
 }

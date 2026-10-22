@@ -11,6 +11,8 @@ import { TrackOrderModal } from '@/components/TrackOrderModal';
 import { AuthModal } from '@/components/AuthModal';
 import { ToastContainer } from '@/components/ToastContainer';
 import { getServerCategories } from '@/services/serverApi';
+import { AppProgressBar } from 'next-nprogress-bar';
+import { NgProgressBar } from '@/components/ui/nprogress';
 
 export const metadata: Metadata = {
   title: 'WellSell BD - Health, Beauty & Wellness Online Store',
@@ -93,6 +95,7 @@ export default async function RootLayout({
           <TrackOrderModal />
           <AuthModal />
           <ToastContainer />
+          <NgProgressBar />
         </AppProvider>
       </body>
     </html>

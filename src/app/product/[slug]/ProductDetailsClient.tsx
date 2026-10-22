@@ -33,11 +33,11 @@ import { Product, ProductQuestion, ProductReview } from '@/types';
 import { api } from '@/services/api';
 
 interface ProductDetailsClientProps {
-  initialProduct: Product;
+  product: Product;
   productSlug?: string;
 }
 
-export default function ProductDetailsClient({ initialProduct, productSlug }: ProductDetailsClientProps) {
+export default function ProductDetailsClient({ product }: ProductDetailsClientProps) {
   const {
     formatPrice,
     addToCart,
@@ -45,8 +45,7 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
     showToast
   } = useApp();
 
-  const [product, setProduct] = useState<Product>(initialProduct);
-  const [activeImage, setActiveImage] = useState<string>(initialProduct.image);
+  const [activeImage, setActiveImage] = useState<string>(product.image);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'desc' | 'reviews' | 'qa' | 'authenticity'>('desc');
 
@@ -59,21 +58,14 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
 
   // Reviews & Questions
   const [reviews, setReviews] = useState<ProductReview[]>(() =>
-    MOCK_REVIEWS.filter((r) => r.product_id === initialProduct.id || initialProduct.id === 108565)
+    MOCK_REVIEWS.filter((r) => r.product_id === product.id || product.id === 108565)
   );
   const [questions, setQuestions] = useState<ProductQuestion[]>(() =>
-    MOCK_QUESTIONS.filter((q) => q.product_id === initialProduct.id || initialProduct.id === 108565)
+    MOCK_QUESTIONS.filter((q) => q.product_id === product.id || product.id === 108565)
   );
   const [newReviewText, setNewReviewText] = useState('');
   const [newReviewRating, setNewReviewRating] = useState(5);
   const [newQuestionText, setNewQuestionText] = useState('');
-
-  useEffect(() => {
-    api.getProductDetails(productSlug || initialProduct.slug || initialProduct.id).then((result) => {
-      setProduct(result.data);
-      setActiveImage(result.data.image);
-    }).catch(() => undefined);
-  }, [initialProduct.id, initialProduct.slug, productSlug]);
 
   const handleCityChange = (city: string) => {
     setSelectedCity(city);
@@ -149,7 +141,7 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
             <div className="lg:col-span-5 space-y-4">
               <div className="product-image-stage relative aspect-square w-full bg-white dark:bg-[#161616] rounded-xs p-4">
                 <div className="product-magnifier w-full h-full">
-                  <SideBySideMagnifier
+                  {/* <SideBySideMagnifier
                     imageSrc={activeImage || product.image}
                     largeImageSrc={activeImage || product.image}
                     switchSides={false}
@@ -157,7 +149,7 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
                     zoomContainerWidth={300}
                     zoomContainerHeight={300}
                     alt={product.name}
-                  />
+                  /> */}
                 </div>
               </div>
 
@@ -223,7 +215,7 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
               <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1815] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] flex flex-wrap items-baseline justify-between gap-4">
                 <div className="flex items-baseline gap-3">
                   <span className="text-2xl sm:text-3xl font-black text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.price || 0)}
                   </span>
                   {product.old_price && (
                     <span className="text-sm text-[#9A9184] line-through font-mono tabular-nums">
@@ -240,12 +232,6 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
                   SKU: WELL-{product.id}-BD
                 </span>
               </div>
-
-              {/* Short Description */}
-              <p className="text-xs sm:text-sm text-[#5C5549] dark:text-[#B3ABA0] leading-relaxed">
-                {product.description ||
-                  'Formulated with certified organic ingredients, botanicals, and deep hydrating complexes to restore skin radiance and cellular vitality.'}
-              </p>
 
               {/* Delivery Zone Selector */}
               <div className="p-3.5 bg-[#F8F5EE] dark:bg-[#1E1C19] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] space-y-2">
@@ -379,10 +365,7 @@ export default function ProductDetailsClient({ initialProduct, productSlug }: Pr
           <div className="pt-2">
             {activeTab === 'desc' && (
               <div className="space-y-4 text-xs sm:text-sm text-[#4A443B] dark:text-[#C5BEB3] leading-relaxed">
-                <p>
-                  {product.description ||
-                    'Formulated with certified organic ingredients, botanicals, and deep hydrating complexes to restore skin radiance and cellular vitality.'}
-                </p>
+                <p dangerouslySetInnerHTML={{ __html: product.description}} />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3">
                   <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1916] rounded-xs border border-[#E8E2D9] dark:border-[#312E29]">
                     <h4 className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] mb-2">

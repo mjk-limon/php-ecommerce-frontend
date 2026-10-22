@@ -18,53 +18,16 @@ interface CategoryClientProps {
 export default function CategoryClient({
   products,
   category,
+  filterObjects,
   slug
 }: CategoryClientProps) {
   const { formatPrice, searchQuery } = useApp();
-
   const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
-
+  
 
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'views'>('default');
-
-  // Unique brands
-  const brands = useMemo(() => {
-    const list = Array.from(new Set(products.map((p) => p.brand).filter(Boolean)));
-    return ['all', ...list];
-  }, [products]);
-
-  // Filter and sort products
-  const filteredProducts = useMemo(() => {
-    let result = [...products];
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(
-        (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          (p.category_name && p.category_name.toLowerCase().includes(q))
-      );
-    }
-
-    if (selectedBrand !== 'all') {
-      result = result.filter((p) => p.brand.toLowerCase() === selectedBrand.toLowerCase());
-    }
-
-    result = result.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
-
-    if (sortBy === 'price-asc') {
-      result.sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'price-desc') {
-      result.sort((a, b) => b.price - a.price);
-    } else if (sortBy === 'views') {
-      result.sort((a, b) => (b.views || 0) - (a.views || 0));
-    }
-
-    return result;
-  }, [products, selectedBrand, priceRange, sortBy, searchQuery]);
 
   return (
     <div className="w-full pb-16 pt-4 sm:pt-6">
@@ -87,7 +50,7 @@ export default function CategoryClient({
                   : 'All Departments & Products'}
             </h1>
             <p className="text-xs text-[#736C62] dark:text-[#9E968B] mt-0.5">
-              Showing <strong className="font-mono text-[#BA2D1D]">{filteredProducts.length}</strong> available genuine items
+              Showing <strong className="font-mono text-[#BA2D1D]">{products.length}</strong> available genuine items
             </p>
           </div>
 
@@ -116,44 +79,13 @@ export default function CategoryClient({
               <span>Filter Products</span>
             </div>
 
-            {/* Department categories */}
-            <div>
-              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] mb-2.5">
-                Categories
-              </h4>
-              <ul className="space-y-1.5 text-xs">
-                <li>
-                  <Link
-                    href="/category/all"
-                    className={`block w-full hover:text-[#BA2D1D] transition-colors ${slug === 'all' || !slug ? 'font-bold text-[#BA2D1D]' : 'text-[#5C5549] dark:text-[#B3ABA0]'
-                      }`}
-                  >
-                    All Categories
-                  </Link>
-                </li>
-                {categories.map((cat) => (
-                  <li key={cat.id}>
-                    <Link
-                      href={`/category/${cat.slug}`}
-                      className={`block w-full hover:text-[#BA2D1D] transition-colors ${slug === cat.slug
-                          ? 'font-bold text-[#BA2D1D]'
-                          : 'text-[#5C5549] dark:text-[#B3ABA0]'
-                        }`}
-                    >
-                      {cat.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Brand Filter */}
             <div className="pt-3 border-t border-[#F4EFEA] dark:border-[#272420]">
               <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] mb-2.5">
                 Brand
               </h4>
               <div className="space-y-1.5 max-h-48 overflow-y-auto text-xs">
-                {brands.map((b) => (
+                {filterObjects.brands && Object.values(filterObjects.brands).map((b) => (
                   <label key={b} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
@@ -194,7 +126,7 @@ export default function CategoryClient({
 
           {/* Product Grid (3 cols on desktop) */}
           <div className="lg:col-span-3">
-            {filteredProducts.length === 0 ? (
+            {products.length === 0 ? (
               <div className="section-card p-12 text-center space-y-3">
                 <p className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                   No products found matching your filter criteria
@@ -214,7 +146,7 @@ export default function CategoryClient({
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-                {filteredProducts.map((p) => (
+                {products.map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}
               </div>
