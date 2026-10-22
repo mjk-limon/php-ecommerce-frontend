@@ -92,7 +92,7 @@ export const CartDrawer: React.FC = () => {
                   className="flex gap-3 pb-4 border-b border-[#F0EDE8] dark:border-[#262420] last:border-none"
                 >
                   <Link
-                    href={`/products/${item.product.slug}`}
+                    href={`/product/${item.product.slug}`}
                     onClick={() => setIsCartDrawerOpen(false)}
                     className="w-16 h-16 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1E1E1E] shrink-0"
                   >
@@ -105,7 +105,7 @@ export const CartDrawer: React.FC = () => {
 
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/products/${item.product.slug}`}
+                      href={`/product/${item.product.slug}`}
                       onClick={() => setIsCartDrawerOpen(false)}
                       className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-[#BA2D1D] transition-colors"
                     >

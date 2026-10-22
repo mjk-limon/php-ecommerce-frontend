@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '@/data/mockData';
 import CategoryClient from './CategoryClient';
+import { serverApiGet } from '@/services/serverApi';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -8,11 +8,14 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const currentCategory = MOCK_CATEGORIES.find((c) => c.slug === slug);
-  const title = currentCategory ? `${currentCategory.name} | WellSell BD` : 'All Departments | WellSell BD';
-  const description = currentCategory
-    ? `Shop authentic imported ${currentCategory.name} products with cash on delivery at WellSell BD.`
-    : 'Browse all imported beauty, wellness, skincare, and health vitamins at WellSell BD.';
+  const productResults = await serverApiGet<object>('products', { category_slug: slug }).catch(() => null);
+
+  if (!productResults) {
+    return {};
+  }
+
+  const title = ' productResults.meta.title';
+  const description = 'productResults.meta.description';
 
   return {
     title,
@@ -20,32 +23,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title,
       description,
-      images: [currentCategory?.images || '/src/assets/images/hero_beauty_skincare_banner_1792385518854.jpg'],
+      images: ['/src/assets/images/hero_beauty_skincare_banner_1792385518854.jpg'],
     },
   };
 }
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const currentCategory = MOCK_CATEGORIES.find((c) => c.slug === slug) || null;
-
-  let initialProducts = [...MOCK_PRODUCTS];
-  if (slug && slug !== 'all' && currentCategory) {
-    initialProducts = initialProducts.filter(
-      (p) =>
-        p.category_id === currentCategory.id ||
-        (p.category_name && p.category_name.toLowerCase().includes(currentCategory.name.toLowerCase())) ||
-        p.slug.includes(slug)
-    );
-    if (initialProducts.length === 0) {
-      initialProducts = MOCK_PRODUCTS.slice(0, 6);
-    }
-  }
+  const productResults = await serverApiGet<object>('products', { category_slug: slug }).catch(() => null);
 
   return (
     <CategoryClient
-      initialProducts={initialProducts}
-      currentCategory={currentCategory}
+      initialProducts={productResults.products}
+      currentCategory={productResults.category}
       slug={slug}
     />
   );

@@ -133,7 +133,7 @@ export default function CartPage() {
                     {/* Thumbnail & Title (6 cols) */}
                     <div className="sm:col-span-6 flex gap-3 items-center">
                       <Link
-                        href={`/products/${item.product.slug}`}
+                        href={`/product/${item.product.slug}`}
                         className="w-16 h-16 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1E1E1E] shrink-0"
                       >
                         <img
@@ -144,7 +144,7 @@ export default function CartPage() {
                       </Link>
                       <div className="min-w-0 flex-1">
                         <Link
-                          href={`/products/${item.product.slug}`}
+                          href={`/product/${item.product.slug}`}
                           className="font-medium text-xs text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-[#BA2D1D] transition-colors"
                         >
                           {item.product.name}

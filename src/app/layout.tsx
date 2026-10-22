@@ -10,6 +10,7 @@ import { InvoiceModal } from '@/components/InvoiceModal';
 import { TrackOrderModal } from '@/components/TrackOrderModal';
 import { AuthModal } from '@/components/AuthModal';
 import { ToastContainer } from '@/components/ToastContainer';
+import { getServerCategories } from '@/services/serverApi';
 
 export const metadata: Metadata = {
   title: 'WellSell BD - Health, Beauty & Wellness Online Store',
@@ -35,11 +36,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const categories = await getServerCategories();
+
   return (
     <html lang="en">
       <head>
@@ -76,7 +79,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col bg-white dark:bg-[#121212] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors">
         <AppProvider>
-          <Header />
+          <Header categories={categories} />
           <main className="flex-1">
             {children}
           </main>

@@ -46,7 +46,7 @@ export interface Product {
   reviews_count?: number;
   sku?: string;
   product_code?: string;
-  image: string;
+  thumbnail: string;
   thumbnails?: string[];
   description?: string;
   short_description?: string;
@@ -71,7 +71,7 @@ export interface Category {
   parent_main_id?: number | null;
   parent_sub_id?: number | null;
   position?: number;
-  images?: string | null;
+  images?: object | null;
   icon?: string;
   total_views?: string | number;
   childs?: Category[];
@@ -251,6 +251,13 @@ export interface ProductQuestion {
   answer?: string;
   status: number;
   created_at: string;
+}
+
+export interface Home {
+  trending_categories: Category[];
+  trending_products: Product[];
+  new_arrivals: Product[];
+  category_products: Category[];
 }
 
 export interface StoreMeta {

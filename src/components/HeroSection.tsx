@@ -165,7 +165,7 @@ export default function HeroSection({ categories }: HeroSectionProps) {
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
-                href="/products/victorias-secret-very-sexy-eau-de-parfum-100ml"
+                href="/product/victorias-secret-very-sexy-eau-de-parfum-100ml"
                 className="bg-white/90 dark:bg-[#1E1E1E]/90 hover:bg-white text-[#1F1D1A] dark:text-[#EDE7DE] text-xs font-semibold px-4 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-xs cursor-pointer"
               >
                 Featured Fragrance

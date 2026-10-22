@@ -146,7 +146,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const targetSlug = prod ? prod.slug : String(slugOrId);
     setActiveProductSlug(targetSlug);
     setActiveRoute('product-details');
-    router.push(`/products/${targetSlug}`);
+    router.push(`/product/${targetSlug}`);
   };
 
   const navigateToCategory = (slug: string) => {

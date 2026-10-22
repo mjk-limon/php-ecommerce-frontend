@@ -6,7 +6,7 @@ Full-featured Next.js App Router migration with Server-Side Rendering (SSR), slu
 
 - **Next.js App Router with Full SSR**: The server renders complete HTML for the page body (Hero banners, categories, trending products, prices, descriptions, reviews, specifications, and footer). In browser "View Page Source", full semantic HTML content is present for optimal SEO and instant initial page load.
 - **Slug-Based Dynamic Routing**:
-  - `/products/[slug]`: Dynamic product details pages (e.g. `/products/victorias-secret-very-sexy-eau-de-parfum-100ml`) with server-rendered metadata (title, OpenGraph, description) and related products.
+  - `/product/[slug]`: Dynamic product details pages (e.g. `/product/victorias-secret-very-sexy-eau-de-parfum-100ml`) with server-rendered metadata (title, OpenGraph, description) and related products.
   - `/category/[slug]`: Dynamic category department pages (e.g. `/category/health-beauty`, `/category/health-vitamin`, `/category/men`, `/category/mom-kids`, `/category/watch-collection`, `/category/korean-collection`).
 - **Dedicated Checkout Page (`/checkout`)**:
   - Customer contact details & delivery address form

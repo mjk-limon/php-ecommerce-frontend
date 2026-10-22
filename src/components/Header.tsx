@@ -21,10 +21,10 @@ import {
   Percent
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData';
+import { MOCK_PRODUCTS } from '../data/mockData';
 import { Category } from '@/types';
 
-export const Header: React.FC = () => {
+export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
   const router = useRouter();
   const pathname = usePathname();
   const isHomePage = pathname === '/';
@@ -213,7 +213,7 @@ export const Header: React.FC = () => {
               {searchResults.map((item) => (
                 <Link
                   key={item.id}
-                  href={`/products/${item.slug}`}
+                  href={`/product/${item.slug}`}
                   onClick={() => setSearchFocused(false)}
                   className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] cursor-pointer transition-colors"
                 >
@@ -359,7 +359,7 @@ export const Header: React.FC = () => {
             >
               <div className="relative">
                 <div className="bg-white dark:bg-[#1C1A17] border border-[#E8E2D9] dark:border-[#312E29] shadow-xl rounded-lg py-2">
-                  {MOCK_CATEGORIES.map((cat) => (
+                  {categories.map((cat) => (
                     <div
                       key={cat.id}
                       className="relative"

@@ -49,11 +49,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
 
       {/* Image container with Link */}
       <Link
-        href={`/products/${product.slug}`}
+        href={`/product/${product.slug}`}
         className="relative w-full aspect-square overflow-hidden bg-[#FAFAFA] dark:bg-[#171717] mb-3 flex items-center justify-center cursor-pointer rounded-xs block"
       >
         <img
-          src={product.image}
+          src={product.thumbnail}
           alt={product.name}
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
@@ -64,13 +64,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
       {/* Product metadata */}
       <div className="flex-1 flex flex-col justify-between">
         <Link
-          href={`/products/${product.slug}`}
+          href={`/product/${product.slug}`}
           className="cursor-pointer block"
         >
           <p className="text-[10px] uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] font-medium mb-1 truncate">
             {product.brand}
           </p>
-          <h3 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 leading-relaxed min-h-[2.5rem] group-hover:text-[#BA2D1D] dark:group-hover:text-[#E05343] transition-colors">
+          <h3 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 leading-relaxed min-h-10 group-hover:text-[#BA2D1D] dark:group-hover:text-[#E05343] transition-colors">
             {product.name}
           </h3>
         </Link>

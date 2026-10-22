@@ -10,38 +10,21 @@ import { Category, Product } from '@/types';
 import { api } from '@/services/api';
 
 interface CategoryClientProps {
-  initialProducts: Product[];
-  currentCategory: Category | null;
+  products: Product[];
+  category: Category | null;
   slug: string;
 }
 
 export default function CategoryClient({
-  initialProducts,
-  currentCategory,
+  products,
+  category,
   slug
 }: CategoryClientProps) {
   const { formatPrice, searchQuery } = useApp();
 
-  const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [category, setCategory] = useState<Category | null>(currentCategory);
   const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
-  useEffect(() => {
-    Promise.all([api.getProducts({ category_slug: slug === 'all' ? undefined : slug }), api.getCategories()])
-      .then(([result, categoryResult]) => {
-        setProducts(result.data.products);
-        setCategories(categoryResult.data);
-        const findCategory = (list: Category[]): Category | null => {
-          for (const item of list) {
-            if (item.slug === slug) return item;
-            const nested = findCategory(item.childs || []);
-            if (nested) return nested;
-          }
-          return null;
-        };
-        setCategory(findCategory(categoryResult.data) || currentCategory);
-      })
-      .catch(() => undefined);
-  }, [slug, currentCategory]);
+
+
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'views'>('default');
@@ -100,8 +83,8 @@ export default function CategoryClient({
               {searchQuery
                 ? `Search: "${searchQuery}"`
                 : category
-                ? category.name
-                : 'All Departments & Products'}
+                  ? category.name
+                  : 'All Departments & Products'}
             </h1>
             <p className="text-xs text-[#736C62] dark:text-[#9E968B] mt-0.5">
               Showing <strong className="font-mono text-[#BA2D1D]">{filteredProducts.length}</strong> available genuine items
@@ -142,9 +125,8 @@ export default function CategoryClient({
                 <li>
                   <Link
                     href="/category/all"
-                    className={`block w-full hover:text-[#BA2D1D] transition-colors ${
-                      slug === 'all' || !slug ? 'font-bold text-[#BA2D1D]' : 'text-[#5C5549] dark:text-[#B3ABA0]'
-                    }`}
+                    className={`block w-full hover:text-[#BA2D1D] transition-colors ${slug === 'all' || !slug ? 'font-bold text-[#BA2D1D]' : 'text-[#5C5549] dark:text-[#B3ABA0]'
+                      }`}
                   >
                     All Categories
                   </Link>
@@ -153,11 +135,10 @@ export default function CategoryClient({
                   <li key={cat.id}>
                     <Link
                       href={`/category/${cat.slug}`}
-                      className={`block w-full hover:text-[#BA2D1D] transition-colors ${
-                        slug === cat.slug
+                      className={`block w-full hover:text-[#BA2D1D] transition-colors ${slug === cat.slug
                           ? 'font-bold text-[#BA2D1D]'
                           : 'text-[#5C5549] dark:text-[#B3ABA0]'
-                      }`}
+                        }`}
                     >
                       {cat.name}
                     </Link>
