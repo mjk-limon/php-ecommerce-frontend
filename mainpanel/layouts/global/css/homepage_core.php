@@ -1,1 +1,0 @@
-<link href="<?php echo asset("assets/vendors/jssor/jssor-additional.css") ?>" rel="stylesheet" />

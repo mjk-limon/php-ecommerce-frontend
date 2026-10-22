@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+:root {
+  color-scheme: light;
+  --brand-ink: #4d1232;
+  --brand-green: #24634b;
+  --page: #fff;
+  --line: #e7e9e5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--page);
+  color: #202923;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 180ms;
+  transition-timing-function: ease;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+::selection {
+  background: #dcebe1;
+  color: #173d2c;
+}
+
+@layer base {
+  :root {
+    --bg-body: #FFFFFF;
+    --card-surface: #FFFFFF;
+    --card-shadow: 0 1px 5px rgba(20, 35, 25, 0.035);
+    --border-subtle: #F0EDE8;
+    --text-primary: #1F1D1A;
+    --text-secondary: #6B7280;
+    --brand-red: #68183f;
+    --brand-green: #24634b;
+  }
+
+  .dark {
+    --bg-body: #121212;
+    --card-surface: #1E1E1E;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --border-subtle: #2A2A2A;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --brand-red: #E05343;
+    --brand-green: #34A87C;
+  }
+
+  body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Sections with no border and soft shadow */
+.section-card {
+  background-color: var(--card-surface);
+  border: none !important;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--line) !important;
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+  @apply rounded-xl;
+}
+
+.section-card-title {
+  @apply p-2 sm:p-3;
+}
+
+/* Product Card with soft shadow and no border */
+.product-card-shadow {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #edf0eb !important;
+  border-radius: 12px;
+}
+
+.product-card-shadow:hover {
+  box-shadow: 0 5px 14px rgba(20, 35, 25, 0.08);
+  transform: translateY(-2px);
+}
+
+.product-card-shadow button:hover {
+  transform: translateY(-1px);
+}
+
+.checkout-backdrop {
+  animation: checkout-fade-in 180ms ease-out both;
+}
+
+.checkout-dialog {
+  animation: checkout-rise-in 220ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.animate-menu-enter {
+  animation: menu-enter 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes checkout-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes checkout-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes menu-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+input,
+select,
+textarea {
+  border-radius: 8px !important;
+}
+
+@media (max-width: 640px) {
+  .section-card {
+    border-radius: 12px;
+  }
+
+  main {
+    overflow-x: clip;
+  }
+}
+
+.dark .product-card-shadow {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .product-card-shadow:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.45);
+}
+
+.product-image-stage {
+  overflow: visible;
+}
+
+.product-magnifier {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}

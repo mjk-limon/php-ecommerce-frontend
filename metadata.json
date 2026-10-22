@@ -1,0 +1,6 @@
+{
+  "name": "WellSell BD - Fine Stationery & Health Care Paper Store",
+  "description": "Next.js concept e-commerce application featuring paper design aesthetics, Postman API structure integration, order tracking, and dark mode support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

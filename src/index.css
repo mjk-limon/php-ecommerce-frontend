@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-body: #FFFFFF;
+    --card-surface: #FFFFFF;
+    --card-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+    --border-subtle: #F0EDE8;
+    --text-primary: #1F1D1A;
+    --text-secondary: #6B7280;
+    --brand-red: #BA2D1D;
+    --brand-green: #1F6E54;
+  }
+
+  .dark {
+    --bg-body: #121212;
+    --card-surface: #1E1E1E;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --border-subtle: #2A2A2A;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --brand-red: #E05343;
+    --brand-green: #34A87C;
+  }
+
+  body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Sections with no border and soft shadow as requested */
+.section-card {
+  background-color: var(--card-surface);
+  border: none !important;
+  box-shadow: var(--card-shadow);
+  border-radius: 4px;
+}
+
+/* Product Card with soft shadow and no border */
+.product-card-shadow {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  border: none !important;
+}
+
+.product-card-shadow:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.dark .product-card-shadow {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .product-card-shadow:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.45);
+}
