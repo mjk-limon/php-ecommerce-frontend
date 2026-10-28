@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import { Printer, CheckCircle2, Package, ArrowLeft } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { OrderInvoice } from '@/types';
+import { ArrowLeft, Printer } from 'lucide-react';
+import Link from 'next/link';
 
 interface InvoiceClientProps {
   invoice: OrderInvoice;
@@ -17,34 +19,37 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
         <div className="flex items-center justify-between no-print">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-[#736C62] hover:text-[#BA2D1D] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-[#736C62] hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Return to Store</span>
           </Link>
 
-          <button
+          <Button
+            type="button"
+            variant="default"
+            size="default"
             onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider transition-colors shadow-xs cursor-pointer"
+            className="gap-1.5 text-xs font-semibold uppercase tracking-wider"
           >
             <Printer className="w-4 h-4" />
             <span>Print Invoice</span>
-          </button>
+          </Button>
         </div>
 
         {/* Invoice Paper Card */}
-        <div className="section-card p-6 sm:p-10 space-y-6 bg-white dark:bg-[#1A1815] border border-[#E8E2D9] dark:border-[#312E29]">
+        <Card className="p-6 sm:p-10 space-y-6 bg-white dark:bg-[#1A1815] border border-[#E8E2D9] dark:border-[#312E29]">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] dark:border-[#312E29] pb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-serif font-black text-2xl text-[#1F6E54]">W</span>
                 <span className="font-serif font-bold text-xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-                  WELLSELL <span className="text-[#BA2D1D]">BD</span>
+                  WELLSELL <span className="text-primary">BD</span>
                 </span>
               </div>
               <p className="text-xs text-[#736C62] dark:text-[#9E968B]">
-                Fine Stationery & Health Care Paper Store
+                Fine Stationery &amp; Health Care Paper Store
               </p>
               <p className="text-xs text-[#736C62] dark:text-[#9E968B]">
                 Sector 3, Uttara, Dhaka, Bangladesh · +8801894084242
@@ -52,11 +57,11 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
             </div>
 
             <div className="sm:text-right">
-              <span className="inline-block px-3 py-1 bg-[#1F6E54]/10 text-[#1F6E54] text-xs font-bold rounded mb-2">
+              <Badge variant="success" className="text-xs px-3 py-1 mb-2">
                 ORDER CONFIRMED
-              </span>
+              </Badge>
               <p className="text-xs text-[#736C62]">
-                Invoice No: <strong className="font-mono text-[#BA2D1D]">#{invoice.invoice}</strong>
+                Invoice No: <strong className="font-mono text-primary">#{invoice.invoice}</strong>
               </p>
               <p className="text-xs text-[#736C62]">
                 Date: <strong>{new Date(invoice.created_at).toLocaleDateString()}</strong>
@@ -79,7 +84,7 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
 
             <div className="p-4 bg-[#FBF9F5] dark:bg-[#161513] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] space-y-1">
               <span className="font-bold uppercase tracking-wider text-[#736C62] text-[10px]">
-                Shipment & Payment:
+                Shipment &amp; Payment:
               </span>
               <p className="text-[#1F1D1A] dark:text-[#EDE7DE]">
                 Method: <strong>{invoice.shipment_type}</strong>
@@ -119,7 +124,7 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
                     <td className="py-3 px-3 text-right font-mono">
                       Tk. {item.unit_price.toLocaleString()}
                     </td>
-                    <td className="py-3 px-3 text-right font-mono font-bold text-[#BA2D1D]">
+                    <td className="py-3 px-3 text-right font-mono font-bold text-primary">
                       Tk. {item.price_total.toLocaleString()}
                     </td>
                   </tr>
@@ -145,7 +150,7 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
                   <span className="font-mono">-Tk. {invoice.total_discount}</span>
                 </div>
               )}
-              <div className="pt-2 border-t border-[#E8E2D9] dark:border-[#312E29] flex justify-between font-bold text-sm text-[#BA2D1D]">
+              <div className="pt-2 border-t border-[#E8E2D9] dark:border-[#312E29] flex justify-between font-bold text-sm text-primary">
                 <span>Grand Total:</span>
                 <span className="font-mono">Tk. {invoice.subtotal}</span>
               </div>
@@ -156,7 +161,7 @@ export default function InvoiceClient({ invoice }: InvoiceClientProps) {
           <div className="pt-6 border-t border-[#E8E2D9] dark:border-[#312E29] text-center text-[11px] text-[#736C62]">
             <p>Thank you for shopping with WellSell BD! For inquiries, call +8801894084242 or email info@wellsellbd.com.</p>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

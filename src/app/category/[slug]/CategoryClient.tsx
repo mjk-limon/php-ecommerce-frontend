@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
-import Link from 'next/link';
-import { SlidersHorizontal, ChevronRight, Check } from 'lucide-react';
 import { ProductCard } from '@/components/ProductCard';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { useApp } from '@/context/AppContext';
-import { MOCK_CATEGORIES } from '@/data/mockData';
-import { Category, Product } from '@/types';
-import { api } from '@/services/api';
+import { Category, FilterObjects, Product } from '@/types';
+import { SlidersHorizontal } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 interface CategoryClientProps {
   products: Product[];
   category: Category | null;
+  filterObjects?: FilterObjects;
   slug: string;
 }
 
@@ -22,8 +23,6 @@ export default function CategoryClient({
   slug
 }: CategoryClientProps) {
   const { formatPrice, searchQuery } = useApp();
-  const [categories, setCategories] = useState<Category[]>(MOCK_CATEGORIES);
-  
 
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
@@ -33,10 +32,10 @@ export default function CategoryClient({
     <div className="w-full pb-16 pt-4 sm:pt-6">
       <div className="container space-y-6">
         {/* Breadcrumb / Title Bar */}
-        <div className="section-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <Card className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-1.5 text-xs text-[#736C62] dark:text-[#9E968B] mb-1">
-              <Link href="/" className="hover:text-[#BA2D1D]">Home</Link>
+              <Link href="/" className="hover:text-primary">Home</Link>
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">
                 {category ? category.name : 'All Products'}
@@ -50,7 +49,7 @@ export default function CategoryClient({
                   : 'All Departments & Products'}
             </h1>
             <p className="text-xs text-[#736C62] dark:text-[#9E968B] mt-0.5">
-              Showing <strong className="font-mono text-[#BA2D1D]">{products.length}</strong> available genuine items
+              Showing <strong className="font-mono text-primary">{products.length}</strong> available genuine items
             </p>
           </div>
 
@@ -68,14 +67,14 @@ export default function CategoryClient({
               <option value="views">Most Popular Views</option>
             </select>
           </div>
-        </div>
+        </Card>
 
         {/* 2-Column Split: Filters & Product Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           {/* Filters Sidebar */}
-          <div className="section-card p-4 sm:p-5 space-y-6">
+          <Card className="space-y-6">
             <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3 text-xs font-bold uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE]">
-              <SlidersHorizontal className="w-4 h-4 text-[#BA2D1D]" />
+              <SlidersHorizontal className="w-4 h-4 text-primary" />
               <span>Filter Products</span>
             </div>
 
@@ -85,7 +84,7 @@ export default function CategoryClient({
                 Brand
               </h4>
               <div className="space-y-1.5 max-h-48 overflow-y-auto text-xs">
-                {filterObjects.brands && Object.values(filterObjects.brands).map((b) => (
+                {filterObjects?.brands && Object.values(filterObjects.brands).map((b: string) => (
                   <label key={b} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
@@ -93,7 +92,7 @@ export default function CategoryClient({
                       value={b}
                       checked={selectedBrand === b}
                       onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                      className="text-primary focus:ring-[#BA2D1D]"
                     />
                     <span className="capitalize text-[#3E3A34] dark:text-[#C5BEB3]">
                       {b === 'all' ? 'All Brands' : b}
@@ -122,27 +121,29 @@ export default function CategoryClient({
                 <span>Tk. 10,000+</span>
               </div>
             </div>
-          </div>
+          </Card>
 
           {/* Product Grid (3 cols on desktop) */}
-          <div className="lg:col-span-3">
+          <Card className="lg:col-span-3">
             {products.length === 0 ? (
-              <div className="section-card p-12 text-center space-y-3">
+              <div className="p-12 text-center space-y-3">
                 <p className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                   No products found matching your filter criteria
                 </p>
                 <p className="text-xs text-[#736C62] dark:text-[#9E968B]">
                   Try resetting the brand filter or adjusting the price slider.
                 </p>
-                <button
+                <Button
+                  type="button"
+                  variant="default"
                   onClick={() => {
                     setSelectedBrand('all');
                     setPriceRange([0, 10000]);
                   }}
-                  className="bg-[#BA2D1D] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider"
+                  className="text-xs font-semibold uppercase tracking-wider"
                 >
                   Reset Filters
-                </button>
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -151,7 +152,7 @@ export default function CategoryClient({
                 ))}
               </div>
             )}
-          </div>
+          </Card>
         </div>
       </div>
     </div>

@@ -31,13 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const productResults = await serverApiGet('products', { category_slug: slug }).catch(() => null);
+  const productResults: any = await serverApiGet('products', { category_slug: slug }).catch(() => null);
 
   return (
     <CategoryClient
-      products={productResults.products}
-      category={productResults.category}
-      filterObjects={productResults.filter_objects}
+      products={productResults?.products || []}
+      category={productResults?.category || null}
+      filterObjects={productResults?.filter_objects}
       slug={slug}
     />
   );

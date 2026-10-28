@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '@/lib/assetHelper';
 import { Category } from '@/types';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface HeroSectionProps {
   categories: Category[];
@@ -78,7 +79,7 @@ export default function HeroSection({ categories }: HeroSectionProps) {
         <div className="hidden lg:block lg:col-span-1 section-card p-0 relative z-30">
           {/* Department List */}
           <ul className="divide-y divide-[#F7F7F7] dark:divide-[#252525] text-xs py-1">
-            {categories.slice(0, 9).map((cat) => (
+            {categories.map((cat) => (
               <li
                 key={cat.id}
                 onMouseEnter={() => setHoveredDept(cat)}
@@ -87,9 +88,9 @@ export default function HeroSection({ categories }: HeroSectionProps) {
                 <Link
                   href={`/category/${cat.slug}`}
                   onClick={() => setPinnedDept(false)}
-                  className={`group w-full text-left py-3 px-4 flex items-center justify-between transition-colors font-medium text-xs ${hoveredDept?.id === cat.id
-                    ? 'bg-[#FDF7F5] dark:bg-[#2A2422] text-[#BA2D1D] font-semibold'
-                    : 'text-[#2A2621] dark:text-[#EDE7DE] hover:text-[#BA2D1D] hover:bg-[#FAFAFA] dark:hover:bg-[#252525]'
+                  className={`group w-full text-left py-3 px-4 flex items-center justify-between transition-colors font-medium text-xs capitalize ${hoveredDept?.id === cat.id
+                    ? 'bg-[#FDF7F5] dark:bg-[#2A2422] text-primary font-semibold'
+                    : 'text-[#2A2621] dark:text-[#EDE7DE] hover:text-primary hover:bg-[#FAFAFA] dark:hover:bg-[#252525]'
                     }`}
                 >
                   <span className="truncate">{cat.name}</span>
@@ -139,7 +140,7 @@ export default function HeroSection({ categories }: HeroSectionProps) {
         {/* Hero Banner (9 cols) */}
         <div className="lg:col-span-4 relative rounded-xs overflow-hidden section-card min-h-[360px] sm:min-h-[440px] flex items-center">
           <img
-            src={heroSlides[activeSlide].image}
+            src={getAssetUrl(heroSlides[activeSlide].image)}
             alt={heroSlides[activeSlide].title}
             className="absolute inset-0 w-full h-full object-cover object-center transition-all duration-700"
           />
@@ -147,7 +148,7 @@ export default function HeroSection({ categories }: HeroSectionProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/75 dark:to-transparent" />
 
           <div className="relative z-10 max-w-lg p-6 sm:p-12 space-y-3">
-            <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#BA2D1D] dark:text-[#E05343] font-mono">
+            <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-primary dark:text-[#E05343] font-mono">
               {heroSlides[activeSlide].subtitle}
             </span>
             <h1 className="font-serif font-black text-2xl sm:text-4xl text-[#1F1D1A] dark:text-[#EDE7DE] leading-tight">
@@ -159,7 +160,7 @@ export default function HeroSection({ categories }: HeroSectionProps) {
             <div className="pt-2 flex items-center gap-3">
               <Link
                 href={`/category/${heroSlides[activeSlide].slug}`}
-                className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
+                className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
               >
                 <span>{heroSlides[activeSlide].cta}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

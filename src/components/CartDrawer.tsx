@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { getAssetUrl } from '@/lib/assetHelper';
+import { ArrowRight, Minus, Plus, ShieldCheck, ShoppingBag, Trash2, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { X, Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export const CartDrawer: React.FC = () => {
@@ -52,7 +53,7 @@ export const CartDrawer: React.FC = () => {
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-[#E8E2D9] dark:border-[#312E29] flex items-center justify-between bg-[#FBF9F5] dark:bg-[#141312]">
             <div className="flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-[#BA2D1D] dark:text-[#E05343]" />
+              <ShoppingBag className="w-4 h-4 text-primary dark:text-[#E05343]" />
               <h2 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                 Your Shopping Bag ({cartTotalCount})
               </h2>
@@ -69,7 +70,7 @@ export const CartDrawer: React.FC = () => {
           <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
-                <div className="w-14 h-14 rounded-full bg-[#BA2D1D]/10 text-[#BA2D1D] flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                   <ShoppingBag className="w-6 h-6" />
                 </div>
                 <h3 className="font-serif font-semibold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
@@ -80,7 +81,7 @@ export const CartDrawer: React.FC = () => {
                 </p>
                 <button
                   onClick={() => setIsCartDrawerOpen(false)}
-                  className="mt-2 text-xs font-semibold text-[#BA2D1D] hover:underline cursor-pointer"
+                  className="mt-2 text-xs font-semibold text-primary hover:underline cursor-pointer"
                 >
                   Start Shopping Now
                 </button>
@@ -97,7 +98,7 @@ export const CartDrawer: React.FC = () => {
                     className="w-16 h-16 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1E1E1E] shrink-0"
                   >
                     <img
-                      src={item.product.image}
+                      src={getAssetUrl(item.product.image || item.product.thumbnail)}
                       alt={item.product.name}
                       className="w-full h-full object-contain"
                     />
@@ -107,7 +108,7 @@ export const CartDrawer: React.FC = () => {
                     <Link
                       href={`/product/${item.product.slug}`}
                       onClick={() => setIsCartDrawerOpen(false)}
-                      className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-[#BA2D1D] transition-colors"
+                      className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-primary transition-colors"
                     >
                       {item.product.name}
                     </Link>
@@ -138,7 +139,7 @@ export const CartDrawer: React.FC = () => {
                       </div>
 
                       <div className="text-right">
-                        <span className="text-xs font-bold text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
+                        <span className="text-xs font-bold text-primary dark:text-[#E05343] font-mono tabular-nums">
                           {formatPrice(item.product.price * item.quantity)}
                         </span>
                       </div>
@@ -147,7 +148,7 @@ export const CartDrawer: React.FC = () => {
 
                   <button
                     onClick={() => removeFromCart(item.product.id)}
-                    className="text-[#9A9184] hover:text-[#BA2D1D] p-1 transition-colors self-start cursor-pointer"
+                    className="text-[#9A9184] hover:text-primary p-1 transition-colors self-start cursor-pointer"
                     title="Remove item"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -177,7 +178,7 @@ export const CartDrawer: React.FC = () => {
                 </div>
                 <div className="pt-2 border-t border-[#E8E2D9] dark:border-[#312E29] flex justify-between text-sm font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">
                   <span>Total Amount:</span>
-                  <span className="text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
+                  <span className="text-primary dark:text-[#E05343] font-mono tabular-nums">
                     {formatPrice(cartSubtotal)}
                   </span>
                 </div>
@@ -196,7 +197,7 @@ export const CartDrawer: React.FC = () => {
                     setIsCartDrawerOpen(false);
                     router.push('/checkout');
                   }}
-                  className="flex items-center justify-center gap-1.5 bg-[#BA2D1D] hover:bg-[#961F12] text-white py-2.5 px-3 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+                  className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white py-2.5 px-3 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
                 >
                   <span>Checkout</span>
                   <ArrowRight className="w-3.5 h-3.5" />

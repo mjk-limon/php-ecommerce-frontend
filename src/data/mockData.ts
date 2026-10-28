@@ -66,8 +66,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Health & Vitamin',
     slug: 'health-vitamin',
     icon: 'Pill',
-    images: '/assets/images/category_health_vitamin_banner_1792385519799.jpg',
-    total_views: '34820',
     childs: [
       {
         id: 1011,
@@ -122,8 +120,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Health & Beauty',
     slug: 'health-beauty',
     icon: 'Sparkles',
-    images: '/assets/images/hero_beauty_skincare_banner_1792385518854.jpg',
-    total_views: '48210',
     childs: [
       {
         id: 1021,
@@ -169,8 +165,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Sewing Machinery',
     slug: 'sewing-machinery',
     position: 1000,
-    total_views: '19975',
-    images: '/assets/images/category_health_vitamin_banner_1792385519799.jpg',
     childs: [
       {
         id: 33,
@@ -230,7 +224,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Laundry Machinery',
     slug: 'laundry-machinery',
     position: 1000,
-    total_views: '17481',
     childs: [
       {
         id: 481,
@@ -250,7 +243,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Yarn Tester',
     slug: 'yarn-tester',
     position: 1000,
-    total_views: '7054',
     childs: [
       {
         id: 24,
@@ -289,7 +281,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Material Handling Equipment',
     slug: 'material-handling-equipment',
     position: 1000,
-    total_views: '5833',
     childs: [
       {
         id: 551,
@@ -309,7 +300,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Dyeing & Fastening Equipment',
     slug: 'dyeing-fastening-equipment',
     position: 1000,
-    total_views: '2298',
     childs: [
       {
         id: 14,
@@ -332,7 +322,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Strength Testing Equipment',
     slug: 'strength-testing-equipment',
     position: 1000,
-    total_views: '887',
     childs: [
       {
         id: 18,
@@ -419,8 +408,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: "Men's Care & Grooming",
     slug: 'men',
     icon: 'User',
-    images: '/assets/images/category_banner_men_1792386936747.jpg',
-    total_views: '18490',
     childs: [
       { id: 1031, name: 'Beard Oils & Balms', slug: 'beard-oils' },
       { id: 1032, name: 'Men Fragrances', slug: 'men-fragrances' },
@@ -432,8 +419,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Mom & Baby Care',
     slug: 'mom-kids',
     icon: 'Baby',
-    images: '/assets/images/category_banner_mom_kids_1792386938739.jpg',
-    total_views: '16200',
     childs: [
       { id: 1041, name: 'Baby Shampoo & Wash', slug: 'baby-shampoo' },
       { id: 1042, name: 'Diaper Rash Cream', slug: 'diaper-rash-cream' },
@@ -445,8 +430,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Watches Collection',
     slug: 'watch-collection',
     icon: 'Clock',
-    images: '/assets/images/category_banner_watches_1792386938623.jpg',
-    total_views: '22400',
     childs: [
       { id: 1061, name: 'Men Chronograph', slug: 'men-chronograph' },
       { id: 1062, name: 'Women Minimalist', slug: 'women-minimalist' }
@@ -457,8 +440,6 @@ export const MOCK_CATEGORIES: Category[] = [
     name: 'Korean Beauty',
     slug: 'korean-collection',
     icon: 'Sparkles',
-    images: '/assets/images/category_banner_korean_beauty_1792386937884.jpg',
-    total_views: '31500',
     childs: [
       { id: 1071, name: 'Snail Mucin Essences', slug: 'snail-mucin' },
       { id: 1072, name: 'Cica Soothing Gels', slug: 'cica-soothing' },
@@ -469,6 +450,52 @@ export const MOCK_CATEGORIES: Category[] = [
 
 // All Products (combining Postman collections + Health/Beauty screenshots)
 export const MOCK_PRODUCTS: Product[] = [
+  {
+    id: 103764,
+    product_code: '103764',
+    name: 'Cerave SA Lotion For Rough & Bumpy Skin 237ml',
+    slug: 'cerave-sa-lotion-for-rough-bumpy-skin-237ml',
+    brand: 'Cerave',
+    category_id: 102,
+    category_name: 'Health & Beauty',
+    price: 2790,
+    old_price: 3390,
+    discount: 18,
+    stock: 25,
+    views: 8900,
+    rating: 4.9,
+    reviews_count: 54,
+    sku: '3606000537712',
+    image: '/assets/images/cerave_sa_lotion.png',
+    images: ['/assets/images/cerave_sa_lotion.png'],
+    variants: [
+      {
+        id: 1037641,
+        product_id: 103764,
+        size: '237ml',
+        color: null,
+        price: 2790,
+        old_price: 3390,
+        stock: 25,
+        sku: '3606000537712',
+        image: '/assets/images/cerave_sa_lotion.png',
+        images: ['/assets/images/cerave_sa_lotion.png']
+      },
+      {
+        id: 1037642,
+        product_id: 103764,
+        size: '473ml',
+        color: null,
+        price: 4350,
+        old_price: 4990,
+        stock: 12,
+        sku: '3606000537729',
+        image: '/assets/images/cerave_sa_lotion.png',
+        images: ['/assets/images/cerave_sa_lotion.png']
+      }
+    ],
+    description: '<p>Cerave SA Lotion for Rough & Bumpy Skin is formulated to effectively smooth and soothe dry, rough, and bumpy skin. Formulated with salicylic acid, lactic acid, hyaluronic acid, and 3 essential ceramides, this lightweight non-greasy lotion exfoliates, hydrates, and restores the protective skin barrier without irritation.</p>'
+  },
   // Health & Vitamins from Screenshot 3
   {
     id: 2001,

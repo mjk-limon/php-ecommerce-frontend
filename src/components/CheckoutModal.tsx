@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-import { X, MapPin, Truck, CreditCard, ShoppingBag } from 'lucide-react';
+import { getAssetUrl } from '@/lib/assetHelper';
+import { CreditCard, MapPin, ShoppingBag, Truck, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
 import { PaymentMethod, ShippingLocation, ShippingMethod } from '../types';
@@ -152,7 +153,7 @@ export const CheckoutModal: React.FC = () => {
             <div className="space-y-3">
               {cart.map((item) => (
                 <div key={item.product.id} className="flex gap-3 border-b border-[#edf0ec] pb-3">
-                  <div className="h-14 w-14 shrink-0 rounded-lg bg-[#f7f8f6] p-1"><img src={item.product.image} alt={item.product.name} className="h-full w-full object-contain" /></div>
+                  <div className="h-14 w-14 shrink-0 rounded-lg bg-[#f7f8f6] p-1"><img src={getAssetUrl(item.product.image || item.product.thumbnail)} alt={item.product.name} className="h-full w-full object-contain" /></div>
                   <div className="min-w-0 flex-1"><p className="line-clamp-2 text-xs font-medium text-[#26312a]">{item.product.name}</p><p className="mt-1 text-[11px] text-[#858c85]">{item.quantity} {item.quantity === 1 ? 'Unit' : 'Units'}</p></div>
                   <span className="shrink-0 text-xs font-semibold text-[#26312a]">{formatPrice(item.product.price * item.quantity)}</span>
                 </div>
@@ -167,7 +168,7 @@ export const CheckoutModal: React.FC = () => {
           {/* 1. Customer Shipping Details */}
           <div>
             <div className="flex items-center gap-1.5 text-sm font-semibold text-[#28332c] mb-3">
-              <MapPin className="w-4 h-4 text-[#BA2D1D]" />
+              <MapPin className="w-4 h-4 text-primary" />
               <span>1. Shipping Information</span>
             </div>
             <div className="grid grid-cols-1 gap-3 text-xs">
@@ -235,7 +236,7 @@ export const CheckoutModal: React.FC = () => {
           {/* 2. Shipping Courier Method */}
           <div className="md:col-start-2">
             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE] mb-3">
-              <Truck className="w-4 h-4 text-[#BA2D1D]" />
+              <Truck className="w-4 h-4 text-primary" />
               <span>2. Courier Partner ({currentCostTime?.estimate_time || '24-48 Hours'})</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
@@ -271,7 +272,7 @@ export const CheckoutModal: React.FC = () => {
           {/* 3. Payment Method */}
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE] mb-3">
-              <CreditCard className="w-4 h-4 text-[#BA2D1D]" />
+              <CreditCard className="w-4 h-4 text-primary" />
               <span>3. Payment Selection</span>
             </div>
             <div className="space-y-2">
@@ -319,7 +320,7 @@ export const CheckoutModal: React.FC = () => {
             </div>
             <div className="pt-2 border-t border-[#E8E2D9] dark:border-[#312E29] flex justify-between text-sm font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">
               <span>Payable Total:</span>
-              <span className="text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
+              <span className="text-primary dark:text-[#E05343] font-mono tabular-nums">
                 {formatPrice(grandTotal)}
               </span>
             </div>
@@ -337,7 +338,7 @@ export const CheckoutModal: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitting || loadingConfig || paymentMethods.length === 0 || cart.length === 0}
-              className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+              className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? 'Placing order…' : loadingConfig ? 'Loading delivery options…' : 'Order now'}
             </button>

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
 import {
-  ChevronRight,
-  ChevronLeft,
-  Sparkles,
-  TrendingUp,
-  ArrowRight,
-  Layers,
-  ShoppingBag
+    ArrowRight,
+    ChevronLeft,
+    ChevronRight,
+    Layers,
+    TrendingUp
 } from 'lucide-react';
+import React, { useState } from 'react';
 import { ProductCard } from '../components/ProductCard';
 import { useApp } from '../context/AppContext';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData';
@@ -87,7 +85,7 @@ export const HomePage: React.FC = () => {
             onMouseLeave={() => setHoveredDept(null)}
           >
             {/* Header matching Screenshot 1 */}
-            <div className="bg-[#BA2D1D] text-white px-4 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-between rounded-t-xs">
+            <div className="bg-primary text-white px-4 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-between rounded-t-xs">
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4" />
                 <span>ALL DEPARTMENTS</span>
@@ -106,8 +104,8 @@ export const HomePage: React.FC = () => {
                     onClick={() => navigateToCategory(cat.slug)}
                     className={`w-full text-left py-2.5 px-4 flex items-center justify-between transition-colors font-medium text-xs ${
                       hoveredDept?.id === cat.id
-                        ? 'bg-[#FDF7F5] dark:bg-[#2A2422] text-[#BA2D1D] font-semibold'
-                        : 'text-[#2A2621] dark:text-[#EDE7DE] hover:text-[#BA2D1D] hover:bg-[#FAFAFA] dark:hover:bg-[#252525]'
+                        ? 'bg-[#FDF7F5] dark:bg-[#2A2422] text-primary font-semibold'
+                        : 'text-[#2A2621] dark:text-[#EDE7DE] hover:text-primary hover:bg-[#FAFAFA] dark:hover:bg-[#252525]'
                     }`}
                   >
                     <span className="truncate">{cat.name}</span>
@@ -130,7 +128,7 @@ export const HomePage: React.FC = () => {
                   </h3>
                   <button
                     onClick={() => navigateToCategory(hoveredDept.slug)}
-                    className="text-[11px] text-[#BA2D1D] hover:underline font-semibold"
+                    className="text-[11px] text-primary hover:underline font-semibold"
                   >
                     View All ›
                   </button>
@@ -145,7 +143,7 @@ export const HomePage: React.FC = () => {
                       <li key={sub.id}>
                         <button
                           onClick={() => navigateToCategory(sub.slug)}
-                          className="w-full text-left py-1.5 px-2 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-[#BA2D1D] transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
+                          className="w-full text-left py-1.5 px-2 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-primary transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
                         >
                           <span>{sub.name}</span>
                           <span className="text-[10px] text-[#9A9184]">→</span>
@@ -187,7 +185,7 @@ export const HomePage: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-transparent dark:from-[#121212]/95 dark:via-[#121212]/75 dark:to-transparent" />
 
             <div className="relative z-10 max-w-lg p-6 sm:p-12 space-y-3">
-              <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-[#BA2D1D] dark:text-[#E05343] font-mono">
+              <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-primary dark:text-[#E05343] font-mono">
                 {heroSlides[activeSlide].subtitle}
               </span>
               <h1 className="font-serif font-black text-2xl sm:text-4xl text-[#1F1D1A] dark:text-[#EDE7DE] leading-tight">
@@ -199,7 +197,7 @@ export const HomePage: React.FC = () => {
               <div className="pt-2 flex items-center gap-3">
                 <button
                   onClick={() => navigateToCategory(heroSlides[activeSlide].slug)}
-                  className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
+                  className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-6 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-2 cursor-pointer"
                 >
                   <span>{heroSlides[activeSlide].cta}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -239,14 +237,14 @@ export const HomePage: React.FC = () => {
         <div className="section-card p-4 sm:p-6">
           <div className="flex items-center justify-between mb-5 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-[#BA2D1D]" />
+              <TrendingUp className="w-4 h-4 text-primary" />
               <h2 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE] uppercase tracking-wider">
                 TRENDING
               </h2>
             </div>
             <button
               onClick={() => navigateToCategory('health-beauty')}
-              className="text-xs text-[#BA2D1D] dark:text-[#E05343] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-xs text-primary dark:text-[#E05343] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
             >
               <span>View All Trending</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -281,7 +279,7 @@ export const HomePage: React.FC = () => {
               </h3>
               <button
                 onClick={() => navigateToCategory(item.category.slug)}
-                className="text-xs text-[#BA2D1D] dark:text-[#E05343] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-xs text-primary dark:text-[#E05343] font-semibold hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>View All ›</span>
               </button>
@@ -329,7 +327,7 @@ export const HomePage: React.FC = () => {
             <div className="text-right pt-2 border-t border-[#F0EDE8] dark:border-[#2A2A2A]">
               <button
                 onClick={() => navigateToCategory(item.category.slug)}
-                className="text-xs font-semibold text-[#BA2D1D] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>View All {item.category.name}</span>
                 <ChevronRight className="w-3.5 h-3.5" />

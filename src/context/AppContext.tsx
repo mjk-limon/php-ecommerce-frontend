@@ -59,7 +59,11 @@ interface AppContextType {
 
   // Cart
   cart: CartItem[];
-  addToCart: (product: Product, quantity?: number, options?: { size?: string; color?: string; openDrawer?: boolean }) => void;
+  addToCart: (
+    product: Product,
+    quantity?: number,
+    options?: { size?: string; color?: string; variant_id?: number; openDrawer?: boolean }
+  ) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
@@ -89,7 +93,11 @@ interface AppContextType {
   setIsTrackModalOpen: (open: boolean) => void;
 
   // Quick Buy
-  quickBuy: (product: Product, quantity?: number) => void;
+  quickBuy: (
+    product: Product,
+    quantity?: number,
+    options?: { size?: string; color?: string; variant_id?: number }
+  ) => void;
 
   // Toast
   toasts: ToastMessage[];
@@ -273,9 +281,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.setItem('wellsell_cart_v2', JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product: Product, quantity: number = 1, options?: { size?: string; color?: string; openDrawer?: boolean }) => {
+  const addToCart = (
+    product: Product,
+    quantity: number = 1,
+    options?: { size?: string; color?: string; variant_id?: number; openDrawer?: boolean }
+  ) => {
     setCart((prev) => {
-      const existingIndex = prev.findIndex((item) => item.product.id === product.id);
+      const existingIndex = prev.findIndex(
+        (item) =>
+          item.product.id === product.id &&
+          item.variant_id === options?.variant_id &&
+          item.selected_size === options?.size &&
+          item.selected_color === options?.color
+      );
       if (existingIndex > -1) {
         const next = [...prev];
         next[existingIndex] = {
@@ -288,6 +306,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         ...prev,
         {
           product,
+          variant_id: options?.variant_id || product.variants?.[0]?.id,
           quantity,
           selected_size: options?.size,
           selected_color: options?.color
@@ -327,8 +346,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   );
 
   // Quick Buy opens the compact delivery checkout directly.
-  const quickBuy = (product: Product, quantity: number = 1) => {
-    setCart([{ product, quantity, variant_id: product.variants?.[0]?.id }]);
+  const quickBuy = (
+    product: Product,
+    quantity: number = 1,
+    options?: { size?: string; color?: string; variant_id?: number }
+  ) => {
+    setCart([
+      {
+        product,
+        quantity,
+        variant_id: options?.variant_id || product.variants?.[0]?.id,
+        selected_size: options?.size,
+        selected_color: options?.color
+      }
+    ]);
     setIsCartDrawerOpen(false);
     setIsCheckoutModalOpen(true);
   };

@@ -1,8 +1,10 @@
+import { ProductCard } from '@/components/ProductCard';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { MOCK_PRODUCTS } from '@/data/mockData';
+import { ArrowRight, Award } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Award, ArrowRight, ShieldCheck, CheckCircle } from 'lucide-react';
-import { MOCK_PRODUCTS } from '@/data/mockData';
-import { ProductCard } from '@/components/ProductCard';
 
 export const metadata: Metadata = {
   title: 'Official Brand Partners | WellSell BD',
@@ -25,9 +27,9 @@ export default function BrandPage() {
     <div className="w-full pb-16 pt-4 sm:pt-6">
       <div className="container space-y-8">
         {/* Breadcrumb / Title Bar */}
-        <div className="section-card p-6">
+        <Card className="p-6">
           <div className="flex items-center gap-2 mb-2">
-            <Award className="w-5 h-5 text-[#BA2D1D]" />
+            <Award className="w-5 h-5 text-primary" />
             <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
               Official Brand Partners
             </h1>
@@ -35,7 +37,7 @@ export default function BrandPage() {
           <p className="text-xs text-[#736C62] dark:text-[#9E968B]">
             Every brand represented on Wellsell BD is authentic, directly imported, and verified with laboratory batch numbers.
           </p>
-        </div>
+        </Card>
 
         {/* Brand Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -43,38 +45,40 @@ export default function BrandPage() {
             <Link
               key={b.name}
               href="/category/all"
-              className="p-5 section-card hover:ring-2 hover:ring-[#BA2D1D] transition-all cursor-pointer flex flex-col justify-between block"
+              className="block"
             >
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#BA2D1D]">
-                  {b.origin} IMPORT
-                </span>
-                <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE] mt-1 mb-2">
-                  {b.name}
-                </h3>
-                <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
-                  {b.desc}
-                </p>
-              </div>
-              <div className="pt-4 flex items-center justify-between text-xs text-[#BA2D1D] font-semibold border-t border-[#F0EDE8] dark:border-[#2A2A2A] mt-4">
-                <span>View Products</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </div>
+              <Card className="p-5 hover:ring-2 hover:ring-[#BA2D1D] transition-all cursor-pointer flex flex-col justify-between h-full">
+                <div>
+                  <Badge variant="discount" className="text-[10px] font-mono uppercase tracking-widest mb-2">
+                    {b.origin} IMPORT
+                  </Badge>
+                  <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE] mt-1 mb-2">
+                    {b.name}
+                  </h3>
+                  <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
+                    {b.desc}
+                  </p>
+                </div>
+                <div className="pt-4 flex items-center justify-between text-xs text-primary font-semibold border-t border-[#F0EDE8] dark:border-[#2A2A2A] mt-4">
+                  <span>View Products</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Card>
             </Link>
           ))}
         </div>
 
         {/* Featured Brand Products */}
-        <div className="section-card p-6 space-y-4">
+        <Card className="p-6 space-y-4">
           <h2 className="font-serif font-bold text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
             Featured Brand Selections
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {MOCK_PRODUCTS.slice(0, 6).map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} border />
             ))}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

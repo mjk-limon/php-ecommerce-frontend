@@ -3,12 +3,15 @@ import { cache } from 'react';
 import type { Category } from '@/types';
 import { log } from 'console';
 
-const API_ORIGIN = (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const API_ORIGIN = (process.env.ECOM_API_BASE_URL || 'http://ilmcomm-v2.services.my').replace(/\/$/, '');
+const ASSET_ORIGIN = (process.env.ECOM_ASSET_URL || process.env.ECOM_API_BASE_URL || 'http://ilmcomm-v2.services.my').replace(/\/$/, '');
 const API_VERSION = (process.env.ECOM_API_VERSION || 'v1').replace(/^\/+|\/+$/g, '');
-const APP_KEY = process.env.NEXT_PUBLIC_APP_KEY || 'abcd';
+const APP_KEY = process.env.ECOM_APP_KEY || 'abcd';
 
-export function serverApiAssetUrl(path: string) {
-  return `${API_ORIGIN}/${path.replace(/^\/+/, '')}`;
+export function serverApiAssetUrl(path?: string | null) {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${ASSET_ORIGIN}/${path.replace(/^\/+/, '')}`;
 }
 
 // React cache deduplicates identical requests during a server render, including

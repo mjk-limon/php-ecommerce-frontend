@@ -1,10 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Search, CheckCircle2, Clock, Truck, Package, MapPin, ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { api } from '@/services/api';
 import { OrderInvoice } from '@/types';
+import { ArrowRight, CheckCircle2, Package, Search, Truck } from 'lucide-react';
+import Link from 'next/link';
+import React, { useState } from 'react';
 
 export default function TrackOrderPage() {
   const [queryInvoice, setQueryInvoice] = useState('684058321');
@@ -32,11 +36,11 @@ export default function TrackOrderPage() {
   return (
     <div className="w-full pb-20 pt-8 sm:pt-12 bg-[#FAFAFA] dark:bg-[#121212] min-h-[75vh]">
       <div className="max-w-2xl mx-auto px-4 space-y-6">
-        <div className="section-card p-6 sm:p-8 space-y-5">
+        <Card className="p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-            <Package className="w-5 h-5 text-[#BA2D1D]" />
+            <Package className="w-5 h-5 text-primary" />
             <h1 className="font-serif font-bold text-xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-              Track Your Order & Delivery
+              Track Your Order &amp; Delivery
             </h1>
           </div>
 
@@ -46,23 +50,25 @@ export default function TrackOrderPage() {
 
           <form onSubmit={handleTrack} className="flex gap-2">
             <div className="relative flex-1">
-              <input
+              <Input
                 type="text"
                 required
                 value={queryInvoice}
                 onChange={(e) => setQueryInvoice(e.target.value)}
                 placeholder="e.g. 684058321"
-                className="w-full bg-[#FAFAFA] dark:bg-[#161616] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2.5 text-xs text-[#1F1D1A] dark:text-[#EDE7DE] font-mono focus:outline-none focus:border-[#BA2D1D]"
+                className="font-mono"
               />
             </div>
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
-              className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-5 py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              isLoading={isLoading}
+              variant="default"
+              className="text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5"
             >
               <Search className="w-4 h-4" />
               <span>Track</span>
-            </button>
+            </Button>
           </form>
 
           {/* Results Display */}
@@ -73,7 +79,7 @@ export default function TrackOrderPage() {
                   <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1815] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] flex flex-wrap items-center justify-between gap-3 text-xs">
                     <div>
                       <span className="text-[#736C62]">Invoice:</span>{' '}
-                      <strong className="font-mono text-[#BA2D1D]">#{trackedOrder.invoice}</strong>
+                      <strong className="font-mono text-primary">#{trackedOrder.invoice}</strong>
                     </div>
                     <div>
                       <span className="text-[#736C62]">Recipient:</span>{' '}
@@ -81,9 +87,7 @@ export default function TrackOrderPage() {
                     </div>
                     <div>
                       <span className="text-[#736C62]">Status:</span>{' '}
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#1F6E54]/10 text-[#1F6E54]">
-                        In Transit with Courier
-                      </span>
+                      <Badge variant="success">In Transit with Courier</Badge>
                     </div>
                   </div>
 
@@ -95,7 +99,7 @@ export default function TrackOrderPage() {
                       </div>
                       <div className="text-xs">
                         <p className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                          Order Placed & Verified
+                          Order Placed &amp; Verified
                         </p>
                         <p className="text-[#736C62] text-[11px]">
                           Invoice issued, batch serial code confirmed genuine.
@@ -118,11 +122,11 @@ export default function TrackOrderPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="w-7 h-7 rounded-full bg-[#BA2D1D] text-white flex items-center justify-center shrink-0 animate-pulse">
+                      <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center shrink-0 animate-pulse">
                         <Truck className="w-4 h-4" />
                       </div>
                       <div className="text-xs">
-                        <p className="font-bold text-[#BA2D1D]">
+                        <p className="font-bold text-primary">
                           Out for Delivery (Rider in Transit)
                         </p>
                         <p className="text-[#736C62] text-[11px]">
@@ -135,7 +139,7 @@ export default function TrackOrderPage() {
                   <div className="pt-2 text-right">
                     <Link
                       href={`/invoice/${trackedOrder.invoice}`}
-                      className="inline-flex items-center gap-1.5 text-xs text-[#BA2D1D] font-semibold hover:underline"
+                      className="inline-flex items-center gap-1.5 text-xs text-primary font-semibold hover:underline"
                     >
                       <span>View Full Printable Invoice</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -149,7 +153,7 @@ export default function TrackOrderPage() {
               )}
             </div>
           )}
-        </div>
+        </Card>
       </div>
     </div>
   );

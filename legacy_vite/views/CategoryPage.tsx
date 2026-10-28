@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Filter, SlidersHorizontal, ArrowUpDown, ChevronDown, Check } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ProductCard } from '../components/ProductCard';
 import { useApp } from '../context/AppContext';
 import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData';
@@ -78,7 +78,7 @@ export const CategoryPage: React.FC = () => {
                 : 'All Departments & Products'}
             </h1>
             <p className="text-xs text-[#736C62] dark:text-[#9E968B] mt-0.5">
-              Showing <strong className="font-mono text-[#BA2D1D]">{filteredProducts.length}</strong> available genuine items
+              Showing <strong className="font-mono text-primary">{filteredProducts.length}</strong> available genuine items
             </p>
           </div>
 
@@ -103,7 +103,7 @@ export const CategoryPage: React.FC = () => {
           {/* Filters Sidebar */}
           <div className="section-card p-4 sm:p-5 space-y-6">
             <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3 text-xs font-bold uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE]">
-              <SlidersHorizontal className="w-4 h-4 text-[#BA2D1D]" />
+              <SlidersHorizontal className="w-4 h-4 text-primary" />
               <span>Filter Products</span>
             </div>
 
@@ -116,8 +116,8 @@ export const CategoryPage: React.FC = () => {
                 <li>
                   <button
                     onClick={() => navigateToCategory('')}
-                    className={`text-left w-full hover:text-[#BA2D1D] transition-colors ${
-                      !activeCategorySlug ? 'font-bold text-[#BA2D1D]' : 'text-[#5C5549] dark:text-[#B3ABA0]'
+                    className={`text-left w-full hover:text-primary transition-colors ${
+                      !activeCategorySlug ? 'font-bold text-primary' : 'text-[#5C5549] dark:text-[#B3ABA0]'
                     }`}
                   >
                     All Categories
@@ -127,9 +127,9 @@ export const CategoryPage: React.FC = () => {
                   <li key={cat.id}>
                     <button
                       onClick={() => navigateToCategory(cat.slug)}
-                      className={`text-left w-full hover:text-[#BA2D1D] transition-colors ${
+                      className={`text-left w-full hover:text-primary transition-colors ${
                         activeCategorySlug === cat.slug
-                          ? 'font-bold text-[#BA2D1D]'
+                          ? 'font-bold text-primary'
                           : 'text-[#5C5549] dark:text-[#B3ABA0]'
                       }`}
                     >
@@ -219,7 +219,7 @@ export const CategoryPage: React.FC = () => {
                     setPriceRange([0, 10000]);
                     setSearchQuery('');
                   }}
-                  className="bg-[#BA2D1D] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider"
+                  className="bg-primary text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider"
                 >
                   Clear All Filters
                 </button>

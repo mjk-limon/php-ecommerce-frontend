@@ -20,39 +20,76 @@ export interface AuthState {
   isAuthenticated: boolean;
 }
 
+export interface Home {
+  trending_categories: Category[];
+  trending_products: Product[];
+  new_arrivals: Product[];
+  category_products: Category[];
+}
+
 export interface ProductVariant {
   id: number;
-  product_id: number;
-  size?: string | null;
-  color?: string | null;
+  product_id?: number;
+  size: string | null;
+  color: string | null;
   price: number;
-  stock: number;
-  images?: string;
+  old_price?: number;
+  stock?: number;
+  images: string[];
+  sku?: string;
+  image?: string;
+}
+
+export interface ReviewItem {
+  id: number;
+  user_id: number;
+  product_id: number;
+  review: string;
+  rating: number;
+  status: number;
+  created_at: string;
+}
+
+export interface QuestionItem {
+  id: number;
+  product_id: number;
+  parent_id?: number | null;
+  question: string;
+  answer?: string | null;
+  status: number;
+  created_at: string;
 }
 
 export interface Product {
   id: number;
   name: string;
   slug: string;
+  sku?: string;
+  product_code?: string;
   brand: string;
   category_id?: number;
   category_name?: string;
-  discount?: number;
-  old_price?: number;
-  price: number;
-  stock?: number;
-  views?: number;
-  rating?: number;
-  reviews_count?: number;
-  sku?: string;
-  product_code?: string;
-  thumbnail: string;
-  thumbnails?: string[];
+  merchant_id?: number;
   description?: string;
   short_description?: string;
-  variants?: ProductVariant[];
+  thumbnail?: string;
+  image?: string;
+  thumbnails?: string[];
+  images?: string[] | string;
+  price?: number;
+  old_price?: number;
+  views?: number;
+  discount?: number;
+  minimum_price?: number;
+  maximum_price?: number;
+  stock?: number;
+  rating?: number;
+  reviews_count?: number;
   status?: number;
   featered_flags?: number;
+  variants?: ProductVariant[];
+  variant?: ProductVariant[];
+  others?: string;
   category?: Category[];
   merchant?: Array<{
     id: number;
@@ -71,9 +108,11 @@ export interface Category {
   parent_main_id?: number | null;
   parent_sub_id?: number | null;
   position?: number;
-  images?: object | null;
+  images?: null | {
+    featured_icon: string;
+    browse_category_feature: string;
+  };
   icon?: string;
-  total_views?: string | number;
   childs?: Category[];
   child_ids?: number[];
   products?: Product[] | null;
@@ -190,7 +229,7 @@ export interface OrderCreatePayload {
 
 export interface OrderInvoice {
   id: number;
-  tenant_id: number;
+  tenant_id?: number;
   invoice: string;
   customer_id?: number | null;
   shipping_id: number;
@@ -253,16 +292,9 @@ export interface ProductQuestion {
   created_at: string;
 }
 
-export interface Home {
-  trending_categories: Category[];
-  trending_products: Product[];
-  new_arrivals: Product[];
-  category_products: Category[];
-}
-
 export interface StoreMeta {
   id: number;
-  tenant_id: number;
+  tenant_id?: number;
   meta_key: string;
   meta_sub_key?: string | null;
   meta_value: string;

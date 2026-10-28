@@ -1,550 +1,803 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { SideBySideMagnifier, MagnifierContainer, MagnifierPreview, MagnifierZoom } from '@ctasca/react-image-magnifiers';
+import { ProductCard } from "@/components/ProductCard";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useApp } from "@/context/AppContext";
+import { getAssetUrl } from "@/lib/assetHelper";
+import { Product, ProductVariant, QuestionItem, ReviewItem } from "@/types";
 import {
-  Star,
-  ShieldCheck,
-  RotateCcw,
-  Phone,
-  MessageCircle,
-  Share2,
-  Check,
-  Plus,
+  Building2,
+  CheckCircle2,
+  HelpCircle,
+  MessageSquare,
   Minus,
-  ShoppingBag,
-  Zap,
-  MapPin,
-  Clock,
-  Send,
-  Eye,
-  Package,
-  Truck,
-  Sparkles,
-  Facebook,
-  Twitter,
-  Linkedin
-} from 'lucide-react';
-import { ProductCard } from '@/components/ProductCard';
-import { useApp } from '@/context/AppContext';
-import { MOCK_PRODUCTS, MOCK_REVIEWS, MOCK_QUESTIONS } from '@/data/mockData';
-import { Product, ProductQuestion, ProductReview } from '@/types';
-import { api } from '@/services/api';
+  Phone,
+  Plus,
+  RotateCcw,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 interface ProductDetailsClientProps {
   product: Product;
-  productSlug?: string;
+  reviews?: ReviewItem[];
+  questions?: QuestionItem[];
+  suggestions?: Product[];
 }
 
-export default function ProductDetailsClient({ product }: ProductDetailsClientProps) {
-  const {
-    formatPrice,
-    addToCart,
-    quickBuy,
-    showToast
-  } = useApp();
+export default function ProductDetailsClient({
+  product,
+  reviews = [],
+  questions = [],
+  suggestions = [],
+}: ProductDetailsClientProps) {
+  const { formatPrice, addToCart, quickBuy } = useApp();
 
-  const [activeImage, setActiveImage] = useState<string>(product.image);
-  const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<'desc' | 'reviews' | 'qa' | 'authenticity'>('desc');
+  // Selected size & color state
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-  // Shipping location check
-  const [selectedCity, setSelectedCity] = useState('Dhaka (Inside City)');
-  const [shippingEstimate, setShippingEstimate] = useState<{ cost: number; time: string }>({
-    cost: 60,
-    time: '24-48 Hours via RedX Express'
-  });
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
-  // Reviews & Questions
-  const [reviews, setReviews] = useState<ProductReview[]>(() =>
-    MOCK_REVIEWS.filter((r) => r.product_id === product.id || product.id === 108565)
-  );
-  const [questions, setQuestions] = useState<ProductQuestion[]>(() =>
-    MOCK_QUESTIONS.filter((q) => q.product_id === product.id || product.id === 108565)
-  );
-  const [newReviewText, setNewReviewText] = useState('');
-  const [newReviewRating, setNewReviewRating] = useState(5);
-  const [newQuestionText, setNewQuestionText] = useState('');
+  // Extract distinct available sizes & colors from variants
+  const [availableSizes, availableColors] = useMemo<[string[], string[]]>(() => {
+    const variants = product.variants ?? [];
 
-  const handleCityChange = (city: string) => {
-    setSelectedCity(city);
-    if (city.toLowerCase().includes('dhaka')) {
-      setShippingEstimate({ cost: 60, time: '24-48 Hours via RedX Express' });
-    } else {
-      setShippingEstimate({ cost: 130, time: '48-72 Hours Nationwide' });
+    const { sizeSet, colorSet } = variants.reduce(
+      (acc, variant) => {
+        if (variant.size) {
+          acc.sizeSet.add(variant.size);
+        }
+
+        if (variant.color) {
+          acc.colorSet.add(variant.color);
+        }
+
+        return acc;
+      },
+      { sizeSet: new Set<string>(), colorSet: new Set<string>() },
+    );
+
+    if (sizeSet.size > 0) {
+      setSelectedSize(sizeSet.values().next().value);
+    }
+
+    if (colorSet.size > 0) {
+      setSelectedColor(colorSet.values().next().value);
+    }
+
+    return [Array.from(sizeSet), Array.from(colorSet)];
+  }, [product.variants]);
+
+  // Determine active variant based on size and color selection
+  const selectedVariant = useMemo<ProductVariant>(() => {
+    const variants = product.variants || [];
+    if (variants.length === 0) {
+      return {
+        id: product.id,
+        size: null,
+        color: null,
+        price: Number(product.price ?? 0),
+        images: [],
+      };
+    }
+
+    if (selectedSize && selectedColor) {
+      const match = variants.find((v) => v.size === selectedSize && v.color === selectedColor);
+      if (match) return match;
+    }
+    if (selectedSize) {
+      const match = variants.find((v) => v.size === selectedSize);
+      if (match) return match;
+    }
+    if (selectedColor) {
+      const match = variants.find((v) => v.color === selectedColor);
+      if (match) return match;
+    }
+    return variants[0];
+  }, [product.variants, product.id, product.price, selectedSize, selectedColor]);
+
+  // Variant change handlers
+  const handleSizeChange = (newSize: string) => {
+    setSelectedSize(newSize);
+    if (availableColors.length > 0) {
+      const existsWithColor = product.variants.some((v) => v.size === newSize && v.color === selectedColor);
+      if (!existsWithColor) {
+        const alt = product.variants.find((v) => v.size === newSize && v.color);
+        if (alt?.color) setSelectedColor(alt.color);
+      }
     }
   };
 
-  const handleReviewSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newReviewText.trim()) return;
-    const newRev: ProductReview = {
-      id: Date.now(),
-      product_id: product.id,
-      user_id: 1,
-      user_name: 'Verified Customer',
-      rating: newReviewRating,
-      review: newReviewText,
-      status: 1,
-      created_at: new Date().toISOString()
-    };
-    setReviews([newRev, ...reviews]);
-    setNewReviewText('');
-    showToast('Review submitted successfully!', 'success');
+  const handleColorChange = (newColor: string) => {
+    setSelectedColor(newColor);
+    if (availableSizes.length > 0) {
+      const existsWithSize = product.variants.some((v) => v.color === newColor && v.size === selectedSize);
+      if (!existsWithSize) {
+        const alt = product.variants.find((v) => v.color === newColor && v.size);
+        if (alt?.size) setSelectedSize(alt.size);
+      }
+    }
   };
 
-  const handleQuestionSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newQuestionText.trim()) return;
-    const newQ: ProductQuestion = {
-      id: Date.now(),
-      product_id: product.id,
-      question: newQuestionText,
-      answer: 'Thank you for your question! Our product specialist confirms 100% genuine formulation.',
-      status: 1,
-      created_at: new Date().toISOString()
-    };
-    setQuestions([newQ, ...questions]);
-    setNewQuestionText('');
-    showToast('Question submitted to store specialist!', 'success');
+  // Prices
+  const currentPrice = selectedVariant.price;
+  const currentOldPrice =
+    selectedVariant.old_price ??
+    (product.discount && product.discount > 0 ? Math.round(currentPrice / (1 - product.discount / 100)) : undefined);
+
+  // Gallery Images
+  const galleryImages = useMemo<string[]>(() => {
+    const list: string[] = [];
+    if (Array.isArray(selectedVariant.images) && selectedVariant.images.length > 0) {
+      selectedVariant.images.forEach((img) => {
+        const formatted = getAssetUrl(img);
+        if (!list.includes(formatted)) list.push(formatted);
+      });
+    }
+    if (list.length === 0) {
+      if (product.thumbnail) list.push(getAssetUrl(product.thumbnail));
+      else list.push("/assets/images/product-placeholder.png");
+    }
+    return list;
+  }, [selectedVariant.images, product.thumbnail]);
+
+  const [activeImage, setActiveImage] = useState<string>(() => galleryImages[0]);
+
+  useEffect(() => {
+    if (galleryImages.length > 0) {
+      setActiveImage(galleryImages[0]);
+    }
+  }, [galleryImages]);
+
+  // Side-by-side zoom state
+  const [isZooming, setIsZooming] = useState(false);
+  const [lensPos, setLensPos] = useState({ x: 0, y: 0 });
+  const [zoomPercent, setZoomPercent] = useState({ x: 50, y: 50 });
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const LENS_SIZE = 130;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageContainerRef.current) return;
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const maxLensX = Math.max(0, rect.width - LENS_SIZE);
+    const maxLensY = Math.max(0, rect.height - LENS_SIZE);
+
+    const lensX = Math.max(0, Math.min(maxLensX, mouseX - LENS_SIZE / 2));
+    const lensY = Math.max(0, Math.min(maxLensY, mouseY - LENS_SIZE / 2));
+
+    setLensPos({ x: lensX, y: lensY });
+
+    const percentX = maxLensX > 0 ? (lensX / maxLensX) * 100 : 50;
+    const percentY = maxLensY > 0 ? (lensY / maxLensY) * 100 : 50;
+
+    setZoomPercent({ x: percentX, y: percentY });
   };
 
-  const galleryImages = [
-    product.image,
-    '/src/assets/images/hero_beauty_skincare_banner_1792385518854.jpg',
-    '/src/assets/images/product_skincare_cleanser_botanical_1792385521171.jpg'
-  ];
+  // Quantity State
+  const [quantity, setQuantity] = useState(1);
+  const totalAmount = currentPrice * quantity;
 
-  const relatedProducts = MOCK_PRODUCTS.filter((p) => p.id !== product.id).slice(0, 6);
+  // Stock & SKU
+  const currentStock = selectedVariant.stock ?? 10;
+  const isInStock = currentStock > 0;
+  const currentSku =
+    selectedVariant.sku || product.sku || (product.others ? JSON.parse(product.others || "{}")?.sku : "") || "103764";
+  const productCode = String(product.id || "10");
+
+  // Store Contacts
+  const hotline = process.env.NEXT_PUBLIC_STORE_HOTLINE || "+8801894084242";
+  const whatsappNum = (process.env.NEXT_PUBLIC_STORE_WHATSAPP || hotline).replace(/[^0-9]/g, "");
+
+  // Add to cart & Quick Buy
+  const handleAddToCart = () => {
+    addToCart(
+      {
+        ...product,
+        price: currentPrice,
+        old_price: currentOldPrice,
+        image: activeImage,
+      },
+      quantity,
+      {
+        size: selectedSize || undefined,
+        color: selectedColor || undefined,
+        variant_id: selectedVariant.id,
+      },
+    );
+  };
+
+  const handleQuickBuy = () => {
+    quickBuy(
+      {
+        ...product,
+        price: currentPrice,
+        old_price: currentOldPrice,
+        image: activeImage,
+      },
+      quantity,
+      {
+        size: selectedSize || undefined,
+        color: selectedColor || undefined,
+        variant_id: selectedVariant.id,
+      },
+    );
+  };
+
+  // WhatsApp Order
+  const handleWhatsAppOrder = () => {
+    const details = [
+      `Hello! I would like to order:`,
+      `*${product.name}*`,
+      selectedSize ? `Size: ${selectedSize}` : null,
+      selectedColor ? `Color: ${selectedColor}` : null,
+      `Quantity: ${quantity}`,
+      `Total Price: Tk.${totalAmount}`,
+      `SKU: ${currentSku}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const url = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(details)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  // Average review calculation
+  const averageRating = useMemo(() => {
+    if (!reviews || reviews.length === 0) return 4.5;
+    const sum = reviews.reduce((acc, r) => acc + Number(r.rating || 0), 0);
+    return sum / reviews.length;
+  }, [reviews]);
+
+  // Merchant info
+  const merchantInfo = product.merchant?.[0];
+
+  // Social share
+  const shareUrl = "";
+  const shareTitle = product.name;
 
   return (
-    <div className="w-full pb-16 space-y-8 sm:space-y-10 pt-4 sm:pt-6">
-      {/* 1. Main PDP Container */}
+    <div className="w-full pb-16 space-y-6 pt-4 sm:pt-6 min-h-screen">
+      {/* 1. Main Product Card */}
       <section className="container">
-        <div className="section-card p-4 sm:p-7">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs text-[#736C62] dark:text-[#9E968B] mb-5 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-            <Link href="/" className="hover:text-[#BA2D1D]">Home</Link>
-            <span>›</span>
-            <Link href={`/category/${product.category_id === 101 ? 'health-vitamin' : 'health-beauty'}`} className="hover:text-[#BA2D1D]">
-              {product.category_name || 'Beauty & Wellness'}
-            </Link>
-            <span>›</span>
-            <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold truncate max-w-sm">
-              {product.name}
-            </span>
-          </div>
+        <Card>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Left Column: Side-by-side Zoom Stage & Thumbnails (5 Cols) */}
+            <div className="lg:col-span-5 flex flex-col items-center relative">
+              <div
+                ref={imageContainerRef}
+                onMouseEnter={() => setIsZooming(true)}
+                onMouseLeave={() => setIsZooming(false)}
+                onMouseMove={handleMouseMove}
+                className="relative aspect-square w-full max-w-[420px] bg-white dark:bg-[#161616] flex items-center justify-center select-none cursor-crosshair rounded-xs border border-gray-100 dark:border-gray-800"
+              >
+                <img src={activeImage} alt={product.name} className="max-h-full max-w-full object-contain p-2" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left: Product Image & Gallery (5 cols) */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="product-image-stage relative aspect-square w-full bg-white dark:bg-[#161616] rounded-xs p-4">
-                <div className="product-magnifier w-full h-full">
-                  {/* <SideBySideMagnifier
-                    imageSrc={activeImage || product.image}
-                    largeImageSrc={activeImage || product.image}
-                    switchSides={false}
-                    fillAvailableSpace
-                    zoomContainerWidth={300}
-                    zoomContainerHeight={300}
-                    alt={product.name}
-                  /> */}
-                </div>
-              </div>
+                {/* Hover Lens Indicator */}
+                {isZooming && (
+                  <div
+                    className="hidden lg:block absolute pointer-events-none border-2 border-[#540d2e]/50 dark:border-white/50 bg-primary/10 dark:bg-white/10 rounded-xs transition-opacity duration-75"
+                    style={{
+                      width: `${LENS_SIZE}px`,
+                      height: `${LENS_SIZE}px`,
+                      left: `${lensPos.x}px`,
+                      top: `${lensPos.y}px`,
+                    }}
+                  />
+                )}
 
-              {/* Thumbnails */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                {galleryImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImage(img)}
-                    className={`w-16 h-16 rounded border p-1 bg-white dark:bg-[#1A1916] transition-all cursor-pointer ${activeImage === img
-                      ? 'border-[#BA2D1D] ring-2 ring-[#BA2D1D]/20'
-                      : 'border-[#E8E2D9] dark:border-[#312E29] opacity-70 hover:opacity-100'
-                      }`}
+                {/* Side by Side Zoom Window */}
+                {isZooming && (
+                  <div
+                    className="hidden lg:block absolute left-[calc(100%+20px)] top-0 z-50 w-[460px] h-[460px] xl:w-[500px] xl:h-[500px] bg-white dark:bg-[#1c1c1c] rounded-md border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden pointer-events-none"
+                    style={{
+                      backgroundImage: `url(${activeImage})`,
+                      backgroundPosition: `${zoomPercent.x}% ${zoomPercent.y}%`,
+                      backgroundSize: "150%",
+                      backgroundRepeat: "no-repeat",
+                    }}
                   >
-                    <img src={img} alt="Thumbnail" className="w-full h-full object-contain" />
-                  </button>
-                ))}
+                    <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-black/60 text-white text-[10px] font-medium rounded-full backdrop-blur-xs tracking-wide">
+                      Zoomed View (1.5×)
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Assurances Under Image */}
-              <div className="grid grid-cols-2 gap-2 text-[11px] text-[#736C62] dark:text-[#9E968B] pt-2">
-                <div className="flex items-center gap-1.5 p-2 bg-[#FBF9F5] dark:bg-[#1A1815] rounded-xs">
-                  <ShieldCheck className="w-4 h-4 text-[#1F6E54]" />
-                  <span>100% Genuine Import</span>
+              {/* Thumbnails row */}
+              {galleryImages.length > 1 && (
+                <div className="flex items-center justify-center gap-2.5 overflow-x-auto w-full pt-4 pb-1">
+                  {galleryImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImage(img)}
+                      className={`w-14 h-14 rounded-xs border p-1 bg-white dark:bg-[#161616] transition-all cursor-pointer flex-shrink-0 ${
+                        activeImage === img
+                          ? "border-[#540d2e] ring-2 ring-[#540d2e]/20"
+                          : "border-gray-200 dark:border-gray-700 opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <img src={img} alt="Thumbnail" className="w-full h-full object-contain" />
+                    </button>
+                  ))}
                 </div>
-                <div className="flex items-center gap-1.5 p-2 bg-[#FBF9F5] dark:bg-[#1A1815] rounded-xs">
-                  <RotateCcw className="w-4 h-4 text-[#BA2D1D]" />
-                  <span>7-Day Return Policy</span>
-                </div>
-              </div>
+              )}
             </div>
 
-            {/* Right: Product Info & Buy Box (7 cols) */}
-            <div className="lg:col-span-7 space-y-5">
+            {/* Right Column: Product Details & Buying Controls (7 Cols) */}
+            <div className="lg:col-span-7 flex flex-col space-y-4">
               <div>
-                <span className="inline-block text-[11px] font-mono uppercase tracking-widest text-[#BA2D1D] dark:text-[#E05343] font-semibold mb-1">
-                  {product.brand} · Direct Authentic Import
-                </span>
-                <h1 className="font-serif font-black text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE] leading-snug">
+                <h1 className="text-2xl sm:text-[26px] font-normal text-[#222222] dark:text-[#EDE7DE] leading-snug tracking-tight">
                   {product.name}
                 </h1>
-
-                {/* Rating & Stock */}
-                <div className="flex items-center gap-4 mt-2.5 text-xs">
-                  <div className="flex items-center gap-1 text-amber-500">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                      ))}
-                    </div>
-                    <span className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] ml-1">4.9</span>
-                    <span className="text-[#736C62] dark:text-[#9E968B]">({reviews.length} reviews)</span>
-                  </div>
-                  <span className="text-[#D3CBC0] dark:text-[#3E3A34]">|</span>
-                  <div className="flex items-center gap-1 text-[#1F6E54] dark:text-[#34A87C] font-semibold">
-                    <Check className="w-3.5 h-3.5" />
-                    <span>In Stock (Ready to Dispatch)</span>
-                  </div>
-                </div>
+                <p className="text-xs sm:text-[13px] text-gray-500 dark:text-gray-400 mt-1">
+                  By, {product.brand || "ilmComm"}
+                </p>
               </div>
 
-              {/* Price Box */}
-              <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1815] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] flex flex-wrap items-baseline justify-between gap-4">
-                <div className="flex items-baseline gap-3">
-                  <span className="text-2xl sm:text-3xl font-black text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
-                    {formatPrice(product.price || 0)}
-                  </span>
-                  {product.old_price && (
-                    <span className="text-sm text-[#9A9184] line-through font-mono tabular-nums">
-                      {formatPrice(product.old_price)}
-                    </span>
-                  )}
-                  {product.discount && (
-                    <span className="text-xs font-bold text-[#1F6E54] dark:text-[#34A87C] bg-[#1F6E54]/10 px-2 py-0.5 rounded-xs">
-                      Save {product.discount}%
-                    </span>
-                  )}
-                </div>
-                <span className="text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                  SKU: WELL-{product.id}-BD
+              {/* Price Line */}
+              <div className="flex items-baseline gap-3 pt-0.5">
+                <span className="text-2xl sm:text-[28px] font-bold text-[#540d2e] dark:text-[#E05343] font-sans">
+                  Tk.{currentPrice}
                 </span>
+                {currentOldPrice && currentOldPrice > currentPrice && (
+                  <span className="text-base sm:text-lg text-gray-400 line-through font-light">
+                    Tk.{currentOldPrice}
+                  </span>
+                )}
               </div>
 
-              {/* Delivery Zone Selector */}
-              <div className="p-3.5 bg-[#F8F5EE] dark:bg-[#1E1C19] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-1.5 font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    <Truck className="w-4 h-4 text-[#BA2D1D]" />
-                    <span>Delivery Estimate</span>
+              <div className="w-full border-b border-gray-200 dark:border-gray-800" />
+
+              {/* Meta: Availability, SKU, Product Code */}
+              <div className="space-y-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-600 dark:text-gray-400">Availability:</span>
+                  <span className={isInStock ? "text-[#16a34a] font-bold" : "text-red-500 font-bold"}>
+                    {isInStock ? "In Stock" : "Out of Stock"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-600 dark:text-gray-400">SKU:</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{currentSku}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-600 dark:text-gray-400">Product Code:</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{productCode}</span>
+                </div>
+              </div>
+
+              {/* Size Selector */}
+              {availableSizes.length > 0 && (
+                <div className="space-y-1.5 pt-1">
+                  <label className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal block">
+                    Select size:
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {availableSizes.map((size) => {
+                      const isSelected = selectedSize === size;
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          onClick={() => handleSizeChange(size)}
+                          className={`rounded-md px-3.5 py-1.5 text-xs font-normal transition-all cursor-pointer ${
+                            isSelected
+                              ? "border border-[#540d2e] ring-1 ring-[#540d2e] text-[#540d2e] bg-primary/5 dark:bg-primary/20 font-medium"
+                              : "border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 bg-white dark:bg-[#202020] hover:border-gray-400"
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <select
-                    value={selectedCity}
-                    onChange={(e) => handleCityChange(e.target.value)}
-                    className="bg-white dark:bg-[#262420] border border-[#DCD5C9] dark:border-[#38332C] text-xs rounded px-2 py-1 text-[#1F1D1A] dark:text-[#EDE7DE]"
-                  >
-                    <option value="Dhaka (Inside City)">Inside Dhaka City</option>
-                    <option value="Chittagong / Nationwide">Outside Dhaka (All Districts)</option>
-                  </select>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                  <span>Delivery Charge: <strong className="text-[#BA2D1D]">Tk. {shippingEstimate.cost}</strong></span>
-                  <span>Timeline: <strong>{shippingEstimate.time}</strong></span>
-                </div>
-              </div>
+              )}
 
-              {/* Quantity Selector & Action Buttons */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-4">
-                  <span className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">Quantity:</span>
-                  <div className="flex items-center border border-[#DCD5C9] dark:border-[#38332C] rounded-xs bg-[#FBF9F5] dark:bg-[#161513]">
+              {/* Color Selector */}
+              {availableColors.length > 0 && (
+                <div className="space-y-1.5 pt-1">
+                  <label className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal block">
+                    Select color:
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {availableColors.map((color) => {
+                      const isSelected = selectedColor === color;
+                      return (
+                        <button
+                          key={color}
+                          type="button"
+                          onClick={() => handleColorChange(color)}
+                          className={`rounded-md px-3.5 py-1.5 text-xs font-normal transition-all cursor-pointer flex items-center gap-1.5 ${
+                            isSelected
+                              ? "border border-[#540d2e] ring-1 ring-[#540d2e] text-[#540d2e] bg-primary/5 dark:bg-primary/20 font-medium"
+                              : "border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 bg-white dark:bg-[#202020] hover:border-gray-400"
+                          }`}
+                        >
+                          <span
+                            className="w-2.5 h-2.5 rounded-full border border-gray-300 inline-block"
+                            style={{ backgroundColor: color.toLowerCase() }}
+                          />
+                          <span>{color}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Quantity Selector */}
+              <div className="pt-1 flex gap-5 items-end">
+                <div className="quantity-select">
+                  <label className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal block">
+                    Select Quantity:
+                  </label>
+                  <div className="inline-flex items-center border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-[#202020] h-9">
                     <button
+                      type="button"
                       onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                      className="w-8 h-8 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
+                      className="w-9 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors cursor-pointer text-sm"
+                      aria-label="Decrease quantity"
                     >
                       <Minus className="w-3.5 h-3.5" />
                     </button>
-                    <span className="w-10 text-center text-xs font-semibold font-mono">
+                    <span className="w-10 text-center text-sm font-medium text-gray-900 dark:text-white select-none">
                       {quantity}
                     </span>
                     <button
+                      type="button"
                       onClick={() => setQuantity((prev) => prev + 1)}
-                      className="w-8 h-8 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
+                      className="w-9 h-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors cursor-pointer text-sm"
+                      aria-label="Increase quantity"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
-
-                {/* Primary Buttons */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <button
-                    onClick={() => addToCart(product, quantity)}
-                    className="flex items-center justify-center gap-2 bg-[#5C5549] hover:bg-[#453F36] dark:bg-[#383838] dark:hover:bg-[#4A4A4A] text-white py-3 px-5 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-xs cursor-pointer"
+                <div className="flex items-center gap-1">
+                  <Button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="rounded px-6 py-2.5 text-xs sm:text-sm font-medium h-auto"
                   >
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Add To Bag</span>
-                  </button>
-                  <button
-                    onClick={() => quickBuy(product, quantity)}
-                    className="flex items-center justify-center gap-2 bg-[#BA2D1D] hover:bg-[#961F12] text-white py-3 px-5 rounded-xs font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+                    Add To Cart
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleQuickBuy}
+                    variant="dark"
+                    className="rounded px-6 py-2.5 text-xs sm:text-sm font-medium h-auto bg-[#606060] hover:bg-[#4d4d4d]"
                   >
-                    <Zap className="w-4 h-4" />
-                    <span>Buy Now (Checkout)</span>
-                  </button>
+                    Quick Buy
+                  </Button>
                 </div>
               </div>
 
-              {/* Contact Seller & Hotline */}
-              <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A] flex flex-wrap items-center justify-between text-xs text-[#736C62] dark:text-[#9E968B] gap-3">
-                <a
-                  href="tel:+8801894084242"
-                  className="inline-flex items-center gap-1.5 hover:text-[#BA2D1D]"
+              {/* Amount Total */}
+              <div className="pt-1 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                <span>Product amount total: </span>
+                <span className="font-bold text-gray-900 dark:text-white font-sans">Tk.{totalAmount}</span>
+              </div>
+
+              {/* Action Buttons & Call Widget */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Button
+                  type="button"
+                  onClick={handleWhatsAppOrder}
+                  variant="whatsapp"
+                  className="rounded-full px-5 py-2.5 text-xs sm:text-sm h-auto inline-flex items-center gap-2"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#BA2D1D]" />
-                  <span>Call Store Hotline: <strong>+8801894084242</strong></span>
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.974.53 1.954.811 2.796.811 3.183 0 5.768-2.587 5.769-5.766.001-3.182-2.585-5.769-5.769-5.769zm3.374 8.232c-.145.409-.834.782-1.159.832-.324.05-.738.082-2.386-.596-1.986-.816-3.266-2.836-3.366-2.969-.099-.133-.799-1.063-.799-2.028 0-.965.506-1.44.686-1.636.181-.196.395-.246.527-.246.132 0 .264.001.379.006.121.006.284-.046.444.337.165.396.564 1.375.614 1.475.05.1.083.216.017.348-.066.133-.1.216-.198.332-.099.117-.208.261-.297.351-.1.1-.205.209-.088.409.117.2 5.21 3.018 1.119 3.548.599.53 1.104.694 1.261.773.157.08.248.066.34-.04.091-.106.391-.455.496-.61.105-.155.209-.13.348-.08.139.05.882.416 1.033.491.151.075.252.112.289.176.037.064.037.373-.108.782zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.176L2 22l4.981-1.306C8.441 21.536 10.165 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+                  </svg>
+                  <span>Order on WhatsApp</span>
+                </Button>
+                <a
+                  href={`tel:${hotline.replace(/[^0-9+]/g, "")}`}
+                  className="bg-[#f4f3f6] dark:bg-[#252224] hover:bg-[#eae8ef] dark:hover:bg-[#2e2b2d] rounded px-4 py-2 flex items-center gap-2.5 transition-colors no-underline"
+                >
+                  <Phone className="w-4 h-4 text-[#540d2e] dark:text-primary -rotate-12 fill-current" />
+                  <div className="flex flex-col text-left">
+                    <span className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 leading-tight">
+                      Call for order
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white leading-tight">
+                      {hotline}
+                    </span>
+                  </div>
                 </a>
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px]">Share:</span>
-                  <a href="#fb" className="hover:text-[#BA2D1D]"><Facebook className="w-3.5 h-3.5" /></a>
-                  <a href="#tw" className="hover:text-[#BA2D1D]"><Twitter className="w-3.5 h-3.5" /></a>
-                  <a href="#in" className="hover:text-[#BA2D1D]"><Linkedin className="w-3.5 h-3.5" /></a>
+              </div>
+
+              {/* Share */}
+              <div className="flex items-center gap-2 pt-1 text-xs text-gray-600 dark:text-gray-400">
+                <span className="font-normal">Share on:</span>
+                <div className="flex items-center gap-1.5">
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on Facebook"
+                    className="w-6 h-6 bg-[#3b5998] hover:opacity-90 text-white rounded-xs flex items-center justify-center transition-opacity"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on Twitter"
+                    className="w-6 h-6 bg-[#00acee] hover:opacity-90 text-white rounded-xs flex items-center justify-center transition-opacity"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.936 9.936 0 0024 4.59z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on LinkedIn"
+                    className="w-6 h-6 bg-[#0077b5] hover:opacity-90 text-white rounded-xs flex items-center justify-center transition-opacity"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(activeImage)}&description=${encodeURIComponent(product.name)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on Pinterest"
+                    className="w-6 h-6 bg-[#bd081c] hover:opacity-90 text-white rounded-xs flex items-center justify-center transition-opacity"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.357-.053.211-.174.256-.402.151-1.499-.696-2.435-2.882-2.435-4.639 0-3.777 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+                    </svg>
+                  </a>
+                  <a
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareTitle} - ${shareUrl}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share on WhatsApp"
+                    className="w-6 h-6 bg-[#25d366] hover:opacity-90 text-white rounded-xs flex items-center justify-center transition-opacity"
+                  >
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.974.53 1.954.811 2.796.811 3.183 0 5.768-2.587 5.769-5.766.001-3.182-2.585-5.769-5.769-5.769zm3.374 8.232c-.145.409-.834.782-1.159.832-.324.05-.738.082-2.386-.596-1.986-.816-3.266-2.836-3.366-2.969-.099-.133-.799-1.063-.799-2.028 0-.965.506-1.44.686-1.636.181-.196.395-.246.527-.246.132 0 .264.001.379.006.121.006.284-.046.444.337.165.396.564 1.375.614 1.475.05.1.083.216.017.348-.066.133-.1.216-.198.332-.099.117-.208.261-.297.351-.1.1-.205.209-.088.409.117.2 5.21 3.018 1.119 3.548.599.53 1.104.694 1.261.773.157.08.248.066.34-.04.091-.106.391-.455.496-.61.105-.155.209-.13.348-.08.139.05.882.416 1.033.491.151.075.252.112.289.176.037.064.037.373-.108.782zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.176L2 22l4.981-1.306C8.441 21.536 10.165 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] text-gray-600 dark:text-gray-400 pt-1">
+                <div className="flex items-center gap-1.5 p-2 bg-[#faf9f7] dark:bg-[#1a1815] rounded">
+                  <ShieldCheck className="w-4 h-4 text-[#16a34a]" />
+                  <span>100% Genuine Certified</span>
+                </div>
+                <div className="flex items-center gap-1.5 p-2 bg-[#faf9f7] dark:bg-[#1a1815] rounded">
+                  <RotateCcw className="w-4 h-4 text-[#540d2e] dark:text-primary" />
+                  <span>7-Day Return Policy</span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </section>
 
-      {/* 2. Detailed Tabs Section */}
-      <section className="container">
-        <div className="section-card p-4 sm:p-7 space-y-6">
-          {/* Tab Headers */}
-          <div className="flex border-b border-[#E8E2D9] dark:border-[#312E29] overflow-x-auto gap-4 sm:gap-6 text-xs sm:text-sm font-semibold uppercase tracking-wider">
-            <button
-              onClick={() => setActiveTab('desc')}
-              className={`pb-3 border-b-2 transition-colors cursor-pointer ${activeTab === 'desc'
-                ? 'border-[#BA2D1D] text-[#BA2D1D]'
-                : 'border-transparent text-[#736C62] dark:text-[#9E968B] hover:text-[#1F1D1A]'
-                }`}
-            >
-              Description & Specifications
-            </button>
-            <button
-              onClick={() => setActiveTab('authenticity')}
-              className={`pb-3 border-b-2 transition-colors cursor-pointer ${activeTab === 'authenticity'
-                ? 'border-[#BA2D1D] text-[#BA2D1D]'
-                : 'border-transparent text-[#736C62] dark:text-[#9E968B] hover:text-[#1F1D1A]'
-                }`}
-            >
-              Authenticity & Lab Verification
-            </button>
-            <button
-              onClick={() => setActiveTab('reviews')}
-              className={`pb-3 border-b-2 transition-colors cursor-pointer ${activeTab === 'reviews'
-                ? 'border-[#BA2D1D] text-[#BA2D1D]'
-                : 'border-transparent text-[#736C62] dark:text-[#9E968B] hover:text-[#1F1D1A]'
-                }`}
-            >
-              Customer Reviews ({reviews.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('qa')}
-              className={`pb-3 border-b-2 transition-colors cursor-pointer ${activeTab === 'qa'
-                ? 'border-[#BA2D1D] text-[#BA2D1D]'
-                : 'border-transparent text-[#736C62] dark:text-[#9E968B] hover:text-[#1F1D1A]'
-                }`}
-            >
-              Questions & Answers ({questions.length})
-            </button>
-          </div>
+      {/* 2. Four Section Cards Below Product Main Card */}
+      <section className="container space-y-6">
+        {/* Card 1: Description Card */}
+        <Card className="space-y-4">
+          <CardHeader className="p-0 border-b border-gray-200 dark:border-gray-800 pb-3 flex flex-row items-center justify-between">
+            <CardTitle className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">Description</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-1">
+            <div
+              className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed prose dark:prose-invert max-w-none [&_table]:w-full [&_table]:border-collapse [&_table]:my-3 [&_td]:border [&_td]:border-gray-200 dark:[&_td]:border-gray-700 [&_td]:p-2.5 [&_th]:border [&_th]:border-gray-200 dark:[&_th]:border-gray-700 [&_th]:p-2.5 [&_ul]:list-disc [&_ul]:list-inside [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:list-inside [&_ol]:space-y-1"
+              dangerouslySetInnerHTML={{
+                __html: product.description || "<p>No description provided for this product.</p>",
+              }}
+            />
+          </CardContent>
+        </Card>
 
-          {/* Tab Content */}
-          <div className="pt-2">
-            {activeTab === 'desc' && (
-              <div className="space-y-4 text-xs sm:text-sm text-[#4A443B] dark:text-[#C5BEB3] leading-relaxed">
-                <p dangerouslySetInnerHTML={{ __html: product.description}} />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3">
-                  <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1916] rounded-xs border border-[#E8E2D9] dark:border-[#312E29]">
-                    <h4 className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] mb-2">
-                      Key Highlights
-                    </h4>
-                    <ul className="space-y-1.5 text-xs list-disc list-inside">
-                      <li>100% Genuine imported formulation with original packaging</li>
-                      <li>Dermatologist verified and lab tested</li>
-                      <li>Batch serial number printed on outer carton</li>
-                      <li>Cruelty free, non-comedogenic formula</li>
-                    </ul>
+        {/* Card 2: Reviews & Merchant Rating in One Card */}
+        <Card className="space-y-6">
+          <CardHeader className="p-0 border-b border-gray-200 dark:border-gray-800 pb-3 flex flex-row items-center justify-between">
+            <CardTitle className="text-base sm:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <MessageSquare className="w-5 h-5 text-[#540d2e] dark:text-primary" />
+              <span>Reviews &amp; Merchant Rating</span>
+            </CardTitle>
+            <span className="text-xs text-gray-500 font-medium">
+              {reviews.length} {reviews.length === 1 ? "Review" : "Reviews"}
+            </span>
+          </CardHeader>
+
+          <CardContent className="pt-1">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* Merchant Rating Column (4 cols) */}
+              <div className="lg:col-span-4 bg-[#faf9f7] dark:bg-[#202020] rounded-md p-4 sm:p-5 border border-gray-200 dark:border-gray-700 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/30 flex items-center justify-center text-[#540d2e] dark:text-primary shrink-0">
+                    <Building2 className="w-5 h-5" />
                   </div>
-                  <div className="p-4 bg-[#FBF9F5] dark:bg-[#1A1916] rounded-xs border border-[#E8E2D9] dark:border-[#312E29]">
-                    <h4 className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] mb-2">
-                      Usage Directions
-                    </h4>
-                    <p className="text-xs">
-                      Apply a moderate amount onto clean, dry skin or pulse points. For skincare, massage in upward circular motions until fully absorbed. Suitable for daily morning and night routines.
+                  <div>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 block">
+                      Merchant Profile
+                    </span>
+                    <h3 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">
+                      {merchantInfo?.company_name || merchantInfo?.name || product.brand || "Authorized Merchant"}
+                    </h3>
+                    <div className="flex items-center gap-1 text-[11px] text-[#16a34a] font-medium mt-0.5">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Verified Seller</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rating Score Breakdown */}
+                <div className="flex items-center gap-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                  <div className="text-3xl font-extrabold text-[#540d2e] dark:text-primary">
+                    {averageRating.toFixed(1)}
+                  </div>
+                  <div>
+                    <div className="flex text-amber-500">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`w-3.5 h-3.5 ${
+                            star <= Math.round(averageRating)
+                              ? "fill-current text-amber-500"
+                              : "text-gray-300 dark:text-gray-600"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">
+                      Based on {reviews.length} customer ratings
                     </p>
                   </div>
                 </div>
-              </div>
-            )}
 
-            {activeTab === 'authenticity' && (
-              <div className="space-y-4 text-xs sm:text-sm text-[#4A443B] dark:text-[#C5BEB3] leading-relaxed">
-                <div className="p-5 bg-[#F2F9F5] dark:bg-[#14231C] rounded-xs border border-[#BDE3CF] dark:border-[#1E4D38] space-y-2">
-                  <div className="flex items-center gap-2 text-[#1F6E54] dark:text-[#34A87C] font-bold">
-                    <ShieldCheck className="w-5 h-5" />
-                    <span>Wellsell BD 100% Genuine Import Guarantee</span>
+                {/* Performance Metrics */}
+                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-gray-200 dark:border-gray-700 text-center text-xs">
+                  <div className="p-2 bg-white dark:bg-[#181818] rounded">
+                    <span className="font-bold text-gray-900 dark:text-white block">98%</span>
+                    <span className="text-[10px] text-gray-500">Positive</span>
                   </div>
-                  <p className="text-xs">
-                    Every cosmetic, perfume, and dietary supplement item sold on Wellsell BD is imported directly through authorized distributors from the USA, Korea, and Japan. All items contain legitimate batch codes verifiable against the manufacturer database.
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                  <div className="section-card p-4 text-center">
-                    <span className="font-bold text-lg text-[#BA2D1D]">100%</span>
-                    <p className="text-xs text-[#736C62] mt-1">Authentic Batch Proof</p>
+                  <div className="p-2 bg-white dark:bg-[#181818] rounded">
+                    <span className="font-bold text-gray-900 dark:text-white block">100%</span>
+                    <span className="text-[10px] text-gray-500">On-Time</span>
                   </div>
-                  <div className="section-card p-4 text-center">
-                    <span className="font-bold text-lg text-[#1F6E54]">7 Days</span>
-                    <p className="text-xs text-[#736C62] mt-1">Hassle-Free Money Back</p>
-                  </div>
-                  <div className="section-card p-4 text-center">
-                    <span className="font-bold text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">RedX</span>
-                    <p className="text-xs text-[#736C62] mt-1">Inspected Parcel Delivery</p>
+                  <div className="p-2 bg-white dark:bg-[#181818] rounded">
+                    <span className="font-bold text-gray-900 dark:text-white block">96%</span>
+                    <span className="text-[10px] text-gray-500">Response</span>
                   </div>
                 </div>
               </div>
-            )}
 
-            {activeTab === 'reviews' && (
-              <div className="space-y-6">
-                {/* Submit New Review Form */}
-                <form onSubmit={handleReviewSubmit} className="p-4 bg-[#FBF9F5] dark:bg-[#1A1916] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] space-y-3">
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Write a Verified Review
-                  </h4>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-[#736C62]">Your Rating:</span>
-                    <select
-                      value={newReviewRating}
-                      onChange={(e) => setNewReviewRating(Number(e.target.value))}
-                      className="bg-white dark:bg-[#262420] border border-[#DCD5C9] text-xs rounded px-2 py-1"
-                    >
-                      <option value={5}>5 Stars - Outstanding</option>
-                      <option value={4}>4 Stars - Very Good</option>
-                      <option value={3}>3 Stars - Average</option>
-                      <option value={2}>2 Stars - Below Average</option>
-                      <option value={1}>1 Star - Poor</option>
-                    </select>
+              {/* Customer Reviews Listing (8 cols) */}
+              <div className="lg:col-span-8 space-y-3">
+                {reviews.length === 0 ? (
+                  <div className="p-8 text-center bg-gray-50 dark:bg-[#202020] rounded-md text-gray-500 dark:text-gray-400 text-xs">
+                    No reviews available yet for this product.
                   </div>
-                  <textarea
-                    required
-                    rows={2}
-                    value={newReviewText}
-                    onChange={(e) => setNewReviewText(e.target.value)}
-                    placeholder="Share your experience regarding texture, fragrance, and longevity..."
-                    className="w-full bg-white dark:bg-[#262420] border border-[#DCD5C9] text-xs p-2.5 rounded-xs focus:outline-none focus:border-[#BA2D1D]"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider transition-colors cursor-pointer"
-                  >
-                    Submit Review
-                  </button>
-                </form>
-
-                {/* Reviews List */}
-                <div className="space-y-3 divide-y divide-[#F0EDE8] dark:divide-[#262420]">
-                  {reviews.map((r) => (
-                    <div key={r.id} className="pt-3 first:pt-0 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
-                          {r.user_name}
-                        </span>
-                        <div className="flex text-amber-500">
-                          {[...Array(r.rating || 5)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-current" />
-                          ))}
+                ) : (
+                  <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                    {reviews.map((r) => (
+                      <div key={r.id} className="py-3 first:pt-0 last:pb-0 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-primary/10 text-[#540d2e] dark:text-primary font-bold text-[11px] flex items-center justify-center">
+                              #{r.user_id}
+                            </div>
+                            <span className="font-bold text-xs text-gray-900 dark:text-white">
+                              Customer #{r.user_id}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <div className="flex text-amber-500">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                  key={star}
+                                  className={`w-3 h-3 ${
+                                    star <= Math.round(r.rating)
+                                      ? "fill-current text-amber-500"
+                                      : "text-gray-300 dark:text-gray-600"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <span className="text-[11px] text-gray-500 font-medium">({r.rating})</span>
+                          </div>
                         </div>
+                        <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed pl-8">{r.review}</p>
+                        <div className="text-[10px] text-gray-400 pl-8">{r.created_at}</div>
                       </div>
-                      <p className="text-xs text-[#5C5549] dark:text-[#B3ABA0] leading-relaxed">
-                        {r.review}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'qa' && (
-              <div className="space-y-6">
-                {/* Ask a Question */}
-                <form onSubmit={handleQuestionSubmit} className="p-4 bg-[#FBF9F5] dark:bg-[#1A1916] rounded-xs border border-[#E8E2D9] dark:border-[#312E29] space-y-3">
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Have a Question about this Product?
-                  </h4>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      required
-                      value={newQuestionText}
-                      onChange={(e) => setNewQuestionText(e.target.value)}
-                      placeholder="e.g. Is this suitable for sensitive combination skin?"
-                      className="flex-1 bg-white dark:bg-[#262420] border border-[#DCD5C9] text-xs px-3 py-2 rounded-xs focus:outline-none focus:border-[#BA2D1D]"
-                    />
-                    <button
-                      type="submit"
-                      className="bg-[#5C5549] hover:bg-[#453F36] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider transition-colors cursor-pointer"
-                    >
-                      Ask Question
-                    </button>
+                    ))}
                   </div>
-                </form>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-                {/* Questions List */}
-                <div className="space-y-3 divide-y divide-[#F0EDE8] dark:divide-[#262420]">
-                  {questions.map((q) => (
-                    <div key={q.id} className="pt-3 first:pt-0 space-y-1 text-xs">
-                      <p className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center gap-1.5">
-                        <span className="text-[#BA2D1D] font-bold">Q:</span>
-                        <span>{q.question}</span>
-                      </p>
-                      {q.answer && (
-                        <p className="text-[#5C5549] dark:text-[#B3ABA0] pl-4 border-l-2 border-[#1F6E54] text-[11px] leading-relaxed">
-                          <strong>A:</strong> {q.answer}
-                        </p>
-                      )}
+        {/* Card 3: Questions Card */}
+        <Card className="space-y-4">
+          <CardHeader className="p-0 border-b border-gray-200 dark:border-gray-800 pb-3 flex flex-row items-center justify-between">
+            <CardTitle className="text-base sm:text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-[#540d2e] dark:text-primary" />
+              <span>Questions About This Product</span>
+            </CardTitle>
+            <span className="text-xs text-gray-500 font-medium">
+              {questions.length} {questions.length === 1 ? "Question" : "Questions"}
+            </span>
+          </CardHeader>
+
+          <CardContent className="pt-1">
+            {questions.length === 0 ? (
+              <div className="p-8 text-center bg-gray-50 dark:bg-[#202020] rounded-md text-gray-500 dark:text-gray-400 text-xs">
+                No questions have been asked yet for this product.
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100 dark:divide-gray-800 space-y-3">
+                {questions.map((q) => (
+                  <div key={q.id} className="pt-3 first:pt-0 space-y-2 text-xs">
+                    <div className="flex items-start gap-2">
+                      <span className="bg-primary text-white font-bold px-1.5 py-0.5 rounded-xs text-[10px] mt-0.5">
+                        Q
+                      </span>
+                      <p className="font-semibold text-gray-900 dark:text-white flex-1">{q.question}</p>
+                      <span className="text-[10px] text-gray-400 whitespace-nowrap">{q.created_at}</span>
                     </div>
-                  ))}
-                </div>
+                    {q.answer ? (
+                      <div className="flex items-start gap-2 pl-6 text-gray-700 dark:text-gray-300">
+                        <span className="bg-[#16a34a] text-white font-bold px-1.5 py-0.5 rounded-xs text-[10px] mt-0.5">
+                          A
+                        </span>
+                        <p className="text-[11px] leading-relaxed flex-1">{q.answer}</p>
+                      </div>
+                    ) : (
+                      <p className="pl-6 text-[11px] text-gray-400 italic">Pending seller response.</p>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
-          </div>
-        </div>
-      </section>
+          </CardContent>
+        </Card>
 
-      {/* 3. Related Products Section */}
-      <section className="container">
-        <div className="section-card p-4 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-            <h3 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
-              Related Recommended Products
-            </h3>
-            <Link
-              href="/category/health-beauty"
-              className="text-xs text-[#BA2D1D] hover:underline font-semibold"
-            >
-              View More ›
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
-            {relatedProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
+        {/* Card 4: Related Products Card */}
+        <Card className="space-y-4">
+          <CardHeader className="p-0 border-b border-gray-200 dark:border-gray-800 pb-3 flex flex-row items-center justify-between">
+            <CardTitle className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+              Related Products
+            </CardTitle>
+            <span className="text-xs text-gray-500 font-medium">{suggestions.length} items</span>
+          </CardHeader>
+
+          <CardContent className="pt-1">
+            {suggestions.length === 0 ? (
+              <div className="p-8 text-center bg-gray-50 dark:bg-[#202020] rounded-md text-gray-500 dark:text-gray-400 text-xs">
+                No related products found.
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+                {suggestions.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </section>
     </div>
   );

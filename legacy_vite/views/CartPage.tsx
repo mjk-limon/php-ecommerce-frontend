@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import {
-  Trash2,
-  Plus,
-  Minus,
-  ShoppingBag,
-  ArrowRight,
-  ShieldCheck,
-  Truck,
-  RotateCcw,
-  CheckCircle,
-  Tag
+    ArrowRight,
+    Minus,
+    Plus,
+    RotateCcw,
+    ShieldCheck,
+    ShoppingBag,
+    Trash2,
+    Truck
 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
 import { ShippingLocation } from '../types';
@@ -66,7 +64,7 @@ export const CartPage: React.FC = () => {
     return (
       <div className="container py-16 text-center">
         <div className="section-card max-w-lg mx-auto p-10 space-y-4">
-          <div className="w-16 h-16 rounded-full bg-[#BA2D1D]/10 text-[#BA2D1D] flex items-center justify-center mx-auto">
+          <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
           <h2 className="font-serif font-bold text-xl text-[#1F1D1A] dark:text-[#EDE7DE]">
@@ -78,7 +76,7 @@ export const CartPage: React.FC = () => {
           <div className="pt-2">
             <button
               onClick={navigateToHome}
-              className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-6 py-3 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+              className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-6 py-3 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
             >
               Continue Shopping
             </button>
@@ -103,7 +101,7 @@ export const CartPage: React.FC = () => {
           </div>
           <button
             onClick={clearCart}
-            className="text-xs text-[#BA2D1D] hover:underline font-medium cursor-pointer"
+            className="text-xs text-primary hover:underline font-medium cursor-pointer"
           >
             Clear All Items
           </button>
@@ -136,12 +134,12 @@ export const CartPage: React.FC = () => {
                             className="w-16 h-16 object-cover rounded-xs border border-[#F0EDE8] dark:border-[#2A2A2A] cursor-pointer shrink-0"
                           />
                           <div>
-                            <span className="text-[10px] uppercase font-bold tracking-wider text-[#BA2D1D]">
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-primary">
                               {item.product.brand}
                             </span>
                             <h4
                               onClick={() => navigateToProduct(item.product.slug)}
-                              className="font-medium text-xs text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-[#BA2D1D] cursor-pointer mt-0.5"
+                              className="font-medium text-xs text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 hover:text-primary cursor-pointer mt-0.5"
                             >
                               {item.product.name}
                             </h4>
@@ -176,14 +174,14 @@ export const CartPage: React.FC = () => {
                         </div>
                       </td>
 
-                      <td className="py-4 pl-2 text-right font-mono font-bold text-sm text-[#BA2D1D] dark:text-[#E05343] tabular-nums">
+                      <td className="py-4 pl-2 text-right font-mono font-bold text-sm text-primary dark:text-[#E05343] tabular-nums">
                         {formatPrice(item.product.price * item.quantity)}
                       </td>
 
                       <td className="py-4 pl-2 text-center">
                         <button
                           onClick={() => removeFromCart(item.product.id)}
-                          className="p-1.5 text-[#9A9184] hover:text-[#BA2D1D] transition-colors"
+                          className="p-1.5 text-[#9A9184] hover:text-primary transition-colors"
                           title="Remove item"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -198,7 +196,7 @@ export const CartPage: React.FC = () => {
             <div className="pt-4 border-t border-[#F0EDE8] dark:border-[#2A2A2A] flex flex-wrap items-center justify-between gap-3">
               <button
                 onClick={navigateToHome}
-                className="text-xs font-semibold text-[#BA2D1D] hover:underline flex items-center gap-1"
+                className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
               >
                 ← Continue Shopping
               </button>
@@ -262,7 +260,7 @@ export const CartPage: React.FC = () => {
                 {/* Grand Total */}
                 <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A] flex justify-between text-base font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">
                   <span>Total Payable:</span>
-                  <span className="font-mono text-[#BA2D1D] dark:text-[#E05343] tabular-nums">
+                  <span className="font-mono text-primary dark:text-[#E05343] tabular-nums">
                     {formatPrice(grandTotal)}
                   </span>
                 </div>
@@ -288,7 +286,7 @@ export const CartPage: React.FC = () => {
               {/* Checkout CTA */}
               <button
                 onClick={() => setIsCheckoutModalOpen(true)}
-                className="w-full bg-[#BA2D1D] hover:bg-[#961F12] text-white py-3 px-4 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-primary hover:bg-primary-hover text-white py-3 px-4 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />
@@ -301,7 +299,7 @@ export const CartPage: React.FC = () => {
                   <span>100% Genuine Imported Products</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Truck className="w-3.5 h-3.5 text-[#BA2D1D]" />
+                  <Truck className="w-3.5 h-3.5 text-primary" />
                   <span>Cash on Delivery in all 64 districts</span>
                 </div>
                 <div className="flex items-center gap-1.5">

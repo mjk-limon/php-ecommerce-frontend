@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export const Progress: React.FC<{
   value?: number;
@@ -17,7 +17,7 @@ export const Progress: React.FC<{
       )}
     >
       <div
-        className={cn('h-full bg-[#BA2D1D] transition-all duration-300 ease-out', indicatorClassName)}
+        className={cn('h-full bg-primary transition-all duration-300 ease-out', indicatorClassName)}
         style={{ width: `${percentage}%` }}
       />
     </div>

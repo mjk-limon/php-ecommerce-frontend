@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { X, Search, CheckCircle2, Clock, Truck, Package, MapPin } from 'lucide-react';
+import { MapPin, Package, Search, Truck, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
 import { OrderInvoice } from '../types';
@@ -56,7 +56,7 @@ export const TrackOrderModal: React.FC = () => {
 
         <div className="mb-5">
           <div className="flex items-center gap-2 mb-1">
-            <Truck className="w-5 h-5 text-[#BA2D1D]" />
+            <Truck className="w-5 h-5 text-primary" />
             <h3 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
               Track Your Package
             </h3>
@@ -84,7 +84,7 @@ export const TrackOrderModal: React.FC = () => {
           <button
             type="submit"
             disabled={isSearching}
-            className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-4 py-2.5 rounded-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2.5 rounded-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
           >
             <Search className="w-3.5 h-3.5" />
             <span>Track</span>
@@ -108,7 +108,7 @@ export const TrackOrderModal: React.FC = () => {
                 </span>
               </div>
               <div className="flex items-center gap-1.5 text-[#736C62] dark:text-[#9E968B]">
-                <MapPin className="w-3.5 h-3.5 text-[#BA2D1D] shrink-0" />
+                <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
                 <span className="truncate">Destination: {trackedOrder.shipping_address}</span>
               </div>
               <div className="flex items-center gap-1.5 text-[#736C62] dark:text-[#9E968B]">

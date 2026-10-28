@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from 'react';
 import {
-  Star,
-  ShieldCheck,
-  RotateCcw,
-  Phone,
-  MessageCircle,
-  Share2,
-  Check,
-  Plus,
-  Minus,
-  ShoppingBag,
-  Zap,
-  MapPin,
-  Clock,
-  Send,
-  Eye,
-  Package,
-  Sparkles,
-  Facebook,
-  Twitter,
-  Linkedin
+    Facebook,
+    Linkedin,
+    MessageCircle,
+    Minus,
+    Phone,
+    Plus,
+    RotateCcw,
+    ShieldCheck,
+    ShoppingBag,
+    Star,
+    Twitter,
+    Zap
 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { ProductCard } from '../components/ProductCard';
 import { useApp } from '../context/AppContext';
 import { MOCK_PRODUCTS } from '../data/mockData';
@@ -172,7 +164,7 @@ export const ProductDetailsPage: React.FC = () => {
                   className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
                 />
                 {product.discount && (
-                  <span className="absolute top-3 left-3 bg-[#BA2D1D] text-white text-[10px] font-bold px-2 py-0.5 rounded-xs tracking-wider shadow-xs">
+                  <span className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-xs tracking-wider shadow-xs">
                     -{product.discount}% OFF
                   </span>
                 )}
@@ -213,7 +205,7 @@ export const ProductDetailsPage: React.FC = () => {
 
               {/* Price */}
               <div className="flex items-baseline gap-3 pt-1 border-b border-[#F4EFEA] dark:border-[#272420] pb-3">
-                <span className="font-mono font-bold text-2xl text-[#BA2D1D] dark:text-[#E05343] tabular-nums">
+                <span className="font-mono font-bold text-2xl text-primary dark:text-[#E05343] tabular-nums">
                   {formatPrice(product.price)}
                 </span>
                 {product.old_price && (
@@ -265,7 +257,7 @@ export const ProductDetailsPage: React.FC = () => {
                     </button>
                   </div>
                   <span className="text-xs text-[#736C62] dark:text-[#9E968B]">
-                    Product total: <strong className="font-mono text-[#BA2D1D]">{formatPrice(product.price * quantity)}</strong>
+                    Product total: <strong className="font-mono text-primary">{formatPrice(product.price * quantity)}</strong>
                   </span>
                 </div>
               </div>
@@ -281,7 +273,7 @@ export const ProductDetailsPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => quickBuy(product, quantity)}
-                  className="flex items-center justify-center gap-1.5 bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold py-2.5 px-3 rounded-xs uppercase tracking-wider transition-colors shadow-2xs cursor-pointer"
+                  className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold py-2.5 px-3 rounded-xs uppercase tracking-wider transition-colors shadow-2xs cursor-pointer"
                 >
                   <Zap className="w-3.5 h-3.5" />
                   <span>Quick Buy</span>
@@ -301,7 +293,7 @@ export const ProductDetailsPage: React.FC = () => {
 
               {/* Call for order */}
               <div className="p-3 bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#E8E2D9] dark:border-[#312E29] rounded-xs flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-[#BA2D1D]/10 text-[#BA2D1D] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div className="text-xs">
@@ -310,7 +302,7 @@ export const ProductDetailsPage: React.FC = () => {
                   </span>
                   <a
                     href="tel:+8801894084242"
-                    className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] font-mono hover:text-[#BA2D1D]"
+                    className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] font-mono hover:text-primary"
                   >
                     +8801894084242
                   </a>
@@ -413,7 +405,7 @@ export const ProductDetailsPage: React.FC = () => {
                   <div className="bg-[#EFEAE1] dark:bg-[#25221E] p-2 rounded-xs text-[11px] space-y-0.5 mt-2">
                     <div className="flex justify-between font-medium">
                       <span>Standard Courier:</span>
-                      <span className="font-mono text-[#BA2D1D]">Tk. {shippingEstimate.cost}</span>
+                      <span className="font-mono text-primary">Tk. {shippingEstimate.cost}</span>
                     </div>
                     <div className="text-[10px] text-[#736C62] dark:text-[#9E968B]">
                       Estimate: {shippingEstimate.time}
@@ -429,7 +421,7 @@ export const ProductDetailsPage: React.FC = () => {
                   <span className="text-[11px] font-medium">Payment Security Guaranteed</span>
                 </div>
                 <div className="flex items-center gap-2 text-[#1F1D1A] dark:text-[#EDE7DE]">
-                  <RotateCcw className="w-4 h-4 text-[#BA2D1D] shrink-0" />
+                  <RotateCcw className="w-4 h-4 text-primary shrink-0" />
                   <span className="text-[11px] font-medium">Free and Easy Return Policy</span>
                 </div>
               </div>
@@ -447,7 +439,7 @@ export const ProductDetailsPage: React.FC = () => {
               onClick={() => setActiveTab('desc')}
               className={`px-5 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                 activeTab === 'desc'
-                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-[#BA2D1D] dark:text-[#E05343]'
+                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-primary dark:text-[#E05343]'
                   : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
               }`}
             >
@@ -457,7 +449,7 @@ export const ProductDetailsPage: React.FC = () => {
               onClick={() => setActiveTab('reviews')}
               className={`px-5 py-3 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                 activeTab === 'reviews'
-                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-[#BA2D1D] dark:text-[#E05343]'
+                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-primary dark:text-[#E05343]'
                   : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
               }`}
             >
@@ -560,7 +552,7 @@ export const ProductDetailsPage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmittingReview}
-                        className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider cursor-pointer disabled:opacity-50"
+                        className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider cursor-pointer disabled:opacity-50"
                       >
                         {isSubmittingReview ? 'Submitting...' : 'Post Review'}
                       </button>
@@ -620,7 +612,7 @@ export const ProductDetailsPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmittingQuestion}
-                className="bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider cursor-pointer disabled:opacity-50"
+                className="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-xs uppercase tracking-wider cursor-pointer disabled:opacity-50"
               >
                 Ask
               </button>
@@ -642,7 +634,7 @@ export const ProductDetailsPage: React.FC = () => {
                   Overall Store Score:
                 </p>
               </div>
-              <span className="font-mono font-black text-2xl text-[#BA2D1D] dark:text-[#E05343]">
+              <span className="font-mono font-black text-2xl text-primary dark:text-[#E05343]">
                 91.37
               </span>
             </div>
@@ -665,7 +657,7 @@ export const ProductDetailsPage: React.FC = () => {
                   <span className="font-mono">96%</span>
                 </div>
                 <div className="w-full h-2 bg-[#F0EDE8] dark:bg-[#2A2A2A] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#BA2D1D] w-[96%]" />
+                  <div className="h-full bg-primary w-[96%]" />
                 </div>
               </div>
 
@@ -682,7 +674,7 @@ export const ProductDetailsPage: React.FC = () => {
 
             <button
               onClick={() => showToast('Visiting official certified store profile.', 'info')}
-              className="w-full text-center text-xs font-semibold text-[#BA2D1D] hover:underline pt-2 block cursor-pointer"
+              className="w-full text-center text-xs font-semibold text-primary hover:underline pt-2 block cursor-pointer"
             >
               Visit Seller Store ›
             </button>

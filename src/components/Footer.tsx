@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
 import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Youtube
+    Facebook,
+    Instagram,
+    Linkedin,
+    Twitter,
+    Youtube
 } from 'lucide-react';
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export const Footer: React.FC = () => {
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/brand"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › About Us & Brands
                 </Link>
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/checkout"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Secure Checkout
                 </Link>
@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
                     e.preventDefault();
                     showToast('Terms and conditions terms loaded.', 'info');
                   }}
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Terms and Conditions
                 </a>
@@ -69,7 +69,7 @@ export const Footer: React.FC = () => {
                     e.preventDefault();
                     showToast('How to Pay instructions: bKash, Nagad, Cash On Delivery.', 'info');
                   }}
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › How to Pay
                 </a>
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
                     e.preventDefault();
                     showToast('Photo Confirmations: 100% Genuine batch import receipts.', 'info');
                   }}
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Batch Authenticity
                 </a>
@@ -98,7 +98,7 @@ export const Footer: React.FC = () => {
               <li>
                 <a
                   href="tel:+8801894084242"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Customer Care: +8801894084242
                 </a>
@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
                     e.preventDefault();
                     showToast('Privacy Policy: We protect customer data under strict protocols.', 'info');
                   }}
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Privacy Policy
                 </a>
@@ -122,7 +122,7 @@ export const Footer: React.FC = () => {
                     e.preventDefault();
                     showToast('7-Day Free and Easy Return Policy for all sealed items.', 'info');
                   }}
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Shipping Returns
                 </a>
@@ -130,7 +130,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/track-order"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Track Your Parcel (All 64 Districts)
                 </Link>
@@ -152,7 +152,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/login"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › User Account
                 </Link>
@@ -160,7 +160,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/cart"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Shopping Cart
                 </Link>
@@ -168,7 +168,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/checkout"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Checkout Order
                 </Link>
@@ -176,7 +176,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/track-order"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Order History & Track
                 </Link>
@@ -184,7 +184,7 @@ export const Footer: React.FC = () => {
               <li>
                 <Link
                   href="/offers"
-                  className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+                  className="hover:text-primary dark:hover:text-[#E05343] transition-colors"
                 >
                   › Hot Deals & Offers
                 </Link>
@@ -264,7 +264,7 @@ export const Footer: React.FC = () => {
               Payment Methods
             </span>
             <div className="flex items-center gap-2 flex-wrap justify-center">
-              <span className="px-2.5 py-1 text-[11px] font-bold bg-white dark:bg-[#25221E] border border-[#E8E2D9] dark:border-[#312E29] rounded shadow-2xs text-[#BA2D1D]">
+              <span className="px-2.5 py-1 text-[11px] font-bold bg-white dark:bg-[#25221E] border border-[#E8E2D9] dark:border-[#312E29] rounded shadow-2xs text-primary">
                 bKash
               </span>
               <span className="px-2.5 py-1 text-[11px] font-bold bg-white dark:bg-[#25221E] border border-[#E8E2D9] dark:border-[#312E29] rounded shadow-2xs text-[#8E44AD]">

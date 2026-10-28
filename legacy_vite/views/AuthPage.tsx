@@ -1,5 +1,5 @@
+import { Lock, Mail } from 'lucide-react';
 import React, { useState } from 'react';
-import { Lock, Mail, Phone, User as UserIcon, MapPin, CheckCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface AuthPageProps {
@@ -63,7 +63,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
               onClick={() => setMode('login')}
               className={`flex-1 py-4 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                 mode === 'login'
-                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-[#BA2D1D] dark:text-[#E05343]'
+                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-primary dark:text-[#E05343]'
                   : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
               }`}
             >
@@ -73,7 +73,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
               onClick={() => setMode('register')}
               className={`flex-1 py-4 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
                 mode === 'register'
-                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-[#BA2D1D] dark:text-[#E05343]'
+                  ? 'border-[#BA2D1D] bg-white dark:bg-[#1E1E1E] text-primary dark:text-[#E05343]'
                   : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
               }`}
             >
@@ -93,7 +93,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
                     setPassword('123456');
                     showToast('Demo credentials prefilled!', 'info');
                   }}
-                  className="text-[#BA2D1D] dark:text-[#E05343] font-semibold underline cursor-pointer"
+                  className="text-primary dark:text-[#E05343] font-semibold underline cursor-pointer"
                 >
                   Quick Fill
                 </button>
@@ -127,7 +127,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
                       e.preventDefault();
                       showToast('Password reset link sent to demo account.', 'info');
                     }}
-                    className="text-[11px] text-[#BA2D1D] hover:underline"
+                    className="text-[11px] text-primary hover:underline"
                   >
                     Forgot Password?
                   </a>
@@ -148,7 +148,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold py-3 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer disabled:opacity-50"
+                className="w-full bg-primary hover:bg-primary-hover text-white text-xs font-semibold py-3 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer disabled:opacity-50"
               >
                 {isLoading ? 'Signing In...' : 'Sign In to Account'}
               </button>
@@ -160,7 +160,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
                 <button
                   type="button"
                   onClick={() => setMode('register')}
-                  className="text-xs font-semibold text-[#BA2D1D] hover:underline"
+                  className="text-xs font-semibold text-primary hover:underline"
                 >
                   Register here
                 </button>
@@ -279,7 +279,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ initialMode = 'login' }) => 
                 <button
                   type="button"
                   onClick={() => setMode('login')}
-                  className="text-xs font-semibold text-[#BA2D1D] hover:underline"
+                  className="text-xs font-semibold text-primary hover:underline"
                 >
                   Sign in
                 </button>

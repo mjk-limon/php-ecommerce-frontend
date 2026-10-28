@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_ORIGIN = (process.env.ECOM_API_BASE_URL || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const API_ORIGIN = (process.env.ECOM_API_BASE_URL || process.env.ECOM_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
 
 async function forward(request: NextRequest, segments: string[]) {
   const target = new URL(`${API_ORIGIN}/api/${segments.join('/')}`);

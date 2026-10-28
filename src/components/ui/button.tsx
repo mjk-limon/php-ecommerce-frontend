@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
     | 'default'
-    | 'plum'
     | 'dark'
     | 'outline'
     | 'secondary'
@@ -28,9 +27,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
       default:
-        'bg-[#BA2D1D] hover:bg-[#961F12] text-white shadow-xs hover:shadow focus-visible:ring-[#BA2D1D]',
-      plum:
-        'bg-[#581845] hover:bg-[#431234] text-white shadow-xs hover:shadow focus-visible:ring-[#581845]',
+        'bg-primary hover:bg-primary-hover text-white shadow-xs hover:shadow focus-visible:ring-[#BA2D1D]',
       dark:
         'bg-[#383838] hover:bg-[#252525] text-white shadow-xs hover:shadow focus-visible:ring-[#383838]',
       outline:
@@ -40,7 +37,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       ghost:
         'hover:bg-[#F3F4F6] dark:hover:bg-[#1F2937] text-[#111827] dark:text-[#F9FAFB]',
       link:
-        'text-[#BA2D1D] hover:underline p-0 h-auto font-normal focus-visible:ring-0',
+        'text-primary hover:underline p-0 h-auto font-normal focus-visible:ring-0',
       quickCheckout:
         'bg-[#4CAF50] hover:bg-[#43A047] text-white font-semibold shadow-md hover:shadow-lg focus-visible:ring-[#4CAF50]',
       whatsapp:

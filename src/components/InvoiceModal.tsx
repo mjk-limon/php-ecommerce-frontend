@@ -1,7 +1,7 @@
 'use client';
 
+import { CheckCircle2, Package, Printer, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
-import { X, CheckCircle2, Printer, Package, ArrowRight, Clock, MapPin } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { api } from '../services/api';
 import { OrderInvoice } from '../types';
@@ -52,7 +52,7 @@ export const InvoiceModal: React.FC = () => {
             Retrieving official paper invoice...
           </div>
         ) : !invoice ? (
-          <div className="p-8 text-center text-xs text-[#BA2D1D]">
+          <div className="p-8 text-center text-xs text-primary">
             Invoice #{activeInvoiceNumber} could not be located.
           </div>
         ) : (
@@ -61,7 +61,7 @@ export const InvoiceModal: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] dark:border-[#312E29] pb-5">
               <div>
                 <span className="font-serif font-black text-xl text-[#1F1D1A] dark:text-[#EDE7DE] tracking-tight">
-                  WELLSELL <span className="text-[#BA2D1D]">BD</span>
+                  WELLSELL <span className="text-primary">BD</span>
                 </span>
                 <p className="text-[10px] uppercase tracking-widest text-[#736C62] dark:text-[#9E968B] mt-0.5">
                   Official Customer Invoice & Receipt
@@ -147,7 +147,7 @@ export const InvoiceModal: React.FC = () => {
                         <td className="p-2.5 text-right font-mono tabular-nums">
                           {formatPrice(it.unit_price)}
                         </td>
-                        <td className="p-2.5 text-right font-mono font-semibold tabular-nums text-[#BA2D1D]">
+                        <td className="p-2.5 text-right font-mono font-semibold tabular-nums text-primary">
                           {formatPrice(it.item_total)}
                         </td>
                       </tr>
@@ -169,7 +169,7 @@ export const InvoiceModal: React.FC = () => {
               </div>
               <div className="flex justify-between text-sm font-bold text-[#1F1D1A] dark:text-[#EDE7DE] pt-2 border-t border-[#E8E2D9] dark:border-[#312E29]">
                 <span>Grand Total:</span>
-                <span className="text-[#BA2D1D] font-mono tabular-nums">
+                <span className="text-primary font-mono tabular-nums">
                   Tk. {Number(invoice.subtotal).toLocaleString()}
                 </span>
               </div>
@@ -190,7 +190,7 @@ export const InvoiceModal: React.FC = () => {
                   setIsInvoiceModalOpen(false);
                   setIsTrackModalOpen(true);
                 }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-[#BA2D1D] hover:bg-[#961F12] text-white px-5 py-2 text-xs font-semibold rounded-xs transition-colors cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-5 py-2 text-xs font-semibold rounded-xs transition-colors cursor-pointer"
               >
                 <Package className="w-3.5 h-3.5" />
                 <span>Track This Order Live</span>

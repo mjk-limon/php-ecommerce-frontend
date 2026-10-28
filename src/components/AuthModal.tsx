@@ -1,7 +1,7 @@
 'use client';
 
+import { X } from 'lucide-react';
 import React, { useState } from 'react';
-import { X, Lock, Mail, User as UserIcon, Phone, MapPin, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export const AuthModal: React.FC = () => {
@@ -66,7 +66,7 @@ export const AuthModal: React.FC = () => {
             onClick={() => setAuthModalTab('login')}
             className={`flex-1 py-3.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
               authModalTab === 'login'
-                ? 'border-[#BA2D1D] text-[#BA2D1D] dark:text-[#E05343]'
+                ? 'border-[#BA2D1D] text-primary dark:text-[#E05343]'
                 : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
             }`}
           >
@@ -76,7 +76,7 @@ export const AuthModal: React.FC = () => {
             onClick={() => setAuthModalTab('register')}
             className={`flex-1 py-3.5 text-xs font-bold uppercase tracking-wider transition-colors border-b-2 ${
               authModalTab === 'register'
-                ? 'border-[#BA2D1D] text-[#BA2D1D] dark:text-[#E05343]'
+                ? 'border-[#BA2D1D] text-primary dark:text-[#E05343]'
                 : 'border-transparent text-[#736C62] hover:text-[#1F1D1A]'
             }`}
           >
@@ -98,7 +98,7 @@ export const AuthModal: React.FC = () => {
               <button
                 type="button"
                 onClick={fillDemoCredentials}
-                className="text-[#BA2D1D] dark:text-[#E05343] font-semibold underline cursor-pointer"
+                className="text-primary dark:text-[#E05343] font-semibold underline cursor-pointer"
               >
                 Auto Fill
               </button>
@@ -135,7 +135,7 @@ export const AuthModal: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer disabled:opacity-50"
+              className="w-full bg-primary hover:bg-primary-hover text-white text-xs font-semibold py-2.5 rounded-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer disabled:opacity-50"
             >
               {isLoading ? 'Authenticating...' : 'Sign In to Wellsell BD'}
             </button>

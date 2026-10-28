@@ -1,27 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useApp } from '@/context/AppContext';
+import { getAssetUrl } from '@/lib/assetHelper';
+import { api } from '@/services/api';
+import { OrderCreatePayload, PaymentMethod, ShippingLocation, ShippingMethod } from '@/types';
+import {
+    ArrowRight,
+    CreditCard,
+    MapPin,
+    Phone,
+    ShieldCheck,
+    ShoppingBag,
+    Tag,
+    Truck,
+    User as UserIcon
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import {
-  ShieldCheck,
-  Truck,
-  CreditCard,
-  CheckCircle2,
-  AlertCircle,
-  MapPin,
-  Phone,
-  User as UserIcon,
-  ShoppingBag,
-  ArrowRight,
-  ArrowLeft,
-  Tag,
-  Lock,
-  Clock
-} from 'lucide-react';
-import { useApp } from '@/context/AppContext';
-import { api } from '@/services/api';
-import { PaymentMethod, ShippingLocation, ShippingMethod } from '@/types';
+import React, { useEffect, useState } from 'react';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -102,13 +102,13 @@ export default function CheckoutPage() {
 
     setIsSubmitting(true);
     try {
-      const payload = {
+      const orderPayload: OrderCreatePayload = {
         location_id: selectedLocationId,
         shipping_id: selectedMethodId,
         shipping_name: customerName,
         shipping_phone: customerPhone,
         shipping_address: customerAddress,
-        shipment_type: selectedLocationId === 1 ? 'Inside Dhaka City (24-48h)' : 'Outside Dhaka City (48-72h)',
+        shipment_type: selectedLocationId === 1 ? 'inside_dhaka' : 'outside_dhaka',
         total_cart_item: cartTotalCount,
         total_cart_item_price: cartSubtotal,
         total_discount: cartTotalDiscount + couponDiscountAmount,
@@ -122,30 +122,28 @@ export default function CheckoutPage() {
         },
         items: cart.map((item) => ({
           product_id: item.product.id,
-          variant_id: 1,
+          variant_id: item.variant_id || item.product.variants?.[0]?.id || 1,
           product_name: item.product.name,
           variant_info: {
-            size: item.selected_size || 'Default',
-            color: item.selected_color || 'Standard'
+            brand: item.product.brand,
+            sku: item.product.sku || 'SKU-STD'
           },
           quantity: item.quantity,
           unit_price: item.product.price,
           price_total: item.product.price * item.quantity,
           shipping_total: 0,
-          discount_total: item.product.old_price
-            ? (item.product.old_price - item.product.price) * item.quantity
-            : 0,
+          discount_total: item.product.old_price ? (item.product.old_price - item.product.price) * item.quantity : 0,
           item_total: item.product.price * item.quantity
         }))
       };
 
-      const res = await api.createOrder(payload);
-      if (res.success && res.data.invoice_number) {
+      const res = await api.createOrder(orderPayload);
+      if (res.success && res.data) {
         clearCart();
-        showToast(`Order placed successfully! Invoice #${res.data.invoice_number}`, 'success');
+        showToast('Order successfully confirmed! Redirecting to invoice...', 'success');
         router.push(`/invoice/${res.data.invoice_number}`);
       } else {
-        showToast('Order creation failed. Please check form details.', 'error');
+        showToast('Failed to complete order. Please try again.', 'error');
       }
     } catch {
       showToast('Server error processing order. Please try again.', 'error');
@@ -158,8 +156,8 @@ export default function CheckoutPage() {
   if (cart.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="section-card p-10 max-w-md mx-auto space-y-4">
-          <div className="w-16 h-16 rounded-full bg-[#BA2D1D]/10 text-[#BA2D1D] flex items-center justify-center mx-auto">
+        <Card className="p-10 max-w-md mx-auto space-y-4">
+          <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
           <h1 className="font-serif font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
@@ -169,15 +167,14 @@ export default function CheckoutPage() {
             There are no items ready for checkout. Browse our imported skincare, perfumes, and health vitamins to continue.
           </p>
           <div className="pt-2">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 bg-[#BA2D1D] hover:bg-[#961F12] text-white text-xs font-semibold px-6 py-3 rounded-xs uppercase tracking-wider transition-colors shadow-sm"
-            >
-              <span>Explore Products</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+            <Link href="/">
+              <Button variant="default" size="lg" className="gap-2 uppercase tracking-wider text-xs font-semibold">
+                <span>Explore Products</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
             </Link>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -186,17 +183,17 @@ export default function CheckoutPage() {
     <div className="w-full pb-20 pt-6 sm:pt-8 bg-[#FAFAFA] dark:bg-[#121212] min-h-[80vh]">
       <div className="container space-y-6 sm:space-y-8">
         {/* Step Indicator Header */}
-        <div className="section-card p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
+        <Card className="p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs text-[#736C62] dark:text-[#9E968B] mb-1">
-              <Link href="/" className="hover:text-[#BA2D1D]">Home</Link>
+              <Link href="/" className="hover:text-primary">Home</Link>
               <span>›</span>
-              <Link href="/cart" className="hover:text-[#BA2D1D]">Cart</Link>
+              <Link href="/cart" className="hover:text-primary">Cart</Link>
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">Checkout</span>
             </div>
             <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-              Express & Secure Checkout
+              Express &amp; Secure Checkout
             </h1>
           </div>
 
@@ -206,26 +203,26 @@ export default function CheckoutPage() {
             </span>
             <span className="text-[#1F6E54] font-medium hidden sm:inline">1. Cart</span>
             <span className="text-[#9A9184]">——</span>
-            <span className="w-6 h-6 rounded-full bg-[#BA2D1D] text-white flex items-center justify-center font-bold text-[11px]">
+            <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold text-[11px]">
               2
             </span>
-            <span className="font-bold text-[#BA2D1D]">2. Delivery & Payment</span>
+            <span className="font-bold text-primary">2. Delivery &amp; Payment</span>
             <span className="text-[#9A9184]">——</span>
             <span className="w-6 h-6 rounded-full bg-[#E8E2D9] dark:bg-[#312E29] text-[#736C62] flex items-center justify-center font-bold text-[11px]">
               3
             </span>
             <span className="text-[#736C62] dark:text-[#9E968B] hidden sm:inline">3. Invoice</span>
           </div>
-        </div>
+        </Card>
 
         {/* Main 2-Column Grid */}
         <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           {/* Left Form: Shipping Address, Zone & Payment (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
             {/* 1. Customer & Shipping Details */}
-            <div className="section-card p-5 sm:p-7 space-y-5">
+            <Card className="p-5 sm:p-7 space-y-5">
               <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-                <MapPin className="w-5 h-5 text-[#BA2D1D]" />
+                <MapPin className="w-5 h-5 text-primary" />
                 <h2 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
                   1. Delivery Details
                 </h2>
@@ -234,36 +231,30 @@ export default function CheckoutPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5 sm:col-span-2">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Full Name <span className="text-[#BA2D1D]">*</span>
+                    Full Name <span className="text-primary">*</span>
                   </label>
-                  <div className="relative">
-                    <UserIcon className="w-4 h-4 text-[#9A9184] absolute left-3 top-3" />
-                    <input
-                      type="text"
-                      required
-                      value={customerName}
-                      onChange={(e) => setCustomerName(e.target.value)}
-                      placeholder="Receiver's full name"
-                      className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs py-2.5 pl-9 pr-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
-                    />
-                  </div>
+                  <Input
+                    type="text"
+                    required
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder="Receiver's full name"
+                    icon={<UserIcon className="w-4 h-4 text-[#9A9184]" />}
+                  />
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Phone Number (BD) <span className="text-[#BA2D1D]">*</span>
+                    Phone Number (BD) <span className="text-primary">*</span>
                   </label>
-                  <div className="relative">
-                    <Phone className="w-4 h-4 text-[#9A9184] absolute left-3 top-3" />
-                    <input
-                      type="tel"
-                      required
-                      value={customerPhone}
-                      onChange={(e) => setCustomerPhone(e.target.value)}
-                      placeholder="01XXXXXXXXX"
-                      className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs py-2.5 pl-9 pr-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
-                    />
-                  </div>
+                  <Input
+                    type="tel"
+                    required
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    placeholder="01XXXXXXXXX"
+                    icon={<Phone className="w-4 h-4 text-[#9A9184]" />}
+                  />
                   <span className="text-[10px] text-[#736C62] dark:text-[#9E968B]">
                     For SMS delivery tracking and rider confirmation
                   </span>
@@ -273,18 +264,17 @@ export default function CheckoutPage() {
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
                     Email Address
                   </label>
-                  <input
+                  <Input
                     type="email"
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     placeholder="name@domain.com"
-                    className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs py-2.5 px-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
                   />
                 </div>
 
                 <div className="space-y-1.5 sm:col-span-2">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Delivery Area / Zone <span className="text-[#BA2D1D]">*</span>
+                    Delivery Area / Zone <span className="text-primary">*</span>
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div
@@ -300,12 +290,12 @@ export default function CheckoutPage() {
                         name="shipping_location"
                         checked={selectedLocationId === 1}
                         onChange={() => setSelectedLocationId(1)}
-                        className="mt-0.5 text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                        className="mt-0.5 text-primary focus:ring-[#BA2D1D]"
                       />
                       <div className="text-xs">
                         <div className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center justify-between">
                           <span>Inside Dhaka City</span>
-                          <span className="text-[#BA2D1D] font-mono font-bold">Tk. 60</span>
+                          <span className="text-primary font-mono font-bold">Tk. 60</span>
                         </div>
                         <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
                           Delivery in 24 - 48 Hours via RedX Express
@@ -326,12 +316,12 @@ export default function CheckoutPage() {
                         name="shipping_location"
                         checked={selectedLocationId === 2}
                         onChange={() => setSelectedLocationId(2)}
-                        className="mt-0.5 text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                        className="mt-0.5 text-primary focus:ring-[#BA2D1D]"
                       />
                       <div className="text-xs">
                         <div className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center justify-between">
                           <span>Outside Dhaka City</span>
-                          <span className="text-[#BA2D1D] font-mono font-bold">Tk. 130</span>
+                          <span className="text-primary font-mono font-bold">Tk. 130</span>
                         </div>
                         <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
                           Delivery in 48 - 72 Hours (All 64 Districts)
@@ -343,7 +333,7 @@ export default function CheckoutPage() {
 
                 <div className="space-y-1.5 sm:col-span-2">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Full Delivery Address <span className="text-[#BA2D1D]">*</span>
+                    Full Delivery Address <span className="text-primary">*</span>
                   </label>
                   <textarea
                     required
@@ -359,21 +349,20 @@ export default function CheckoutPage() {
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
                     Special Delivery Instructions (Optional)
                   </label>
-                  <input
+                  <Input
                     type="text"
                     value={orderNotes}
                     onChange={(e) => setOrderNotes(e.target.value)}
-                    placeholder="e.g. Call before delivery, leave with security guard, etc."
-                    className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs py-2 px-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
+                    placeholder="e.g. Leave with gate security / Call before delivery"
                   />
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* 2. Payment Method */}
-            <div className="section-card p-5 sm:p-7 space-y-4">
+            <Card className="p-5 sm:p-7 space-y-4">
               <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-                <CreditCard className="w-5 h-5 text-[#BA2D1D]" />
+                <CreditCard className="w-5 h-5 text-primary" />
                 <h2 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
                   2. Payment Method
                 </h2>
@@ -394,16 +383,14 @@ export default function CheckoutPage() {
                     name="payment_method"
                     checked={selectedPaymentId === 2}
                     onChange={() => setSelectedPaymentId(2)}
-                    className="mt-1 text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
                         Cash On Delivery (COD)
                       </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#1F6E54]/10 text-[#1F6E54]">
-                        Recommended
-                      </span>
+                      <Badge variant="success">Recommended</Badge>
                     </div>
                     <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
                       Pay in cash to the delivery rider when your sealed parcel arrives. Check serial code before opening.
@@ -425,13 +412,13 @@ export default function CheckoutPage() {
                     name="payment_method"
                     checked={selectedPaymentId === 3}
                     onChange={() => setSelectedPaymentId(3)}
-                    className="mt-1 text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center gap-2">
                         <span>bKash / Nagad Mobile Banking</span>
-                        <span className="text-[10px] font-bold text-[#BA2D1D]">bKash</span>
+                        <span className="text-[10px] font-bold text-primary">bKash</span>
                       </span>
                       <span className="text-[10px] text-[#736C62] font-mono">0% Fee</span>
                     </div>
@@ -455,34 +442,34 @@ export default function CheckoutPage() {
                     name="payment_method"
                     checked={selectedPaymentId === 1}
                     onChange={() => setSelectedPaymentId(1)}
-                    className="mt-1 text-[#BA2D1D] focus:ring-[#BA2D1D]"
+                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
                   />
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
-                        Credit / Debit Card (VISA, MasterCard, AMEX)
+                        Visa / MasterCard / AMEX
                       </span>
-                      <Lock className="w-3.5 h-3.5 text-[#1F6E54]" />
+                      <span className="text-[10px] text-[#736C62] font-mono">SSLCommerz</span>
                     </div>
                     <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
-                      Encrypted 256-bit SSL transaction via automated payment gateway.
+                      Pay securely with 256-bit encrypted checkout via local &amp; international credit or debit cards.
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Right Summary: Items, Coupon, Totals & Place Order CTA (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="section-card p-5 sm:p-7 space-y-5 sticky top-20">
+            <Card className="p-5 sm:p-7 space-y-5 sticky top-20">
               <div className="flex items-center justify-between border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
                 <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                   Order Summary ({cartTotalCount} items)
                 </h3>
                 <Link
                   href="/cart"
-                  className="text-xs text-[#BA2D1D] hover:underline font-semibold"
+                  className="text-xs text-primary hover:underline font-semibold"
                 >
                   Edit Bag
                 </Link>
@@ -490,55 +477,61 @@ export default function CheckoutPage() {
 
               {/* Items List */}
               <div className="max-h-60 overflow-y-auto space-y-3 divide-y divide-[#F0EDE8] dark:divide-[#262420] pr-1">
-                {cart.map((item) => (
-                  <div key={`${item.product.id}-${item.selected_size}`} className="pt-3 first:pt-0 flex gap-3">
-                    <div className="w-12 h-12 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1A1916] shrink-0">
-                      <img
-                        src={item.product.image}
-                        alt={item.product.name}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
-                        {item.product.name}
-                      </h4>
-                      <p className="text-[10px] text-[#736C62] dark:text-[#9E968B]">
-                        Qty: {item.quantity} {item.selected_size ? `· Size: ${item.selected_size}` : ''}
-                      </p>
-                      <div className="text-xs font-bold text-[#BA2D1D] dark:text-[#E05343] font-mono mt-0.5">
-                        {formatPrice(item.product.price * item.quantity)}
+                {cart.map((item) => {
+                  const itemImg = getAssetUrl(item.product.image || item.product.thumbnail);
+                  return (
+                    <div key={`${item.product.id}-${item.selected_size || 'default'}`} className="pt-3 first:pt-0 flex gap-3">
+                      <div className="w-12 h-12 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1A1916] shrink-0">
+                        <img
+                          src={itemImg}
+                          alt={item.product.name}
+                          className="w-full h-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
+                          {item.product.name}
+                        </h4>
+                        <p className="text-[10px] text-[#736C62] dark:text-[#9E968B]">
+                          Qty: {item.quantity} {item.selected_size ? `· Size: ${item.selected_size}` : ''}
+                        </p>
+                        <div className="text-xs font-bold text-primary dark:text-[#E05343] font-mono mt-0.5">
+                          {formatPrice(item.product.price * item.quantity)}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Promo Coupon Box */}
               <div className="pt-2 border-t border-[#F0EDE8] dark:border-[#2A2A2A]">
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] mb-2">
-                  <Tag className="w-3.5 h-3.5 text-[#BA2D1D]" />
+                  <Tag className="w-3.5 h-3.5 text-primary" />
                   <span>Promotional Coupon Code</span>
                 </div>
                 <div className="flex gap-2">
-                  <input
+                  <Input
                     type="text"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                     placeholder="e.g. WELLSELL10"
-                    className="flex-1 bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] uppercase placeholder:normal-case focus:outline-none focus:border-[#BA2D1D]"
+                    className="uppercase placeholder:normal-case font-mono"
                   />
-                  <button
+                  <Button
                     type="button"
+                    variant="dark"
+                    size="default"
                     onClick={handleApplyCoupon}
-                    className="bg-[#5C5549] hover:bg-[#453F36] text-white text-xs font-semibold px-4 py-2 rounded-xs transition-colors cursor-pointer"
+                    className="text-xs font-semibold uppercase tracking-wider shrink-0"
                   >
                     Apply
-                  </button>
+                  </Button>
                 </div>
                 {appliedCoupon && (
                   <div className="flex items-center justify-between text-xs text-[#1F6E54] dark:text-[#34A87C] mt-2 font-medium bg-[#1F6E54]/10 p-2 rounded-xs">
-                    <span>Coupon "{appliedCoupon.code}" applied!</span>
+                    <span>Coupon &quot;{appliedCoupon.code}&quot; applied!</span>
                     <span>-Tk. {appliedCoupon.discount}</span>
                   </div>
                 )}
@@ -554,7 +547,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
-                  <span>Delivery Charge:</span>
+                  <span>Courier Delivery:</span>
                   <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">
                     Tk. {shippingCost}
                   </span>
@@ -579,27 +572,24 @@ export default function CheckoutPage() {
                     <span className="text-sm font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">Grand Total:</span>
                     <span className="block text-[10px] text-[#736C62] dark:text-[#9E968B]">Inclusive of all taxes</span>
                   </div>
-                  <span className="text-xl font-black text-[#BA2D1D] dark:text-[#E05343] font-mono tabular-nums">
+                  <span className="text-xl font-black text-primary dark:text-[#E05343] font-mono tabular-nums">
                     {formatPrice(grandTotal)}
                   </span>
                 </div>
               </div>
 
               {/* Submit CTA Button */}
-              <button
+              <Button
                 type="submit"
+                variant="default"
+                size="lg"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 bg-[#BA2D1D] hover:bg-[#961F12] text-white py-3.5 px-6 rounded-xs font-bold text-xs uppercase tracking-wider transition-colors shadow-sm disabled:opacity-50 cursor-pointer"
+                isLoading={isSubmitting}
+                className="w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-3.5"
               >
-                {isSubmitting ? (
-                  <span>Processing Your Order...</span>
-                ) : (
-                  <>
-                    <span>Confirm & Place Order</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
+                <span>Confirm &amp; Place Order</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
 
               {/* Trust Badges */}
               <div className="pt-2 border-t border-[#F0EDE8] dark:border-[#2A2A2A] space-y-2">
@@ -608,11 +598,11 @@ export default function CheckoutPage() {
                   <span>100% Genuine batch import guarantees with barcode verification</span>
                 </div>
                 <div className="flex items-center gap-2 text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                  <Truck className="w-4 h-4 text-[#BA2D1D] shrink-0" />
+                  <Truck className="w-4 h-4 text-primary shrink-0" />
                   <span>Official RedX / Pathao courier with live tracking</span>
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         </form>
       </div>

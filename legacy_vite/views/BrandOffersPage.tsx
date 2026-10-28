@@ -1,5 +1,5 @@
+import { ArrowRight, Award, Percent } from 'lucide-react';
 import React from 'react';
-import { Award, Percent, Sparkles, ArrowRight } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { useApp } from '../context/AppContext';
 import { MOCK_PRODUCTS } from '../data/mockData';
@@ -31,7 +31,7 @@ export const BrandOffersPage: React.FC<BrandOffersPageProps> = ({ mode }) => {
         <div className="container space-y-8">
           <div className="section-card p-6">
             <div className="flex items-center gap-2 mb-2">
-              <Award className="w-5 h-5 text-[#BA2D1D]" />
+              <Award className="w-5 h-5 text-primary" />
               <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
                 Official Brand Partners
               </h1>
@@ -49,7 +49,7 @@ export const BrandOffersPage: React.FC<BrandOffersPageProps> = ({ mode }) => {
                 className="p-5 section-card hover:ring-2 hover:ring-[#BA2D1D] transition-all cursor-pointer flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#BA2D1D]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-primary">
                     {b.origin} IMPORT
                   </span>
                   <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE] mt-1 mb-2">
@@ -59,7 +59,7 @@ export const BrandOffersPage: React.FC<BrandOffersPageProps> = ({ mode }) => {
                     {b.desc}
                   </p>
                 </div>
-                <div className="pt-4 border-t border-[#F4EFEA] dark:border-[#272420] mt-4 flex items-center justify-between text-xs font-semibold text-[#BA2D1D]">
+                <div className="pt-4 border-t border-[#F4EFEA] dark:border-[#272420] mt-4 flex items-center justify-between text-xs font-semibold text-primary">
                   <span>Explore Brand</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
@@ -95,7 +95,7 @@ export const BrandOffersPage: React.FC<BrandOffersPageProps> = ({ mode }) => {
             <h2 className="font-serif font-bold text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
               Discounted Products ({discountedProducts.length})
             </h2>
-            <span className="text-xs text-[#BA2D1D] font-mono font-semibold">
+            <span className="text-xs text-primary font-mono font-semibold">
               Flash Sales Campaign
             </span>
           </div>

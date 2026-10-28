@@ -1,33 +1,37 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { getAssetUrl } from "@/lib/assetHelper";
+import { asset } from "@/lib/utils";
+import { Category } from "@/types";
 import {
-  Phone,
-  Mail,
-  Heart,
-  Search,
   Bell,
-  HelpCircle,
-  Menu,
   ChevronDown,
-  Sun,
+  Heart,
+  HelpCircle,
+  Mail,
+  Menu,
   Moon,
+  Package,
+  Percent,
+  Phone,
+  Search,
+  Sparkles,
+  Sun,
   User as UserIcon,
   X,
-  Package,
-  Sparkles,
-  Percent
-} from 'lucide-react';
-import { useApp } from '../context/AppContext';
-import { MOCK_PRODUCTS } from '../data/mockData';
-import { Category } from '@/types';
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { useApp } from "../context/AppContext";
+import { MOCK_PRODUCTS } from "../data/mockData";
 
-export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
+export const Header: React.FC<{ categories: Category[] }> = ({
+  categories,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
+  const isHomePage = pathname === "/";
   const {
     theme,
     toggleTheme,
@@ -39,12 +43,14 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
     logout,
     searchQuery,
     setSearchQuery,
-    showToast
+    showToast,
   } = useApp();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [hoveredDept, setHoveredDept] = useState<Category | null>(null);
-  const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(null);
+  const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(
+    null,
+  );
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
@@ -65,8 +71,8 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -78,40 +84,50 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
   }, [isHomePage]);
 
   const searchResults = searchQuery.trim()
-    ? MOCK_PRODUCTS.filter((p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.brand.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 5)
+    ? MOCK_PRODUCTS.filter(
+        (p) =>
+          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.brand.toLowerCase().includes(searchQuery.toLowerCase()),
+      ).slice(0, 5)
     : [];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setSearchFocused(false);
-      router.push(`/category/all?search=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(
+        `/category/all?search=${encodeURIComponent(searchQuery.trim())}`,
+      );
     }
   };
 
   return (
     <header className="w-full pb-1 select-none shadow-md transition-colors relative z-40">
       {/* 1. Top Utility Header */}
-      <div className="text-xs text-[#736C62] dark:text-[#9E968B]">
+      <div className="hidden md:block text-xs text-[#736C62] dark:text-[#9E968B]">
         <div className="container py-1 flex flex-wrap items-center justify-between gap-3">
           {/* Left contact info */}
           <div className="flex items-center gap-4 flex-wrap">
             <a
               href="tel:+8801894084242"
-              className="inline-flex items-center gap-1.5 hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+              className="inline-flex items-center gap-1.5 hover:text-primary dark:hover:text-[#E05343] transition-colors"
             >
-              <Phone className="w-3 h-3 text-[#BA2D1D] dark:text-[#E05343]" />
-              <span>Hotline: <strong className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">+8801894084242</strong></span>
+              <Phone className="w-3 h-3 text-primary dark:text-[#E05343]" />
+              <span>
+                Hotline:{" "}
+                <strong className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                  +8801894084242
+                </strong>
+              </span>
             </a>
-            <span className="hidden sm:inline text-[#D3CBC0] dark:text-[#3E3A34]">|</span>
+            <span className="hidden sm:inline text-[#D3CBC0] dark:text-[#3E3A34]">
+              |
+            </span>
             <a
               href="mailto:info@wellsellbd.com"
-              className="hidden sm:inline-flex items-center gap-1.5 hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 hover:text-primary dark:hover:text-[#E05343] transition-colors"
             >
-              <Mail className="w-3 h-3 text-[#BA2D1D] dark:text-[#E05343]" />
+              <Mail className="w-3 h-3 text-primary dark:text-[#E05343]" />
               <span>Mail Us: info@wellsellbd.com</span>
             </a>
           </div>
@@ -122,13 +138,8 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               href="/brand"
               className="hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE] flex items-center gap-1 transition-colors"
             >
-              <Heart className="w-3 h-3 text-[#BA2D1D]" />
+              <Heart className="w-3 h-3 text-primary" />
               <span>Wishlists</span>
-              {wishlist.length > 0 && (
-                <span className="ml-0.5 px-1.5 py-0.2 text-[10px] bg-[#BA2D1D] text-white rounded-full font-medium">
-                  {wishlist.length}
-                </span>
-              )}
             </Link>
 
             <span className="text-[#D3CBC0] dark:text-[#3E3A34]">|</span>
@@ -137,21 +148,23 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             <div className="flex items-center gap-1 text-[11px]">
               <span className="opacity-70">Currency:</span>
               <button
-                onClick={() => setCurrency('Tk.')}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === 'Tk.'
-                  ? 'text-[#BA2D1D] dark:text-[#E05343] underline'
-                  : 'hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]'
-                  }`}
+                onClick={() => setCurrency("Tk.")}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
+                  currency === "Tk."
+                    ? "text-primary dark:text-[#E05343] underline"
+                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                }`}
               >
                 Tk.
               </button>
               <span>/</span>
               <button
-                onClick={() => setCurrency('$')}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === '$'
-                  ? 'text-[#BA2D1D] dark:text-[#E05343] underline'
-                  : 'hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]'
-                  }`}
+                onClick={() => setCurrency("$")}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
+                  currency === "$"
+                    ? "text-primary dark:text-[#E05343] underline"
+                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                }`}
               >
                 USD
               </button>
@@ -162,9 +175,13 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
               className="p-1 rounded hover:bg-[#EFEAE1] dark:hover:bg-[#23201C] transition-colors text-[#1F1D1A] dark:text-[#EDE7DE] cursor-pointer"
-              title={theme === 'dark' ? 'Switch to Paper Light' : 'Switch to Ink Charcoal'}
+              title={
+                theme === "dark"
+                  ? "Switch to Paper Light"
+                  : "Switch to Ink Charcoal"
+              }
             >
-              {theme === 'dark' ? (
+              {theme === "dark" ? (
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
               ) : (
                 <Moon className="w-3.5 h-3.5 text-[#736C62]" />
@@ -180,25 +197,33 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
           href="/"
           className="cursor-pointer flex items-center gap-2 sm:gap-3 shrink-0 group"
         >
-          <img src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
-            style={{ height: '55px' }} />
+          <img
+            src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
+            className="h-7.25 md:h-13.75"
+          />
         </Link>
 
         {/* Live Search Input with Dropdown */}
-        <div ref={searchRef} className="flex-1 max-w-xl hidden md:block relative">
-          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+        <div
+          ref={searchRef}
+          className="flex-1 max-w-xl hidden md:block relative"
+        >
+          <form
+            onSubmit={handleSearchSubmit}
+            className="relative flex items-center"
+          >
             <input
               type="text"
               placeholder="Search health, skincare, vitamins, perfumes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setSearchFocused(true)}
-              className="w-full bg-[#FFFFFF] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-sm text-[#1F1D1A] dark:text-[#EDE7DE] rounded-full py-2.5 pl-5 pr-11 focus:outline-none focus:ring-1 focus:ring-[#BA2D1D] focus:border-[#BA2D1D] transition-shadow shadow-xs placeholder-[#9A9184]"
+              className="w-full bg-[#FFFFFF] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-sm text-[#1F1D1A] dark:text-[#EDE7DE] rounded-full py-2.5 pl-5 pr-11 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-shadow shadow-xs placeholder-[#9A9184]"
             />
             <button
               type="submit"
               aria-label="Execute search"
-              className="absolute right-1.5 w-8 h-8 rounded-full bg-[#BA2D1D] hover:bg-[#9D2315] text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="absolute right-1.5 w-8 h-8 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <Search className="w-4 h-4" />
             </button>
@@ -218,7 +243,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                   className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] cursor-pointer transition-colors"
                 >
                   <img
-                    src={item.image}
+                    src={getAssetUrl(item.image || item.thumbnail)}
                     alt={item.name}
                     className="w-9 h-9 object-cover rounded border border-[#E8E2D9] dark:border-[#312E29]"
                   />
@@ -226,7 +251,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                     <p className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
                       {item.name}
                     </p>
-                    <p className="text-[11px] text-[#BA2D1D] font-mono">
+                    <p className="text-[11px] text-primary font-mono">
                       Tk. {item.price.toLocaleString()}
                     </p>
                   </div>
@@ -240,12 +265,12 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           {/* Notification icon */}
           <button
-            onClick={() => showToast('No new unread store alerts.', 'info')}
+            onClick={() => showToast("No new unread store alerts.", "info")}
             aria-label="Notifications"
             className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] text-[#1F1D1A] dark:text-[#EDE7DE] relative transition-colors cursor-pointer"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#BA2D1D] text-white text-[10px] font-semibold flex items-center justify-center">
+            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
               0
             </span>
           </button>
@@ -268,9 +293,9 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-full border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
                 >
-                  <UserIcon className="w-4 h-4 text-[#BA2D1D]" />
+                  <UserIcon className="w-4 h-4 text-primary" />
                   <span className="text-xs font-medium hidden sm:inline">
-                    {user.first_name || 'My Account'}
+                    {user.first_name || "My Account"}
                   </span>
                   <ChevronDown className="w-3 h-3 text-[#736C62] hidden sm:inline" />
                 </button>
@@ -304,7 +329,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                         logout();
                         setIsUserMenuOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-xs text-[#BA2D1D] hover:bg-[#FAFAFA] dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
+                      className="w-full text-left px-4 py-2 text-xs text-primary hover:bg-[#FAFAFA] dark:hover:bg-[#2A2A2A] transition-colors cursor-pointer"
                     >
                       Sign Out
                     </button>
@@ -316,8 +341,10 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                 href="/login"
                 className="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-full border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
               >
-                <UserIcon className="w-4 h-4 text-[#BA2D1D]" />
-                <span className="text-xs font-medium hidden sm:inline">Sign In</span>
+                <UserIcon className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium hidden sm:inline">
+                  Sign In
+                </span>
               </Link>
             )}
           </div>
@@ -332,19 +359,19 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             onClick={() => {
               if (isHomePage) {
                 setIsDepartmentOpen(false);
-                window.dispatchEvent(new Event('focus-hero-departments'));
+                window.dispatchEvent(new Event("focus-hero-departments"));
                 return;
               }
               setIsDepartmentOpen((open) => !open);
               setHoveredDept(null);
               setHoveredSubcategory(null);
             }}
-            className="w-full rounded-xl flex justify-center items-center gap-2.5 bg-[#BA2D1D] text-white py-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-[#9D2315] transition-colors cursor-pointer"
+            className="w-full rounded-xl flex justify-center items-center gap-2.5 bg-primary text-white py-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover transition-colors cursor-pointer"
           >
             <Menu className="w-4 h-4" />
             <span>ALL DEPARTMENTS</span>
             <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 ${isDepartmentOpen ? 'rotate-180' : ''}`}
+              className={`w-4 h-4 transition-transform duration-200 ${isDepartmentOpen ? "rotate-180" : ""}`}
             />
           </button>
 
@@ -371,7 +398,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                       <Link
                         href={`/category/${cat.slug}`}
                         onClick={() => setIsDepartmentOpen(false)}
-                        className="w-full text-left px-4 py-2 text-xs text-[#1F1D1A] dark:text-[#EDE7DE] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-[#BA2D1D] dark:hover:text-[#E05343] flex items-center justify-between transition-colors"
+                        className="w-full text-left px-4 py-2 text-xs text-[#1F1D1A] dark:text-[#EDE7DE] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-primary dark:hover:text-[#E05343] flex items-center justify-between transition-colors"
                       >
                         <span>{cat.name}</span>
                         <span className="text-[10px] text-[#9A9184]">→</span>
@@ -386,7 +413,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                             <Link
                               href={`/category/${cat.slug}`}
                               onClick={() => setIsDepartmentOpen(false)}
-                              className="text-[11px] text-[#BA2D1D] hover:underline font-semibold"
+                              className="text-[11px] text-primary hover:underline font-semibold"
                             >
                               View All ›
                             </Link>
@@ -398,28 +425,35 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                                 key={sub.id}
                                 className="relative"
                                 onMouseEnter={() =>
-                                  setHoveredSubcategory(sub.childs?.length ? sub : null)
+                                  setHoveredSubcategory(
+                                    sub.childs?.length ? sub : null,
+                                  )
                                 }
                               >
                                 <Link
                                   href={`/category/${sub.slug}`}
                                   onClick={() => setIsDepartmentOpen(false)}
-                                  className="w-full text-left py-2 px-4 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-[#BA2D1D] transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
+                                  className="w-full text-left py-2 px-4 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-primary transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
                                 >
                                   <span>{sub.name}</span>
                                   {sub.childs?.length ? (
-                                    <span className="text-[10px] text-[#9A9184]">→</span>
+                                    <span className="text-[10px] text-[#9A9184]">
+                                      →
+                                    </span>
                                   ) : null}
                                 </Link>
 
-                                {hoveredSubcategory?.id === sub.id && sub.childs?.length ? (
+                                {hoveredSubcategory?.id === sub.id &&
+                                sub.childs?.length ? (
                                   <div className="absolute top-0 left-full -ml-1 w-64 bg-white dark:bg-[#1E1E1E] section-card py-2 shadow-xl z-10">
                                     {sub.childs.map((child) => (
                                       <Link
                                         key={child.id}
                                         href={`/category/${child.slug}`}
-                                        onClick={() => setIsDepartmentOpen(false)}
-                                        className="block px-4 py-2 text-xs text-[#3E3A34] dark:text-[#C5BEB3] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-[#BA2D1D] transition-colors"
+                                        onClick={() =>
+                                          setIsDepartmentOpen(false)
+                                        }
+                                        className="block px-4 py-2 text-xs text-[#3E3A34] dark:text-[#C5BEB3] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-primary transition-colors"
                                       >
                                         {child.name}
                                       </Link>
@@ -436,13 +470,17 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                               onClick={() => setIsDepartmentOpen(false)}
                               className="relative h-28 cursor-pointer group block mt-4 rounded-b-xl overflow-hidden"
                             >
-                              <img
-                                src={cat.images}
-                                alt={cat.name}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                              />
+                              {cat.images ? (
+                                <img
+                                  src={asset(cat.images?.browse_category_feature)}
+                                  alt={cat.name}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                />
+                              ) : null}
                               <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent p-2.5 flex flex-col justify-end text-white">
-                                <span className="underline">Explore {cat.name} ›</span>
+                                <span className="underline">
+                                  Explore {cat.name} ›
+                                </span>
                               </div>
                             </Link>
                           ) : null}
@@ -460,33 +498,33 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
         <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-[#4A443B] dark:text-[#C5BEB3]">
           <Link
             href="/"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
           >
             Home
           </Link>
           <Link
             href="/brand"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
           >
             Brands
           </Link>
           <Link
             href="/offers"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-[#BA2D1D] dark:text-[#E05343]"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-primary dark:text-[#E05343]"
           >
             <Percent className="w-3.5 h-3.5" />
             HOT OFFERS
           </Link>
           <Link
             href="/checkout"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-[#1F6E54] dark:text-[#34A87C]"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-[#1F6E54] dark:text-[#34A87C]"
           >
             <Sparkles className="w-3.5 h-3.5" />
             Checkout
           </Link>
           <Link
             href="/track-order"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1"
           >
             <Package className="w-3.5 h-3.5 text-[#1F6E54]" />
             Track Order
@@ -495,13 +533,13 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             <>
               <Link
                 href="/register"
-                className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5"
+                className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
               >
                 Join Free
               </Link>
               <Link
                 href="/login"
-                className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5"
+                className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
               >
                 Sign In
               </Link>
@@ -513,7 +551,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
           )}
           <a
             href="tel:+8801894084242"
-            className="hover:text-[#BA2D1D] dark:hover:text-[#E05343] transition-colors py-2.5"
+            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
           >
             Support
           </a>
@@ -526,7 +564,11 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             className="p-2 text-[#1F1D1A] dark:text-[#EDE7DE] cursor-pointer"
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
           </button>
         </div>
       </div>
@@ -561,7 +603,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             <Link
               href="/offers"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#BA2D1D]"
+              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-primary"
             >
               Hot Offers
             </Link>
@@ -609,7 +651,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
                   logout();
                   setIsMobileMenuOpen(false);
                 }}
-                className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#BA2D1D]"
+                className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-primary"
               >
                 Sign Out
               </button>

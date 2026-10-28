@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'discount' | 'secondary' | 'outline' | 'success' | 'warning';
@@ -12,8 +12,8 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    default: 'bg-[#BA2D1D] text-white',
-    discount: 'bg-[#581845] text-white font-bold tracking-wider',
+    default: 'bg-primary text-white',
+    discount: 'bg-primary text-white font-bold tracking-wider',
     secondary: 'bg-[#F3F4F6] text-[#374151] dark:bg-[#374151] dark:text-[#F3F4F6]',
     outline: 'border border-[#E5E7EB] dark:border-[#374151] text-[#374151] dark:text-[#D1D5DB]',
     success: 'bg-[#10B981] text-white',
