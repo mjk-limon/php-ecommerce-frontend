@@ -1,26 +1,16 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { useApp } from '@/context/AppContext';
-import { getAssetUrl } from '@/lib/assetHelper';
-import { api } from '@/services/api';
-import { ShippingLocation } from '@/types';
-import {
-  ArrowRight,
-  Minus,
-  Plus,
-  RotateCcw,
-  ShieldCheck,
-  ShoppingBag,
-  Tag,
-  Trash2,
-  Truck
-} from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useApp } from "@/context/AppContext";
+import { asset } from "@/lib/utils";
+import { api } from "@/services/api";
+import { ShippingLocation } from "@/types";
+import { ArrowRight, Minus, Plus, RotateCcw, ShieldCheck, ShoppingBag, Tag, Trash2, Truck } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
@@ -33,12 +23,12 @@ export default function CartPage() {
     cartTotalDiscount,
     cartTotalCount,
     formatPrice,
-    showToast
+    showToast,
   } = useApp();
 
   const [locations, setLocations] = useState<ShippingLocation[]>([]);
   const [selectedLocationId, setSelectedLocationId] = useState<number>(1);
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
   useEffect(() => {
@@ -56,13 +46,13 @@ export default function CartPage() {
   const handleApplyCoupon = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
-    if (couponCode.toUpperCase() === 'WELLSELL10' || couponCode.toUpperCase() === 'FLASH10') {
+    if (couponCode.toUpperCase() === "WELLSELL10" || couponCode.toUpperCase() === "FLASH10") {
       const discount = Math.round(cartSubtotal * 0.1);
       setAppliedCoupon({ code: couponCode.toUpperCase(), discount });
-      showToast(`Coupon ${couponCode.toUpperCase()} applied! Saved Tk. ${discount}`, 'success');
-      setCouponCode('');
+      showToast(`Coupon ${couponCode.toUpperCase()} applied! Saved Tk. ${discount}`, "success");
+      setCouponCode("");
     } else {
-      showToast('Invalid promo coupon code. Try "WELLSELL10"', 'error');
+      showToast('Invalid promo coupon code. Try "WELLSELL10"', "error");
     }
   };
 
@@ -73,11 +63,10 @@ export default function CartPage() {
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
-          <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-            Your Shopping Bag is Empty
-          </h1>
+          <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Your Shopping Bag is Empty</h1>
           <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
-            Looks like you haven&apos;t added any products to your bag yet. Explore our curated collections of authentic imported skincare, fragrances, and health vitamins.
+            Looks like you haven&apos;t added any products to your bag yet. Explore our curated collections of authentic
+            imported skincare, fragrances, and health vitamins.
           </p>
           <div className="pt-2">
             <Link href="/">
@@ -99,7 +88,9 @@ export default function CartPage() {
         <Card className="p-4 sm:p-5 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 text-xs text-[#736C62] dark:text-[#9E968B] mb-1">
-              <Link href="/" className="hover:text-primary">Home</Link>
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">Shopping Bag</span>
             </div>
@@ -107,12 +98,7 @@ export default function CartPage() {
               Shopping Bag ({cartTotalCount} items)
             </h1>
           </div>
-          <Button
-            type="button"
-            variant="link"
-            onClick={clearCart}
-            className="text-xs text-primary hover:underline"
-          >
+          <Button type="button" variant="link" onClick={clearCart} className="text-xs text-primary hover:underline">
             Clear Entire Bag
           </Button>
         </Card>
@@ -131,10 +117,11 @@ export default function CartPage() {
 
               <div className="space-y-4 divide-y divide-[#F0EDE8] dark:divide-[#262420]">
                 {cart.map((item) => {
-                  const itemImg = getAssetUrl(item.product.image || item.product.thumbnail);
+                  const itemImg = asset(item.product.thumbnail);
+
                   return (
                     <div
-                      key={`${item.product.id}-${item.selected_size || 'default'}`}
+                      key={`${item.product.id}`}
                       className="pt-4 first:pt-0 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
                     >
                       {/* Thumbnail & Title (6 cols) */}
@@ -160,9 +147,14 @@ export default function CartPage() {
                           <span className="text-[10px] text-[#736C62] dark:text-[#9E968B] uppercase">
                             {item.product.brand}
                           </span>
-                          {item.selected_size && (
+                          {item.variant.size && (
                             <span className="block text-[10px] text-[#736C62] dark:text-[#9E968B]">
-                              Size: {item.selected_size}
+                              Size: {item.variant.size}
+                            </span>
+                          )}
+                          {item.variant.color && (
+                            <span className="block text-[10px] text-[#736C62] dark:text-[#9E968B]">
+                              Color: {item.variant.color}
                             </span>
                           )}
                         </div>
@@ -179,17 +171,15 @@ export default function CartPage() {
                         <div className="flex items-center border border-[#DCD5C9] dark:border-[#38332C] rounded-xs bg-[#FBF9F5] dark:bg-[#161513]">
                           <button
                             type="button"
-                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.product.id, item.variant.id, item.quantity - 1)}
                             className="w-7 h-7 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="w-8 text-center text-xs font-semibold font-mono">
-                            {item.quantity}
-                          </span>
+                          <span className="w-8 text-center text-xs font-semibold font-mono">{item.quantity}</span>
                           <button
                             type="button"
-                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.product.id, item.variant.id, item.quantity + 1)}
                             className="w-7 h-7 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
                           >
                             <Plus className="w-3.5 h-3.5" />
@@ -204,7 +194,7 @@ export default function CartPage() {
                         </span>
                         <button
                           type="button"
-                          onClick={() => removeFromCart(item.product.id)}
+                          onClick={() => removeFromCart(item.product.id, item.variant.id)}
                           className="text-[#9A9184] hover:text-primary p-1 transition-colors cursor-pointer"
                           title="Remove"
                         >
@@ -298,9 +288,7 @@ export default function CartPage() {
 
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
                   <span>Shipping Cost:</span>
-                  <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Tk. {shippingCost}
-                  </span>
+                  <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">Tk. {shippingCost}</span>
                 </div>
 
                 {appliedCoupon && (
@@ -320,7 +308,9 @@ export default function CartPage() {
                 <div className="pt-3 border-t border-[#E8E2D9] dark:border-[#312E29] flex justify-between items-baseline">
                   <div>
                     <span className="text-sm font-bold text-[#1F1D1A] dark:text-[#EDE7DE]">Total Payable:</span>
-                    <span className="block text-[10px] text-[#736C62] dark:text-[#9E968B]">Cash On Delivery Available</span>
+                    <span className="block text-[10px] text-[#736C62] dark:text-[#9E968B]">
+                      Cash On Delivery Available
+                    </span>
                   </div>
                   <span className="text-xl font-black text-primary dark:text-[#E05343] font-mono tabular-nums">
                     {formatPrice(grandTotal)}
@@ -333,7 +323,7 @@ export default function CartPage() {
                 type="button"
                 variant="default"
                 size="lg"
-                onClick={() => router.push('/checkout')}
+                onClick={() => router.push("/checkout")}
                 className="w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-3.5"
               >
                 <span>Proceed To Checkout</span>
@@ -341,10 +331,7 @@ export default function CartPage() {
               </Button>
 
               <div className="text-center">
-                <Link
-                  href="/"
-                  className="text-xs text-[#736C62] hover:text-primary transition-colors"
-                >
+                <Link href="/" className="text-xs text-[#736C62] hover:text-primary transition-colors">
                   ← Continue Shopping
                 </Link>
               </div>

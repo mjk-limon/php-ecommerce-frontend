@@ -88,7 +88,7 @@ export const CartDrawer: React.FC = () => {
             ) : (
               cart.map((item) => (
                 <div
-                  key={`${item.product.id}-${item.variant.size || ""}`}
+                  key={`${item.product.id}`}
                   className="flex gap-3 pb-4 border-b border-[#F0EDE8] dark:border-[#262420] last:border-none"
                 >
                   <Link
@@ -115,6 +115,12 @@ export const CartDrawer: React.FC = () => {
                     {item.variant.size && (
                       <span className="inline-block text-[10px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
                         Size: {item.variant.size}
+                      </span>
+                    )}
+
+                    {item.variant.color && (
+                      <span className="inline-block text-[10px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
+                        Color: {item.variant.color}
                       </span>
                     )}
 
