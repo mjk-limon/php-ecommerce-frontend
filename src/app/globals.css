@@ -20,10 +20,6 @@
   --line: #e7e9e5;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background: var(--page);
   color: #202923;

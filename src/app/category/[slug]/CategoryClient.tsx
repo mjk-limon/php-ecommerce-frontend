@@ -1,32 +1,26 @@
-'use client';
+"use client";
 
-import { ProductCard } from '@/components/ProductCard';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { useApp } from '@/context/AppContext';
-import { Category, FilterObjects, Product } from '@/types';
-import { SlidersHorizontal } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+import { ProductCard } from "@/components/ProductCard";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useApp } from "@/context/AppContext";
+import { Category, FilterObjects, Product } from "@/types";
+import { SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 interface CategoryClientProps {
   products: Product[];
   category: Category | null;
   filterObjects?: FilterObjects;
-  slug: string;
 }
 
-export default function CategoryClient({
-  products,
-  category,
-  filterObjects,
-  slug
-}: CategoryClientProps) {
+export default function CategoryClient({ products, category, filterObjects }: CategoryClientProps) {
   const { formatPrice, searchQuery } = useApp();
 
-  const [selectedBrand, setSelectedBrand] = useState<string>('all');
+  const [selectedBrand, setSelectedBrand] = useState<string>("all");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'views'>('default');
+  const [sortBy, setSortBy] = useState<"default" | "price-asc" | "price-desc" | "views">("default");
 
   return (
     <div className="w-full pb-16 pt-4 sm:pt-6">
@@ -35,18 +29,16 @@ export default function CategoryClient({
         <Card className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-1.5 text-xs text-[#736C62] dark:text-[#9E968B] mb-1">
-              <Link href="/" className="hover:text-primary">Home</Link>
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">
-                {category ? category.name : 'All Products'}
+                {category ? category.name : "All Products"}
               </span>
             </div>
             <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-              {searchQuery
-                ? `Search: "${searchQuery}"`
-                : category
-                  ? category.name
-                  : 'All Departments & Products'}
+              {searchQuery ? `Search: "${searchQuery}"` : category ? category.name : "All Departments & Products"}
             </h1>
             <p className="text-xs text-[#736C62] dark:text-[#9E968B] mt-0.5">
               Showing <strong className="font-mono text-primary">{products.length}</strong> available genuine items
@@ -84,21 +76,22 @@ export default function CategoryClient({
                 Brand
               </h4>
               <div className="space-y-1.5 max-h-48 overflow-y-auto text-xs">
-                {filterObjects?.brands && Object.values(filterObjects.brands).map((b: string) => (
-                  <label key={b} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="brand_filter"
-                      value={b}
-                      checked={selectedBrand === b}
-                      onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="text-primary focus:ring-[#BA2D1D]"
-                    />
-                    <span className="capitalize text-[#3E3A34] dark:text-[#C5BEB3]">
-                      {b === 'all' ? 'All Brands' : b}
-                    </span>
-                  </label>
-                ))}
+                {filterObjects?.brands &&
+                  Object.values(filterObjects.brands).map((b: string) => (
+                    <label key={b} className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="brand_filter"
+                        value={b}
+                        checked={selectedBrand === b}
+                        onChange={(e) => setSelectedBrand(e.target.value)}
+                        className="text-primary focus:ring-[#BA2D1D]"
+                      />
+                      <span className="capitalize text-[#3E3A34] dark:text-[#C5BEB3]">
+                        {b === "all" ? "All Brands" : b}
+                      </span>
+                    </label>
+                  ))}
               </div>
             </div>
 
@@ -137,7 +130,7 @@ export default function CategoryClient({
                   type="button"
                   variant="default"
                   onClick={() => {
-                    setSelectedBrand('all');
+                    setSelectedBrand("all");
                     setPriceRange([0, 10000]);
                   }}
                   className="text-xs font-semibold uppercase tracking-wider"

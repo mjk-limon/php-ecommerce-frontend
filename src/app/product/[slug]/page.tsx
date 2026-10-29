@@ -1,8 +1,7 @@
-import type { Metadata } from 'next';
-import ProductDetailsClient from './ProductDetailsClient';
-import { serverApiGet } from '@/services/serverApi';
-import { Product, ReviewItem, QuestionItem } from '@/types';
-import { notFound } from 'next/navigation';
+import { serverApiGet } from "@/services/serverApi";
+import { Product, QuestionItem, ReviewItem } from "@/types";
+import type { Metadata } from "next";
+import ProductDetailsClient from "./ProductDetailsClient";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -10,51 +9,20 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await serverApiGet<Product>('product/details', { slug }).catch(() => null);
+  const productResponse = await serverApiGet<{ meta: Metadata }>("product/details", { slug }).catch(() => null);
 
-  if (!product) {
-    return {
-      title: 'Product Details | ilmComm'
-    };
-  }
-
-  const name = product.name || slug;
-  const description =
-    product.description?.replace(/<[^>]*>?/gm, '')?.slice(0, 160) ||
-    `${name} available at best price on ilmComm.`;
-  const image = product.variants?.[0]?.images?.[0] || '';
-
-  return {
-    title: `${name} | ilmComm`,
-    description,
-    openGraph: {
-      title: `${name} - ilmComm`,
-      description,
-      images: image ? [image] : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${name} - ilmComm`,
-      images: image ? [image] : [],
-    },
-  };
+  return productResponse.meta;
 }
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = await serverApiGet<Product>('product/details', { slug }).catch(() => null);
-  
-
-  if (!product) {
-    notFound();
-  }
-
-  const categoryId = product.category_id || product.category?.[0]?.id || 14;
+  const { data: product } = await serverApiGet<{ data: Product }>("product/details", { slug });
+  const categoryId = product.category_id;
 
   const [reviewsRes, questionsRes, suggestionsRes] = await Promise.all([
     serverApiGet<any>(`product/${product.id}/reviews`).catch(() => []),
     serverApiGet<any>(`product/${product.id}/questions`).catch(() => []),
-    serverApiGet<any>('product/suggestions', { category_ids: categoryId }).catch(() => [])
+    serverApiGet<any>("product/suggestions", { category_ids: categoryId }).catch(() => []),
   ]);
 
   const initialReviews: ReviewItem[] = Array.isArray(reviewsRes) ? reviewsRes : reviewsRes?.data || [];

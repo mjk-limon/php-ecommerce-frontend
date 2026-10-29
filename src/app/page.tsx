@@ -3,21 +3,33 @@ import { ProductCard } from "@/components/ProductCard";
 import { Card } from "@/components/ui/card";
 import { asset } from "@/lib/utils";
 import { getServerCategories, serverApiGet } from "@/services/serverApi";
-import { ArrowRight, Sparkles, TrendingUp } from "lucide-react";
+import { Category, Product } from "@/types";
+import { ArrowRight, Radio, Sparkles } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+interface HomeApi {
+  meta: Metadata;
+  data: {
+    trending_categories: Category[];
+    trending_products: Product[];
+    new_arrivals: Product[];
+    category_products: Category[];
+  };
+}
 
 export default async function HomePage() {
   const [categories, homepageData] = await Promise.all([
     getServerCategories(),
-    serverApiGet<any>("home", {
+    serverApiGet<HomeApi>("home", {
       fetches: "trending_categories,trending_products,new_arrivals,category_products",
     }),
   ]);
 
-  const trending_categories = homepageData?.trending_categories || [];
-  const trending_products = homepageData?.trending_products || [];
-  const new_arrivals = homepageData?.new_arrivals || [];
-  const category_products = homepageData?.category_products || [];
+  const trending_categories = homepageData?.data?.trending_categories || [];
+  const trending_products = homepageData?.data?.trending_products || [];
+  const new_arrivals = homepageData?.data?.new_arrivals || [];
+  const category_products = homepageData?.data?.category_products || [];
 
   return (
     <div className="w-full pb-16 space-y-8 sm:space-y-10">
@@ -29,7 +41,7 @@ export default async function HomePage() {
         <div className="w-full bg-[#f4f2ee] dark:bg-[#181818] border-y border-[#eae6df] dark:border-[#262626]">
           <section className="container py-6">
             <div className="mb-4 flex justify-center items-center gap-2">
-              <Sparkles className="h-4 w-4 text-[#68183f] dark:text-primary" />
+              <Sparkles className="h-4 w-4 text-primary" />
               <h2 className="text-base font-semibold text-[#202923] dark:text-white">Top Ranking Categories</h2>
             </div>
             <div className="flex flex-wrap justify-center items-center gap-5 sm:gap-8">
@@ -60,13 +72,13 @@ export default async function HomePage() {
       {/* 2. TRENDING Showcase */}
       {trending_products.length > 0 && (
         <section className="container">
-          <Card className="section-card">
+          <Card className="border-2 border-primary bg-[url('https://i.pinimg.com/originals/12/4d/e3/124de3d1b5e12f1d8fcec1685e634361.gif')]">
             <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F0EDE8] dark:border-[#2A2A2A]">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-primary" />
-                <h2 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE] tracking-wider">
-                  Trending Now
-                </h2>
+                <div className="flex items-center gap-2 font-bold">
+                  <Radio className="w-5 h-5 text-red-700 animate-ping" />
+                  <span>Flash Sale</span>
+                </div>
               </div>
             </div>
 
@@ -114,18 +126,14 @@ export default async function HomePage() {
       {category_products.length > 0 && (
         <section className="container space-y-8">
           <div className="pb-2">
-            <h2 className="font-bold text-lg sm:text-xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-              Browse Our Categories
-            </h2>
+            <h2 className="font-bold text-lg sm:text-xl text-[#1F1D1A] dark:text-[#EDE7DE]">Browse Our Categories</h2>
           </div>
 
           {category_products.map((category) => (
             <Card key={category.id} className="section-card">
               {/* Category Section Header */}
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#F0EDE8] dark:border-[#2A2A2A]">
-                <h3 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
-                  {category.name}
-                </h3>
+                <h3 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">{category.name}</h3>
                 <Link
                   href={`/category/${category.slug}`}
                   className="text-xs text-primary dark:text-[#E05343] font-semibold hover:underline flex items-center gap-1 cursor-pointer"

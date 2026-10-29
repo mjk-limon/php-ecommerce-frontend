@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { asset } from "@/lib/utils";
 import { Heart, ShoppingBag } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useApp } from "../context/AppContext";
@@ -51,10 +52,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
         href={`/product/${product.slug}`}
         className="relative w-full aspect-square overflow-hidden bg-[#FAFAFA] dark:bg-[#171717] mb-3 flex items-center justify-center cursor-pointer rounded-xs block"
       >
-        <img
+        <Image
           src={asset(product.thumbnail, "assets/images/product-placeholder.png")}
           alt={product.name}
-          referrerPolicy="no-referrer"
+          width={300}
+          height={300}
           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
         />
