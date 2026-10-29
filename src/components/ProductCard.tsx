@@ -27,11 +27,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
       }
     >
       {/* Discount badge */}
-      {product.discount && product.discount > 0 ? (
+      {Boolean(product.discount) && (
         <Badge variant="discount" className="absolute top-2 right-2 z-10">
           -{product.discount}%
         </Badge>
-      ) : null}
+      )}
 
       {/* Wishlist toggle button */}
       <button
@@ -65,22 +65,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
       {/* Product metadata */}
       <div className="flex-1 flex flex-col justify-between">
         <Link href={`/product/${product.slug}`} className="cursor-pointer block">
-          <p className="text-[10px] uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] font-medium mb-1 truncate">
-            {product.brand || "WELLSELL"}
-          </p>
           <h3 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] line-clamp-2 leading-relaxed min-h-10 group-hover:text-primary dark:group-hover:text-[#E05343] transition-colors">
             {product.name}
           </h3>
+          {product.brand && (
+            <p className="text-[10px] uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] font-medium mb-1 truncate">
+              {product.brand}
+            </p>
+          )}
         </Link>
 
         {/* Pricing */}
         <div className="mt-2.5 mb-3 flex items-baseline gap-2">
           <span className="font-bold text-sm text-primary dark:text-[#E05343] font-mono tabular-nums">
-            {formatPrice(product.price || 0)}
+            {formatPrice(product.price, product.discount)}
           </span>
-          {product.old_price && (
+
+          {Boolean(product.discount) && (
             <span className="text-[11px] text-[#9A9184] line-through font-mono tabular-nums">
-              {formatPrice(product.old_price)}
+              {formatPrice(product.price)}
             </span>
           )}
         </div>
@@ -89,7 +92,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
         <div className="grid sm:grid-cols-2 gap-1.5 pt-1 dark:border-[#2A2A2A]">
           <button
             type="button"
-            onClick={() => addToCart(product, 1)}
+            onClick={() => addToCart(product, product.variants[0])}
             className="flex items-center justify-center gap-1 bg-[#5C5549] hover:bg-[#453F36] dark:bg-[#383838] dark:hover:bg-[#4A4A4A] text-white text-[11px] font-medium py-1.5 px-2 rounded-xs transition-colors cursor-pointer"
           >
             <ShoppingBag className="w-3 h-3" />
@@ -97,7 +100,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
           </button>
           <button
             type="button"
-            onClick={() => quickBuy(product, 1)}
+            onClick={() => quickBuy(product, product.variants[0])}
             className="flex items-center justify-center gap-1 bg-primary hover:bg-primary-hover text-white text-[11px] font-semibold py-1.5 px-2 rounded-xs transition-colors shadow-2xs cursor-pointer"
           >
             <span className="truncate">Buy Now</span>

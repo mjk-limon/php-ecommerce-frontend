@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { getAssetUrl } from '@/lib/assetHelper';
-import { ArrowRight, Minus, Plus, ShieldCheck, ShoppingBag, Trash2, X } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { useApp } from '../context/AppContext';
+import { asset, cn } from "@/lib/utils";
+import { ArrowRight, Minus, Plus, ShieldCheck, ShoppingBag, Trash2, X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useApp } from "../context/AppContext";
 
 export const CartDrawer: React.FC = () => {
   const router = useRouter();
@@ -18,9 +18,10 @@ export const CartDrawer: React.FC = () => {
     removeFromCart,
     updateQuantity,
     cartSubtotal,
+    cartUnitTotal,
     cartTotalDiscount,
     cartTotalCount,
-    formatPrice
+    formatPrice,
   } = useApp();
 
   useEffect(() => {
@@ -45,9 +46,10 @@ export const CartDrawer: React.FC = () => {
 
       {/* Drawer */}
       <div
-        className={`absolute inset-y-0 right-0 max-w-full flex pl-10 transform transition-transform duration-300 ease-out motion-reduce:transition-none ${
-          isDrawerVisible ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={cn(
+          "absolute inset-y-0 right-0 max-w-full flex pl-10 transform transition-transform duration-300 ease-out motion-reduce:transition-none",
+          isDrawerVisible ? "translate-x-0" : "translate-x-full",
+        )}
       >
         <div className="w-screen max-w-md bg-white dark:bg-[#1A1815] shadow-2xl flex flex-col">
           {/* Header */}
@@ -76,9 +78,6 @@ export const CartDrawer: React.FC = () => {
                 <h3 className="font-serif font-semibold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                   Your cart is empty
                 </h3>
-                <p className="text-xs text-[#736C62] dark:text-[#9E968B] max-w-xs">
-                  Discover authentic skincare, luxury fragrances, and health vitamins imported directly.
-                </p>
                 <button
                   onClick={() => setIsCartDrawerOpen(false)}
                   className="mt-2 text-xs font-semibold text-primary hover:underline cursor-pointer"
@@ -89,7 +88,7 @@ export const CartDrawer: React.FC = () => {
             ) : (
               cart.map((item) => (
                 <div
-                  key={`${item.product.id}-${item.selected_size || 'default'}`}
+                  key={`${item.product.id}-${item.variant.size || ""}`}
                   className="flex gap-3 pb-4 border-b border-[#F0EDE8] dark:border-[#262420] last:border-none"
                 >
                   <Link
@@ -98,7 +97,7 @@ export const CartDrawer: React.FC = () => {
                     className="w-16 h-16 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1E1E1E] shrink-0"
                   >
                     <img
-                      src={getAssetUrl(item.product.image || item.product.thumbnail)}
+                      src={asset(item.product.thumbnail, "assets/images/product-placeholder.png")}
                       alt={item.product.name}
                       className="w-full h-full object-contain"
                     />
@@ -113,25 +112,23 @@ export const CartDrawer: React.FC = () => {
                       {item.product.name}
                     </Link>
 
-                    {item.selected_size && (
+                    {item.variant.size && (
                       <span className="inline-block text-[10px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
-                        Size: {item.selected_size}
+                        Size: {item.variant.size}
                       </span>
                     )}
 
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center border border-[#DCD5C9] dark:border-[#38332C] rounded-xs bg-[#FBF9F5] dark:bg-[#161513]">
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.product.id, item.variant.id, item.quantity - 1)}
                           className="w-6 h-6 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-7 text-center text-xs font-semibold font-mono">
-                          {item.quantity}
-                        </span>
+                        <span className="w-7 text-center text-xs font-semibold font-mono">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.product.id, item.variant.id, item.quantity + 1)}
                           className="w-6 h-6 flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#25221E] text-xs transition-colors cursor-pointer"
                         >
                           <Plus className="w-3 h-3" />
@@ -147,7 +144,7 @@ export const CartDrawer: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => removeFromCart(item.product.id)}
+                    onClick={() => removeFromCart(item.product.id, item.variant.id)}
                     className="text-[#9A9184] hover:text-primary p-1 transition-colors self-start cursor-pointer"
                     title="Remove item"
                   >
@@ -164,7 +161,7 @@ export const CartDrawer: React.FC = () => {
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
                   <span>Items Subtotal:</span>
-                  <span className="font-mono font-medium">{formatPrice(cartSubtotal)}</span>
+                  <span className="font-mono font-medium">{formatPrice(cartUnitTotal)}</span>
                 </div>
                 {cartTotalDiscount > 0 && (
                   <div className="flex justify-between text-[#1F6E54] dark:text-[#34A87C]">
@@ -195,7 +192,7 @@ export const CartDrawer: React.FC = () => {
                 <button
                   onClick={() => {
                     setIsCartDrawerOpen(false);
-                    router.push('/checkout');
+                    router.push("/checkout");
                   }}
                   className="flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover text-white py-2.5 px-3 rounded-xs font-semibold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
                 >

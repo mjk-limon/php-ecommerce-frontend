@@ -193,41 +193,6 @@ export default function ProductDetailsClient({
   const hotline = process.env.NEXT_PUBLIC_STORE_HOTLINE || "+8801894084242";
   const whatsappNum = (process.env.NEXT_PUBLIC_STORE_WHATSAPP || hotline).replace(/[^0-9]/g, "");
 
-  // Add to cart & Quick Buy
-  const handleAddToCart = () => {
-    addToCart(
-      {
-        ...product,
-        price: currentPrice,
-        old_price: currentOldPrice,
-        image: activeImage,
-      },
-      quantity,
-      {
-        size: selectedSize || undefined,
-        color: selectedColor || undefined,
-        variant_id: selectedVariant.id,
-      },
-    );
-  };
-
-  const handleQuickBuy = () => {
-    quickBuy(
-      {
-        ...product,
-        price: currentPrice,
-        old_price: currentOldPrice,
-        image: activeImage,
-      },
-      quantity,
-      {
-        size: selectedSize || undefined,
-        color: selectedColor || undefined,
-        variant_id: selectedVariant.id,
-      },
-    );
-  };
-
   // WhatsApp Order
   const handleWhatsAppOrder = () => {
     const details = [
@@ -463,14 +428,14 @@ export default function ProductDetailsClient({
                 <div className="flex items-center gap-1">
                   <Button
                     type="button"
-                    onClick={handleAddToCart}
+                    onClick={() => addToCart(product, selectedVariant, quantity)}
                     className="rounded px-6 py-2.5 text-xs sm:text-sm font-medium h-auto"
                   >
                     Add To Cart
                   </Button>
                   <Button
                     type="button"
-                    onClick={handleQuickBuy}
+                    onClick={() => quickBuy(product, selectedVariant, quantity)}
                     variant="dark"
                     className="rounded px-6 py-2.5 text-xs sm:text-sm font-medium h-auto bg-[#606060] hover:bg-[#4d4d4d]"
                   >

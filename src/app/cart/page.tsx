@@ -8,15 +8,15 @@ import { getAssetUrl } from '@/lib/assetHelper';
 import { api } from '@/services/api';
 import { ShippingLocation } from '@/types';
 import {
-    ArrowRight,
-    Minus,
-    Plus,
-    RotateCcw,
-    ShieldCheck,
-    ShoppingBag,
-    Tag,
-    Trash2,
-    Truck
+  ArrowRight,
+  Minus,
+  Plus,
+  RotateCcw,
+  ShieldCheck,
+  ShoppingBag,
+  Tag,
+  Trash2,
+  Truck
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -53,7 +53,7 @@ export default function CartPage() {
   const couponDiscountAmount = appliedCoupon ? appliedCoupon.discount : 0;
   const grandTotal = Math.max(0, cartSubtotal + shippingCost - couponDiscountAmount);
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  const handleApplyCoupon = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
     if (couponCode.toUpperCase() === 'WELLSELL10' || couponCode.toUpperCase() === 'FLASH10') {
@@ -73,7 +73,7 @@ export default function CartPage() {
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
-          <h1 className="font-serif font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
+          <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
             Your Shopping Bag is Empty
           </h1>
           <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
@@ -103,7 +103,7 @@ export default function CartPage() {
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">Shopping Bag</span>
             </div>
-            <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
+            <h1 className="font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
               Shopping Bag ({cartTotalCount} items)
             </h1>
           </div>
@@ -237,7 +237,7 @@ export default function CartPage() {
           {/* Right Summary Card (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
             <Card className="p-5 sm:p-6 space-y-5">
-              <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE] border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
+              <h3 className="font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE] border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
                 Order Summary
               </h3>
 

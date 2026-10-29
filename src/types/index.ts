@@ -68,27 +68,20 @@ export interface Product {
   product_code?: string;
   brand: string;
   category_id?: number;
-  category_name?: string;
   merchant_id?: number;
   description?: string;
   short_description?: string;
   thumbnail?: string;
-  image?: string;
-  thumbnails?: string[];
-  images?: string[] | string;
+  images?: string[];
   price?: number;
-  old_price?: number;
-  views?: number;
-  discount?: number;
+  discount: number;
   minimum_price?: number;
   maximum_price?: number;
-  stock?: number;
-  rating?: number;
+  views?: number;
   reviews_count?: number;
   status?: number;
   featered_flags?: number;
   variants?: ProductVariant[];
-  variant?: ProductVariant[];
   others?: string;
   category?: Category[];
   merchant?: Array<{
@@ -187,10 +180,12 @@ export interface PaymentMethod {
 
 export interface CartItem {
   product: Product;
-  variant_id?: number;
+  variant: ProductVariant;
   quantity: number;
-  selected_size?: string;
-  selected_color?: string;
+  unit_price: number;
+  unit_total: number;
+  discount_total: number;
+  total_price: number;
 }
 
 export interface OrderItemPayload {
