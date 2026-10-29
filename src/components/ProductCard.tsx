@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useApp } from "../context/AppContext";
+import { useCart } from "../context/CartContext";
 import { Product } from "../types";
 
 interface ProductCardProps {
@@ -15,9 +16,17 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, border = false }) => {
-  const { addToCart, quickBuy, formatPrice, toggleWishlist, isInWishlist } = useApp();
+  const { formatPrice, toggleWishlist, isInWishlist } = useApp();
+  const { addToCart, quickBuy } = useCart();
 
   const isFavorited = isInWishlist(product.id);
+  const defaultVariant = product.variants?.[0] || {
+    id: 1,
+    size: null,
+    color: null,
+    price: product.price ?? 0,
+    images: [],
+  };
 
   return (
     <div
@@ -78,12 +87,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
         {/* Pricing */}
         <div className="mt-2.5 mb-3 flex items-baseline gap-2">
           <span className="font-bold text-sm text-primary dark:text-[#E05343] font-mono tabular-nums">
-            {formatPrice(product.price, product.discount)}
+            {formatPrice(product.price ?? 0, product.discount)}
           </span>
 
           {Boolean(product.discount) && (
             <span className="text-[11px] text-[#9A9184] line-through font-mono tabular-nums">
-              {formatPrice(product.price)}
+              {formatPrice(product.price ?? 0)}
             </span>
           )}
         </div>
@@ -92,7 +101,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
         <div className="grid sm:grid-cols-2 gap-1.5 pt-1 dark:border-[#2A2A2A]">
           <button
             type="button"
-            onClick={() => addToCart(product, product.variants[0])}
+            onClick={() => addToCart(product, product.variants?.[0] || defaultVariant)}
             className="flex items-center justify-center gap-1 bg-[#5C5549] hover:bg-[#453F36] dark:bg-[#383838] dark:hover:bg-[#4A4A4A] text-white text-[11px] font-medium py-1.5 px-2 rounded-xs transition-colors cursor-pointer"
           >
             <ShoppingBag className="w-3 h-3" />
@@ -100,7 +109,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, border = fals
           </button>
           <button
             type="button"
-            onClick={() => quickBuy(product, product.variants[0])}
+            onClick={() => quickBuy(product, product.variants?.[0] || defaultVariant)}
             className="flex items-center justify-center gap-1 bg-primary hover:bg-primary-hover text-white text-[11px] font-semibold py-1.5 px-2 rounded-xs transition-colors shadow-2xs cursor-pointer"
           >
             <span className="truncate">Buy Now</span>

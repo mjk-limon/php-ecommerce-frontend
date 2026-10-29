@@ -7,6 +7,7 @@ import { InvoiceModal } from "@/components/InvoiceModal";
 import { ToastContainer } from "@/components/ToastContainer";
 import { TrackOrderModal } from "@/components/TrackOrderModal";
 import { AppProvider } from "@/context/AppContext";
+import { CartProvider } from "@/context/CartContext";
 import { getServerCategories } from "@/services/serverApi";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
@@ -83,17 +84,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
 
         <AppProvider>
-          <Header categories={categories} />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <CartProvider>
+            <Header categories={categories} />
+            <main className="flex-1">{children}</main>
+            <Footer />
 
-          {/* Global Drawers & Modals */}
-          <CartDrawer />
-          <CheckoutModal />
-          <FloatingCart />
-          <InvoiceModal />
-          <TrackOrderModal />
-          <ToastContainer />
+            {/* Global Drawers & Modals */}
+            <CartDrawer />
+            <CheckoutModal />
+            <FloatingCart />
+            <InvoiceModal />
+            <TrackOrderModal />
+            <ToastContainer />
+          </CartProvider>
         </AppProvider>
       </body>
     </html>

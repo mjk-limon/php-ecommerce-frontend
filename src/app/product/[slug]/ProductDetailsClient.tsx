@@ -4,6 +4,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useApp } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
 import { getAssetUrl } from "@/lib/assetHelper";
 import { Product, ProductVariant, QuestionItem, ReviewItem } from "@/types";
 import {
@@ -33,7 +34,8 @@ export default function ProductDetailsClient({
   questions = [],
   suggestions = [],
 }: ProductDetailsClientProps) {
-  const { formatPrice, addToCart, quickBuy } = useApp();
+  const { formatPrice } = useApp();
+  const { addToCart, quickBuy } = useCart();
 
   // Selected size & color state
   const [selectedSize, setSelectedSize] = useState<string | null>(null);

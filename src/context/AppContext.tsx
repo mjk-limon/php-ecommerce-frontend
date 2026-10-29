@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { CartItem, Product, ProductVariant, User } from "../types";
+import { User } from "../types";
+import { api } from "../services/api";
 
 interface ToastMessage {
   id: string;
@@ -24,31 +25,38 @@ interface AppContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
-
-  // Cart
-  cart: CartItem[];
-  addToCart: (product: Product, variant: ProductVariant, quantity?: number, options?: { openDrawer?: boolean }) => void;
-  removeFromCart: (productId: number, variantId: number) => void;
-  updateQuantity: (productId: number, variantId: number, quantity: number) => void;
-  clearCart: () => void;
-  cartTotalCount: number;
-  cartUnitTotal: number;
-  cartTotalDiscount: number;
-  cartSubtotal: number;
-
-  // Quick Buy
-  quickBuy: (product: Product, variant: ProductVariant, quantity?: number) => void;
+  login: (username: string, pass: string) => Promise<boolean>;
+  register: (data: {
+    username: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state?: string;
+    country?: string;
+    postal_code?: string;
+  }) => Promise<boolean>;
+  logout: () => void;
 
   // Wishlist
   wishlist: number[];
   toggleWishlist: (productId: number) => void;
   isInWishlist: (productId: number) => boolean;
 
-  // Modals & Drawers
-  isCartDrawerOpen: boolean;
-  setIsCartDrawerOpen: (open: boolean) => void;
-  isCheckoutModalOpen: boolean;
-  setIsCheckoutModalOpen: (open: boolean) => void;
+  // Non-Cart Modals
+  isAuthModalOpen: boolean;
+  setIsAuthModalOpen: (open: boolean) => void;
+  authModalTab: "login" | "register";
+  setAuthModalTab: (tab: "login" | "register") => void;
+  isInvoiceModalOpen: boolean;
+  setIsInvoiceModalOpen: (open: boolean) => void;
+  activeInvoiceNumber: string | null;
+  openInvoice: (invoiceNo: string) => void;
+  isTrackModalOpen: boolean;
+  setIsTrackModalOpen: (open: boolean) => void;
 
   // Toast
   toasts: ToastMessage[];
@@ -86,13 +94,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Currency (Tk / USD)
   const [currency, setCurrency] = useState<string>("Tk.");
   const formatPrice = (amountInTk: number, discountPercentage: number = 0) => {
-    const dicountedPrice = amountInTk * (1 - discountPercentage / 100);
+    const discountedPrice = amountInTk * (1 - discountPercentage / 100);
 
     if (currency === "$") {
-      return `$${(dicountedPrice / 120).toFixed(2)}`;
+      return `$${(discountedPrice / 120).toFixed(2)}`;
     }
 
-    return `Tk. ${dicountedPrice.toLocaleString()}`;
+    return `Tk. ${Math.round(discountedPrice).toLocaleString()}`;
   };
 
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -100,8 +108,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Auth state
   const [user, setUser] = useState<User | null>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wellsell_user_v2");
-      return saved ? JSON.parse(saved) : null;
+      try {
+        const saved = localStorage.getItem("wellsell_user_v2");
+        return saved ? JSON.parse(saved) : null;
+      } catch {
+        return null;
+      }
     }
     return null;
   });
@@ -113,121 +125,76 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return null;
   });
 
-  // Cart state
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const login = async (username: string, pass: string): Promise<boolean> => {
+    try {
+      const res = await api.login({ username, password: pass });
+      if (res.success && res.data) {
+        setUser(res.data.user);
+        setToken(res.data.token);
+        localStorage.setItem("wellsell_token_v2", res.data.token);
+        localStorage.setItem("wellsell_user_v2", JSON.stringify(res.data.user));
+        showToast(`Welcome back, ${res.data.user.first_name || "Member"}!`, "success");
+        setIsAuthModalOpen(false);
+        return true;
+      }
+    } catch {
+      showToast("Login failed. Please check credentials.", "error");
+    }
+    return false;
+  };
 
-  useEffect(() => {
+  const register = async (data: {
+    username: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state?: string;
+    country?: string;
+    postal_code?: string;
+  }): Promise<boolean> => {
+    try {
+      const res = await api.register(data);
+      if (res.success) {
+        const auth = await api.login({ username: data.username, password: data.password });
+        if (auth.success && auth.data) {
+          setUser(auth.data.user);
+          setToken(auth.data.token);
+          localStorage.setItem("wellsell_token_v2", auth.data.token);
+          localStorage.setItem("wellsell_user_v2", JSON.stringify(auth.data.user));
+        }
+        showToast("Registration successful! Welcome to WellSell BD.", "success");
+        setIsAuthModalOpen(false);
+        return true;
+      }
+    } catch {
+      showToast("Registration failed. Please verify details.", "error");
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wellsell_cart_v2");
-
-      if (saved) {
-        setCart(JSON.parse(saved));
-      }
+      localStorage.removeItem("wellsell_token_v2");
+      localStorage.removeItem("wellsell_user_v2");
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("wellsell_cart_v2", JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (
-    product: Product,
-    variant: ProductVariant,
-    quantity: number = 1,
-    options?: { openDrawer?: boolean },
-  ) => {
-    setCart((prev) => {
-      const existingIndex = prev.findIndex((item) => item.product.id === product.id && item.variant.id === variant.id);
-
-      if (existingIndex > -1) {
-        const next = [...prev];
-
-        next[existingIndex] = {
-          ...next[existingIndex],
-          quantity: next[existingIndex].quantity + quantity,
-        };
-
-        return next;
-      }
-
-      const unitTotal = quantity * variant.price;
-      const unitTotalDiscountAmount = unitTotal * (product.discount / 100);
-      const totalPrice = unitTotal - unitTotalDiscountAmount;
-
-      return [
-        ...prev,
-        {
-          product,
-          variant,
-          quantity,
-          unit_price: variant.price,
-          unit_total: unitTotal,
-          discount_total: unitTotalDiscountAmount,
-          total_price: totalPrice,
-        },
-      ];
-    });
-
-    showToast(`Added "${product.name.slice(0, 24)}..." to cart`, "success");
-
-    if (options?.openDrawer !== false) {
-      setIsCartDrawerOpen(true);
-    }
+    showToast("You have been signed out.", "info");
   };
-
-  // Quick Buy opens the compact delivery checkout directly.
-  const quickBuy = (product: Product, variant: ProductVariant, quantity: number = 1) => {
-    const unitTotal = quantity * variant.price;
-    const unitTotalDiscountAmount = unitTotal * (product.discount / 100);
-    const totalPrice = unitTotal - unitTotalDiscountAmount;
-
-    setCart([
-      {
-        product,
-        quantity,
-        variant,
-        unit_price: variant.price,
-        unit_total: unitTotal,
-        discount_total: unitTotalDiscountAmount,
-        total_price: totalPrice,
-      },
-    ]);
-
-    setIsCartDrawerOpen(false);
-    setIsCheckoutModalOpen(true);
-  };
-
-  const removeFromCart = (productId: number, variantId: number) => {
-    setCart((prev) => prev.filter((item) => item.product.id !== productId && item.variant.id !== variantId));
-
-    showToast("Item removed from cart", "info");
-  };
-
-  const updateQuantity = (productId: number, variantId: number, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(productId, variantId);
-      return;
-    }
-
-    setCart((prev) =>
-      prev.map((item) =>
-        item.product.id === productId && item.variant.id === variantId ? { ...item, quantity } : item,
-      ),
-    );
-  };
-
-  const clearCart = () => setCart([]);
-
-  const cartTotalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const cartUnitTotal = cart.reduce((acc, item) => acc + item.unit_total, 0);
-  const cartSubtotal = cart.reduce((acc, item) => acc + item.total_price, 0);
-  const cartTotalDiscount = cart.reduce((acc, item) => acc + item.discount_total, 0);
 
   // Wishlist
   const [wishlist, setWishlist] = useState<number[]>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wellsell_wishlist_v2");
-      return saved ? JSON.parse(saved) : [];
+      try {
+        const saved = localStorage.getItem("wellsell_wishlist_v2");
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
     }
     return [];
   });
@@ -251,8 +218,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const isInWishlist = (productId: number) => wishlist.includes(productId);
 
   // Modals
-  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState<boolean>(false);
-  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState<boolean>(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [authModalTab, setAuthModalTab] = useState<"login" | "register">("login");
+  const [isInvoiceModalOpen, setIsInvoiceModalOpen] = useState<boolean>(false);
+  const [activeInvoiceNumber, setActiveInvoiceNumber] = useState<string | null>(null);
+  const [isTrackModalOpen, setIsTrackModalOpen] = useState<boolean>(false);
+
+  const openInvoice = (invoiceNo: string) => {
+    setActiveInvoiceNumber(invoiceNo);
+    setIsInvoiceModalOpen(true);
+  };
 
   // Toasts
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -281,23 +256,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         user,
         token,
         isAuthenticated: !!token,
-        cart,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        cartTotalCount,
-        cartUnitTotal,
-        cartTotalDiscount,
-        cartSubtotal,
+        login,
+        register,
+        logout,
         wishlist,
         toggleWishlist,
         isInWishlist,
-        isCartDrawerOpen,
-        setIsCartDrawerOpen,
-        isCheckoutModalOpen,
-        setIsCheckoutModalOpen,
-        quickBuy,
+        isAuthModalOpen,
+        setIsAuthModalOpen,
+        authModalTab,
+        setAuthModalTab,
+        isInvoiceModalOpen,
+        setIsInvoiceModalOpen,
+        activeInvoiceNumber,
+        openInvoice,
+        isTrackModalOpen,
+        setIsTrackModalOpen,
         toasts,
         showToast,
         dismissToast,

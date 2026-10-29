@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useApp } from "../context/AppContext";
+import { useCart } from "../context/CartContext";
 
 export const CartDrawer: React.FC = () => {
   const router = useRouter();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
+  const { formatPrice } = useApp();
   const {
     isCartDrawerOpen,
     setIsCartDrawerOpen,
@@ -21,8 +23,7 @@ export const CartDrawer: React.FC = () => {
     cartUnitTotal,
     cartTotalDiscount,
     cartTotalCount,
-    formatPrice,
-  } = useApp();
+  } = useCart();
 
   useEffect(() => {
     if (!isCartDrawerOpen) {

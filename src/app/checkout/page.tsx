@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useApp } from '@/context/AppContext';
-import { getAssetUrl } from '@/lib/assetHelper';
+import { useCart } from '@/context/CartContext';
+import { asset } from '@/lib/utils';
 import { api } from '@/services/api';
-import { OrderCreatePayload, PaymentMethod, ShippingLocation, ShippingMethod } from '@/types';
+import { OrderCreatePayload, PaymentMethod } from '@/types';
 import {
     ArrowRight,
     CreditCard,
@@ -26,18 +27,29 @@ import React, { useEffect, useState } from 'react';
 export default function CheckoutPage() {
   const router = useRouter();
   const {
-    cart,
-    cartSubtotal,
-    cartTotalDiscount,
-    cartTotalCount,
     formatPrice,
-    clearCart,
     showToast,
     user
   } = useApp();
 
-  const [locations, setLocations] = useState<ShippingLocation[]>([]);
-  const [methods, setMethods] = useState<ShippingMethod[]>([]);
+  const {
+    cart,
+    cartSubtotal,
+    cartTotalDiscount,
+    cartTotalCount,
+    clearCart,
+    locations,
+    methods,
+    selectedLocationId,
+    setSelectedLocationId,
+    selectedLocation,
+    selectedMethodId,
+    setSelectedMethodId,
+    shippingCost,
+    shippingEstimateTime,
+    calculateShippingCost,
+  } = useCart();
+
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loadingConfig, setLoadingConfig] = useState(true);
 
@@ -48,8 +60,6 @@ export default function CheckoutPage() {
   const [customerPhone, setCustomerPhone] = useState(user?.phone || '');
   const [customerEmail, setCustomerEmail] = useState(user?.email || '');
   const [customerAddress, setCustomerAddress] = useState(user?.address || '');
-  const [selectedLocationId, setSelectedLocationId] = useState<number>(1); // 1 = Inside Dhaka, 2 = Outside Dhaka
-  const [selectedMethodId, setSelectedMethodId] = useState<number>(1);
   const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2); // 2 = Cash on Delivery
   const [orderNotes, setOrderNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,12 +69,8 @@ export default function CheckoutPage() {
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
   useEffect(() => {
-    Promise.all([api.getShipping(), api.getPaymentMethods()])
-      .then(([shippingRes, payRes]) => {
-        if (shippingRes.success) {
-          setLocations(shippingRes.data.locations);
-          setMethods(shippingRes.data.methods);
-        }
+    api.getPaymentMethods()
+      .then((payRes) => {
         if (payRes.success) {
           setPaymentMethods(payRes.data);
         }
@@ -72,7 +78,6 @@ export default function CheckoutPage() {
       .finally(() => setLoadingConfig(false));
   }, []);
 
-  const shippingCost = selectedLocationId === 1 ? 60 : 130;
   const couponDiscountAmount = appliedCoupon ? appliedCoupon.discount : 0;
   const grandTotal = Math.max(0, cartSubtotal + shippingCost - couponDiscountAmount);
 
@@ -102,13 +107,14 @@ export default function CheckoutPage() {
 
     setIsSubmitting(true);
     try {
+      const isInside = selectedLocationId === 14 || (selectedLocation?.location || '').toLowerCase().includes('inside');
       const orderPayload: OrderCreatePayload = {
         location_id: selectedLocationId,
         shipping_id: selectedMethodId,
         shipping_name: customerName,
         shipping_phone: customerPhone,
         shipping_address: customerAddress,
-        shipment_type: selectedLocationId === 1 ? 'inside_dhaka' : 'outside_dhaka',
+        shipment_type: isInside ? 'inside_dhaka' : 'outside_dhaka',
         total_cart_item: cartTotalCount,
         total_cart_item_price: cartSubtotal,
         total_discount: cartTotalDiscount + couponDiscountAmount,
@@ -122,18 +128,20 @@ export default function CheckoutPage() {
         },
         items: cart.map((item) => ({
           product_id: item.product.id,
-          variant_id: item.variant_id || item.product.variants?.[0]?.id || 1,
+          variant_id: item.variant.id,
           product_name: item.product.name,
           variant_info: {
-            brand: item.product.brand,
-            sku: item.product.sku || 'SKU-STD'
+            brand: item.product.brand || '',
+            sku: item.product.sku || 'SKU-STD',
+            ...(item.variant.size ? { size: item.variant.size } : {}),
+            ...(item.variant.color ? { color: item.variant.color } : {})
           },
           quantity: item.quantity,
-          unit_price: item.product.price,
-          price_total: item.product.price * item.quantity,
+          unit_price: item.unit_price,
+          price_total: item.total_price,
           shipping_total: 0,
-          discount_total: item.product.old_price ? (item.product.old_price - item.product.price) * item.quantity : 0,
-          item_total: item.product.price * item.quantity
+          discount_total: item.discount_total,
+          item_total: item.total_price
         }))
       };
 
@@ -273,63 +281,67 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="space-y-1.5 sm:col-span-2">
-                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Delivery Area / Zone <span className="text-primary">*</span>
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div
-                      onClick={() => setSelectedLocationId(1)}
-                      className={`p-3.5 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
-                        selectedLocationId === 1
-                          ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                          : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="shipping_location"
-                        checked={selectedLocationId === 1}
-                        onChange={() => setSelectedLocationId(1)}
-                        className="mt-0.5 text-primary focus:ring-[#BA2D1D]"
-                      />
-                      <div className="text-xs">
-                        <div className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center justify-between">
-                          <span>Inside Dhaka City</span>
-                          <span className="text-primary font-mono font-bold">Tk. 60</span>
-                        </div>
-                        <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
-                          Delivery in 24 - 48 Hours via RedX Express
-                        </p>
-                      </div>
-                    </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                      Delivery Location / District <span className="text-primary">*</span>
+                    </label>
+                    <span className="text-[11px] text-primary font-semibold font-mono">
+                      Tk. {shippingCost} · {shippingEstimateTime}
+                    </span>
+                  </div>
+                  <select
+                    value={selectedLocationId}
+                    onChange={(e) => setSelectedLocationId(Number(e.target.value))}
+                    className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-xs rounded-xs p-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
+                  >
+                    {locations.map((loc) => {
+                      const ct = calculateShippingCost(loc.id, selectedMethodId);
+                      return (
+                        <option key={loc.id} value={loc.id}>
+                          {loc.location} ({loc.city ? `${loc.city} · ` : ""}Tk. {ct.cost} · {ct.estimateTime})
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
 
-                    <div
-                      onClick={() => setSelectedLocationId(2)}
-                      className={`p-3.5 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
-                        selectedLocationId === 2
-                          ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                          : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50'
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="shipping_location"
-                        checked={selectedLocationId === 2}
-                        onChange={() => setSelectedLocationId(2)}
-                        className="mt-0.5 text-primary focus:ring-[#BA2D1D]"
-                      />
-                      <div className="text-xs">
-                        <div className="font-bold text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center justify-between">
-                          <span>Outside Dhaka City</span>
-                          <span className="text-primary font-mono font-bold">Tk. 130</span>
-                        </div>
-                        <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
-                          Delivery in 48 - 72 Hours (All 64 Districts)
-                        </p>
-                      </div>
+                {methods.length > 0 && (
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                      Preferred Courier Service
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {methods.map((method) => {
+                        const isSelected = selectedMethodId === method.id;
+                        return (
+                          <button
+                            type="button"
+                            key={method.id}
+                            onClick={() => setSelectedMethodId(method.id)}
+                            className={`p-2.5 rounded-xs border text-left flex items-center gap-2 transition-all cursor-pointer ${
+                              isSelected
+                                ? 'border-primary bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
+                                : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-primary/50'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="courier_method"
+                              checked={isSelected}
+                              onChange={() => setSelectedMethodId(method.id)}
+                              className="text-primary focus:ring-primary shrink-0"
+                            />
+                            <div className="min-w-0">
+                              <span className="block text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
+                                {method.method_name}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
-                </div>
+                )}
 
                 <div className="space-y-1.5 sm:col-span-2">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
@@ -478,9 +490,9 @@ export default function CheckoutPage() {
               {/* Items List */}
               <div className="max-h-60 overflow-y-auto space-y-3 divide-y divide-[#F0EDE8] dark:divide-[#262420] pr-1">
                 {cart.map((item) => {
-                  const itemImg = getAssetUrl(item.product.image || item.product.thumbnail);
+                  const itemImg = asset(item.variant?.image || item.product.thumbnail || item.product.image);
                   return (
-                    <div key={`${item.product.id}-${item.selected_size || 'default'}`} className="pt-3 first:pt-0 flex gap-3">
+                    <div key={`${item.product.id}-${item.variant.id}`} className="pt-3 first:pt-0 flex gap-3">
                       <div className="w-12 h-12 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1A1916] shrink-0">
                         <img
                           src={itemImg}
@@ -493,11 +505,18 @@ export default function CheckoutPage() {
                         <h4 className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
                           {item.product.name}
                         </h4>
-                        <p className="text-[10px] text-[#736C62] dark:text-[#9E968B]">
-                          Qty: {item.quantity} {item.selected_size ? `· Size: ${item.selected_size}` : ''}
-                        </p>
-                        <div className="text-xs font-bold text-primary dark:text-[#E05343] font-mono mt-0.5">
-                          {formatPrice(item.product.price * item.quantity)}
+                        <div className="flex items-center gap-1.5 text-[10px] text-[#736C62] dark:text-[#9E968B] mt-0.5">
+                          <span>Qty: {item.quantity}</span>
+                          {item.variant.size && <span>· Size: {item.variant.size}</span>}
+                          {item.variant.color && <span>· Color: {item.variant.color}</span>}
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-[10px] text-[#736C62] font-mono">
+                            {formatPrice(item.unit_price)} each
+                          </span>
+                          <span className="text-xs font-bold text-primary dark:text-[#E05343] font-mono">
+                            {formatPrice(item.total_price)}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -547,7 +566,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
-                  <span>Courier Delivery:</span>
+                  <span>Courier Delivery ({shippingEstimateTime}):</span>
                   <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">
                     Tk. {shippingCost}
                   </span>

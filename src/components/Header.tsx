@@ -24,6 +24,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "../context/AppContext";
+import { useCart } from "../context/CartContext";
 import { MOCK_PRODUCTS } from "../data/mockData";
 
 export const Header: React.FC<{ categories: Category[] }> = ({
@@ -37,7 +38,6 @@ export const Header: React.FC<{ categories: Category[] }> = ({
     toggleTheme,
     currency,
     setCurrency,
-    cartTotalCount,
     wishlist,
     user,
     logout,
@@ -45,6 +45,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
     setSearchQuery,
     showToast,
   } = useApp();
+  const { cartTotalCount } = useCart();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [hoveredDept, setHoveredDept] = useState<Category | null>(null);

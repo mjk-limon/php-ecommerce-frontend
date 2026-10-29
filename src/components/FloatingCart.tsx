@@ -1,10 +1,12 @@
 "use client";
 
 import { useApp } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
 import { ShoppingCart } from "lucide-react";
 
 export function FloatingCart() {
-  const { cartTotalCount, cartSubtotal, formatPrice, setIsCartDrawerOpen } = useApp();
+  const { formatPrice } = useApp();
+  const { cartTotalCount, cartSubtotal, setIsCartDrawerOpen } = useCart();
 
   return (
     <button

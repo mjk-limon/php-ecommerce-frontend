@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useApp } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
 import { asset } from "@/lib/utils";
-import { api } from "@/services/api";
-import { ShippingLocation } from "@/types";
 import { ArrowRight, Minus, Plus, RotateCcw, ShieldCheck, ShoppingBag, Tag, Trash2, Truck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export default function CartPage() {
   const router = useRouter();
+  const { formatPrice, showToast } = useApp();
   const {
     cart,
     removeFromCart,
@@ -22,24 +22,18 @@ export default function CartPage() {
     cartSubtotal,
     cartTotalDiscount,
     cartTotalCount,
-    formatPrice,
-    showToast,
-  } = useApp();
+    locations,
+    selectedLocationId,
+    setSelectedLocationId,
+    selectedMethodId,
+    shippingCost,
+    shippingEstimateTime,
+    calculateShippingCost,
+  } = useCart();
 
-  const [locations, setLocations] = useState<ShippingLocation[]>([]);
-  const [selectedLocationId, setSelectedLocationId] = useState<number>(1);
   const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
-  useEffect(() => {
-    api.getShipping().then((res) => {
-      if (res.success && res.data.locations) {
-        setLocations(res.data.locations);
-      }
-    });
-  }, []);
-
-  const shippingCost = selectedLocationId === 1 ? 60 : 130;
   const couponDiscountAmount = appliedCoupon ? appliedCoupon.discount : 0;
   const grandTotal = Math.max(0, cartSubtotal + shippingCost - couponDiscountAmount);
 
@@ -121,7 +115,7 @@ export default function CartPage() {
 
                   return (
                     <div
-                      key={`${item.product.id}`}
+                      key={`${item.product.id}-${item.variant.id}`}
                       className="pt-4 first:pt-0 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center"
                     >
                       {/* Thumbnail & Title (6 cols) */}
@@ -163,7 +157,7 @@ export default function CartPage() {
                       {/* Unit Price (2 cols) */}
                       <div className="sm:col-span-2 text-left sm:text-center text-xs font-mono">
                         <span className="sm:hidden text-[#736C62] mr-2">Unit:</span>
-                        <span className="font-semibold">{formatPrice(item.product.price)}</span>
+                        <span className="font-semibold">{formatPrice(item.unit_price)}</span>
                       </div>
 
                       {/* Quantity (2 cols) */}
@@ -190,7 +184,7 @@ export default function CartPage() {
                       {/* Subtotal & Delete (2 cols) */}
                       <div className="sm:col-span-2 flex items-center justify-between sm:justify-end gap-3 text-right">
                         <span className="text-xs font-bold text-primary dark:text-[#E05343] font-mono tabular-nums">
-                          {formatPrice(item.product.price * item.quantity)}
+                          {formatPrice(item.total_price)}
                         </span>
                         <button
                           type="button"
@@ -239,10 +233,16 @@ export default function CartPage() {
                 <select
                   value={selectedLocationId}
                   onChange={(e) => setSelectedLocationId(Number(e.target.value))}
-                  className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-xs rounded-xs p-2.5 text-[#1F1D1A] dark:text-[#EDE7DE]"
+                  className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-xs rounded-xs p-2.5 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
                 >
-                  <option value={1}>Inside Dhaka City (Tk. 60 · 24-48 Hours)</option>
-                  <option value={2}>Outside Dhaka City (Tk. 130 · 48-72 Hours)</option>
+                  {locations.map((loc) => {
+                    const ct = calculateShippingCost(loc.id, selectedMethodId);
+                    return (
+                      <option key={loc.id} value={loc.id}>
+                        {loc.location} ({loc.city ? `${loc.city} · ` : ""}Tk. {ct.cost} · {ct.estimateTime})
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -287,7 +287,7 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
-                  <span>Shipping Cost:</span>
+                  <span>Shipping Cost ({shippingEstimateTime}):</span>
                   <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">Tk. {shippingCost}</span>
                 </div>
 

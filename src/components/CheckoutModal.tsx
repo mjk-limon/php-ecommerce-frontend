@@ -1,13 +1,21 @@
 "use client"
 
-import { getAssetUrl } from '@/lib/assetHelper';
+import { asset } from '@/lib/utils';
 import { CreditCard, MapPin, ShoppingBag, Truck, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { useCart } from '../context/CartContext';
 import { api } from '../services/api';
-import { PaymentMethod, ShippingLocation, ShippingMethod } from '../types';
+import { PaymentMethod } from '../types';
 
 export const CheckoutModal: React.FC = () => {
+  const {
+    formatPrice,
+    openInvoice,
+    showToast,
+    user
+  } = useApp();
+
   const {
     isCheckoutModalOpen,
     setIsCheckoutModalOpen,
@@ -15,21 +23,23 @@ export const CheckoutModal: React.FC = () => {
     cartSubtotal,
     cartTotalDiscount,
     cartTotalCount,
-    formatPrice,
     clearCart,
-    openInvoice,
-    showToast,
-    user
-  } = useApp();
+    locations,
+    methods,
+    selectedLocationId,
+    setSelectedLocationId,
+    selectedLocation,
+    selectedMethodId,
+    setSelectedMethodId,
+    shippingCost,
+    shippingEstimateTime,
+    calculateShippingCost,
+  } = useCart();
 
-  const [locations, setLocations] = useState<ShippingLocation[]>([]);
-  const [methods, setMethods] = useState<ShippingMethod[]>([]);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loadingConfig, setLoadingConfig] = useState(true);
 
   // Form states
-  const [selectedLocationId, setSelectedLocationId] = useState<number>(1);
-  const [selectedMethodId, setSelectedMethodId] = useState<number>(1);
   const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2); // 2 is Cash on Delivery
   const [customerName, setCustomerName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
   const [customerPhone, setCustomerPhone] = useState(user?.phone || '');
@@ -38,28 +48,19 @@ export const CheckoutModal: React.FC = () => {
 
   useEffect(() => {
     if (isCheckoutModalOpen) {
-      Promise.all([api.getShipping(), api.getPaymentMethods()])
-        .then(([shippingRes, payRes]) => {
-          if (shippingRes.success) {
-            setLocations(shippingRes.data.locations);
-            setMethods(shippingRes.data.methods);
-          }
+      api.getPaymentMethods()
+        .then((payRes) => {
           if (payRes.success) {
             setPaymentMethods(payRes.data);
           }
         })
-        .catch(() => showToast('Delivery options are temporarily unavailable.', 'error'))
+        .catch(() => showToast('Payment options are temporarily unavailable.', 'error'))
         .finally(() => setLoadingConfig(false));
     }
-  }, [isCheckoutModalOpen]);
+  }, [isCheckoutModalOpen, showToast]);
 
   if (!isCheckoutModalOpen) return null;
 
-  // Calculate dynamic shipping cost based on location
-  const currentLocation = locations.find((l) => l.id === selectedLocationId);
-  const currentCostTime = currentLocation?.cost_times?.find((ct) => ct.method_id === selectedMethodId) ||
-    currentLocation?.cost_times?.[0];
-  const shippingCost = currentCostTime ? currentCostTime.cost : (selectedLocationId === 1 ? 60 : 130);
   const grandTotal = cartSubtotal + shippingCost;
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
@@ -76,13 +77,14 @@ export const CheckoutModal: React.FC = () => {
 
     setIsSubmitting(true);
     try {
+      const isInside = selectedLocationId === 14 || (selectedLocation?.location || '').toLowerCase().includes('inside');
       const payload = {
         location_id: selectedLocationId,
         shipping_id: selectedMethodId,
         shipping_name: customerName,
         shipping_phone: customerPhone,
         shipping_address: customerAddress,
-        shipment_type: 'normal',
+        shipment_type: isInside ? 'inside_dhaka' : 'outside_dhaka',
         total_cart_item: cartTotalCount,
         total_cart_item_price: cartSubtotal,
         total_discount: cartTotalDiscount,
@@ -94,20 +96,22 @@ export const CheckoutModal: React.FC = () => {
           amount: grandTotal,
           gateway_response: []
         },
-        items: cart.map((item, idx) => ({
+        items: cart.map((item) => ({
           product_id: item.product.id,
-          variant_id: item.variant_id || 1,
+          variant_id: item.variant.id,
           product_name: item.product.name,
           variant_info: {
-            brand: item.product.brand,
-            sku: item.product.sku || 'SKU-STD'
+            brand: item.product.brand || '',
+            sku: item.product.sku || 'SKU-STD',
+            ...(item.variant.size ? { size: item.variant.size } : {}),
+            ...(item.variant.color ? { color: item.variant.color } : {})
           },
           quantity: item.quantity,
-          unit_price: item.product.price,
-          price_total: item.product.price * item.quantity,
+          unit_price: item.unit_price,
+          price_total: item.total_price,
           shipping_total: 0,
-          discount_total: item.product.old_price ? (item.product.old_price - item.product.price) * item.quantity : 0,
-          item_total: item.product.price * item.quantity
+          discount_total: item.discount_total,
+          item_total: item.total_price
         }))
       };
 
@@ -152,10 +156,23 @@ export const CheckoutModal: React.FC = () => {
             <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-[#28332c]"><ShoppingBag className="h-4 w-4 text-[#68183f]" /> Cart information</div>
             <div className="space-y-3">
               {cart.map((item) => (
-                <div key={item.product.id} className="flex gap-3 border-b border-[#edf0ec] pb-3">
-                  <div className="h-14 w-14 shrink-0 rounded-lg bg-[#f7f8f6] p-1"><img src={getAssetUrl(item.product.image || item.product.thumbnail)} alt={item.product.name} className="h-full w-full object-contain" /></div>
-                  <div className="min-w-0 flex-1"><p className="line-clamp-2 text-xs font-medium text-[#26312a]">{item.product.name}</p><p className="mt-1 text-[11px] text-[#858c85]">{item.quantity} {item.quantity === 1 ? 'Unit' : 'Units'}</p></div>
-                  <span className="shrink-0 text-xs font-semibold text-[#26312a]">{formatPrice(item.product.price * item.quantity)}</span>
+                <div key={`${item.product.id}-${item.variant.id}`} className="flex gap-3 border-b border-[#edf0ec] pb-3">
+                  <div className="h-14 w-14 shrink-0 rounded-lg bg-[#f7f8f6] p-1">
+                    <img
+                      src={asset(item.variant?.image || item.product.thumbnail || item.product.image)}
+                      alt={item.product.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="line-clamp-2 text-xs font-medium text-[#26312a]">{item.product.name}</p>
+                    <p className="mt-1 text-[11px] text-[#858c85]">
+                      {item.quantity} {item.quantity === 1 ? 'Unit' : 'Units'}
+                      {item.variant.size ? ` · ${item.variant.size}` : ''}
+                      {item.variant.color ? ` · ${item.variant.color}` : ''}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-xs font-semibold text-[#26312a]">{formatPrice(item.total_price)}</span>
                 </div>
               ))}
             </div>
@@ -201,19 +218,27 @@ export const CheckoutModal: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-medium text-[#736C62] dark:text-[#9E968B] mb-1">
-                  Delivery Region / City *
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-[11px] font-medium text-[#736C62] dark:text-[#9E968B]">
+                    Delivery Region / District *
+                  </label>
+                  <span className="text-[10px] text-primary font-semibold font-mono">
+                    Tk. {shippingCost} · {shippingEstimateTime}
+                  </span>
+                </div>
                 <select
                   value={selectedLocationId}
                   onChange={(e) => setSelectedLocationId(Number(e.target.value))}
-                  className="w-full bg-white dark:bg-[#161513] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
+                  className="w-full bg-white dark:bg-[#161513] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
                 >
-                  {locations.map((loc) => (
-                    <option key={loc.id} value={loc.id}>
-                      {loc.location} ({loc.city})
-                    </option>
-                  ))}
+                  {locations.map((loc) => {
+                    const ct = calculateShippingCost(loc.id, selectedMethodId);
+                    return (
+                      <option key={loc.id} value={loc.id}>
+                        {loc.location} ({loc.city ? `${loc.city} · ` : ""}Tk. {ct.cost} · {ct.estimateTime})
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -227,7 +252,7 @@ export const CheckoutModal: React.FC = () => {
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
                   placeholder="e.g. House 14, Road 5, Sector 3, Uttara, Dhaka-1230"
-                  className="w-full bg-white dark:bg-[#161513] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
+                  className="w-full bg-white dark:bg-[#161513] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
@@ -237,35 +262,39 @@ export const CheckoutModal: React.FC = () => {
           <div className="md:col-start-2">
             <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1F1D1A] dark:text-[#EDE7DE] mb-3">
               <Truck className="w-4 h-4 text-primary" />
-              <span>2. Courier Partner ({currentCostTime?.estimate_time || '24-48 Hours'})</span>
+              <span>2. Courier Partner ({shippingEstimateTime})</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-              {methods.slice(0, 4).map((m) => (
-                <label
-                  key={m.id}
-                  className={`p-2.5 rounded-xs border cursor-pointer flex flex-col justify-between transition-colors ${
-                    selectedMethodId === m.id
-                      ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#251D1B]'
-                      : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#161513]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-semibold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
-                      {m.method_name}
+              {methods.map((m) => {
+                const ct = calculateShippingCost(selectedLocationId, m.id);
+                const isSelected = selectedMethodId === m.id;
+                return (
+                  <label
+                    key={m.id}
+                    className={`p-2.5 rounded-xs border cursor-pointer flex flex-col justify-between transition-colors ${
+                      isSelected
+                        ? 'border-primary bg-[#FDF7F5] dark:bg-[#251D1B]'
+                        : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#161513] hover:border-primary/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-semibold text-xs text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
+                        {m.method_name}
+                      </span>
+                      <input
+                        type="radio"
+                        name="shipping_method"
+                        checked={isSelected}
+                        onChange={() => setSelectedMethodId(m.id)}
+                        className="text-primary focus:ring-primary shrink-0"
+                      />
+                    </div>
+                    <span className="text-[10px] text-[#736C62] dark:text-[#9E968B] font-mono">
+                      Tk. {ct.cost} · {ct.estimateTime}
                     </span>
-                    <input
-                      type="radio"
-                      name="shipping_method"
-                      checked={selectedMethodId === m.id}
-                      onChange={() => setSelectedMethodId(m.id)}
-                      className="accent-[#BA2D1D]"
-                    />
-                  </div>
-                  <span className="text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                    Delivery: Tk. {shippingCost}
-                  </span>
-                </label>
-              ))}
+                  </label>
+                );
+              })}
             </div>
           </div>
 
