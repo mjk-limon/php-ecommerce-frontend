@@ -1,5 +1,6 @@
 "use client"
 
+import { Input } from '@/components/ui/input';
 import { asset } from '@/lib/utils';
 import { CreditCard, MapPin, ShoppingBag, Truck, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -246,13 +247,13 @@ export const CheckoutModal: React.FC = () => {
                 <label className="block text-[11px] font-medium text-[#736C62] dark:text-[#9E968B] mb-1">
                   Detailed Address (House, Road, Area, Landmark) *
                 </label>
-                <textarea
+                <Input
+                  multiline
                   rows={2}
                   required
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
                   placeholder="e.g. House 14, Road 5, Sector 3, Uttara, Dhaka-1230"
-                  className="w-full bg-white dark:bg-[#161513] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs px-3 py-2 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
                 />
               </div>
             </div>

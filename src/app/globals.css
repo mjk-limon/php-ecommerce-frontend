@@ -171,13 +171,6 @@ button:active {
   }
 }
 
-
-input,
-select,
-textarea {
-  border-radius: 8px !important;
-}
-
 @media (max-width: 640px) {
   .section-card {
     border-radius: 12px;

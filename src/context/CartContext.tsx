@@ -1,9 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useMemo, useCallback } from "react";
-import { CartItem, CostTime, Product, ProductVariant, ShippingLocation, ShippingMethod } from "../types";
-import { useApp } from "./AppContext";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../services/api";
+import { CartItem, Product, ProductVariant, ShippingLocation, ShippingMethod } from "../types";
+import { useApp } from "./AppContext";
 
 export function calculateShipping(
   location?: ShippingLocation | null,
@@ -38,6 +38,7 @@ export function calculateShipping(
 export interface CartContextType {
   // Cart items & operations
   cart: CartItem[];
+  isCartLoaded: boolean;
   addToCart: (
     product: Product,
     variant: ProductVariant,
@@ -301,6 +302,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <CartContext.Provider
       value={{
         cart,
+        isCartLoaded,
         addToCart,
         removeFromCart,
         updateQuantity,

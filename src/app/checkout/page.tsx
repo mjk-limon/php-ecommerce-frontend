@@ -1,39 +1,27 @@
-'use client';
+"use client";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { useApp } from '@/context/AppContext';
-import { useCart } from '@/context/CartContext';
-import { asset } from '@/lib/utils';
-import { api } from '@/services/api';
-import { OrderCreatePayload, PaymentMethod } from '@/types';
-import {
-    ArrowRight,
-    CreditCard,
-    MapPin,
-    Phone,
-    ShieldCheck,
-    ShoppingBag,
-    Tag,
-    Truck,
-    User as UserIcon
-} from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectOption } from "@/components/ui/select";
+import { useApp } from "@/context/AppContext";
+import { useCart } from "@/context/CartContext";
+import { asset } from "@/lib/utils";
+import { api } from "@/services/api";
+import { OrderCreatePayload } from "@/types";
+import { ArrowRight, CreditCard, MapPin, Phone, ShoppingBag, Tag, Truck, User as UserIcon } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const {
-    formatPrice,
-    showToast,
-    user
-  } = useApp();
+  const { formatPrice, showToast, user } = useApp();
 
   const {
     cart,
+    isCartLoaded,
     cartSubtotal,
     cartTotalDiscount,
     cartTotalCount,
@@ -50,71 +38,86 @@ export default function CheckoutPage() {
     calculateShippingCost,
   } = useCart();
 
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
-  const [loadingConfig, setLoadingConfig] = useState(true);
-
   // Form states
-  const [customerName, setCustomerName] = useState(
-    user ? `${user.first_name} ${user.last_name}` : ''
-  );
-  const [customerPhone, setCustomerPhone] = useState(user?.phone || '');
-  const [customerEmail, setCustomerEmail] = useState(user?.email || '');
-  const [customerAddress, setCustomerAddress] = useState(user?.address || '');
-  const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2); // 2 = Cash on Delivery
-  const [orderNotes, setOrderNotes] = useState('');
+  const [customerName, setCustomerName] = useState(user ? `${user.first_name} ${user.last_name}` : "");
+  const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
+  const [customerEmail, setCustomerEmail] = useState(user?.email || "");
+  const [customerAddress, setCustomerAddress] = useState(user?.address || "");
+  const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2);
+  const [orderNotes, setOrderNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Promo coupon
-  const [couponCode, setCouponCode] = useState('');
+  const [couponCode, setCouponCode] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
-  useEffect(() => {
-    api.getPaymentMethods()
-      .then((payRes) => {
-        if (payRes.success) {
-          setPaymentMethods(payRes.data);
-        }
-      })
-      .finally(() => setLoadingConfig(false));
-  }, []);
+  // Delivery location options: label = district, sublabel = division
+  const locationOptions = useMemo<SelectOption<number>[]>(() => {
+    return locations.map((loc) => ({
+      value: loc.id,
+      label: loc.location,
+      sublabel: loc.city ? `${loc.city} Division` : "Bangladesh",
+      group: loc.city ? `${loc.city} Division` : "Other",
+      icon: <MapPin className="w-4 h-4 text-primary shrink-0" />,
+    }));
+  }, [locations]);
+
+  // Preferred courier options: logo at left, name at label, delivery time and cost at sublabel
+  const courierOptions = useMemo<SelectOption<number>[]>(() => {
+    return methods.map((method) => {
+      const ct = calculateShippingCost(selectedLocationId, method.id);
+      const logoUrl = method.method_logo ? asset(method.method_logo) : null;
+
+      return {
+        value: method.id,
+        label: method.method_name,
+        sublabel: `${ct.estimateTime} · Tk. ${ct.cost}`,
+        icon: logoUrl ? (
+          <img
+            src={logoUrl}
+            alt={method.method_name}
+            className="w-5 h-5 object-contain rounded-xs"
+            onError={(e) => {
+              (e.currentTarget as HTMLElement).style.display = "none";
+            }}
+          />
+        ) : (
+          <Truck className="w-4 h-4 text-primary shrink-0" />
+        ),
+      };
+    });
+  }, [methods, selectedLocationId, calculateShippingCost]);
 
   const couponDiscountAmount = appliedCoupon ? appliedCoupon.discount : 0;
   const grandTotal = Math.max(0, cartSubtotal + shippingCost - couponDiscountAmount);
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  const handleApplyCoupon = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
-    if (couponCode.toUpperCase() === 'WELLSELL10' || couponCode.toUpperCase() === 'FLASH10') {
-      const discount = Math.round(cartSubtotal * 0.1);
-      setAppliedCoupon({ code: couponCode.toUpperCase(), discount });
-      showToast(`Coupon ${couponCode.toUpperCase()} applied! Saved Tk. ${discount}`, 'success');
-      setCouponCode('');
-    } else {
-      showToast('Invalid coupon code. Use "WELLSELL10" for 10% discount.', 'error');
-    }
+    showToast("Invalid coupon code.", "error");
   };
 
-  const handlePlaceOrder = async (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (cart.length === 0) {
-      showToast('Your cart is empty. Add products before placing order.', 'error');
+      showToast("Your cart is empty. Add products before placing order.", "error");
       return;
     }
     if (!customerName.trim() || !customerPhone.trim() || !customerAddress.trim()) {
-      showToast('Please provide your name, phone number, and delivery address.', 'error');
+      showToast("Please provide your name, phone number, and delivery address.", "error");
       return;
     }
 
     setIsSubmitting(true);
+
     try {
-      const isInside = selectedLocationId === 14 || (selectedLocation?.location || '').toLowerCase().includes('inside');
       const orderPayload: OrderCreatePayload = {
         location_id: selectedLocationId,
         shipping_id: selectedMethodId,
         shipping_name: customerName,
         shipping_phone: customerPhone,
         shipping_address: customerAddress,
-        shipment_type: isInside ? 'inside_dhaka' : 'outside_dhaka',
+        shipment_type: "normal",
         total_cart_item: cartTotalCount,
         total_cart_item_price: cartSubtotal,
         total_discount: cartTotalDiscount + couponDiscountAmount,
@@ -124,37 +127,39 @@ export default function CheckoutPage() {
         payment: {
           method_id: selectedPaymentId,
           amount: grandTotal,
-          gateway_response: []
+          gateway_response: [],
         },
         items: cart.map((item) => ({
           product_id: item.product.id,
           variant_id: item.variant.id,
           product_name: item.product.name,
           variant_info: {
-            brand: item.product.brand || '',
-            sku: item.product.sku || 'SKU-STD',
+            brand: item.product.brand || "",
+            sku: item.product.sku || "SKU-STD",
             ...(item.variant.size ? { size: item.variant.size } : {}),
-            ...(item.variant.color ? { color: item.variant.color } : {})
+            ...(item.variant.color ? { color: item.variant.color } : {}),
           },
           quantity: item.quantity,
           unit_price: item.unit_price,
           price_total: item.total_price,
           shipping_total: 0,
           discount_total: item.discount_total,
-          item_total: item.total_price
-        }))
+          item_total: item.total_price,
+        })),
       };
 
       const res = await api.createOrder(orderPayload);
+
       if (res.success && res.data) {
         clearCart();
-        showToast('Order successfully confirmed! Redirecting to invoice...', 'success');
+        showToast("Order successfully confirmed! Redirecting to invoice...", "success");
+
         router.push(`/invoice/${res.data.invoice_number}`);
       } else {
-        showToast('Failed to complete order. Please try again.', 'error');
+        showToast("Failed to complete order. Please try again.", "error");
       }
     } catch {
-      showToast('Server error processing order. Please try again.', 'error');
+      showToast("Server error processing order. Please try again.", "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -168,20 +173,25 @@ export default function CheckoutPage() {
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
-          <h1 className="font-serif font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
-            Your Bag is Empty
-          </h1>
-          <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
-            There are no items ready for checkout. Browse our imported skincare, perfumes, and health vitamins to continue.
-          </p>
-          <div className="pt-2">
-            <Link href="/">
-              <Button variant="default" size="lg" className="gap-2 uppercase tracking-wider text-xs font-semibold">
-                <span>Explore Products</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
-            </Link>
-          </div>
+          {isCartLoaded ? (
+            <>
+              <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Your Bag is Empty</h1>
+              <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
+                There are no items ready for checkout. Browse our imported skincare, perfumes, and health vitamins to
+                continue.
+              </p>
+              <div className="pt-2">
+                <Link href="/">
+                  <Button variant="default" size="lg" className="gap-2 uppercase tracking-wider text-xs font-semibold">
+                    <span>Explore Products</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Checking Your Cart...</h1>
+          )}
         </Card>
       </div>
     );
@@ -194,13 +204,17 @@ export default function CheckoutPage() {
         <Card className="p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs text-[#736C62] dark:text-[#9E968B] mb-1">
-              <Link href="/" className="hover:text-primary">Home</Link>
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
               <span>›</span>
-              <Link href="/cart" className="hover:text-primary">Cart</Link>
+              <Link href="/cart" className="hover:text-primary">
+                Cart
+              </Link>
               <span>›</span>
               <span className="text-[#1F1D1A] dark:text-[#EDE7DE] font-semibold">Checkout</span>
             </div>
-            <h1 className="font-serif font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
+            <h1 className="font-bold text-xl sm:text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">
               Express &amp; Secure Checkout
             </h1>
           </div>
@@ -231,7 +245,7 @@ export default function CheckoutPage() {
             <Card className="p-5 sm:p-7 space-y-5">
               <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
                 <MapPin className="w-5 h-5 text-primary" />
-                <h2 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
+                <h2 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
                   1. Delivery Details
                 </h2>
               </div>
@@ -269,9 +283,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Email Address
-                  </label>
+                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">Email Address</label>
                   <Input
                     type="email"
                     value={customerEmail}
@@ -280,80 +292,47 @@ export default function CheckoutPage() {
                   />
                 </div>
 
-                <div className="space-y-1.5 sm:col-span-2">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                      Delivery Location / District <span className="text-primary">*</span>
-                    </label>
-                    <span className="text-[11px] text-primary font-semibold font-mono">
-                      Tk. {shippingCost} · {shippingEstimateTime}
-                    </span>
-                  </div>
-                  <select
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                    Delivery Location / District <span className="text-primary">*</span>
+                  </label>
+                  <Select
+                    options={locationOptions}
                     value={selectedLocationId}
-                    onChange={(e) => setSelectedLocationId(Number(e.target.value))}
-                    className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-xs rounded-xs p-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-primary"
-                  >
-                    {locations.map((loc) => {
-                      const ct = calculateShippingCost(loc.id, selectedMethodId);
-                      return (
-                        <option key={loc.id} value={loc.id}>
-                          {loc.location} ({loc.city ? `${loc.city} · ` : ""}Tk. {ct.cost} · {ct.estimateTime})
-                        </option>
-                      );
-                    })}
-                  </select>
+                    onChange={(val) => setSelectedLocationId(Number(val))}
+                    placeholder="Select delivery district"
+                    searchPlaceholder="Search district or division..."
+                    searchable
+                    groupBy
+                  />
                 </div>
 
-                {methods.length > 0 && (
-                  <div className="space-y-1.5 sm:col-span-2">
-                    <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                      Preferred Courier Service
-                    </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                      {methods.map((method) => {
-                        const isSelected = selectedMethodId === method.id;
-                        return (
-                          <button
-                            type="button"
-                            key={method.id}
-                            onClick={() => setSelectedMethodId(method.id)}
-                            className={`p-2.5 rounded-xs border text-left flex items-center gap-2 transition-all cursor-pointer ${
-                              isSelected
-                                ? 'border-primary bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                                : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-primary/50'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="courier_method"
-                              checked={isSelected}
-                              onChange={() => setSelectedMethodId(method.id)}
-                              className="text-primary focus:ring-primary shrink-0"
-                            />
-                            <div className="min-w-0">
-                              <span className="block text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
-                                {method.method_name}
-                              </span>
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                    Preferred Courier <span className="text-primary">*</span>
+                  </label>
+                  <Select
+                    options={courierOptions}
+                    value={selectedMethodId}
+                    onChange={(val) => setSelectedMethodId(Number(val))}
+                    placeholder="Select preferred courier"
+                    searchPlaceholder="Search courier service..."
+                    searchable
+                    groupBy={false}
+                  />
+                </div>
 
                 <div className="space-y-1.5 sm:col-span-2">
                   <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
                     Full Delivery Address <span className="text-primary">*</span>
                   </label>
-                  <textarea
-                    required
+                  <Input
+                    multiline
                     rows={3}
+                    required
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     placeholder="House number, flat, road, area, sector, thana, district"
-                    className="w-full bg-[#FBF9F5] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] rounded-xs text-xs p-3 text-[#1F1D1A] dark:text-[#EDE7DE] focus:outline-none focus:border-[#BA2D1D]"
                   />
                 </div>
 
@@ -375,9 +354,7 @@ export default function CheckoutPage() {
             <Card className="p-5 sm:p-7 space-y-4">
               <div className="flex items-center gap-2 border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
                 <CreditCard className="w-5 h-5 text-primary" />
-                <h2 className="font-serif font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">
-                  2. Payment Method
-                </h2>
+                <h2 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">2. Payment Method</h2>
               </div>
 
               <div className="space-y-3">
@@ -386,8 +363,8 @@ export default function CheckoutPage() {
                   onClick={() => setSelectedPaymentId(2)}
                   className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
                     selectedPaymentId === 2
-                      ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                      : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50'
+                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
+                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
                   }`}
                 >
                   <input
@@ -405,7 +382,8 @@ export default function CheckoutPage() {
                       <Badge variant="success">Recommended</Badge>
                     </div>
                     <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
-                      Pay in cash to the delivery rider when your sealed parcel arrives. Check serial code before opening.
+                      Pay in cash to the delivery rider when your sealed parcel arrives. Check serial code before
+                      opening.
                     </p>
                   </div>
                 </div>
@@ -415,8 +393,8 @@ export default function CheckoutPage() {
                   onClick={() => setSelectedPaymentId(3)}
                   className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
                     selectedPaymentId === 3
-                      ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                      : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50'
+                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
+                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
                   }`}
                 >
                   <input
@@ -445,8 +423,8 @@ export default function CheckoutPage() {
                   onClick={() => setSelectedPaymentId(1)}
                   className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
                     selectedPaymentId === 1
-                      ? 'border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs'
-                      : 'border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50'
+                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
+                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
                   }`}
                 >
                   <input
@@ -476,13 +454,10 @@ export default function CheckoutPage() {
           <div className="lg:col-span-5 space-y-6">
             <Card className="p-5 sm:p-7 space-y-5 sticky top-20">
               <div className="flex items-center justify-between border-b border-[#F0EDE8] dark:border-[#2A2A2A] pb-3">
-                <h3 className="font-serif font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
+                <h3 className="font-bold text-base text-[#1F1D1A] dark:text-[#EDE7DE]">
                   Order Summary ({cartTotalCount} items)
                 </h3>
-                <Link
-                  href="/cart"
-                  className="text-xs text-primary hover:underline font-semibold"
-                >
+                <Link href="/cart" className="text-xs text-primary hover:underline font-semibold">
                   Edit Bag
                 </Link>
               </div>
@@ -490,12 +465,11 @@ export default function CheckoutPage() {
               {/* Items List */}
               <div className="max-h-60 overflow-y-auto space-y-3 divide-y divide-[#F0EDE8] dark:divide-[#262420] pr-1">
                 {cart.map((item) => {
-                  const itemImg = asset(item.variant?.image || item.product.thumbnail || item.product.image);
                   return (
                     <div key={`${item.product.id}-${item.variant.id}`} className="pt-3 first:pt-0 flex gap-3">
                       <div className="w-12 h-12 rounded border border-[#E8E2D9] dark:border-[#312E29] p-1 bg-[#FAFAFA] dark:bg-[#1A1916] shrink-0">
                         <img
-                          src={itemImg}
+                          src={asset(item.product.thumbnail)}
                           alt={item.product.name}
                           className="w-full h-full object-contain"
                           loading="lazy"
@@ -548,6 +522,7 @@ export default function CheckoutPage() {
                     Apply
                   </Button>
                 </div>
+
                 {appliedCoupon && (
                   <div className="flex items-center justify-between text-xs text-[#1F6E54] dark:text-[#34A87C] mt-2 font-medium bg-[#1F6E54]/10 p-2 rounded-xs">
                     <span>Coupon &quot;{appliedCoupon.code}&quot; applied!</span>
@@ -567,9 +542,7 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between text-[#736C62] dark:text-[#9E968B]">
                   <span>Courier Delivery ({shippingEstimateTime}):</span>
-                  <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">
-                    Tk. {shippingCost}
-                  </span>
+                  <span className="font-mono font-medium text-[#1F1D1A] dark:text-[#EDE7DE]">Tk. {shippingCost}</span>
                 </div>
 
                 {appliedCoupon && (
@@ -609,18 +582,6 @@ export default function CheckoutPage() {
                 <span>Confirm &amp; Place Order</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
-
-              {/* Trust Badges */}
-              <div className="pt-2 border-t border-[#F0EDE8] dark:border-[#2A2A2A] space-y-2">
-                <div className="flex items-center gap-2 text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                  <ShieldCheck className="w-4 h-4 text-[#1F6E54] shrink-0" />
-                  <span>100% Genuine batch import guarantees with barcode verification</span>
-                </div>
-                <div className="flex items-center gap-2 text-[11px] text-[#736C62] dark:text-[#9E968B]">
-                  <Truck className="w-4 h-4 text-primary shrink-0" />
-                  <span>Official RedX / Pathao courier with live tracking</span>
-                </div>
-              </div>
             </Card>
           </div>
         </form>
