@@ -15,10 +15,9 @@ import {
   Percent,
   Phone,
   Search,
-  Sparkles,
   Sun,
   User as UserIcon,
-  X,
+  X
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,31 +26,17 @@ import { useApp } from "../context/AppContext";
 import { useCart } from "../context/CartContext";
 import { MOCK_PRODUCTS } from "../data/mockData";
 
-export const Header: React.FC<{ categories: Category[] }> = ({
-  categories,
-}) => {
+export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
   const router = useRouter();
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const {
-    theme,
-    toggleTheme,
-    currency,
-    setCurrency,
-    wishlist,
-    user,
-    logout,
-    searchQuery,
-    setSearchQuery,
-    showToast,
-  } = useApp();
+  const { theme, toggleTheme, currency, setCurrency, wishlist, user, logout, searchQuery, setSearchQuery, showToast } =
+    useApp();
   const { cartTotalCount } = useCart();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [hoveredDept, setHoveredDept] = useState<Category | null>(null);
-  const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(
-    null,
-  );
+  const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
@@ -96,9 +81,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
     e.preventDefault();
     if (searchQuery.trim()) {
       setSearchFocused(false);
-      router.push(
-        `/category/all?search=${encodeURIComponent(searchQuery.trim())}`,
-      );
+      router.push(`/category/all?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -115,15 +98,10 @@ export const Header: React.FC<{ categories: Category[] }> = ({
             >
               <Phone className="w-3 h-3 text-primary dark:text-[#E05343]" />
               <span>
-                Hotline:{" "}
-                <strong className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
-                  +8801894084242
-                </strong>
+                Hotline: <strong className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">+8801894084242</strong>
               </span>
             </a>
-            <span className="hidden sm:inline text-[#D3CBC0] dark:text-[#3E3A34]">
-              |
-            </span>
+            <span className="hidden sm:inline text-[#D3CBC0] dark:text-[#3E3A34]">|</span>
             <a
               href="mailto:info@wellsellbd.com"
               className="hidden sm:inline-flex items-center gap-1.5 hover:text-primary dark:hover:text-[#E05343] transition-colors"
@@ -176,11 +154,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
               className="p-1 rounded hover:bg-[#EFEAE1] dark:hover:bg-[#23201C] transition-colors text-[#1F1D1A] dark:text-[#EDE7DE] cursor-pointer"
-              title={
-                theme === "dark"
-                  ? "Switch to Paper Light"
-                  : "Switch to Ink Charcoal"
-              }
+              title={theme === "dark" ? "Switch to Paper Light" : "Switch to Ink Charcoal"}
             >
               {theme === "dark" ? (
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
@@ -194,25 +168,13 @@ export const Header: React.FC<{ categories: Category[] }> = ({
 
       {/* 2. Main Brand Header Bar */}
       <div className="container py-3 flex items-center justify-between gap-4">
-        <Link
-          href="/"
-          className="cursor-pointer flex items-center gap-2 sm:gap-3 shrink-0 group"
-        >
-          <img
-            src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
-            className="h-7.25 md:h-13.75"
-          />
+        <Link href="/" className="cursor-pointer flex items-center gap-2 sm:gap-3 shrink-0 group">
+          <img src="https://wellsellbd.com/images/logo.svg?dummy=59825993" className="h-7.25 md:h-13.75" />
         </Link>
 
         {/* Live Search Input with Dropdown */}
-        <div
-          ref={searchRef}
-          className="flex-1 max-w-xl hidden md:block relative"
-        >
-          <form
-            onSubmit={handleSearchSubmit}
-            className="relative flex items-center"
-          >
+        <div ref={searchRef} className="flex-1 max-w-xl hidden md:block relative">
+          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
             <input
               type="text"
               placeholder="Search health, skincare, vitamins, perfumes..."
@@ -249,12 +211,8 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                     className="w-9 h-9 object-cover rounded border border-[#E8E2D9] dark:border-[#312E29]"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
-                      {item.name}
-                    </p>
-                    <p className="text-[11px] text-primary font-mono">
-                      Tk. {item.price.toLocaleString()}
-                    </p>
+                    <p className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">{item.name}</p>
+                    <p className="text-[11px] text-primary font-mono">Tk. {item.price.toLocaleString()}</p>
                   </div>
                 </Link>
               ))}
@@ -295,9 +253,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                   className="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-full border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
                 >
                   <UserIcon className="w-4 h-4 text-primary" />
-                  <span className="text-xs font-medium hidden sm:inline">
-                    {user.first_name || "My Account"}
-                  </span>
+                  <span className="text-xs font-medium hidden sm:inline">{user.first_name || "My Account"}</span>
                   <ChevronDown className="w-3 h-3 text-[#736C62] hidden sm:inline" />
                 </button>
 
@@ -307,9 +263,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                       <p className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">
                         {user.first_name} {user.last_name}
                       </p>
-                      <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] truncate">
-                        {user.email}
-                      </p>
+                      <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] truncate">{user.email}</p>
                     </div>
                     <Link
                       href="/track-order"
@@ -343,9 +297,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                 className="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-full border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
               >
                 <UserIcon className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium hidden sm:inline">
-                  Sign In
-                </span>
+                <span className="text-xs font-medium hidden sm:inline">Sign In</span>
               </Link>
             )}
           </div>
@@ -355,7 +307,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
       {/* 3. Primary Navigation Bar */}
       <div className="container flex items-center justify-between">
         {/* ALL DEPARTMENTS button with dropdown */}
-        <div ref={deptRef} className="relative w-[calc(20%-12px)]">
+        <div ref={deptRef} className="relative md:w-[calc(20%-12px)]">
           <button
             onClick={() => {
               if (isHomePage) {
@@ -367,7 +319,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
               setHoveredDept(null);
               setHoveredSubcategory(null);
             }}
-            className="w-full rounded-xl flex justify-center items-center gap-2.5 bg-primary text-white py-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover transition-colors cursor-pointer"
+            className="w-full rounded-xl flex justify-center items-center gap-2.5 bg-primary text-white p-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover transition-colors cursor-pointer"
           >
             <Menu className="w-4 h-4" />
             <span>ALL DEPARTMENTS</span>
@@ -425,11 +377,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                               <li
                                 key={sub.id}
                                 className="relative"
-                                onMouseEnter={() =>
-                                  setHoveredSubcategory(
-                                    sub.childs?.length ? sub : null,
-                                  )
-                                }
+                                onMouseEnter={() => setHoveredSubcategory(sub.childs?.length ? sub : null)}
                               >
                                 <Link
                                   href={`/category/${sub.slug}`}
@@ -437,23 +385,16 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                                   className="w-full text-left py-2 px-4 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-primary transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
                                 >
                                   <span>{sub.name}</span>
-                                  {sub.childs?.length ? (
-                                    <span className="text-[10px] text-[#9A9184]">
-                                      →
-                                    </span>
-                                  ) : null}
+                                  {sub.childs?.length ? <span className="text-[10px] text-[#9A9184]">→</span> : null}
                                 </Link>
 
-                                {hoveredSubcategory?.id === sub.id &&
-                                sub.childs?.length ? (
+                                {hoveredSubcategory?.id === sub.id && sub.childs?.length ? (
                                   <div className="absolute top-0 left-full -ml-1 w-64 bg-white dark:bg-[#1E1E1E] section-card py-2 shadow-xl z-10">
                                     {sub.childs.map((child) => (
                                       <Link
                                         key={child.id}
                                         href={`/category/${child.slug}`}
-                                        onClick={() =>
-                                          setIsDepartmentOpen(false)
-                                        }
+                                        onClick={() => setIsDepartmentOpen(false)}
                                         className="block px-4 py-2 text-xs text-[#3E3A34] dark:text-[#C5BEB3] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-primary transition-colors"
                                       >
                                         {child.name}
@@ -479,9 +420,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
                                 />
                               ) : null}
                               <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent p-2.5 flex flex-col justify-end text-white">
-                                <span className="underline">
-                                  Explore {cat.name} ›
-                                </span>
+                                <span className="underline">Explore {cat.name} ›</span>
                               </div>
                             </Link>
                           ) : null}
@@ -497,16 +436,10 @@ export const Header: React.FC<{ categories: Category[] }> = ({
 
         {/* Navigation Links using Next.js Link */}
         <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-[#4A443B] dark:text-[#C5BEB3]">
-          <Link
-            href="/"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-          >
+          <Link href="/" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
             Home
           </Link>
-          <Link
-            href="/brand"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-          >
+          <Link href="/brand" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
             Brands
           </Link>
           <Link
@@ -517,13 +450,6 @@ export const Header: React.FC<{ categories: Category[] }> = ({
             HOT OFFERS
           </Link>
           <Link
-            href="/checkout"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-[#1F6E54] dark:text-[#34A87C]"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            Checkout
-          </Link>
-          <Link
             href="/track-order"
             className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1"
           >
@@ -532,16 +458,10 @@ export const Header: React.FC<{ categories: Category[] }> = ({
           </Link>
           {!user ? (
             <>
-              <Link
-                href="/register"
-                className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-              >
+              <Link href="/register" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
                 Join Free
               </Link>
-              <Link
-                href="/login"
-                className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-              >
+              <Link href="/login" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
                 Sign In
               </Link>
             </>
@@ -565,11 +485,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({
             className="p-2 text-[#1F1D1A] dark:text-[#EDE7DE] cursor-pointer"
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>

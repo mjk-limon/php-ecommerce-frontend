@@ -11,7 +11,7 @@ import { CartProvider } from "@/context/CartContext";
 import { getServerCategories } from "@/services/serverApi";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
-import "./globals.css";
+import "./../globals.css";
 
 export const metadata: Metadata = {
   title: "WellSell BD - Health, Beauty & Wellness Online Store",
@@ -79,9 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="min-h-screen flex flex-col bg-white dark:bg-[#121212] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors">
-        <NextTopLoader
-          color="#68183f"
-        />
+        <NextTopLoader color="#68183f" />
 
         <AppProvider>
           <CartProvider>

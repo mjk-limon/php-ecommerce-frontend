@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useApp } from "@/context/AppContext";
 import { useCart } from "@/context/CartContext";
 import { asset } from "@/lib/utils";
-import { ArrowRight, Minus, Plus, RotateCcw, ShieldCheck, ShoppingBag, Tag, Trash2, Truck } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShoppingBag, Tag, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -200,22 +200,6 @@ export default function CartPage() {
                 })}
               </div>
             </Card>
-
-            {/* Shopping Trust badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <Card className="p-3.5 flex items-center gap-2.5 text-xs text-[#736C62] dark:text-[#9E968B]">
-                <ShieldCheck className="w-5 h-5 text-[#1F6E54] shrink-0" />
-                <span>100% Genuine Barcoded Import Guarantee</span>
-              </Card>
-              <Card className="p-3.5 flex items-center gap-2.5 text-xs text-[#736C62] dark:text-[#9E968B]">
-                <Truck className="w-5 h-5 text-primary shrink-0" />
-                <span>24-48 Hours Fast RedX Courier in Dhaka</span>
-              </Card>
-              <Card className="p-3.5 flex items-center gap-2.5 text-xs text-[#736C62] dark:text-[#9E968B]">
-                <RotateCcw className="w-5 h-5 text-[#1F6E54] shrink-0" />
-                <span>7-Day Return Policy for Unopened Seals</span>
-              </Card>
-            </div>
           </div>
 
           {/* Right Summary Card (4 cols) */}
@@ -319,16 +303,17 @@ export default function CartPage() {
               </div>
 
               {/* Proceed to Checkout Button */}
-              <Button
-                type="button"
-                variant="default"
-                size="lg"
-                onClick={() => router.push("/checkout")}
-                className="w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-3.5"
-              >
-                <span>Proceed To Checkout</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <Link href="/checkout">
+                <Button
+                  type="button"
+                  variant="default"
+                  size="lg"
+                  className="w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-3.5"
+                >
+                  <span>Proceed To Checkout</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
 
               <div className="text-center">
                 <Link href="/" className="text-xs text-[#736C62] hover:text-primary transition-colors">

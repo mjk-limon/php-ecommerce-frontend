@@ -99,6 +99,27 @@ export interface Product {
   }>;
 }
 
+export interface ProductReview {
+  id: number;
+  user_id: number;
+  user_name?: string;
+  product_id: number;
+  review: string;
+  rating: number;
+  status: number;
+  created_at: string;
+}
+
+export interface ProductQuestion {
+  id: number;
+  product_id: number;
+  parent_id?: number | null;
+  question: string;
+  answer?: string;
+  status: number;
+  created_at: string;
+}
+
 export interface Category {
   id: number;
   tenant_id?: number;
@@ -194,11 +215,13 @@ export interface CartItem {
   total_price: number;
 }
 
-export interface OrderItemPayload {
+export interface OrderItem {
+  id: number;
+  order_id: number;
   product_id: number;
   variant_id: number;
   product_name: string;
-  variant_info: Record<string, string>;
+  variant_info: string;
   quantity: number;
   unit_price: number;
   price_total: number;
@@ -207,25 +230,14 @@ export interface OrderItemPayload {
   item_total: number;
 }
 
-export interface OrderCreatePayload {
-  location_id: number;
-  shipping_id: number;
-  shipping_name: string;
-  shipping_phone: string;
-  shipping_address: string;
-  shipment_type: string;
-  total_cart_item: number;
-  total_cart_item_price: number;
-  total_discount: number;
-  total_shipping_cost: number;
-  subtotal: number;
-  coupon_ids: string[];
-  payment: {
-    method_id: number;
-    amount: number;
-    gateway_response: unknown[];
-  };
-  items: OrderItemPayload[];
+export interface OrderPayment {
+  id: number;
+  order_id: number;
+  method_id: number;
+  trxn_id: string;
+  amount: number;
+  status: number;
+  created_at: string;
 }
 
 export interface OrderInvoice {
@@ -247,50 +259,30 @@ export interface OrderInvoice {
   status: number;
   created_at: string;
   updated_at: string;
-  items: Array<{
-    id: number;
-    order_id: number;
-    product_id: number;
-    variant_id: number;
-    product_name: string;
-    variant_info: string;
-    quantity: number;
-    unit_price: number;
-    price_total: number;
-    shipping_total: number;
-    discount_total: number;
-    item_total: number;
-  }>;
-  payments?: Array<{
-    id: number;
-    order_id: number;
+  items: OrderItem[];
+  payments: OrderPayment[];
+  location: ShippingLocation;
+}
+
+export interface OrderCreatePayload {
+  location_id: number;
+  shipping_id: number;
+  shipping_name: string;
+  shipping_phone: string;
+  shipping_address: string;
+  shipment_type: string;
+  total_cart_item: number;
+  total_cart_item_price: number;
+  total_discount: number;
+  total_shipping_cost: number;
+  subtotal: number;
+  coupon_ids: string[];
+  payment: {
     method_id: number;
-    trxn_id: string;
     amount: number;
-    status: number;
-    created_at: string;
-  }>;
-}
-
-export interface ProductReview {
-  id: number;
-  user_id: number;
-  user_name?: string;
-  product_id: number;
-  review: string;
-  rating: number;
-  status: number;
-  created_at: string;
-}
-
-export interface ProductQuestion {
-  id: number;
-  product_id: number;
-  parent_id?: number | null;
-  question: string;
-  answer?: string;
-  status: number;
-  created_at: string;
+    gateway_response: unknown[];
+  };
+  items: Omit<OrderItem, "id" | "order_id">;
 }
 
 export interface StoreMeta {
