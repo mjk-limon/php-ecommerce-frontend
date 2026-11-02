@@ -12,7 +12,7 @@ export function FloatingCart() {
     <button
       type="button"
       onClick={() => setIsCartDrawerOpen(true)}
-      className="fixed right-0 top-1/2 z-40 -translate-y-1/2 text-center rounded-l-md bg-primary px-3 py-3 text-white shadow transition-all hover:bg-primary-hover hover:pr-4 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-[#68183f]"
+      className="hidden md:block fixed right-0 top-1/2 z-40 -translate-y-1/2 text-center rounded-l-md bg-primary px-3 py-3 text-white shadow transition-all hover:bg-primary-hover hover:pr-4 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
       <span className="inline-block relative h-6 w-6">
         <ShoppingCart className="h-5 w-5" />

@@ -221,7 +221,7 @@ export interface OrderItem {
   product_id: number;
   variant_id: number;
   product_name: string;
-  variant_info: string;
+  variant_info: string | Record<string, string>;
   quantity: number;
   unit_price: number;
   price_total: number;
@@ -282,7 +282,7 @@ export interface OrderCreatePayload {
     amount: number;
     gateway_response: unknown[];
   };
-  items: Omit<OrderItem, "id" | "order_id">;
+  items: Omit<OrderItem, "id" | "order_id">[];
 }
 
 export interface StoreMeta {

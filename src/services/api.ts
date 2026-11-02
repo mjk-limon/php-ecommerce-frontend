@@ -129,6 +129,12 @@ function initializeStorage() {
           created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
         },
       ],
+      location: {
+        id: 1,
+        location: "Inside Dhaka",
+        city: "Dhaka",
+        status: 1,
+      },
     };
     localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify([defaultOrder]));
   }

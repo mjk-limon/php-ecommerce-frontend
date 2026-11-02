@@ -2,7 +2,7 @@ import { CartDrawer } from "@/components/CartDrawer";
 import { CheckoutModal } from "@/components/CheckoutModal";
 import { FloatingCart } from "@/components/FloatingCart";
 import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/header/Header";
 import { InvoiceModal } from "@/components/InvoiceModal";
 import { ToastContainer } from "@/components/ToastContainer";
 import { TrackOrderModal } from "@/components/TrackOrderModal";

@@ -1,7 +1,6 @@
 "use client";
 
-import { getAssetUrl } from "@/lib/assetHelper";
-import { asset } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 import { Category } from "@/types";
 import {
   Bell,
@@ -11,55 +10,70 @@ import {
   Mail,
   Menu,
   Moon,
-  Package,
-  Percent,
   Phone,
-  Search,
   Sun,
   User as UserIcon,
-  X
+  X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import { useApp } from "../context/AppContext";
-import { useCart } from "../context/CartContext";
-import { MOCK_PRODUCTS } from "../data/mockData";
+import { useApp } from "../../context/AppContext";
+import { NavLinks } from "../NavLinks";
+import { SearchBar } from "../SearchBar";
 
 export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const { theme, toggleTheme, currency, setCurrency, wishlist, user, logout, searchQuery, setSearchQuery, showToast } =
-    useApp();
-  const { cartTotalCount } = useCart();
+  const { theme, toggleTheme, currency, setCurrency, user, logout, showToast } = useApp();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [hoveredDept, setHoveredDept] = useState<Category | null>(null);
   const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
+  const [expandedMobileCategories, setExpandedMobileCategories] = useState<number[]>([]);
+
   const deptRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setSearchFocused(false);
-      }
-
       if (deptRef.current && !deptRef.current.contains(e.target as Node)) {
         setIsDepartmentOpen(false);
         setHoveredDept(null);
         setHoveredSubcategory(null);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Close menus on route change or ESC
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsDepartmentOpen(false);
+    setIsUserMenuOpen(false);
+    setHoveredDept(null);
+    setHoveredSubcategory(null);
+  }, [pathname]);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     if (isHomePage) {
@@ -69,25 +83,33 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
     }
   }, [isHomePage]);
 
-  const searchResults = searchQuery.trim()
-    ? MOCK_PRODUCTS.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.brand.toLowerCase().includes(searchQuery.toLowerCase()),
-      ).slice(0, 5)
-    : [];
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      setSearchFocused(false);
-      router.push(`/category/all?search=${encodeURIComponent(searchQuery.trim())}`);
+  const handleDepartmentOrMenuClick = () => {
+    // If on mobile viewport (< 768px), open the mobile drawer from left
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setIsMobileMenuOpen(true);
+      return;
     }
+
+    // On desktop
+    if (isHomePage) {
+      setIsDepartmentOpen(false);
+      window.dispatchEvent(new Event("focus-hero-departments"));
+      return;
+    }
+    setIsDepartmentOpen((open) => !open);
+    setHoveredDept(null);
+    setHoveredSubcategory(null);
+  };
+
+  const toggleMobileCategory = (catId: number) => {
+    setExpandedMobileCategories((prev) =>
+      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId],
+    );
   };
 
   return (
     <header className="w-full pb-1 select-none shadow-md transition-colors relative z-40">
-      {/* 1. Top Utility Header */}
+      {/* 1. Top Utility Header (Desktop only) */}
       <div className="hidden md:block text-xs text-[#736C62] dark:text-[#9E968B]">
         <div className="container py-1 flex flex-wrap items-center justify-between gap-3">
           {/* Left contact info */}
@@ -166,61 +188,21 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
         </div>
       </div>
 
-      {/* 2. Main Brand Header Bar */}
+      {/* 2. Main Brand Header Bar (Middle row) */}
       <div className="container py-3 flex items-center justify-between gap-4">
+        {/* Left Column: Logo */}
         <Link href="/" className="cursor-pointer flex items-center gap-2 sm:gap-3 shrink-0 group">
-          <img src="https://wellsellbd.com/images/logo.svg?dummy=59825993" className="h-7.25 md:h-13.75" />
+          <img
+            src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
+            alt="Wellsell BD"
+            className="h-7.25 md:h-13.75"
+          />
         </Link>
 
-        {/* Live Search Input with Dropdown */}
-        <div ref={searchRef} className="flex-1 max-w-xl hidden md:block relative">
-          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-            <input
-              type="text"
-              placeholder="Search health, skincare, vitamins, perfumes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setSearchFocused(true)}
-              className="w-full bg-[#FFFFFF] dark:bg-[#1A1916] border border-[#DCD5C9] dark:border-[#38332C] text-sm text-[#1F1D1A] dark:text-[#EDE7DE] rounded-full py-2.5 pl-5 pr-11 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-shadow shadow-xs placeholder-[#9A9184]"
-            />
-            <button
-              type="submit"
-              aria-label="Execute search"
-              className="absolute right-1.5 w-8 h-8 rounded-full bg-primary hover:bg-primary-hover text-white flex items-center justify-center transition-colors cursor-pointer"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-          </form>
+        {/* Middle Column: Desktop Search Bar (hidden on mobile) */}
+        <SearchBar className="hidden md:block flex-1 max-w-xl mx-4" />
 
-          {/* Autocomplete Dropdown */}
-          {searchFocused && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1C1A17] border border-[#E8E2D9] dark:border-[#312E29] rounded-xl shadow-lg p-2 z-50">
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 py-1.5">
-                Suggested Products
-              </div>
-              {searchResults.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/product/${item.slug}`}
-                  onClick={() => setSearchFocused(false)}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] cursor-pointer transition-colors"
-                >
-                  <img
-                    src={getAssetUrl(item.image || item.thumbnail)}
-                    alt={item.name}
-                    className="w-9 h-9 object-cover rounded border border-[#E8E2D9] dark:border-[#312E29]"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] truncate">{item.name}</p>
-                    <p className="text-[11px] text-primary font-mono">Tk. {item.price.toLocaleString()}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Right utility icons & Cart / Checkout Triggers */}
+        {/* Right Column: Utility icons & User / Mobile menu triggers */}
         <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           {/* Notification icon */}
           <button
@@ -245,7 +227,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
           </Link>
 
           {/* User Account / Profile button */}
-          <div className="relative">
+          <div ref={userMenuRef} className="relative">
             {user ? (
               <div>
                 <button
@@ -301,37 +283,40 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               </Link>
             )}
           </div>
+
+          {/* Mobile Menu Drawer Toggle Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="p-2 md:hidden text-[#1F1D1A] dark:text-[#EDE7DE] hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] rounded-lg transition-colors cursor-pointer"
+            aria-label="Open navigation menu drawer"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
       {/* 3. Primary Navigation Bar */}
-      <div className="container flex items-center justify-between">
-        {/* ALL DEPARTMENTS button with dropdown */}
-        <div ref={deptRef} className="relative md:w-[calc(20%-12px)]">
+      <div className="container flex gap-2.5 sm:gap-4 items-center justify-between">
+        {/* ALL DEPARTMENTS (Desktop) / Menu (Mobile) button with dropdown */}
+        <div ref={deptRef} className="relative w-auto md:w-[calc(20%-12px)] shrink-0">
           <button
-            onClick={() => {
-              if (isHomePage) {
-                setIsDepartmentOpen(false);
-                window.dispatchEvent(new Event("focus-hero-departments"));
-                return;
-              }
-              setIsDepartmentOpen((open) => !open);
-              setHoveredDept(null);
-              setHoveredSubcategory(null);
-            }}
-            className="w-full rounded-xl flex justify-center items-center gap-2.5 bg-primary text-white p-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover transition-colors cursor-pointer"
+            onClick={handleDepartmentOrMenuClick}
+            className="w-full rounded-xl flex justify-center items-center gap-2 bg-primary/5 text-primary p-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover hover:text-white transition-colors cursor-pointer"
           >
-            <Menu className="w-4 h-4" />
-            <span>ALL DEPARTMENTS</span>
+            <Menu className="w-4 h-4 shrink-0" />
+            <span className="hidden md:inline">ALL DEPARTMENTS</span>
+            <span className="inline md:hidden">Menu</span>
             <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 ${isDepartmentOpen ? "rotate-180" : ""}`}
+              className={`w-4 h-4 transition-transform duration-200 hidden md:inline ${
+                isDepartmentOpen ? "rotate-180" : ""
+              }`}
             />
           </button>
 
-          {/* Department Mega Dropdown with Link */}
-          {isDepartmentOpen && !isHomePage && (
+          {/* Department Mega Dropdown (Desktop only) */}
+          {isDepartmentOpen && (
             <div
-              className="absolute top-full left-0 w-full pt-1 z-50"
+              className="hidden md:block absolute top-full left-0 w-full pt-1 z-50"
               onMouseLeave={() => {
                 setHoveredDept(null);
                 setHoveredSubcategory(null);
@@ -434,148 +419,188 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
           )}
         </div>
 
-        {/* Navigation Links using Next.js Link */}
-        <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-[#4A443B] dark:text-[#C5BEB3]">
-          <Link href="/" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
-            Home
-          </Link>
-          <Link href="/brand" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
-            Brands
-          </Link>
-          <Link
-            href="/offers"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1 text-primary dark:text-[#E05343]"
-          >
-            <Percent className="w-3.5 h-3.5" />
-            HOT OFFERS
-          </Link>
-          <Link
-            href="/track-order"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5 flex items-center gap-1"
-          >
-            <Package className="w-3.5 h-3.5 text-[#1F6E54]" />
-            Track Order
-          </Link>
-          {!user ? (
-            <>
-              <Link href="/register" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
-                Join Free
-              </Link>
-              <Link href="/login" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
-                Sign In
-              </Link>
-            </>
-          ) : (
-            <span className="text-[11px] text-[#1F6E54] dark:text-[#34A87C] font-semibold py-2.5">
-              Hi, {user.first_name}
-            </span>
-          )}
-          <a
-            href="tel:+8801894084242"
-            className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-          >
-            Support
-          </a>
-        </nav>
+        {/* Desktop Navigation Links */}
+        <NavLinks orientation="horizontal" className="hidden md:flex" />
 
-        {/* Mobile menu button */}
-        <div className="flex lg:hidden items-center">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-[#1F1D1A] dark:text-[#EDE7DE] cursor-pointer"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
+        {/* Mobile Search Bar - placed beside menu (hidden on desktop) */}
+        <SearchBar className="flex-1 md:hidden" />
       </div>
 
-      {/* Mobile menu dropdown */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-[#E8E2D9] dark:border-[#312E29] p-4 bg-white dark:bg-[#1C1A17] space-y-3">
-          <form onSubmit={handleSearchSubmit} className="relative">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F5F1EA] dark:bg-[#25221E] border border-[#DCD5C9] dark:border-[#38332C] rounded-lg px-3 py-2 text-xs"
+      {/* 4. Mobile Menu Drawer (Slides from Left) */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-300 md:hidden",
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+        )}
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 w-[85vw] max-w-xs sm:max-w-sm bg-white dark:bg-[#1A1815] shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-in-out md:hidden",
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+        aria-label="Mobile Navigation Menu"
+      >
+        {/* Drawer Header */}
+        <div className="p-4 border-b border-[#F0EDE8] dark:border-[#2A2A2A] flex items-center justify-between">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2">
+            <img
+              src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
+              alt="Wellsell BD"
+              className="h-6"
             />
-          </form>
-          <div className="grid grid-cols-2 gap-2 text-xs font-medium">
-            <Link
-              href="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
-            >
-              Home
-            </Link>
-            <Link
-              href="/brand"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
-            >
-              Brands
-            </Link>
-            <Link
-              href="/offers"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-primary"
-            >
-              Hot Offers
-            </Link>
-            <Link
-              href="/checkout"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F6E54]"
-            >
-              Checkout
-            </Link>
-            <Link
-              href="/cart"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
-            >
-              Cart ({cartTotalCount})
-            </Link>
-            <Link
-              href="/track-order"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
-            >
-              Track Order
-            </Link>
-            {!user ? (
-              <>
-                <Link
-                  href="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
+          </Link>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu drawer"
+            className="p-1.5 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#736C62] hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE] transition-colors cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Drawer Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-5">
+          {/* Main Navigation Links */}
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
+              Menu
+            </div>
+            <NavLinks orientation="vertical" onItemClick={() => setIsMobileMenuOpen(false)} />
+          </div>
+
+          {/* Categories Accordion */}
+          {categories?.length > 0 && (
+            <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A]">
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
+                All Departments
+              </div>
+              <div className="space-y-1">
+                {categories.map((cat) => (
+                  <div key={cat.id} className="rounded-lg overflow-hidden">
+                    <div className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] transition-colors">
+                      <Link
+                        href={`/category/${cat.slug}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] flex-1 truncate hover:text-primary"
+                      >
+                        {cat.name}
+                      </Link>
+                      {cat.childs?.length ? (
+                        <button
+                          onClick={() => toggleMobileCategory(cat.id)}
+                          className="p-1 text-[#9A9184] hover:text-primary transition-colors cursor-pointer"
+                          aria-label={`Toggle ${cat.name} subcategories`}
+                        >
+                          <ChevronDown
+                            className={cn(
+                              "w-3.5 h-3.5 transition-transform duration-200",
+                              expandedMobileCategories.includes(cat.id) ? "rotate-180" : "",
+                            )}
+                          />
+                        </button>
+                      ) : null}
+                    </div>
+
+                    {/* Subcategories list */}
+                    {cat.childs?.length && expandedMobileCategories.includes(cat.id) ? (
+                      <div className="pl-6 pr-2 py-1 space-y-1 bg-[#FAFAF8] dark:bg-[#151412] rounded-b-lg">
+                        {cat.childs.map((sub) => (
+                          <Link
+                            key={sub.id}
+                            href={`/category/${sub.slug}`}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block py-1.5 px-2 text-xs text-[#524B42] dark:text-[#B5ACA0] hover:text-primary transition-colors truncate"
+                          >
+                            • {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Quick Settings & Contact */}
+          <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A] space-y-3 text-xs text-[#736C62] dark:text-[#9E968B] px-3">
+            {/* Currency Switcher */}
+            <div className="flex items-center justify-between">
+              <span>Currency:</span>
+              <div className="flex items-center gap-1 font-semibold">
+                <button
+                  onClick={() => setCurrency("Tk.")}
+                  className={cn(
+                    "px-2.5 py-1 rounded text-xs transition-colors cursor-pointer",
+                    currency === "Tk."
+                      ? "bg-primary text-white"
+                      : "hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
+                  )}
                 >
-                  Sign In
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E]"
+                  Tk.
+                </button>
+                <button
+                  onClick={() => setCurrency("$")}
+                  className={cn(
+                    "px-2.5 py-1 rounded text-xs transition-colors cursor-pointer",
+                    currency === "$"
+                      ? "bg-primary text-white"
+                      : "hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
+                  )}
                 >
-                  Join Free
-                </Link>
-              </>
-            ) : (
+                  USD
+                </button>
+              </div>
+            </div>
+
+            {/* Theme Toggle */}
+            <div className="flex items-center justify-between">
+              <span>Appearance:</span>
               <button
-                onClick={() => {
-                  logout();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-left py-2 px-3 rounded hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-primary"
+                onClick={toggleTheme}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] cursor-pointer text-[#1F1D1A] dark:text-[#EDE7DE]"
               >
-                Sign Out
+                {theme === "dark" ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-[#736C62]" />
+                    <span>Dark Mode</span>
+                  </>
+                )}
               </button>
-            )}
+            </div>
+
+            {/* Hotline & Mail */}
+            <div className="pt-2 text-[11px] space-y-1">
+              <div>
+                Hotline:{" "}
+                <a
+                  href="tel:+8801894084242"
+                  className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] hover:underline"
+                >
+                  +8801894084242
+                </a>
+              </div>
+              <div>
+                Mail:{" "}
+                <a
+                  href="mailto:info@wellsellbd.com"
+                  className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] hover:underline"
+                >
+                  info@wellsellbd.com
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      )}
+      </aside>
     </header>
   );
 };
