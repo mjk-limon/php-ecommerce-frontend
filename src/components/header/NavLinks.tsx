@@ -79,17 +79,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   return (
     <nav className={cn("flex flex-col space-y-1 text-sm font-medium", className)}>
       <Link
-        href="/"
-        onClick={onItemClick}
-        className={cn(
-          "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
-          itemClassName,
-        )}
-      >
-        <Home className="w-4 h-4 text-[#736C62] dark:text-[#9E968B]" />
-        <span>Home</span>
-      </Link>
-      <Link
         href="/brand"
         onClick={onItemClick}
         className={cn(
@@ -121,22 +110,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       >
         <Package className="w-4 h-4 text-[#1F6E54]" />
         <span>Track Order</span>
-      </Link>
-      <Link
-        href="/cart"
-        onClick={onItemClick}
-        className={cn(
-          "flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
-          itemClassName,
-        )}
-      >
-        <div className="flex items-center gap-3">
-          <ShoppingCart className="w-4 h-4 text-[#736C62] dark:text-[#9E968B]" />
-          <span>Cart</span>
-        </div>
-        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">
-          {cartTotalCount}
-        </span>
       </Link>
       <Link
         href="/checkout"

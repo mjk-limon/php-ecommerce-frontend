@@ -8,6 +8,7 @@ import {
   ChevronDown,
   Heart,
   HelpCircle,
+  Home,
   Mail,
   Menu,
   Moon,
@@ -23,6 +24,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext";
 import { NavLinks } from "./NavLinks";
 import { SearchBar } from "./SearchBar";
+import { FloatingCart } from "../FloatingCart";
+import { NavCart } from "./NavCart";
 
 export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
   const pathname = usePathname();
@@ -154,22 +157,20 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               <span className="opacity-70">Currency:</span>
               <button
                 onClick={() => setCurrency("Tk.")}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
-                  currency === "Tk."
-                    ? "text-primary dark:text-[#E05343] underline"
-                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
-                }`}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === "Tk."
+                  ? "text-primary dark:text-[#E05343] underline"
+                  : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                  }`}
               >
                 Tk.
               </button>
               <span>/</span>
               <button
                 onClick={() => setCurrency("$")}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
-                  currency === "$"
-                    ? "text-primary dark:text-[#E05343] underline"
-                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
-                }`}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === "$"
+                  ? "text-primary dark:text-[#E05343] underline"
+                  : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                  }`}
               >
                 USD
               </button>
@@ -287,20 +288,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               </Link>
             )}
           </div>
-          <div
-            onClick={() => setIsCartDrawerOpen(true)}
-            className="md:hidden flex justify-center items-center gap-1.5 p-1.5 rounded-xl border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
-          >
-            <span className="relative">
-              <ShoppingCart className="w-4 h-4 text-primary" />
-              <span className="absolute -top-0 -right-1 w-4 h-4 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
-                0
-              </span>
-            </span>
-            <div className="flex flex-col">
-              <span className="text-[10px]">Tk. 4000</span>
-            </div>
-          </div>
+          <NavCart />
         </div>
       </div>
 
@@ -316,9 +304,10 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             <span className="hidden md:inline">ALL DEPARTMENTS</span>
             <span className="inline md:hidden">Menu</span>
             <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 hidden md:inline ${
-                isDepartmentOpen ? "rotate-180" : ""
-              }`}
+              className={cn(
+                'w-4 h-4 transition-transform duration-200 hidden md:inline',
+                isDepartmentOpen ? 'rotate-180' : ''
+              )}
             />
           </button>
 
@@ -467,20 +456,23 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
         </div>
 
         {/* Drawer Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-5">
-          {/* Main Navigation Links */}
-          <div>
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
-              Menu
-            </div>
-            <NavLinks orientation="vertical" onItemClick={() => setIsMobileMenuOpen(false)} />
-          </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <nav className="text-sm font-medium">
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]"
+            >
+              <Home className="w-4 h-4 text-[#736C62] dark:text-[#9E968B]" />
+              <span>Home</span>
+            </Link>
+          </nav>
 
           {/* Categories Accordion */}
           {categories?.length > 0 && (
-            <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A]">
+            <div className="pt-1">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
-                All Departments
+                Categories
               </div>
               <div className="space-y-1">
                 {categories.map((cat) => (
@@ -530,79 +522,11 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             </div>
           )}
 
-          {/* Quick Settings & Contact */}
-          <div className="pt-3 border-t border-[#F0EDE8] dark:border-[#2A2A2A] space-y-3 text-xs text-[#736C62] dark:text-[#9E968B] px-3">
-            {/* Currency Switcher */}
-            <div className="flex items-center justify-between">
-              <span>Currency:</span>
-              <div className="flex items-center gap-1 font-semibold">
-                <button
-                  onClick={() => setCurrency("Tk.")}
-                  className={cn(
-                    "px-2.5 py-1 rounded text-xs transition-colors cursor-pointer",
-                    currency === "Tk."
-                      ? "bg-primary text-white"
-                      : "hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
-                  )}
-                >
-                  Tk.
-                </button>
-                <button
-                  onClick={() => setCurrency("$")}
-                  className={cn(
-                    "px-2.5 py-1 rounded text-xs transition-colors cursor-pointer",
-                    currency === "$"
-                      ? "bg-primary text-white"
-                      : "hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] text-[#1F1D1A] dark:text-[#EDE7DE]",
-                  )}
-                >
-                  USD
-                </button>
-              </div>
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
+              Menu
             </div>
-
-            {/* Theme Toggle */}
-            <div className="flex items-center justify-between">
-              <span>Appearance:</span>
-              <button
-                onClick={toggleTheme}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] cursor-pointer text-[#1F1D1A] dark:text-[#EDE7DE]"
-              >
-                {theme === "dark" ? (
-                  <>
-                    <Sun className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Light Mode</span>
-                  </>
-                ) : (
-                  <>
-                    <Moon className="w-3.5 h-3.5 text-[#736C62]" />
-                    <span>Dark Mode</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Hotline & Mail */}
-            <div className="pt-2 text-[11px] space-y-1">
-              <div>
-                Hotline:{" "}
-                <a
-                  href="tel:+8801894084242"
-                  className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] hover:underline"
-                >
-                  +8801894084242
-                </a>
-              </div>
-              <div>
-                Mail:{" "}
-                <a
-                  href="mailto:info@wellsellbd.com"
-                  className="font-semibold text-[#1F1D1A] dark:text-[#EDE7DE] hover:underline"
-                >
-                  info@wellsellbd.com
-                </a>
-              </div>
-            </div>
+            <NavLinks orientation="vertical" onItemClick={() => setIsMobileMenuOpen(false)} />
           </div>
         </div>
       </aside>
