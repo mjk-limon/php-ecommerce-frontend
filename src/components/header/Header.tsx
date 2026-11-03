@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/context/CartContext";
 import { asset, cn } from "@/lib/utils";
 import { Category } from "@/types";
 import {
@@ -11,6 +12,7 @@ import {
   Menu,
   Moon,
   Phone,
+  ShoppingCart,
   Sun,
   User as UserIcon,
   X,
@@ -19,13 +21,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { NavLinks } from "../NavLinks";
-import { SearchBar } from "../SearchBar";
+import { NavLinks } from "./NavLinks";
+import { SearchBar } from "./SearchBar";
 
 export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const { theme, toggleTheme, currency, setCurrency, user, logout, showToast } = useApp();
+  const { setIsCartDrawerOpen } = useCart();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [hoveredDept, setHoveredDept] = useState<Category | null>(null);
@@ -96,6 +99,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
       window.dispatchEvent(new Event("focus-hero-departments"));
       return;
     }
+
     setIsDepartmentOpen((open) => !open);
     setHoveredDept(null);
     setHoveredSubcategory(null);
@@ -208,7 +212,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
           <button
             onClick={() => showToast("No new unread store alerts.", "info")}
             aria-label="Notifications"
-            className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] text-[#1F1D1A] dark:text-[#EDE7DE] relative transition-colors cursor-pointer"
+            className="hidden md:flex items-center justify-center w-9 h-9 rounded-full hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] text-[#1F1D1A] dark:text-[#EDE7DE] relative transition-colors cursor-pointer"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
@@ -221,7 +225,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             href="/track-order"
             aria-label="Track order"
             title="Track Order"
-            className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors"
+            className="hidden md:flex items-center justify-center w-9 h-9 rounded-full hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors"
           >
             <HelpCircle className="w-4 h-4" />
           </Link>
@@ -283,15 +287,20 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               </Link>
             )}
           </div>
-
-          {/* Mobile Menu Drawer Toggle Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="p-2 md:hidden text-[#1F1D1A] dark:text-[#EDE7DE] hover:bg-[#EDE7DE] dark:hover:bg-[#23201C] rounded-lg transition-colors cursor-pointer"
-            aria-label="Open navigation menu drawer"
+          <div
+            onClick={() => setIsCartDrawerOpen(true)}
+            className="md:hidden flex justify-center items-center gap-1.5 p-1.5 rounded-xl border border-[#DCD5C9] dark:border-[#38332C] hover:bg-[#F5F5F5] dark:hover:bg-[#2A2A2A] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors cursor-pointer"
           >
-            <Menu className="w-5 h-5" />
-          </button>
+            <span className="relative">
+              <ShoppingCart className="w-4 h-4 text-primary" />
+              <span className="absolute -top-0 -right-1 w-4 h-4 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
+                0
+              </span>
+            </span>
+            <div className="flex flex-col">
+              <span className="text-[10px]">Tk. 4000</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -446,11 +455,7 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
         {/* Drawer Header */}
         <div className="p-4 border-b border-[#F0EDE8] dark:border-[#2A2A2A] flex items-center justify-between">
           <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2">
-            <img
-              src="https://wellsellbd.com/images/logo.svg?dummy=59825993"
-              alt="Wellsell BD"
-              className="h-6"
-            />
+            <img src="https://wellsellbd.com/images/logo.svg?dummy=59825993" alt="Wellsell BD" className="h-6" />
           </Link>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
