@@ -129,6 +129,7 @@ export interface Category {
   parent_sub_id?: number | null;
   position?: number;
   images?: null | {
+    icon: string;
     featured_icon: string;
     browse_category_feature: string;
   };

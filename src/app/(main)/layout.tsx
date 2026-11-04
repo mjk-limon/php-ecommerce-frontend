@@ -1,6 +1,6 @@
 import { CartDrawer } from "@/components/CartDrawer";
+import { CartToggler } from "@/components/CartToggler";
 import { CheckoutModal } from "@/components/CheckoutModal";
-import { FloatingCart } from "@/components/FloatingCart";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/header/Header";
 import { InvoiceModal } from "@/components/InvoiceModal";
@@ -79,7 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="min-h-screen flex flex-col bg-white dark:bg-[#121212] text-[#1F1D1A] dark:text-[#EDE7DE] transition-colors">
-        <NextTopLoader color="#68183f" />
+        <NextTopLoader color="#68183f" showSpinner={false} />
 
         <AppProvider>
           <CartProvider>
@@ -90,7 +90,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {/* Global Drawers & Modals */}
             <CartDrawer />
             <CheckoutModal />
-            <FloatingCart />
+            <CartToggler />
             <InvoiceModal />
             <TrackOrderModal />
             <ToastContainer />

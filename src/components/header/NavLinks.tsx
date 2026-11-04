@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { CreditCard, Home, Package, Percent, Phone, ShoppingCart, Tag } from "lucide-react";
 import { useApp } from "@/context/AppContext";
-import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
+import { CreditCard, Package, Percent, Phone, Tag } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
 interface NavLinksProps {
   orientation?: "horizontal" | "vertical";
@@ -21,7 +20,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   onItemClick,
 }) => {
   const { user, logout } = useApp();
-  const { cartTotalCount } = useCart();
 
   if (orientation === "horizontal") {
     return (
@@ -65,10 +63,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
             Hi, {user.first_name}
           </span>
         )}
-        <a
-          href="tel:+8801894084242"
-          className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5"
-        >
+        <a href="tel:+8801894084242" className="hover:text-primary dark:hover:text-[#E05343] transition-colors py-2.5">
           Support
         </a>
       </nav>

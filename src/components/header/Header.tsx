@@ -1,7 +1,6 @@
 "use client";
 
-import { useCart } from "@/context/CartContext";
-import { asset, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Category } from "@/types";
 import {
   Bell,
@@ -13,7 +12,6 @@ import {
   Menu,
   Moon,
   Phone,
-  ShoppingCart,
   Sun,
   User as UserIcon,
   X,
@@ -22,23 +20,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useApp } from "../../context/AppContext";
+import { CartToggler } from "../CartToggler";
+import { CategoryMenu } from "./CategoryMenu";
 import { NavLinks } from "./NavLinks";
 import { SearchBar } from "./SearchBar";
-import { FloatingCart } from "../FloatingCart";
-import { NavCart } from "./NavCart";
 
 export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const { theme, toggleTheme, currency, setCurrency, user, logout, showToast } = useApp();
-  const { setIsCartDrawerOpen } = useCart();
 
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
-  const [hoveredDept, setHoveredDept] = useState<Category | null>(null);
-  const [hoveredSubcategory, setHoveredSubcategory] = useState<Category | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [expandedMobileCategories, setExpandedMobileCategories] = useState<number[]>([]);
 
   const deptRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -48,8 +42,6 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
     function handleClickOutside(e: MouseEvent) {
       if (deptRef.current && !deptRef.current.contains(e.target as Node)) {
         setIsDepartmentOpen(false);
-        setHoveredDept(null);
-        setHoveredSubcategory(null);
       }
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setIsUserMenuOpen(false);
@@ -65,9 +57,19 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
     setIsMobileMenuOpen(false);
     setIsDepartmentOpen(false);
     setIsUserMenuOpen(false);
-    setHoveredDept(null);
-    setHoveredSubcategory(null);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        setIsDepartmentOpen(false);
+        setIsUserMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Lock body scroll when mobile drawer is open
   useEffect(() => {
@@ -84,8 +86,6 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
   useEffect(() => {
     if (isHomePage) {
       setIsDepartmentOpen(false);
-      setHoveredDept(null);
-      setHoveredSubcategory(null);
     }
   }, [isHomePage]);
 
@@ -103,19 +103,12 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
       return;
     }
 
+    // On desktop, toggle full container width megamenu dropdown
     setIsDepartmentOpen((open) => !open);
-    setHoveredDept(null);
-    setHoveredSubcategory(null);
-  };
-
-  const toggleMobileCategory = (catId: number) => {
-    setExpandedMobileCategories((prev) =>
-      prev.includes(catId) ? prev.filter((id) => id !== catId) : [...prev, catId],
-    );
   };
 
   return (
-    <header className="w-full pb-1 select-none shadow-md transition-colors relative z-40">
+    <header className="sticky md:static top-0 w-full pb-1 select-none bg-white shadow-md transition-colors z-40">
       {/* 1. Top Utility Header (Desktop only) */}
       <div className="hidden md:block text-xs text-[#736C62] dark:text-[#9E968B]">
         <div className="container py-1 flex flex-wrap items-center justify-between gap-3">
@@ -157,20 +150,22 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               <span className="opacity-70">Currency:</span>
               <button
                 onClick={() => setCurrency("Tk.")}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === "Tk."
-                  ? "text-primary dark:text-[#E05343] underline"
-                  : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
-                  }`}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
+                  currency === "Tk."
+                    ? "text-primary dark:text-[#E05343] underline"
+                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                }`}
               >
                 Tk.
               </button>
               <span>/</span>
               <button
                 onClick={() => setCurrency("$")}
-                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${currency === "$"
-                  ? "text-primary dark:text-[#E05343] underline"
-                  : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
-                  }`}
+                className={`font-semibold px-1 rounded transition-colors cursor-pointer ${
+                  currency === "$"
+                    ? "text-primary dark:text-[#E05343] underline"
+                    : "hover:text-[#1F1D1A] dark:hover:text-[#EDE7DE]"
+                }`}
               >
                 USD
               </button>
@@ -288,14 +283,15 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
               </Link>
             )}
           </div>
-          <NavCart />
+
+          <CartToggler floating={false} />
         </div>
       </div>
 
       {/* 3. Primary Navigation Bar */}
-      <div className="container flex gap-2.5 sm:gap-4 items-center justify-between">
-        {/* ALL DEPARTMENTS (Desktop) / Menu (Mobile) button with dropdown */}
-        <div ref={deptRef} className="relative w-auto md:w-[calc(20%-12px)] shrink-0">
+      <div ref={deptRef} className="container relative flex gap-2.5 sm:gap-4 items-center justify-between">
+        {/* ALL DEPARTMENTS (Desktop) / Menu (Mobile) button */}
+        <div className="w-auto md:w-[calc(20%-12px)] shrink-0">
           <button
             onClick={handleDepartmentOrMenuClick}
             className="w-full rounded-xl flex justify-center items-center gap-2 bg-primary/5 text-primary p-2 text-xs sm:text-sm font-semibold tracking-wide hover:bg-primary-hover hover:text-white transition-colors cursor-pointer"
@@ -305,116 +301,11 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             <span className="inline md:hidden">Menu</span>
             <ChevronDown
               className={cn(
-                'w-4 h-4 transition-transform duration-200 hidden md:inline',
-                isDepartmentOpen ? 'rotate-180' : ''
+                "w-4 h-4 transition-transform duration-200 hidden md:inline",
+                isDepartmentOpen ? "rotate-180" : "",
               )}
             />
           </button>
-
-          {/* Department Mega Dropdown (Desktop only) */}
-          {isDepartmentOpen && (
-            <div
-              className="hidden md:block absolute top-full left-0 w-full pt-1 z-50"
-              onMouseLeave={() => {
-                setHoveredDept(null);
-                setHoveredSubcategory(null);
-              }}
-            >
-              <div className="relative">
-                <div className="bg-white dark:bg-[#1C1A17] border border-[#E8E2D9] dark:border-[#312E29] shadow-xl rounded-lg py-2">
-                  {categories.map((cat) => (
-                    <div
-                      key={cat.id}
-                      className="relative"
-                      onMouseEnter={() => {
-                        setHoveredDept(cat);
-                        setHoveredSubcategory(null);
-                      }}
-                    >
-                      <Link
-                        href={`/category/${cat.slug}`}
-                        onClick={() => setIsDepartmentOpen(false)}
-                        className="w-full text-left px-4 py-2 text-xs text-[#1F1D1A] dark:text-[#EDE7DE] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-primary dark:hover:text-[#E05343] flex items-center justify-between transition-colors"
-                      >
-                        <span>{cat.name}</span>
-                        <span className="text-[10px] text-[#9A9184]">→</span>
-                      </Link>
-
-                      {hoveredDept?.id === cat.id && cat.childs?.length ? (
-                        <div className="absolute top-0 left-full -ml-1 w-80 bg-white dark:bg-[#1E1E1E] section-card shadow-xl z-10">
-                          <div className="border-b border-[#F0EDE8] dark:border-[#2A2A2A] px-5 py-3 flex items-center justify-between">
-                            <h3 className="font-serif font-bold text-sm text-[#1F1D1A] dark:text-[#EDE7DE]">
-                              {cat.name}
-                            </h3>
-                            <Link
-                              href={`/category/${cat.slug}`}
-                              onClick={() => setIsDepartmentOpen(false)}
-                              className="text-[11px] text-primary hover:underline font-semibold"
-                            >
-                              View All ›
-                            </Link>
-                          </div>
-
-                          <ul className="space-y-1 text-xs">
-                            {cat.childs.map((sub) => (
-                              <li
-                                key={sub.id}
-                                className="relative"
-                                onMouseEnter={() => setHoveredSubcategory(sub.childs?.length ? sub : null)}
-                              >
-                                <Link
-                                  href={`/category/${sub.slug}`}
-                                  onClick={() => setIsDepartmentOpen(false)}
-                                  className="w-full text-left py-2 px-4 rounded-xs hover:bg-[#FDF7F5] dark:hover:bg-[#2A2422] hover:text-primary transition-colors text-[#3E3A34] dark:text-[#C5BEB3] flex items-center justify-between"
-                                >
-                                  <span>{sub.name}</span>
-                                  {sub.childs?.length ? <span className="text-[10px] text-[#9A9184]">→</span> : null}
-                                </Link>
-
-                                {hoveredSubcategory?.id === sub.id && sub.childs?.length ? (
-                                  <div className="absolute top-0 left-full -ml-1 w-64 bg-white dark:bg-[#1E1E1E] section-card py-2 shadow-xl z-10">
-                                    {sub.childs.map((child) => (
-                                      <Link
-                                        key={child.id}
-                                        href={`/category/${child.slug}`}
-                                        onClick={() => setIsDepartmentOpen(false)}
-                                        className="block px-4 py-2 text-xs text-[#3E3A34] dark:text-[#C5BEB3] hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] hover:text-primary transition-colors"
-                                      >
-                                        {child.name}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                ) : null}
-                              </li>
-                            ))}
-                          </ul>
-
-                          {cat.images ? (
-                            <Link
-                              href={`/category/${cat.slug}`}
-                              onClick={() => setIsDepartmentOpen(false)}
-                              className="relative h-28 cursor-pointer group block mt-4 rounded-b-xl overflow-hidden"
-                            >
-                              {cat.images ? (
-                                <img
-                                  src={asset(cat.images?.browse_category_feature)}
-                                  alt={cat.name}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                                />
-                              ) : null}
-                              <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent p-2.5 flex flex-col justify-end text-white">
-                                <span className="underline">Explore {cat.name} ›</span>
-                              </div>
-                            </Link>
-                          ) : null}
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Desktop Navigation Links */}
@@ -422,6 +313,15 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
 
         {/* Mobile Search Bar - placed beside menu (hidden on desktop) */}
         <SearchBar className="flex-1 md:hidden" />
+
+        {/* Department Full Container Width Megamenu Dropdown (Desktop only) */}
+        {isDepartmentOpen && (
+          <CategoryMenu
+            categories={categories}
+            onItemClick={() => setIsDepartmentOpen(false)}
+            className="hidden md:block absolute top-full left-0 right-0 w-full -mt-0.5 pt-1.5 z-50"
+          />
+        )}
       </div>
 
       {/* 4. Mobile Menu Drawer (Slides from Left) */}
@@ -468,57 +368,13 @@ export const Header: React.FC<{ categories: Category[] }> = ({ categories }) => 
             </Link>
           </nav>
 
-          {/* Categories Accordion */}
+          {/* Categories in Mobile Menu Drawer */}
           {categories?.length > 0 && (
             <div className="pt-1">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 mb-2">
                 Categories
               </div>
-              <div className="space-y-1">
-                {categories.map((cat) => (
-                  <div key={cat.id} className="rounded-lg overflow-hidden">
-                    <div className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#F5F1EA] dark:hover:bg-[#25221E] transition-colors">
-                      <Link
-                        href={`/category/${cat.slug}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-xs font-medium text-[#1F1D1A] dark:text-[#EDE7DE] flex-1 truncate hover:text-primary"
-                      >
-                        {cat.name}
-                      </Link>
-                      {cat.childs?.length ? (
-                        <button
-                          onClick={() => toggleMobileCategory(cat.id)}
-                          className="p-1 text-[#9A9184] hover:text-primary transition-colors cursor-pointer"
-                          aria-label={`Toggle ${cat.name} subcategories`}
-                        >
-                          <ChevronDown
-                            className={cn(
-                              "w-3.5 h-3.5 transition-transform duration-200",
-                              expandedMobileCategories.includes(cat.id) ? "rotate-180" : "",
-                            )}
-                          />
-                        </button>
-                      ) : null}
-                    </div>
-
-                    {/* Subcategories list */}
-                    {cat.childs?.length && expandedMobileCategories.includes(cat.id) ? (
-                      <div className="pl-6 pr-2 py-1 space-y-1 bg-[#FAFAF8] dark:bg-[#151412] rounded-b-lg">
-                        {cat.childs.map((sub) => (
-                          <Link
-                            key={sub.id}
-                            href={`/category/${sub.slug}`}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="block py-1.5 px-2 text-xs text-[#524B42] dark:text-[#B5ACA0] hover:text-primary transition-colors truncate"
-                          >
-                            • {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
+              <CategoryMenu categories={categories} onItemClick={() => setIsMobileMenuOpen(false)} className="w-full" />
             </div>
           )}
 
