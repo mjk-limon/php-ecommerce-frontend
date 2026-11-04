@@ -9,6 +9,9 @@ const API_ORIGIN = (
 async function forward(request: NextRequest, segments: string[]) {
   const target = new URL(`${API_ORIGIN}/api/${segments.join("/")}`);
   request.nextUrl.searchParams.forEach((value, key) => target.searchParams.append(key, value));
+  if (!target.searchParams.has("app_key")) {
+    target.searchParams.set("app_key", process.env.ECOM_APP_KEY || "abcd");
+  }
   const headers = new Headers({ Accept: "application/json" });
   const authorization = request.headers.get("authorization");
   const contentType = request.headers.get("content-type");

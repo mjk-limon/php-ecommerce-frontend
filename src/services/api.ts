@@ -48,7 +48,7 @@ async function requestApi<T>(path: string, init: RequestInit = {}): Promise<T> {
   return result as T;
 }
 
-function normalizeProduct(raw: any): Product {
+export function normalizeProduct(raw: any): Product {
   const variants = Array.isArray(raw.variants) ? raw.variants : [];
   const firstVariant = variants[0];
   let images: any = raw.images;
