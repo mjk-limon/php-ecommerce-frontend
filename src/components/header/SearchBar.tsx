@@ -8,6 +8,8 @@ import { useApp } from "@/context/AppContext";
 import { MOCK_PRODUCTS } from "@/data/mockData";
 import { getAssetUrl } from "@/lib/assetHelper";
 import { cn } from "@/lib/utils";
+import { normalizeProduct } from "@/services/api";
+import { Product } from "@/types";
 
 interface SearchBarProps {
   className?: string;
@@ -23,8 +25,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onSearchSubmit,
 }) => {
   const router = useRouter();
-  const { searchQuery, setSearchQuery } = useApp();
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchResult, setSearchResult] = useState<Product[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,22 +44,35 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
-  const searchResults = searchQuery.trim()
-    ? MOCK_PRODUCTS.filter(
-        (p) =>
-          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          p.brand.toLowerCase().includes(searchQuery.toLowerCase()),
-      ).slice(0, 5)
-    : [];
+  useEffect(() => {
+    (async () => {
+      if (searchQuery.trim()) {
+        const response = await fetch(`/api/proxy/v1/products?limit=5&search=${searchQuery.trim()}`);
+        if (!response.ok) throw new Error("Failed to load products");
+        const json = await response.json();
+        const rawProducts: any[] = json?.data?.products || [];
+
+        if (rawProducts.length > 0) {
+          const normalized = rawProducts.map(normalizeProduct);
+
+          setSearchResult(normalized);
+        }
+      } else {
+        setSearchResult([]);
+      }
+    })();
+  }, [searchQuery]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (searchQuery.trim()) {
       setSearchFocused(false);
       onSearchSubmit?.();
@@ -88,12 +104,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       </form>
 
       {/* Autocomplete Dropdown */}
-      {searchFocused && searchResults.length > 0 && (
+      {searchFocused && searchResult.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1C1A17] border border-[#E8E2D9] dark:border-[#312E29] rounded-xl shadow-lg p-2 z-50">
           <div className="text-[11px] font-semibold uppercase tracking-wider text-[#736C62] dark:text-[#9E968B] px-3 py-1.5">
             Suggested Products
           </div>
-          {searchResults.map((item) => (
+          {searchResult.map((item) => (
             <Link
               key={item.id}
               href={`/product/${item.slug}`}
