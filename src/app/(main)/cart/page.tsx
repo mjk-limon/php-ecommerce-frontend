@@ -8,14 +8,13 @@ import { useCart } from "@/context/CartContext";
 import { asset } from "@/lib/utils";
 import { ArrowRight, Minus, Plus, ShoppingBag, Tag, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function CartPage() {
-  const router = useRouter();
   const { formatPrice, showToast } = useApp();
   const {
     cart,
+    isCartLoaded,
     removeFromCart,
     updateQuantity,
     clearCart,
@@ -57,19 +56,25 @@ export default function CartPage() {
           <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
             <ShoppingBag className="w-8 h-8" />
           </div>
-          <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Your Shopping Bag is Empty</h1>
-          <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
-            Looks like you haven&apos;t added any products to your bag yet. Explore our curated collections of authentic
-            imported skincare, fragrances, and health vitamins.
-          </p>
-          <div className="pt-2">
-            <Link href="/">
-              <Button variant="default" size="lg" className="gap-2 uppercase tracking-wider text-xs font-semibold">
-                <span>Explore Store</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Button>
-            </Link>
-          </div>
+          {isCartLoaded ? (
+            <>
+              <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Your Shopping Bag is Empty</h1>
+              <p className="text-xs text-[#736C62] dark:text-[#9E968B] leading-relaxed">
+                Looks like you haven&apos;t added any products to your bag yet. Explore our curated collections of
+                authentic imported skincare, fragrances, and health vitamins.
+              </p>
+              <div className="pt-2">
+                <Link href="/">
+                  <Button variant="default" size="lg" className="gap-2 uppercase tracking-wider text-xs font-semibold">
+                    <span>Explore Store</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <h1 className="font-bold text-2xl text-[#1F1D1A] dark:text-[#EDE7DE]">Checking Your Cart...</h1>
+          )}
         </Card>
       </div>
     );

@@ -13,7 +13,7 @@ import { OrderCreatePayload } from "@/types";
 import { ArrowRight, CreditCard, MapPin, Phone, ShoppingBag, Tag, Truck, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -30,7 +30,6 @@ export default function CheckoutPage() {
     methods,
     selectedLocationId,
     setSelectedLocationId,
-    selectedLocation,
     selectedMethodId,
     setSelectedMethodId,
     shippingCost,
@@ -46,6 +45,39 @@ export default function CheckoutPage() {
   const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2);
   const [orderNotes, setOrderNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentFrame, setPaymentFrame] = useState<{ url: string; invoiceNumber: string } | null>(null);
+
+  const finishPayment = () => {
+    const redirectUrl = `/invoice/${paymentFrame.invoiceNumber}`;
+
+    clearCart();
+    setPaymentFrame(null);
+    router.push(redirectUrl);
+  };
+
+  useEffect(() => {
+    if (!paymentFrame) return;
+
+    const handlePaymentMessage = (event: MessageEvent) => {
+      if (event.origin !== new URL(paymentFrame.url).origin) {
+        return;
+      }
+
+      const data = event.data;
+
+      if (!data || typeof data !== "object") return;
+
+      if (data.type !== "PAYMENT_NOTIFY") {
+        return;
+      }
+
+      showToast(data.message);
+      finishPayment();
+    };
+
+    window.addEventListener("message", handlePaymentMessage);
+    return () => window.removeEventListener("message", handlePaymentMessage);
+  }, [paymentFrame, router, showToast, clearCart]);
 
   // Promo coupon
   const [couponCode, setCouponCode] = useState("");
@@ -93,16 +125,20 @@ export default function CheckoutPage() {
 
   const handleApplyCoupon = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (!couponCode.trim()) return;
+
     showToast("Invalid coupon code.", "error");
   };
 
   const handlePlaceOrder = async (e: React.SubmitEvent) => {
     e.preventDefault();
+
     if (cart.length === 0) {
       showToast("Your cart is empty. Add products before placing order.", "error");
       return;
     }
+
     if (!customerName.trim() || !customerPhone.trim() || !customerAddress.trim()) {
       showToast("Please provide your name, phone number, and delivery address.", "error");
       return;
@@ -135,7 +171,6 @@ export default function CheckoutPage() {
           product_name: item.product.name,
           variant_info: {
             brand: item.product.brand || "",
-            sku: item.product.sku || "SKU-STD",
             ...(item.variant.size ? { size: item.variant.size } : {}),
             ...(item.variant.color ? { color: item.variant.color } : {}),
           },
@@ -151,10 +186,20 @@ export default function CheckoutPage() {
       const res = await api.createOrder(orderPayload);
 
       if (res.success && res.data) {
-        clearCart();
-        showToast("Order successfully confirmed! Redirecting to invoice...", "success");
+        const callbackUrl = res.data.callback_url;
 
-        router.push(`/invoice/${res.data.invoice_number}`);
+        if (res.data.is_embedded) {
+          setPaymentFrame({ url: callbackUrl, invoiceNumber: res.data.invoice_number });
+          return;
+        }
+
+        clearCart();
+
+        if (!callbackUrl) {
+          router.push(`/invoice/${res.data.invoice_number}`);
+        } else {
+          window.location.assign(callbackUrl);
+        }
       } else {
         showToast("Failed to complete order. Please try again.", "error");
       }
@@ -270,7 +315,7 @@ export default function CheckoutPage() {
                     Phone Number (BD) <span className="text-primary">*</span>
                   </label>
                   <Input
-                    type="tel"
+                    type="text"
                     required
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
@@ -283,7 +328,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">Email Address</label>
+                  <label className="text-xs font-semibold text-[#1F1D1A] dark:text-[#EDE7DE]">
+                    Email Address (Optional)
+                  </label>
                   <Input
                     type="email"
                     value={customerEmail}
@@ -586,6 +633,23 @@ export default function CheckoutPage() {
           </div>
         </form>
       </div>
+
+      {paymentFrame && (
+        <div
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/60"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white shadow-xl dark:bg-[#1E1E1E]">
+            <iframe
+              title="Payment gateway"
+              src={paymentFrame.url}
+              className="min-h-0 flex-1 border-0"
+              allow="payment *"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

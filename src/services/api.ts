@@ -274,7 +274,7 @@ export const api = {
   // --- Orders & Invoicing ---
   async createOrder(payload: OrderCreatePayload): Promise<{
     success: boolean;
-    data: { order_id: number; invoice_number: string; callback_url: null };
+    data: { order_id: number; invoice_number: string; callback_url: string | null; is_embedded: true; };
   }> {
     const remote = await requestApi<any>("order/create", {
       method: "POST",
@@ -283,14 +283,8 @@ export const api = {
         Authorization: `Bearer ${localStorage.getItem("wellsell_token_v2") || ""}`,
       },
     });
-    return {
-      success: true,
-      data: {
-        order_id: remote.data.order_id,
-        invoice_number: remote.data.invoice_number || remote.data.invoice,
-        callback_url: remote.data.callback_url || null,
-      },
-    };
+
+    return remote;
   },
 
   async getOrderInvoice(invoiceNumber: string): Promise<{ success: boolean; data: OrderInvoice | null }> {
