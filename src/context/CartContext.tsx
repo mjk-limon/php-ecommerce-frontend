@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../services/api";
-import { CartItem, Product, ProductVariant, ShippingLocation, ShippingMethod } from "../types";
+import { CartItem, PaymentMethod, Product, ProductVariant, ShippingLocation, ShippingMethod } from "../types";
 import { useApp } from "./AppContext";
 
 export function calculateShipping(
@@ -16,9 +16,7 @@ export function calculateShipping(
     return { cost: 60, estimateTime: "24-48 Hours" };
   }
   if (location.cost_times && location.cost_times.length > 0) {
-    const match = methodId
-      ? location.cost_times.find((c) => c.method_id === methodId)
-      : location.cost_times[0];
+    const match = methodId ? location.cost_times.find((c) => c.method_id === methodId) : location.cost_times[0];
     const ct = match || location.cost_times[0];
     if (ct && typeof ct.cost === "number") {
       return {
@@ -39,12 +37,7 @@ export interface CartContextType {
   // Cart items & operations
   cart: CartItem[];
   isCartLoaded: boolean;
-  addToCart: (
-    product: Product,
-    variant: ProductVariant,
-    quantity?: number,
-    options?: { openDrawer?: boolean },
-  ) => void;
+  addToCart: (product: Product, variant: ProductVariant, quantity?: number, options?: { openDrawer?: boolean }) => void;
   removeFromCart: (productId: number, variantId: number) => void;
   updateQuantity: (productId: number, variantId: number, quantity: number) => void;
   clearCart: () => void;
@@ -65,6 +58,7 @@ export interface CartContextType {
   // Shipping locations and methods from API
   locations: ShippingLocation[];
   methods: ShippingMethod[];
+  paymentGateways: PaymentMethod[];
   selectedLocationId: number;
   setSelectedLocationId: (id: number) => void;
   selectedLocation: ShippingLocation | undefined;
@@ -87,10 +81,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartLoaded, setIsCartLoaded] = useState(false);
 
+  // Modals & Drawer State
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState<boolean>(false);
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState<boolean>(false);
+
+  // Shipping Data State
+  const [locations, setLocations] = useState<ShippingLocation[]>([]);
+  const [methods, setMethods] = useState<ShippingMethod[]>([]);
+  const [paymentGateways, setPaymentGateways] = useState<PaymentMethod[]>([]);
+  const [selectedLocationId, setSelectedLocationId] = useState<number>(14); // Default: Dhaka Inside City (id: 14)
+  const [selectedMethodId, setSelectedMethodId] = useState<number>(1); // Default: RedX (id: 1)
+  const [isLoadingShipping, setIsLoadingShipping] = useState<boolean>(false);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
         const saved = localStorage.getItem("wellsell_cart_v2");
+
         if (saved) {
           setCart(JSON.parse(saved));
         }
@@ -108,19 +115,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [cart, isCartLoaded]);
 
-  // Modals & Drawer State
-  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState<boolean>(false);
-  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState<boolean>(false);
-
-  // Shipping Data State
-  const [locations, setLocations] = useState<ShippingLocation[]>([]);
-  const [methods, setMethods] = useState<ShippingMethod[]>([]);
-  const [selectedLocationId, setSelectedLocationId] = useState<number>(14); // Default: Dhaka Inside City (id: 14)
-  const [selectedMethodId, setSelectedMethodId] = useState<number>(1); // Default: RedX (id: 1)
-  const [isLoadingShipping, setIsLoadingShipping] = useState<boolean>(false);
-
   const refreshShipping = useCallback(async () => {
     setIsLoadingShipping(true);
+
     try {
       const res = await api.getShipping();
       if (res.success && res.data) {
@@ -136,6 +133,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return dhakaInside ? dhakaInside.id : res.data.locations[0].id;
           });
         }
+
         if (Array.isArray(res.data.methods) && res.data.methods.length > 0) {
           setMethods(res.data.methods);
           setSelectedMethodId((prevId) => {
@@ -151,9 +149,22 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  const refreshPaymentGateways = useCallback(async () => {
+    try {
+      const res = await api.getPaymentMethods();
+
+      if (res.success && res.data) {
+        setPaymentGateways(res.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch payment configuration", error);
+    }
+  }, []);
+
   useEffect(() => {
     refreshShipping();
-  }, [refreshShipping]);
+    refreshPaymentGateways();
+  }, [refreshShipping, refreshPaymentGateways]);
 
   // Derived selected location and method
   const selectedLocation = useMemo(
@@ -188,9 +199,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     options?: { openDrawer?: boolean },
   ) => {
     setCart((prev) => {
-      const existingIndex = prev.findIndex(
-        (item) => item.product.id === product.id && item.variant.id === variant.id,
-      );
+      const existingIndex = prev.findIndex((item) => item.product.id === product.id && item.variant.id === variant.id);
 
       if (existingIndex > -1) {
         const next = [...prev];
@@ -259,9 +268,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const removeFromCart = (productId: number, variantId: number) => {
-    setCart((prev) =>
-      prev.filter((item) => !(item.product.id === productId && item.variant.id === variantId)),
-    );
+    setCart((prev) => prev.filter((item) => !(item.product.id === productId && item.variant.id === variantId)));
     showToast("Item removed from cart", "info");
   };
 
@@ -318,6 +325,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsCheckoutModalOpen,
         locations,
         methods,
+        paymentGateways,
         selectedLocationId,
         setSelectedLocationId,
         selectedLocation,

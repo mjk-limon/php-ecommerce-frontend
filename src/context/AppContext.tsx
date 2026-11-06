@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "../types";
 import { api } from "../services/api";
+import { User } from "../types";
 
 interface ToastMessage {
   id: string;
@@ -17,9 +17,6 @@ interface AppContextType {
   currency: string;
   setCurrency: (c: string) => void;
   formatPrice: (amountInTk: number, discountPercentage?: number) => string;
-
-  searchQuery: string;
-  setSearchQuery: (q: string) => void;
 
   // Auth
   user: User | null;
@@ -102,8 +99,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     return `Tk. ${Math.round(discountedPrice).toLocaleString()}`;
   };
-
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Auth state
   const [user, setUser] = useState<User | null>(() => {
@@ -251,8 +246,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         currency,
         setCurrency,
         formatPrice,
-        searchQuery,
-        setSearchQuery,
         user,
         token,
         isAuthenticated: !!token,

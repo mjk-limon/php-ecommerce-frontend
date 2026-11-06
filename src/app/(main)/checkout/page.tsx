@@ -1,15 +1,14 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectOption } from "@/components/ui/select";
 import { useApp } from "@/context/AppContext";
 import { useCart } from "@/context/CartContext";
-import { asset } from "@/lib/utils";
+import { asset, cn } from "@/lib/utils";
 import { api } from "@/services/api";
-import { OrderCreatePayload } from "@/types";
+import { OrderCreatePayload, PaymentMethod } from "@/types";
 import { ArrowRight, CreditCard, MapPin, Phone, ShoppingBag, Tag, Truck, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,6 +27,7 @@ export default function CheckoutPage() {
     clearCart,
     locations,
     methods,
+    paymentGateways,
     selectedLocationId,
     setSelectedLocationId,
     selectedMethodId,
@@ -42,7 +42,7 @@ export default function CheckoutPage() {
   const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
   const [customerEmail, setCustomerEmail] = useState(user?.email || "");
   const [customerAddress, setCustomerAddress] = useState(user?.address || "");
-  const [selectedPaymentId, setSelectedPaymentId] = useState<number>(2);
+  const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(paymentGateways[0]);
   const [orderNotes, setOrderNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentFrame, setPaymentFrame] = useState<{ url: string; invoiceNumber: string } | null>(null);
@@ -161,7 +161,7 @@ export default function CheckoutPage() {
         subtotal: grandTotal,
         coupon_ids: appliedCoupon ? [appliedCoupon.code] : [],
         payment: {
-          method_id: selectedPaymentId,
+          method_id: selectedPayment.id,
           amount: grandTotal,
           gateway_response: [],
         },
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
       if (res.success && res.data) {
         const callbackUrl = res.data.callback_url;
 
-        if (res.data.is_embedded) {
+        if (selectedPayment.is_embedded) {
           setPaymentFrame({ url: callbackUrl, invoiceNumber: res.data.invoice_number });
           return;
         }
@@ -404,95 +404,31 @@ export default function CheckoutPage() {
                 <h2 className="font-bold text-base sm:text-lg text-[#1F1D1A] dark:text-[#EDE7DE]">2. Payment Method</h2>
               </div>
 
-              <div className="space-y-3">
-                {/* Cash On Delivery */}
-                <div
-                  onClick={() => setSelectedPaymentId(2)}
-                  className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
-                    selectedPaymentId === 2
-                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
-                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    checked={selectedPaymentId === 2}
-                    onChange={() => setSelectedPaymentId(2)}
-                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
-                        Cash On Delivery (COD)
-                      </span>
-                      <Badge variant="success">Recommended</Badge>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+                {paymentGateways.map((gateway) => (
+                  <div
+                    onClick={() => setSelectedPayment(gateway)}
+                    className={cn(
+                      "p-4 rounded-xs border cursor-pointer transition-all",
+                      selectedPayment.id === gateway.id
+                        ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
+                        : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50",
+                    )}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      {gateway.logo ? (
+                        <img src={asset(gateway.logo)} className="h-7" />
+                      ) : (
+                        <CreditCard className="h-7" />
+                      )}
+                      <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">{gateway.name}</span>
                     </div>
-                    <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
-                      Pay in cash to the delivery rider when your sealed parcel arrives. Check serial code before
-                      opening.
-                    </p>
+                    <p
+                      className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-2"
+                      dangerouslySetInnerHTML={{ __html: gateway.instruction }}
+                    />
                   </div>
-                </div>
-
-                {/* bKash Mobile Banking */}
-                <div
-                  onClick={() => setSelectedPaymentId(3)}
-                  className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
-                    selectedPaymentId === 3
-                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
-                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    checked={selectedPaymentId === 3}
-                    onChange={() => setSelectedPaymentId(3)}
-                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE] flex items-center gap-2">
-                        <span>bKash / Nagad Mobile Banking</span>
-                        <span className="text-[10px] font-bold text-primary">bKash</span>
-                      </span>
-                      <span className="text-[10px] text-[#736C62] font-mono">0% Fee</span>
-                    </div>
-                    <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
-                      Pay instantly from your bKash or Nagad wallet with instant payment verification.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Card / Online Payment */}
-                <div
-                  onClick={() => setSelectedPaymentId(1)}
-                  className={`p-4 rounded-xs border cursor-pointer transition-all flex items-start gap-3 ${
-                    selectedPaymentId === 1
-                      ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
-                      : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    checked={selectedPaymentId === 1}
-                    onChange={() => setSelectedPaymentId(1)}
-                    className="mt-1 text-primary focus:ring-[#BA2D1D]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-xs text-[#1F1D1A] dark:text-[#EDE7DE]">
-                        Visa / MasterCard / AMEX
-                      </span>
-                      <span className="text-[10px] text-[#736C62] font-mono">SSLCommerz</span>
-                    </div>
-                    <p className="text-[11px] text-[#736C62] dark:text-[#9E968B] mt-1">
-                      Pay securely with 256-bit encrypted checkout via local &amp; international credit or debit cards.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </Card>
           </div>

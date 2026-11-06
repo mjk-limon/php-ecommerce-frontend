@@ -199,10 +199,9 @@ export interface PaymentMethod {
   tenant_flag?: number | null;
   handler?: string | null;
   name: string;
-  ins_1?: string;
-  ins_2?: string;
-  ins_3?: string;
-  additional?: string;
+  logo?: string | null;
+  instruction?: string;
+  is_embedded: boolean;
   status: number;
 }
 

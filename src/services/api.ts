@@ -274,7 +274,7 @@ export const api = {
   // --- Orders & Invoicing ---
   async createOrder(payload: OrderCreatePayload): Promise<{
     success: boolean;
-    data: { order_id: number; invoice_number: string; callback_url: string | null; is_embedded: true; };
+    data: { order_id: number; invoice_number: string; callback_url: string | null; };
   }> {
     const remote = await requestApi<any>("order/create", {
       method: "POST",
