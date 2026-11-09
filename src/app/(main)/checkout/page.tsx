@@ -42,21 +42,22 @@ export default function CheckoutPage() {
   const [customerPhone, setCustomerPhone] = useState(user?.phone || "");
   const [customerEmail, setCustomerEmail] = useState(user?.email || "");
   const [customerAddress, setCustomerAddress] = useState(user?.address || "");
-  const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>(paymentGateways[0]);
+  const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [orderNotes, setOrderNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentFrame, setPaymentFrame] = useState<{ url: string; invoiceNumber: string } | null>(null);
 
-  const finishPayment = () => {
-    const redirectUrl = `/invoice/${paymentFrame.invoiceNumber}`;
-
-    clearCart();
-    setPaymentFrame(null);
-    router.push(redirectUrl);
-  };
+  useEffect(() => {
+    if (paymentGateways.length === 0) return;
+    setSelectedPayment((current) =>
+      current && paymentGateways.some((gateway) => gateway.id === current.id) ? current : paymentGateways[0],
+    );
+  }, [paymentGateways]);
 
   useEffect(() => {
-    if (!paymentFrame) return;
+    if (!paymentFrame) {
+      return;
+    }
 
     const handlePaymentMessage = (event: MessageEvent) => {
       if (event.origin !== new URL(paymentFrame.url).origin) {
@@ -65,14 +66,19 @@ export default function CheckoutPage() {
 
       const data = event.data;
 
-      if (!data || typeof data !== "object") return;
-
-      if (data.type !== "PAYMENT_NOTIFY") {
+      if (!data || typeof data !== "object") {
         return;
       }
 
-      showToast(data.message);
-      finishPayment();
+      if (data.type == "FRAME_SIZE") {
+        document.getElementById("payment-frame-wrapper").style.height = data.height + "px";
+      }
+
+      if (data.type == "PAYMENT_NOTIFY") {
+        clearCart();
+        setPaymentFrame(null);
+        window.location.assign(data.postback);
+      }
     };
 
     window.addEventListener("message", handlePaymentMessage);
@@ -144,6 +150,11 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (!selectedPayment) {
+      showToast("Please wait for the payment methods to load, then select a payment method.", "error");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -163,7 +174,7 @@ export default function CheckoutPage() {
         payment: {
           method_id: selectedPayment.id,
           amount: grandTotal,
-          gateway_response: [],
+          callback_url: `${window.location.origin}/payment-callback/{trxn_id}`,
         },
         items: cart.map((item) => ({
           product_id: item.product.id,
@@ -195,11 +206,12 @@ export default function CheckoutPage() {
 
         clearCart();
 
-        if (!callbackUrl) {
-          router.push(`/invoice/${res.data.invoice_number}`);
-        } else {
+        if (callbackUrl) {
           window.location.assign(callbackUrl);
+          return;
         }
+
+        router.push(`/invoice/${res.data.invoice_number}`);
       } else {
         showToast("Failed to complete order. Please try again.", "error");
       }
@@ -407,17 +419,18 @@ export default function CheckoutPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
                 {paymentGateways.map((gateway) => (
                   <div
+                    key={`pmnt-${gateway.id}`}
                     onClick={() => setSelectedPayment(gateway)}
                     className={cn(
                       "p-4 rounded-xs border cursor-pointer transition-all",
-                      selectedPayment.id === gateway.id
+                      selectedPayment?.id === gateway.id
                         ? "border-[#BA2D1D] bg-[#FDF7F5] dark:bg-[#261E1C] shadow-xs"
                         : "border-[#E8E2D9] dark:border-[#312E29] bg-white dark:bg-[#1A1916] hover:border-[#BA2D1D]/50",
                     )}
                   >
                     <div className="flex items-center gap-1.5">
                       {gateway.logo ? (
-                        <img src={asset(gateway.logo)} className="h-7" />
+                        <img src={asset(gateway.logo)} className="h-10" />
                       ) : (
                         <CreditCard className="h-7" />
                       )}
@@ -558,7 +571,7 @@ export default function CheckoutPage() {
                 type="submit"
                 variant="default"
                 size="lg"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !selectedPayment}
                 isLoading={isSubmitting}
                 className="w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-3.5"
               >
@@ -572,11 +585,14 @@ export default function CheckoutPage() {
 
       {paymentFrame && (
         <div
-          className="fixed inset-0 z-100 flex items-center justify-center bg-black/60"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-xs overflow-hidden"
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white shadow-xl dark:bg-[#1E1E1E]">
+          <div
+            id="payment-frame-wrapper"
+            className="flex min-h-[50vh] max-h-[95vh] w-full max-w-xl flex-col overflow-hidden rounded-lg bg-white shadow-xl dark:bg-[#1E1E1E]"
+          >
             <iframe
               title="Payment gateway"
               src={paymentFrame.url}

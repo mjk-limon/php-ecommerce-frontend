@@ -26,7 +26,7 @@ export function serverApiAssetUrl(path?: string | null) {
 
 // React cache deduplicates identical requests during a server render, including
 // requests made by the root layout and the page rendered inside it.
-const requestServerApi = cache(async (path: string, query: string) => {
+const requestServerApi = cache(async (path: string, query: string, method: "GET" | "POST" = "GET", body?: string) => {
   const url = new URL(`${API_ORIGIN}/api/${API_VERSION}/${path.replace(/^\/+/, "")}`);
   url.searchParams.set("app_key", APP_KEY);
   new URLSearchParams(query).forEach((value, key) => url.searchParams.set(key, value));
@@ -37,7 +37,12 @@ const requestServerApi = cache(async (path: string, query: string) => {
 
   try {
     response = await fetch(url, {
-      headers: { Accept: "application/json" },
+      method,
+      headers: {
+        Accept: "application/json",
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+      },
+      ...(body !== undefined ? { body } : {}),
       cache: "no-store",
       signal: controller.signal,
     });
@@ -78,6 +83,10 @@ export function serverApiGet<T>(path: string, params?: Record<string, string | n
   });
 
   return requestServerApi(path, query.toString()) as Promise<T>;
+}
+
+export function serverApiPost<T>(path: string, data?: unknown) {
+  return requestServerApi(path, "", "POST", data === undefined ? undefined : JSON.stringify(data)) as Promise<T>;
 }
 
 export const getServerCategories = cache(async (): Promise<Category[]> => {

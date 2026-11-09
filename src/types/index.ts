@@ -280,7 +280,7 @@ export interface OrderCreatePayload {
   payment: {
     method_id: number;
     amount: number;
-    gateway_response: unknown[];
+    callback_url: string;
   };
   items: Omit<OrderItem, "id" | "order_id">[];
 }
