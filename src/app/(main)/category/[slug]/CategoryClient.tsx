@@ -35,7 +35,7 @@ export default function CategoryClient({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { formatPrice, searchQuery: globalSearchQuery } = useApp();
+  const { formatPrice } = useApp();
 
   // Active filter params from URL
   const selectedBrand = searchParams.get("brands") || "";
@@ -43,7 +43,7 @@ export default function CategoryClient({
   const selectedColor = searchParams.get("color") || "";
   const priceFromParam = searchParams.get("price[from]");
   const priceToParam = searchParams.get("price[to]");
-  const currentSearch = searchParams.get("search") || globalSearchQuery || "";
+  const currentSearch = searchParams.get("search");
 
   // Price boundaries
   const minLimit = Number(filterObjects?.min_price ?? 0);

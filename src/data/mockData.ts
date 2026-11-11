@@ -1007,38 +1007,6 @@ export const MOCK_SHIPPING_LOCATIONS: ShippingLocation[] = [
   }
 ];
 
-// Postman Payment Methods
-export const MOCK_PAYMENT_METHODS: PaymentMethod[] = [
-  {
-    id: 2,
-    name: 'Cash On Delivery',
-    handler: null,
-    status: 1,
-    additional: '<p><span style="color: #666; font-size: 13px;">Please pay Delivery Charge Tk.150 by bKash/Rocket/Nagad Account @ </span><strong style="color: #BA2D1D;">01894084242</strong><span style="color: #666;"> (Personal) if you are ordering outside of Dhaka. Thanks!</span></p>'
-  },
-  {
-    id: 3,
-    name: 'bKash',
-    handler: 'BkashPaymentHandler',
-    status: 1,
-    additional: '<p><span style="color: #BA2D1D; font-weight: bold; font-size: 13px;">bKash 01894084242 (Personal)</span> — Please send money and submit your bKash Transaction ID (TrxID) below.</p>'
-  },
-  {
-    id: 4,
-    name: 'Rocket',
-    handler: null,
-    status: 1,
-    additional: '<p><span style="color: #8E44AD; font-weight: bold; font-size: 13px;">Rocket 01894084242 (Personal)</span> — Send money and provide your 12-digit transaction number.</p>'
-  },
-  {
-    id: 11,
-    name: 'Nagad',
-    handler: null,
-    status: 1,
-    additional: '<p><span style="color: #D35400; font-weight: bold; font-size: 13px;">Nagad 01894084242 (Personal)</span> — Send money and enter your 8-digit Nagad reference code.</p>'
-  }
-];
-
 // Postman Campaigns
 export const MOCK_CAMPAIGNS: Campaign[] = [
   {

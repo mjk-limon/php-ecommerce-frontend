@@ -327,10 +327,10 @@ export const CheckoutModal: React.FC = () => {
                       className="accent-[#BA2D1D]"
                     />
                   </div>
-                  {selectedPaymentId === pm.id && pm.additional && (
+                  {selectedPaymentId === pm.id && pm.instruction && (
                     <div
                       className="mt-2 text-[11px] text-[#736C62] dark:text-[#C5BEB3] bg-[#F5F1EA] dark:bg-[#1E1C19] p-2.5 rounded-xs leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: pm.additional }}
+                      dangerouslySetInnerHTML={{ __html: pm.instruction }}
                     />
                   )}
                 </label>
